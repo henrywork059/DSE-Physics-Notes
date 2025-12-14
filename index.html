@@ -1,168 +1,35 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HKDSE Physics Notes</title>
+<div class="note-list">
 
-  <!-- Reuse your existing site style -->
-  <link rel="stylesheet" href="./assets/site.css">
-
-  <style>
-    /* Fallback styles if site.css is minimal */
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left,#e0ebff 0,#f5f7fb 40%,#f5f7fb 100%);
-      color: #111827;
-    }
-
-    .wrap {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 28px 18px 40px;
-    }
-
-    header.topbar {
-      background: #ffffff;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    header.topbar h1 {
-      margin: 0;
-      color: #174b8f;
-      font-size: 1.9rem;
-    }
-
-    header.topbar .sub {
-      color: #4b5563;
-      font-size: 0.95rem;
-      margin-top: 4px;
-    }
-
-    .card {
-      background: #ffffff;
-      border-radius: 14px;
-      border: 1px solid #d0d7e2;
-      padding: 18px 20px;
-      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
-      margin-bottom: 18px;
-    }
-
-    .card h2 {
-      margin-top: 0;
-      color: #174b8f;
-      font-size: 1.4rem;
-    }
-
-    .note-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
-      margin-top: 12px;
-    }
-
-    .note-link {
-      display: block;
-      text-decoration: none;
-      border: 1px solid #d0d7e2;
-      border-radius: 12px;
-      padding: 14px 16px;
-      background: #f9fafb;
-      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
-      color: #111827;
-    }
-
-    .note-link:hover {
-      background: #eef2ff;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(148,163,184,0.45);
-    }
-
-    .note-title {
-      font-weight: 600;
-      color: #174b8f;
-      margin-bottom: 4px;
-    }
-
-    .note-desc {
-      font-size: 0.85rem;
-      color: #4b5563;
-      line-height: 1.4;
-    }
-
-    footer {
-      margin-top: 28px;
-      font-size: 0.8rem;
-      color: #6b7280;
-      text-align: center;
-    }
-  </style>
-</head>
-
-<body>
-
-  <header class="topbar">
-    <div class="wrap">
-      <h1>HKDSE Physics Notes</h1>
-      <p class="sub">
-        Single-entry navigation hub · All notes follow HKDSE syllabus wording and exam style
-      </p>
+  <a class="note-link" href="./e2/e_2_photoelectric_effect_only.html">
+    <div class="note-title">1. Photoelectric Effect</div>
+    <div class="note-desc">
+      Photon model of light, threshold frequency, stopping potential,
+      experimental observations and HKDSE traps.
     </div>
-  </header>
+  </a>
 
-  <main class="wrap">
+  <a class="note-link" href="./e2/e_2_rutherford_atomic_model_only.html">
+    <div class="note-title">2. Rutherford’s Atomic Model</div>
+    <div class="note-desc">
+      α-particle scattering, observations vs conclusions,
+      evidence for a small, dense nucleus.
+    </div>
+  </a>
 
-    <!-- ================= E2 ATOMIC WORLD ================= -->
-    <section class="card">
-      <h2>Elective E2 — Atomic World</h2>
-      <p style="font-size:0.9rem; color:#4b5563;">
-        Photoelectric effect, atomic models, spectra, and probing into nano scale &amp; microscopes.
-        All pages open as separate HTML files and include Back / Previous / Next navigation.
-      </p>
+  <a class="note-link" href="./e2/e_2_bohr_model_and_spectra_only.html">
+    <div class="note-title">3. Bohr Model &amp; Hydrogen Spectra</div>
+    <div class="note-desc">
+      Quantised energy levels, line spectra,
+      excitation and ionisation (HKDSE-required only).
+    </div>
+  </a>
 
-      <div class="note-list">
+  <a class="note-link" href="./e2/nanoscale_microscopes.html">
+    <div class="note-title">4. Probing into Nano Scale &amp; Microscopes</div>
+    <div class="note-desc">
+      Resolution limit, electron microscope vs optical microscope,
+      applications and limitations.
+    </div>
+  </a>
 
-        <a class="note-link" href="e_2_photoelectric_effect_only.html">
-          <div class="note-title">1. Photoelectric Effect</div>
-          <div class="note-desc">
-            Photon model of light, threshold frequency, stopping potential,
-            experimental observations and HKDSE traps.
-          </div>
-        </a>
-
-        <a class="note-link" href="e_2_rutherford_atomic_model_only.html">
-          <div class="note-title">2. Rutherford’s Atomic Model</div>
-          <div class="note-desc">
-            α-particle scattering, observations vs conclusions,
-            evidence for a small, dense nucleus.
-          </div>
-        </a>
-
-        <a class="note-link" href="e_2_bohr_model_and_spectra_only.html">
-          <div class="note-title">3. Bohr Model &amp; Hydrogen Spectra</div>
-          <div class="note-desc">
-            Quantised energy levels, line spectra,
-            excitation and ionisation (HKDSE-required only).
-          </div>
-        </a>
-
-        <a class="note-link" href="nanoscale_microscopes.html">
-          <div class="note-title">4. Probing into Nano Scale &amp; Microscopes</div>
-          <div class="note-desc">
-            Resolution limit, electron microscope vs optical microscope,
-            applications and limitations.
-          </div>
-        </a>
-
-      </div>
-    </section>
-
-    <footer>
-      © HKDSE Physics Notes · Designed for syllabus-aligned revision and exam preparation
-    </footer>
-
-  </main>
-
-</body>
-</html>
+</div>
