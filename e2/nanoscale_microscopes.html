@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E203 — Probing into Nano-scale & Microscopes (HKDSE)</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card-bg: #ffffff;
+      --accent: #174b8f;
+      --accent-soft: #e1ecff;
+      --border: #d0d7e2;
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --danger: #b91c1c;
+      --danger-soft: #fef2f2;
+      --good: #047857;
+      --good-soft: #ecfdf5;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left,#e0ebff 0,#f5f7fb 40%,#f5f7fb 100%);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 22px 14px 32px;
+    }
+    .page-wrapper { max-width: 980px; margin: 0 auto; }
+    header {
+      margin-bottom: 14px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+    h1 {
+      margin: 0 0 3px;
+      font-size: 1.7rem;
+      color: var(--accent);
+    }
+    .meta {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 620px;
+    }
+    .toplinks {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .toplinks a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.75);
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    .pill-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 11px;
+      font-size: 0.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #f9fafb;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 14px 16px 12px;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+      margin-bottom: 14px;
+    }
+    h2 {
+      margin: 4px 0 6px;
+      font-size: 1.25rem;
+      color: var(--accent);
+    }
+    h3 {
+      margin: 4px 0 6px;
+      font-size: 1.05rem;
+      color: var(--accent);
+    }
+    ul { margin: 4px 0 6px 18px; padding-left: 0; }
+    li { margin: 2px 0; }
+    .key-list li::marker { color: var(--accent); }
+    .eq {
+      display: block;
+      margin: 6px 0 8px 0;
+      font-family: "Times New Roman", serif;
+      font-size: 1.0rem;
+      padding: 6px 10px;
+      background: #f3f4f6;
+      border-radius: 8px;
+      border-left: 4px solid var(--accent);
+    }
+    .frac { display: inline-block; vertical-align: middle; text-align: center; }
+    .frac .top { display: block; padding: 0 2px; }
+    .frac .bottom { display: block; border-top: 1px solid currentColor; padding: 0 2px; }
+    .highlight {
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+    .good {
+      background: var(--good-soft);
+      border: 1px solid rgba(16,185,129,0.30);
+      border-left: 4px solid var(--good);
+    }
+    .good h3 { color: var(--good); }
+    .trap {
+      background: var(--danger-soft);
+      border: 1px solid rgba(220,38,38,0.30);
+      border-left: 4px solid var(--danger);
+    }
+    .trap h3 { color: var(--danger); }
+
+    /* Key terms interactive */
+    .term-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 8px 0 10px;
+    }
+    .term-btn {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #f9fafb;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .term-btn.active {
+      background: linear-gradient(90deg,#1d4ed8,#0ea5e9);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.30);
+    }
+    .term-def {
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      background: #f9fafb;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      min-height: 64px;
+    }
+    .term-title {
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 3px;
+    }
+    footer {
+      margin-top: 14px;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-wrapper">
+
+    <header>
+      <div>
+        <h1>E203 — Probing into Nano-scale & Microscopes</h1>
+        <div class="meta">
+          HKDSE Physics Elective E2 · Understand why optical microscopes have a resolution limit, and how electron / scanning probe microscopes allow nano-scale imaging.
+        </div>
+      </div>
+      <div class="toplinks">
+        <a href="index.html">← Back to index</a>
+        <a href="E202_bohr_spectra.html">← Previous (E202)</a>
+        <a href="E204_next.html">Next →</a>
+      </div>
+    </header>
+
+    <div class="pill-title">E203 · probing into nano scale & microscopes</div>
+
+    <!-- 1. Nano scale -->
+    <div class="card">
+      <h3>1. What does “nano-scale” mean?</h3>
+      <ul class="key-list">
+        <li><strong>1 nanometre (nm)</strong> = 10<sup>−9</sup> m.</li>
+        <li>Typical atom diameter: about <strong>0.1 nm</strong> (order of magnitude).</li>
+        <li>At nano-scale, surface effects become important because surface area/volume ratio is large.</li>
+        <li>We need special microscopes because visible light wavelength (~400–700 nm) is far larger than nano-scale objects.</li>
+      </ul>
+      <div class="highlight">
+        HKDSE key idea: <strong>Magnification is not the same as resolution</strong>.
+        You can enlarge a blurred image, but you cannot see finer detail unless resolution improves.
+      </div>
+    </div>
+
+    <!-- 2. Resolution & diffraction limit -->
+    <div class="card">
+      <h3>2. Resolution & diffraction limit (optical microscopes)</h3>
+      <p><strong>Resolution</strong> = ability to distinguish two close objects as separate.</p>
+
+      <div class="eq">
+        Resolution limit (Rayleigh/Abbe idea):
+        d ≈ 0.61
+        <span class="frac"><span class="top">λ</span><span class="bottom">NA</span></span>
+      </div>
+
+      <ul class="key-list">
+        <li><strong>d</strong> = minimum resolvable separation (smaller d → better resolution).</li>
+        <li><strong>λ</strong> = wavelength of light used (shorter λ → better resolution).</li>
+        <li><strong>NA</strong> = numerical aperture (larger NA → better resolution).</li>
+      </ul>
+
+      <div class="eq">
+        Numerical aperture:
+        NA = n sinθ
+      </div>
+
+      <ul class="key-list">
+        <li>n = refractive index of medium (air ~1, oil &gt; 1).</li>
+        <li>θ = half-angle of the cone of light entering the lens.</li>
+      </ul>
+
+      <div class="highlight">
+        Improving optical microscope resolution:
+        <strong>use shorter wavelength</strong> (violet/UV),
+        <strong>increase NA</strong> (wider lens, immersion oil).
+      </div>
+    </div>
+
+    <!-- 3. Electron microscope -->
+    <div class="card">
+      <h3>3. Electron microscopes (TEM & SEM)</h3>
+      <ul class="key-list">
+        <li>Electrons behave as waves (de Broglie), with wavelength much smaller than visible light.</li>
+        <li>Smaller wavelength → smaller diffraction spreading → much higher resolution.</li>
+      </ul>
+
+      <div class="eq">
+        de Broglie relation:
+        pλ = h  →  λ =
+        <span class="frac"><span class="top">h</span><span class="bottom">p</span></span>
+      </div>
+
+      <ul class="key-list">
+        <li><strong>TEM (Transmission Electron Microscope):</strong> electrons pass through thin specimen → internal structure.</li>
+        <li><strong>SEM (Scanning Electron Microscope):</strong> electrons scan the surface → detailed 3D-like surface image.</li>
+      </ul>
+
+      <div class="highlight">
+        Limitations (HKDSE style):
+        requires <strong>vacuum</strong>; specimens must be prepared carefully; cannot observe living organisms directly.
+      </div>
+    </div>
+
+    <!-- 4. Scanning probe microscopes -->
+    <div class="card good">
+      <h3>4. Scanning probe microscopes (STM & AFM)</h3>
+      <ul class="key-list">
+        <li>They build images by scanning a very sharp tip over the surface point-by-point.</li>
+        <li>Can achieve near atomic resolution.</li>
+      </ul>
+
+      <h4 style="margin:6px 0 4px; color:var(--good);">STM — Scanning Tunnelling Microscope</h4>
+      <ul class="key-list">
+        <li>Works for <strong>conducting surfaces</strong>.</li>
+        <li>Based on <strong>quantum tunnelling</strong>: electrons tunnel across the tiny gap tip–surface.</li>
+        <li>Tunnelling current changes strongly with distance → used to map surface atoms.</li>
+      </ul>
+
+      <h4 style="margin:6px 0 4px; color:var(--good);">AFM — Atomic Force Microscope</h4>
+      <ul class="key-list">
+        <li>Works for <strong>conductors and insulators</strong>.</li>
+        <li>Tip on a cantilever experiences tiny forces (attraction/repulsion).</li>
+        <li>Cantilever deflection is detected (often by laser reflection) → surface profile.</li>
+      </ul>
+    </div>
+
+    <!-- 5. Key terms -->
+    <div class="card">
+      <h3>5. Key terms (HKDSE wording)</h3>
+      <p style="font-size:0.88rem; color:var(--text-muted); margin: 0 0 6px;">
+        Click a term to see an exam-style definition.
+      </p>
+
+      <div class="term-buttons">
+        <button class="term-btn active" data-term="resolution">Resolution</button>
+        <button class="term-btn" data-term="diffraction">Diffraction limit</button>
+        <button class="term-btn" data-term="na">Numerical aperture (NA)</button>
+        <button class="term-btn" data-term="tem">TEM</button>
+        <button class="term-btn" data-term="sem">SEM</button>
+        <button class="term-btn" data-term="stm">STM</button>
+        <button class="term-btn" data-term="afm">AFM</button>
+        <button class="term-btn" data-term="tunnel">Quantum tunnelling</button>
+      </div>
+
+      <div class="term-def">
+        <div class="term-title" id="termTitle">Resolution</div>
+        <div id="termText">
+          The ability of an imaging system to distinguish two close objects as separate. Higher resolution means smaller minimum resolvable separation.
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Common traps -->
+    <div class="card trap">
+      <h3>HKDSE common traps & mistakes (E203)</h3>
+      <ul class="key-list">
+        <li>Mixing up <strong>magnification</strong> and <strong>resolution</strong>.</li>
+        <li>Saying “use higher magnification” to see nano-scale detail — correct answer should be <strong>use shorter wavelength / better resolution</strong>.</li>
+        <li>Forgetting diffraction: optical microscopes cannot resolve features much smaller than ~λ.</li>
+        <li>STM works only on <strong>conductors</strong>, but AFM can work on <strong>insulators</strong>.</li>
+        <li>Stating electron microscopes can image living organisms — usually false because they require <strong>vacuum</strong>.</li>
+      </ul>
+    </div>
+
+    <footer>
+      End of E203 — Probing into nano scale & microscopes (HKDSE Physics E2).
+    </footer>
+
+  </div>
+
+  <script>
+    const termData = {
+      resolution: {
+        title: "Resolution",
+        text: "The ability of an imaging system to distinguish two close objects as separate. Higher resolution means a smaller minimum resolvable separation."
+      },
+      diffraction: {
+        title: "Diffraction limit",
+        text: "A fundamental limit to resolution caused by diffraction. When aperture size is comparable to wavelength, images blur and two close objects cannot be resolved."
+      },
+      na: {
+        title: "Numerical aperture (NA)",
+        text: "A measure of a lens’s light-gathering ability: NA = n sinθ. Larger NA gives better resolution (smaller d)."
+      },
+      tem: {
+        title: "TEM (Transmission Electron Microscope)",
+        text: "An electron microscope where electrons pass through a very thin specimen. The transmitted electrons form an image of the internal structure."
+      },
+      sem: {
+        title: "SEM (Scanning Electron Microscope)",
+        text: "An electron microscope that scans the surface with an electron beam. It forms detailed surface images, often with strong 3D-like appearance."
+      },
+      stm: {
+        title: "STM (Scanning Tunnelling Microscope)",
+        text: "A scanning probe microscope for conducting surfaces. A sharp tip is brought close and a tunnelling current is measured; current variations map the surface."
+      },
+      afm: {
+        title: "AFM (Atomic Force Microscope)",
+        text: "A scanning probe microscope where a tip on a cantilever experiences forces from the surface; cantilever deflection is used to map surface profile."
+      },
+      tunnel: {
+        title: "Quantum tunnelling",
+        text: "A quantum phenomenon where particles can pass through an energy barrier even if classical physics predicts they cannot. In STM, electrons tunnel across the tiny tip-surface gap."
+      }
+    };
+
+    const buttons = Array.from(document.querySelectorAll(".term-btn"));
+    const termTitle = document.getElementById("termTitle");
+    const termText = document.getElementById("termText");
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        buttons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const key = btn.dataset.term;
+        const d = termData[key];
+        if (d) {
+          termTitle.textContent = d.title;
+          termText.textContent = d.text;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
