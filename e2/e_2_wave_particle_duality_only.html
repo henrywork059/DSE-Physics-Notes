@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HKDSE Physics E2 — Wave–Particle Duality (Interactive)</title>
+  <meta name="description" content="HKDSE Physics E2: Wave–particle duality of light and electrons. Interactive double‑slit build‑up + de Broglie visualiser." />
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --card: #ffffff;
+      --border: #d1d5db;
+      --text: #111827;
+      --muted: #4b5563;
+      --primary: #1d4ed8;
+      --primary-soft: #e0ebff;
+      --accent: #0ea5e9;
+      --danger: #b91c1c;
+      --danger-soft: #fef2f2;
+      --good: #047857;
+      --good-soft: #ecfdf5;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #e0ebff 0, var(--bg) 42%, var(--bg) 100%);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 18px 14px 26px;
+    }
+
+    .page { max-width: 1120px; margin: 0 auto; }
+
+    header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 1.55rem;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .toplinks {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .toplinks a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.7);
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 920px) {
+      .layout { grid-template-columns: 1fr; }
+      header { flex-direction: column; align-items: flex-start; }
+      .toplinks { justify-content: flex-start; }
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+      padding: 14px 16px 12px;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+      color: var(--primary);
+      border-bottom: 2px solid var(--primary-soft);
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      margin: 6px 0 6px;
+      font-size: 0.96rem;
+      color: var(--text);
+    }
+
+    .note {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 6px 0 0;
+    }
+
+    /* Controls */
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    select, input[type="range"], button {
+      font: inherit;
+    }
+
+    select {
+      width: 100%;
+      padding: 7px 8px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #f9fafb;
+      font-size: 0.92rem;
+    }
+
+    .control { margin-bottom: 12px; }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .val {
+      min-width: 92px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      color: var(--primary);
+      font-size: 0.88rem;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      background: #d1d5db;
+      border-radius: 999px;
+      appearance: none;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      background: var(--primary);
+      border-radius: 999px;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+      cursor: pointer;
+    }
+
+    .seg {
+      display: flex;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #f9fafb;
+    }
+
+    .seg button {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 6px 8px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      color: var(--muted);
+      transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .seg button.active {
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: #fff;
+      box-shadow: 0 3px 10px rgba(37,99,235,0.30);
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .btn {
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      cursor: pointer;
+      font-size: 0.86rem;
+    }
+
+    .btn.primary {
+      border-color: rgba(37,99,235,0.35);
+      background: rgba(59,130,246,0.08);
+      color: #1d4ed8;
+      font-weight: 600;
+    }
+
+    /* Equations */
+    .eq {
+      background: #f9fafb;
+      border-left: 4px solid var(--primary);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-family: "Times New Roman", serif;
+      font-size: 1.0rem;
+      margin: 8px 0;
+    }
+
+    .eq small {
+      display: block;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 2px;
+    }
+
+    .frac { display: inline-block; vertical-align: middle; text-align: center; }
+    .frac .top { display: block; padding: 0 2px; }
+    .frac .bottom { display: block; border-top: 1px solid currentColor; padding: 0 2px; }
+
+    /* Right side */
+    .lab-card { padding: 0; overflow: hidden; }
+
+    .lab-head {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #bae6fd;
+      background: #ecfeff;
+      color: #0369a1;
+    }
+
+    .canvas-wrap {
+      position: relative;
+      background: linear-gradient(to bottom, #eff6ff, #e5e7eb);
+      padding: 12px;
+    }
+
+    canvas {
+      width: 100%;
+      height: 360px;
+      display: block;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+    }
+
+    @media (max-width: 600px) {
+      canvas { height: 320px; }
+    }
+
+    .legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: rgba(255,255,255,0.65);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.2);
+      background: #111827;
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 920px) {
+      .grid2 { grid-template-columns: 1fr; }
+    }
+
+    .statgrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .stat {
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 0.86rem;
+    }
+
+    .stat .k {
+      font-size: 0.74rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .stat .v {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Key terms */
+    .term-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 6px 0 10px;
+    }
+
+    .term-btn {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #f9fafb;
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      color: var(--muted);
+      transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .term-btn.active {
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.28);
+    }
+
+    .term-def {
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      background: #f9fafb;
+      padding: 10px 12px;
+      min-height: 72px;
+      font-size: 0.9rem;
+    }
+
+    .term-title { font-weight: 800; color: var(--primary); margin-bottom: 3px; }
+
+    /* Trap card */
+    .trap {
+      background: var(--danger-soft);
+      border: 1px solid rgba(220, 38, 38, 0.28);
+      border-left: 4px solid var(--danger);
+    }
+
+    .trap h2 { color: var(--danger); border-bottom-color: rgba(220, 38, 38, 0.12); }
+
+    ul { margin: 6px 0 0 18px; padding-left: 0; }
+    li { margin: 2px 0; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div>
+        <h1>Wave–Particle Duality (Electrons & Light)</h1>
+        <p class="subtitle">HKDSE Physics E2 · “Particles or Waves” · de Broglie relation and experimental evidence</p>
+      </div>
+      <div class="toplinks">
+        <a href="index.html">← Back to index</a>
+        <a href="#lab">Double‑slit lab</a>
+        <a href="#deb">de Broglie</a>
+        <a href="#terms">Key terms</a>
+      </div>
+    </header>
+
+    <div class="layout" id="lab">
+      <!-- LEFT: controls -->
+      <aside>
+        <div class="card">
+          <h2>1. Choose what to send through the slits</h2>
+
+          <div class="control">
+            <label>Entity</label>
+            <div class="seg" role="radiogroup" aria-label="entity">
+              <button type="button" class="seg-btn active" data-entity="photon">Light (photons)</button>
+              <button type="button" class="seg-btn" data-entity="electron">Electrons</button>
+            </div>
+            <p class="note" id="entityNote">
+              Light: wave evidence (interference/diffraction) + particle evidence (photoelectric effect).
+            </p>
+          </div>
+
+          <div class="control" id="photonControls">
+            <label for="lambdaSlider">Light wavelength λ</label>
+            <div class="row">
+              <input id="lambdaSlider" type="range" min="380" max="700" step="1" value="550" />
+              <div class="val"><span id="lambdaVal">550</span> nm</div>
+            </div>
+            <p class="note">HKDSE link: photon energy depends on wavelength/frequency (E = hc/λ).</p>
+          </div>
+
+          <div class="control" id="electronControls" style="display:none;">
+            <label for="vSlider">Electron accelerating voltage V</label>
+            <div class="row">
+              <input id="vSlider" type="range" min="20" max="2000" step="10" value="200" />
+              <div class="val"><span id="vVal">200</span> V</div>
+            </div>
+            <p class="note">Non‑relativistic: eV = ½mv² → λ = h/√(2m<sub>e</sub>eV).</p>
+          </div>
+
+          <div class="control">
+            <label for="intSlider">Intensity (particles per second)</label>
+            <div class="row">
+              <input id="intSlider" type="range" min="0" max="100" step="1" value="60" />
+              <div class="val"><span id="intVal">60</span>%</div>
+            </div>
+            <p class="note">Important idea: changing intensity changes the <em>number</em> arriving, not the wavelength of the fringe pattern.</p>
+          </div>
+
+          <div class="control">
+            <label>Slits</label>
+            <div class="seg" role="radiogroup" aria-label="slits">
+              <button type="button" class="slit-btn active" data-slits="2">Double slit</button>
+              <button type="button" class="slit-btn" data-slits="1">Single slit</button>
+            </div>
+            <p class="note">Single slit shows <strong>diffraction</strong>; double slit shows <strong>interference</strong> + diffraction envelope.</p>
+          </div>
+
+          <div class="control">
+            <label for="dSlider">Slit separation d (centre‑to‑centre)</label>
+            <div class="row">
+              <input id="dSlider" type="range" min="0.20" max="1.50" step="0.01" value="0.60" />
+              <div class="val"><span id="dVal">0.60</span> mm</div>
+            </div>
+          </div>
+
+          <div class="control">
+            <label for="aSlider">Slit width a</label>
+            <div class="row">
+              <input id="aSlider" type="range" min="0.05" max="0.40" step="0.01" value="0.15" />
+              <div class="val"><span id="aVal">0.15</span> mm</div>
+            </div>
+          </div>
+
+          <div class="control">
+            <label>Display</label>
+            <div class="seg" role="radiogroup" aria-label="display">
+              <button type="button" class="disp-btn active" data-disp="build">Build‑up (spots)</button>
+              <button type="button" class="disp-btn" data-disp="curve">Wave intensity curve</button>
+            </div>
+            <p class="note">Key duality message: even when particles arrive one by one (spots), the overall distribution follows a wave‑like intensity pattern.</p>
+          </div>
+
+          <div class="actions">
+            <button class="btn primary" id="pauseBtn">⏸ Pause</button>
+            <button class="btn" id="resetBtn">↻ Reset screen</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>2. HKDSE equations to remember</h2>
+
+          <div class="eq">
+            <small>de Broglie relation (electrons / matter waves)</small>
+            pλ = h  &nbsp; (so &nbsp; λ = <span class="frac"><span class="top">h</span><span class="bottom">p</span></span>)
+          </div>
+
+          <div class="eq">
+            <small>Photon momentum (light)</small>
+            p = <span class="frac"><span class="top">h</span><span class="bottom">λ</span></span>
+            &nbsp; and &nbsp;
+            E = hf = <span class="frac"><span class="top">hc</span><span class="bottom">λ</span></span>
+          </div>
+
+          <div class="eq">
+            <small>Electron accelerated by potential difference V (non‑rel.)</small>
+            λ = <span class="frac"><span class="top">h</span><span class="bottom">√(2m<sub>e</sub>eV)</span></span>
+          </div>
+
+          <p class="note">
+            Syllabus note: using 2π r = nλ together with pλ = h gives
+            2π m<sub>e</sub>vr = nh (quantisation of angular momentum in the Bohr model).
+          </p>
+
+          <p class="note" style="margin-top:8px;">
+            Constants (HKDSE): h = 6.63×10<sup>−34</sup> J s, c = 3.00×10<sup>8</sup> m s<sup>−1</sup>, e = 1.60×10<sup>−19</sup> C, m<sub>e</sub> = 9.11×10<sup>−31</sup> kg.
+          </p>
+        </div>
+      </aside>
+
+      <!-- RIGHT: lab -->
+      <main>
+        <div class="card lab-card">
+          <div class="lab-head">
+            <h2 style="margin:0; border-bottom:none; padding-bottom:0;">3. Double‑slit / single‑slit build‑up</h2>
+            <div class="badge" id="modeBadge">Running: build‑up (spots)</div>
+          </div>
+          <div class="canvas-wrap">
+            <canvas id="labCanvas" aria-label="double slit simulation"></canvas>
+            <div class="legend">
+              <span class="chip"><span class="dot" id="dotColor"></span><span id="dotLabel">photon hits</span></span>
+              <span class="chip">screen builds up → wave‑like distribution</span>
+              <span class="chip" id="fringeChip">fringe spacing ≈ -- mm</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>4. Calculated values for the chosen entity</h2>
+          <div class="statgrid">
+            <div class="stat">
+              <div class="k">Wavelength λ</div>
+              <div class="v" id="outLambda">--</div>
+              <div class="note" id="outLambdaNote" style="margin-top:2px;">--</div>
+            </div>
+            <div class="stat">
+              <div class="k">Momentum p</div>
+              <div class="v" id="outP">--</div>
+              <div class="note" style="margin-top:2px;">(for photons, p = h/λ)</div>
+            </div>
+            <div class="stat">
+              <div class="k" id="outELabel">Photon energy E</div>
+              <div class="v" id="outE">--</div>
+              <div class="note" id="outENote" style="margin-top:2px;">--</div>
+            </div>
+            <div class="stat">
+              <div class="k">Pattern depends on</div>
+              <div class="v" id="outDepends">λ, d, L</div>
+              <div class="note" style="margin-top:2px;">Intensity mainly changes brightness / count.</div>
+            </div>
+          </div>
+
+          <div class="grid2" style="margin-top:12px;">
+            <div class="card" style="margin:0; box-shadow:none;">
+              <h3>What HKDSE wants you to say (short)</h3>
+              <ul id="examSay">
+                <li>Wave property → interference/diffraction pattern (fringes).</li>
+                <li>Particle property → energy/momentum transferred in lumps (quanta).</li>
+                <li>Electrons show wave behaviour via diffraction, but arrive as discrete hits.</li>
+              </ul>
+            </div>
+            <div class="card" style="margin:0; box-shadow:none; background: var(--good-soft); border-color: rgba(16,185,129,0.25);">
+              <h3 style="color: var(--good);">Photon vs Electron “absorption” (HKDSE clarity)</h3>
+              <ul>
+                <li><strong>Photon absorption:</strong> photon can be absorbed completely; it disappears and transfers energy E = hf (e.g. photoelectric effect, absorption spectrum).</li>
+                <li><strong>Electron absorption:</strong> electrons are not “quanta of EM energy”. An electron may be <em>captured</em> by an atom / material or scattered, but it remains a particle with rest mass and charge.</li>
+                <li>So in spectra/energy‑level questions: the atom absorbs a <strong>photon</strong>, not an electron.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="deb">
+          <h2>5. de Broglie & Bohr link (visual)</h2>
+          <div class="grid2">
+            <div>
+              <h3>Standing wave condition around an orbit</h3>
+              <p class="note">If an electron behaves like a wave, a stable orbit corresponds to an integer number of wavelengths fitting around the circumference.</p>
+
+              <div class="control">
+                <label for="nSlider">Number of wavelengths around the orbit (n)</label>
+                <div class="row">
+                  <input id="nSlider" type="range" min="1" max="6" step="1" value="3" />
+                  <div class="val">n = <span id="nVal">3</span></div>
+                </div>
+              </div>
+
+              <div class="control">
+                <label for="rSlider">Orbit radius r (for visualisation only)</label>
+                <div class="row">
+                  <input id="rSlider" type="range" min="0.20" max="1.20" step="0.01" value="0.60" />
+                  <div class="val"><span id="rVal">0.60</span> (arb.)</div>
+                </div>
+              </div>
+
+              <div class="eq">
+                <small>Condition for a standing wave</small>
+                2π r = nλ
+              </div>
+
+              <div class="eq">
+                <small>Combine with de Broglie (pλ = h)</small>
+                2π r = n<span class="frac"><span class="top">h</span><span class="bottom">p</span></span>
+                ⇒ 2π pr = nh
+              </div>
+
+              <p class="note">This is the syllabus note that links de Broglie waves to Bohr’s quantisation rule.</p>
+            </div>
+
+            <div>
+              <h3>Orbit wave sketch</h3>
+              <canvas id="orbitCanvas" style="height: 260px;"></canvas>
+              <p class="note">The wave fits exactly when it joins smoothly after one full revolution (no phase jump).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="terms">
+          <h2>6. Key terms (HKDSE wording)</h2>
+          <p class="note">Click a term to see an exam‑style definition.</p>
+          <div class="term-buttons">
+            <button class="term-btn active" data-term="duality">Wave–particle duality</button>
+            <button class="term-btn" data-term="deb">de Broglie wavelength</button>
+            <button class="term-btn" data-term="interf">Interference</button>
+            <button class="term-btn" data-term="diff">Diffraction</button>
+            <button class="term-btn" data-term="eDiff">Electron diffraction</button>
+            <button class="term-btn" data-term="photon">Photon</button>
+          </div>
+          <div class="term-def">
+            <div class="term-title" id="termTitle">Wave–particle duality</div>
+            <div id="termText">
+              The idea that light and electrons can show <strong>wave properties</strong> (e.g. interference/diffraction) and <strong>particle properties</strong> (discrete detection events; energy and momentum transferred in quanta), depending on the experiment.
+            </div>
+          </div>
+        </div>
+
+        <div class="card trap">
+          <h2>HKDSE common traps & mistakes</h2>
+          <ul>
+            <li>Thinking “higher intensity changes the fringe spacing”. Fringe spacing depends mainly on <strong>λ</strong>, slit separation <strong>d</strong>, and distance to screen <strong>L</strong>, not intensity.</li>
+            <li>Confusing photon absorption with “absorbing an electron”. In energy‑level/spectrum contexts, atoms absorb <strong>photons</strong>.</li>
+            <li>Using de Broglie relation incorrectly: remember <strong>pλ = h</strong> (not p = hλ).</li>
+            <li>For electrons accelerated by voltage, use <strong>eV = ½mv²</strong> (non‑rel.) before substituting into λ = h/p.</li>
+            <li>Stating “electrons are waves” only. HKDSE expects <strong>both</strong>: wave behaviour in diffraction + particle behaviour in discrete impacts.</li>
+          </ul>
+        </div>
+
+        <p class="note" style="margin-top:10px;">
+          End of “Wave–particle duality” (HKDSE E2). Use this together with your Photoelectric Effect and Bohr‑model notes.
+        </p>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // ======= Constants (HKDSE) =======
+    const H = 6.63e-34;      // J s
+    const C = 3.00e8;        // m s^-1
+    const E = 1.60e-19;      // C
+    const ME = 9.11e-31;     // kg
+
+    // ======= UI =======
+    const entityBtns = Array.from(document.querySelectorAll('.seg-btn'));
+    const slitBtns = Array.from(document.querySelectorAll('.slit-btn'));
+    const dispBtns = Array.from(document.querySelectorAll('.disp-btn'));
+
+    const photonControls = document.getElementById('photonControls');
+    const electronControls = document.getElementById('electronControls');
+
+    const lambdaSlider = document.getElementById('lambdaSlider');
+    const lambdaVal = document.getElementById('lambdaVal');
+
+    const vSlider = document.getElementById('vSlider');
+    const vVal = document.getElementById('vVal');
+
+    const intSlider = document.getElementById('intSlider');
+    const intVal = document.getElementById('intVal');
+
+    const dSlider = document.getElementById('dSlider');
+    const dVal = document.getElementById('dVal');
+
+    const aSlider = document.getElementById('aSlider');
+    const aVal = document.getElementById('aVal');
+
+    const pauseBtn = document.getElementById('pauseBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    const modeBadge = document.getElementById('modeBadge');
+    const dotColor = document.getElementById('dotColor');
+    const dotLabel = document.getElementById('dotLabel');
+    const fringeChip = document.getElementById('fringeChip');
+
+    const outLambda = document.getElementById('outLambda');
+    const outLambdaNote = document.getElementById('outLambdaNote');
+    const outP = document.getElementById('outP');
+    const outE = document.getElementById('outE');
+    const outELabel = document.getElementById('outELabel');
+    const outENote = document.getElementById('outENote');
+    const outDepends = document.getElementById('outDepends');
+
+    const examSay = document.getElementById('examSay');
+    const entityNote = document.getElementById('entityNote');
+
+    // Orbit visual
+    const orbitCanvas = document.getElementById('orbitCanvas');
+    const orbitCtx = orbitCanvas.getContext('2d');
+    const nSlider = document.getElementById('nSlider');
+    const nVal = document.getElementById('nVal');
+    const rSlider = document.getElementById('rSlider');
+    const rVal = document.getElementById('rVal');
+
+    // Key terms
+    const termButtons = Array.from(document.querySelectorAll('.term-btn'));
+    const termTitle = document.getElementById('termTitle');
+    const termText = document.getElementById('termText');
+
+    const termData = {
+      duality: {
+        title: 'Wave–particle duality',
+        text: 'The idea that light and electrons can show wave properties (e.g. interference/diffraction) and particle properties (discrete detection events; energy and momentum transferred in quanta), depending on the experiment.'
+      },
+      deb: {
+        title: 'de Broglie wavelength',
+        text: 'The wavelength associated with a moving particle: p\u03bb = h (so \u03bb = h/p). For electrons, higher momentum (or higher accelerating voltage) gives a smaller \u03bb and less diffraction.'
+      },
+      interf: {
+        title: 'Interference',
+        text: 'A wave phenomenon in which overlapping waves add to give maxima and minima. In double‑slit experiments, constructive and destructive interference produces bright and dark fringes.'
+      },
+      diff: {
+        title: 'Diffraction',
+        text: 'Spreading of waves when they pass through a narrow gap. Strong diffraction occurs when the gap size is comparable to the wavelength.'
+      },
+      eDiff: {
+        title: 'Electron diffraction',
+        text: 'Evidence that electrons have wave properties. When electrons pass through a crystal or thin graphite, a diffraction pattern can be observed, consistent with a de Broglie wavelength.'
+      },
+      photon: {
+        title: 'Photon',
+        text: 'A quantum (packet) of electromagnetic radiation. Photon energy E = hf and momentum p = h/\u03bb. Particle evidence of light includes the photoelectric effect.'
+      }
+    };
+
+    // ======= Simulation State =======
+    const state = {
+      entity: 'photon',      // 'photon' | 'electron'
+      slits: 2,              // 1 | 2
+      display: 'build',      // 'build' | 'curve'
+      running: true,
+
+      // user params
+      lambda_nm: 550,
+      V: 200,
+      intensity: 60,
+      d_mm: 0.60,
+      a_mm: 0.15,
+
+      // apparatus (model)
+      L: 1.0,                // m (distance slits -> screen)
+      Ymax: 0.035,           // m (half-height on screen)
+
+      // internals
+      hits: [],              // {yPx}
+      flyers: [],            // animated particles
+      spawnAcc: 0,
+      Imax: 1,
+      lastT: 0
+    };
+
+    // ======= Canvas setup =======
+    const labCanvas = document.getElementById('labCanvas');
+    const labCtx = labCanvas.getContext('2d');
+
+    function resizeCanvasToCSS(canvas, ctx) {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      const w = Math.max(1, Math.floor(rect.width * dpr));
+      const h = Math.max(1, Math.floor(rect.height * dpr));
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      return { w: rect.width, h: rect.height };
+    }
+
+    window.addEventListener('resize', () => {
+      recomputeImax();
+      drawOrbit();
+    });
+
+    // ======= Physics helpers =======
+    function sinc(x) {
+      if (Math.abs(x) < 1e-7) return 1;
+      return Math.sin(x) / x;
+    }
+
+    function getLambdaMeters() {
+      if (state.entity === 'photon') {
+        return state.lambda_nm * 1e-9;
+      }
+      // electron accelerated by V (non-rel.)
+      const p = Math.sqrt(2 * ME * E * state.V);
+      return H / p;
+    }
+
+    function getMomentum() {
+      const lam = getLambdaMeters();
+      return H / lam;
+    }
+
+    function photonEnergyJ_fromLambda(lam_m) {
+      return (H * C) / lam_m;
+    }
+
+    function energyLabelAndValue() {
+      if (state.entity === 'photon') {
+        const lam = getLambdaMeters();
+        const Ej = photonEnergyJ_fromLambda(lam);
+        const eV = Ej / E;
+        return { label: 'Photon energy E', value: eV, note: 'E = hc/\u03bb (eV)' };
+      }
+      // electrons: kinetic energy approx eV (in eV)
+      return { label: 'Electron kinetic energy', value: state.V, note: 'KE \u2248 eV (eV)' };
+    }
+
+    // Intensity distribution on screen:
+    // I(y) = cos^2(pi d y/(lambda L)) * sinc^2(pi a y/(lambda L))
+    // (for single slit: omit cos term)
+    function intensityAtY(y_m, lambda_m, d_m, a_m, L_m, slits) {
+      const beta = Math.PI * a_m * y_m / (lambda_m * L_m);
+      const envelope = Math.pow(sinc(beta), 2);
+      if (slits === 1) return envelope;
+      const alpha = Math.PI * d_m * y_m / (lambda_m * L_m);
+      const interf = Math.pow(Math.cos(alpha), 2);
+      return envelope * interf;
+    }
+
+    function recomputeImax() {
+      const lambda_m = getLambdaMeters();
+      const d_m = state.d_mm * 1e-3;
+      const a_m = state.a_mm * 1e-3;
+
+      let maxI = 0;
+      const steps = 600;
+      for (let i = 0; i <= steps; i++) {
+        const y = -state.Ymax + (2 * state.Ymax) * (i / steps);
+        const I = intensityAtY(y, lambda_m, d_m, a_m, state.L, state.slits);
+        if (I > maxI) maxI = I;
+      }
+      state.Imax = Math.max(1e-6, maxI);
+    }
+
+    function sampleScreenY() {
+      const lambda_m = getLambdaMeters();
+      const d_m = state.d_mm * 1e-3;
+      const a_m = state.a_mm * 1e-3;
+
+      // Rejection sampling
+      for (let k = 0; k < 2000; k++) {
+        const y = (Math.random() * 2 - 1) * state.Ymax;
+        const I = intensityAtY(y, lambda_m, d_m, a_m, state.L, state.slits);
+        if (Math.random() < I / state.Imax) return y;
+      }
+      // Fallback
+      return (Math.random() * 2 - 1) * state.Ymax;
+    }
+
+    function fringeSpacingMeters(lambda_m, d_m, L_m) {
+      // \Delta y \approx λ L / d (small-angle)
+      if (state.slits !== 2) return NaN;
+      if (d_m <= 0) return NaN;
+      return lambda_m * L_m / d_m;
+    }
+
+    // ======= Drawing =======
+    function colorForEntity() {
+      if (state.entity === 'electron') return '#0ea5e9';
+      // photon colour by wavelength (visible approx)
+      const nm = state.lambda_nm;
+      if (nm < 450) return '#4f46e5';
+      if (nm < 490) return '#2563eb';
+      if (nm < 510) return '#06b6d4';
+      if (nm < 580) return '#22c55e';
+      if (nm < 645) return '#eab308';
+      return '#ef4444';
+    }
+
+    function drawLab(dt) {
+      const { w, h } = resizeCanvasToCSS(labCanvas, labCtx);
+
+      // scene coordinates
+      const pad = 18;
+      const srcX = pad + 26;
+      const barrierX = w * 0.46;
+      const screenX = w - pad - 26;
+      const cy = h * 0.50;
+
+      // Clear
+      labCtx.clearRect(0, 0, w, h);
+
+      // Background grid (subtle)
+      labCtx.save();
+      labCtx.globalAlpha = 0.14;
+      labCtx.strokeStyle = '#94a3b8';
+      labCtx.lineWidth = 1;
+      const grid = 28;
+      for (let x = 0; x <= w; x += grid) {
+        labCtx.beginPath();
+        labCtx.moveTo(x, 0);
+        labCtx.lineTo(x, h);
+        labCtx.stroke();
+      }
+      for (let y = 0; y <= h; y += grid) {
+        labCtx.beginPath();
+        labCtx.moveTo(0, y);
+        labCtx.lineTo(w, y);
+        labCtx.stroke();
+      }
+      labCtx.restore();
+
+      // Apparatus labels
+      labCtx.fillStyle = '#475569';
+      labCtx.font = '12px system-ui, -apple-system, Segoe UI, sans-serif';
+      labCtx.fillText('source', srcX - 18, 20);
+      labCtx.fillText('slits', barrierX - 12, 20);
+      labCtx.fillText('screen', screenX - 18, 20);
+
+      // Source
+      labCtx.fillStyle = '#111827';
+      labCtx.beginPath();
+      labCtx.arc(srcX, cy, 10, 0, Math.PI * 2);
+      labCtx.fill();
+      labCtx.fillStyle = '#ffffff';
+      labCtx.beginPath();
+      labCtx.arc(srcX, cy, 4, 0, Math.PI * 2);
+      labCtx.fill();
+
+      // Barrier
+      labCtx.fillStyle = 'rgba(15, 23, 42, 0.70)';
+      labCtx.fillRect(barrierX - 10, 40, 20, h - 80);
+
+      // Slits
+      const d_px = Math.max(8, (state.d_mm / 1.5) * 38);
+      const slitGap = Math.max(8, (state.a_mm / 0.40) * 18);
+
+      if (state.slits === 2) {
+        // upper slit
+        labCtx.clearRect(barrierX - 12, cy - d_px / 2 - slitGap / 2, 24, slitGap);
+        // lower slit
+        labCtx.clearRect(barrierX - 12, cy + d_px / 2 - slitGap / 2, 24, slitGap);
+      } else {
+        labCtx.clearRect(barrierX - 12, cy - slitGap / 2, 24, slitGap);
+      }
+
+      // Screen
+      labCtx.strokeStyle = '#111827';
+      labCtx.lineWidth = 2;
+      labCtx.beginPath();
+      labCtx.moveTo(screenX, 40);
+      labCtx.lineTo(screenX, h - 40);
+      labCtx.stroke();
+
+      // Expected intensity curve
+      if (state.display === 'curve') {
+        const lambda_m = getLambdaMeters();
+        const d_m = state.d_mm * 1e-3;
+        const a_m = state.a_mm * 1e-3;
+
+        labCtx.save();
+        labCtx.globalAlpha = 0.9;
+        labCtx.strokeStyle = '#1d4ed8';
+        labCtx.lineWidth = 2;
+        labCtx.beginPath();
+
+        const plotW = Math.max(60, w * 0.20);
+        const x0 = screenX - plotW;
+        const steps = 220;
+        for (let i = 0; i <= steps; i++) {
+          const y_m = -state.Ymax + (2 * state.Ymax) * (i / steps);
+          const I = intensityAtY(y_m, lambda_m, d_m, a_m, state.L, state.slits) / state.Imax;
+          const yy = cy + (y_m / state.Ymax) * (h * 0.38);
+          const xx = x0 + I * plotW;
+          if (i === 0) labCtx.moveTo(xx, yy);
+          else labCtx.lineTo(xx, yy);
+        }
+        labCtx.stroke();
+
+        labCtx.fillStyle = '#1d4ed8';
+        labCtx.font = '12px system-ui, -apple-system, Segoe UI, sans-serif';
+        labCtx.fillText('wave intensity', x0, h - 16);
+        labCtx.restore();
+      }
+
+      // Hits (build-up)
+      if (state.display === 'build') {
+        const col = colorForEntity();
+        labCtx.fillStyle = col;
+        const xHit = screenX + 0.5;
+        for (const hit of state.hits) {
+          labCtx.fillRect(xHit, hit.yPx, 2, 2);
+        }
+      }
+
+      // Flyers (animated)
+      const col = colorForEntity();
+      labCtx.fillStyle = col;
+      for (const p of state.flyers) {
+        labCtx.beginPath();
+        labCtx.arc(p.x, p.y, 2.6, 0, Math.PI * 2);
+        labCtx.fill();
+      }
+
+      // center line marker
+      labCtx.save();
+      labCtx.globalAlpha = 0.25;
+      labCtx.strokeStyle = '#0f172a';
+      labCtx.setLineDash([4, 4]);
+      labCtx.beginPath();
+      labCtx.moveTo(screenX, cy);
+      labCtx.lineTo(screenX - 80, cy);
+      labCtx.stroke();
+      labCtx.restore();
+
+      // small caption
+      labCtx.fillStyle = '#475569';
+      labCtx.font = '12px system-ui, -apple-system, Segoe UI, sans-serif';
+      labCtx.fillText(state.slits === 2 ? 'double-slit' : 'single-slit', barrierX - 34, h - 16);
+    }
+
+    function yMetersToScreenPx(y_m, h) {
+      const cy = h * 0.50;
+      return cy + (y_m / state.Ymax) * (h * 0.38);
+    }
+
+    function spawnParticle(w, h) {
+      const pad = 18;
+      const srcX = pad + 26;
+      const barrierX = w * 0.46;
+      const screenX = w - pad - 26;
+      const cy = h * 0.50;
+
+      const yTarget_m = sampleScreenY();
+      const yTarget_px = yMetersToScreenPx(yTarget_m, h);
+
+      // pick slit position (for the animation path only)
+      const d_px = Math.max(8, (state.d_mm / 1.5) * 38);
+      const slitGap = Math.max(8, (state.a_mm / 0.40) * 18);
+
+      let slitY;
+      if (state.slits === 2) {
+        slitY = (Math.random() < 0.5)
+          ? (cy - d_px / 2)
+          : (cy + d_px / 2);
+      } else {
+        slitY = cy;
+      }
+      // keep slit point within the gap visually
+      slitY += (Math.random() * 0.6 - 0.3) * (slitGap * 0.6);
+
+      // speed (visual only)
+      let speed = 520; // px/s
+      if (state.entity === 'electron') {
+        // higher V -> faster
+        speed = 360 + Math.sqrt(state.V) * 9;
+      }
+
+      state.flyers.push({
+        phase: 0,
+        t: 0,
+        speed,
+        x0: srcX,
+        y0: cy + (Math.random() * 14 - 7),
+        x1: barrierX,
+        y1: slitY,
+        x2: screenX,
+        y2: yTarget_px,
+        yTarget_px
+      });
+    }
+
+    function updateParticles(dt, w, h) {
+      // spawn rate based on intensity
+      const rate = (state.intensity / 100) * 140; // particles per second
+      state.spawnAcc += rate * dt;
+
+      // Limit for performance
+      const maxFlyers = 60;
+      while (state.spawnAcc >= 1) {
+        state.spawnAcc -= 1;
+        if (state.flyers.length < maxFlyers && state.display === 'build') {
+          spawnParticle(w, h);
+        } else if (state.display === 'build') {
+          // If no flyers, still add hits so the screen builds up
+          const y_m = sampleScreenY();
+          const yPx = yMetersToScreenPx(y_m, h);
+          state.hits.push({ yPx });
+          if (state.hits.length > 4200) state.hits.shift();
+        }
+      }
+
+      // move flyers
+      const still = [];
+      for (const p of state.flyers) {
+        const seg1 = Math.hypot(p.x1 - p.x0, p.y1 - p.y0);
+        const seg2 = Math.hypot(p.x2 - p.x1, p.y2 - p.y1);
+        const total = seg1 + seg2;
+        const distStep = p.speed * dt;
+
+        // convert distance moved into progress along the polyline
+        const prevS = p.t;
+        const nextS = prevS + distStep;
+        p.t = nextS;
+
+        if (nextS < seg1) {
+          const u = nextS / seg1;
+          p.x = p.x0 + (p.x1 - p.x0) * u;
+          p.y = p.y0 + (p.y1 - p.y0) * u;
+          still.push(p);
+        } else if (nextS < total) {
+          const s2 = nextS - seg1;
+          const u = s2 / seg2;
+          p.x = p.x1 + (p.x2 - p.x1) * u;
+          p.y = p.y1 + (p.y2 - p.y1) * u;
+          still.push(p);
+        } else {
+          // hit screen
+          state.hits.push({ yPx: p.yTarget_px });
+          if (state.hits.length > 4200) state.hits.shift();
+        }
+      }
+      state.flyers = still;
+    }
+
+    // ======= Orbit wave drawing =======
+    function drawOrbit() {
+      const rect = orbitCanvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      const w = Math.max(1, Math.floor(rect.width * dpr));
+      const h = Math.max(1, Math.floor(rect.height * dpr));
+      if (orbitCanvas.width !== w || orbitCanvas.height !== h) {
+        orbitCanvas.width = w;
+        orbitCanvas.height = h;
+        orbitCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      const W = rect.width;
+      const Hh = rect.height;
+      orbitCtx.clearRect(0, 0, W, Hh);
+
+      const cx = W / 2;
+      const cy = Hh / 2;
+      const R = Math.min(W, Hh) * 0.33 * parseFloat(rSlider.value);
+      const n = parseInt(nSlider.value, 10);
+
+      // Base circle
+      orbitCtx.strokeStyle = '#111827';
+      orbitCtx.globalAlpha = 0.35;
+      orbitCtx.lineWidth = 2;
+      orbitCtx.beginPath();
+      orbitCtx.arc(cx, cy, R, 0, Math.PI * 2);
+      orbitCtx.stroke();
+      orbitCtx.globalAlpha = 1;
+
+      // Wave around the orbit
+      const amp = Math.max(6, Math.min(18, R * 0.12));
+      orbitCtx.strokeStyle = '#1d4ed8';
+      orbitCtx.lineWidth = 2;
+      orbitCtx.beginPath();
+
+      const steps = 500;
+      for (let i = 0; i <= steps; i++) {
+        const t = (i / steps) * (Math.PI * 2);
+        const dr = amp * Math.sin(n * t);
+        const rr = R + dr;
+        const x = cx + rr * Math.cos(t);
+        const y = cy + rr * Math.sin(t);
+        if (i === 0) orbitCtx.moveTo(x, y);
+        else orbitCtx.lineTo(x, y);
+      }
+      orbitCtx.stroke();
+
+      // labels
+      orbitCtx.fillStyle = '#475569';
+      orbitCtx.font = '12px system-ui, -apple-system, Segoe UI, sans-serif';
+      orbitCtx.fillText('n wavelengths fit exactly', 10, 18);
+    }
+
+    // ======= UI Updates =======
+    function updateUIText() {
+      lambdaVal.textContent = String(state.lambda_nm);
+      vVal.textContent = String(state.V);
+      intVal.textContent = String(state.intensity);
+      dVal.textContent = state.d_mm.toFixed(2);
+      aVal.textContent = state.a_mm.toFixed(2);
+
+      // dot legend
+      const col = colorForEntity();
+      dotColor.style.background = col;
+      dotLabel.textContent = state.entity === 'electron' ? 'electron hits' : 'photon hits';
+
+      // derived values
+      const lam = getLambdaMeters();
+      const p = getMomentum();
+
+      if (state.entity === 'photon') {
+        outLambda.textContent = (lam * 1e9).toFixed(0) + ' nm';
+        outLambdaNote.textContent = 'chosen by the slider';
+        outP.textContent = p.toExponential(2) + ' kg m s⁻¹';
+
+        const Ej = photonEnergyJ_fromLambda(lam);
+        const eV = Ej / E;
+        outELabel.textContent = 'Photon energy E';
+        outE.textContent = eV.toFixed(2) + ' eV';
+        outENote.textContent = 'E = hc/\u03bb (one photon)';
+
+        entityNote.textContent = 'Light: wave evidence (interference/diffraction) + particle evidence (photoelectric effect).';
+
+        examSay.innerHTML = [
+          'Wave property of light: <strong>interference/diffraction</strong> patterns.',
+          'Particle property of light: energy transferred in quanta (photons), e.g. <strong>photoelectric effect</strong>.',
+          'In the build‑up view, each detection is a discrete event (particle), but the overall distribution follows a wave intensity pattern.'
+        ].map(s => '<li>' + s + '</li>').join('');
+
+      } else {
+        outLambda.textContent = (lam * 1e12).toFixed(1) + ' pm';
+        outLambdaNote.textContent = '\u03bb = h/\u221A(2m\u2091eV) (non‑rel.)';
+        outP.textContent = p.toExponential(2) + ' kg m s⁻¹';
+
+        const info = energyLabelAndValue();
+        outELabel.textContent = info.label;
+        outE.textContent = info.value.toFixed(0) + ' eV';
+        outENote.textContent = info.note;
+
+        entityNote.textContent = 'Electrons: wave evidence (electron diffraction) + particle evidence (discrete impacts, charge).';
+
+        examSay.innerHTML = [
+          'Electron wave property: <strong>diffraction / interference</strong> can be observed (e.g. thin graphite / crystal).',
+          'Electron particle property: detected as <strong>discrete hits</strong> and carries charge.',
+          'Higher accelerating voltage \u2192 larger momentum \u2192 smaller de Broglie wavelength \u2192 weaker diffraction / closer fringes.'
+        ].map(s => '<li>' + s + '</li>').join('');
+      }
+
+      // fringe spacing
+      const d_m = state.d_mm * 1e-3;
+      const dy = fringeSpacingMeters(lam, d_m, state.L);
+      if (isFinite(dy)) {
+        fringeChip.textContent = 'fringe spacing ≈ ' + (dy * 1e3).toFixed(2) + ' mm';
+      } else {
+        fringeChip.textContent = 'fringe spacing: (single-slit)';
+      }
+
+      // badge
+      const runText = state.running ? 'Running' : 'Paused';
+      const viewText = state.display === 'build' ? 'build-up (spots)' : 'wave intensity curve';
+      modeBadge.textContent = runText + ': ' + viewText;
+    }
+
+    function setEntity(next) {
+      state.entity = next;
+      entityBtns.forEach(b => b.classList.toggle('active', b.dataset.entity === next));
+
+      if (next === 'photon') {
+        photonControls.style.display = '';
+        electronControls.style.display = 'none';
+      } else {
+        photonControls.style.display = 'none';
+        electronControls.style.display = '';
+      }
+      state.hits = [];
+      state.flyers = [];
+      state.spawnAcc = 0;
+      recomputeImax();
+      updateUIText();
+    }
+
+    function setSlits(n) {
+      state.slits = n;
+      slitBtns.forEach(b => b.classList.toggle('active', parseInt(b.dataset.slits, 10) === n));
+      state.hits = [];
+      state.flyers = [];
+      recomputeImax();
+      updateUIText();
+    }
+
+    function setDisplay(mode) {
+      state.display = mode;
+      dispBtns.forEach(b => b.classList.toggle('active', b.dataset.disp === mode));
+      state.hits = [];
+      state.flyers = [];
+      updateUIText();
+    }
+
+    // ======= Animation loop =======
+    function loop(t) {
+      const now = t / 1000;
+      const dt = Math.min(0.04, Math.max(0, now - (state.lastT || now)));
+      state.lastT = now;
+
+      const { w, h } = resizeCanvasToCSS(labCanvas, labCtx);
+
+      if (state.running) {
+        updateParticles(dt, w, h);
+      }
+      drawLab(dt);
+
+      requestAnimationFrame(loop);
+    }
+
+    // ======= Event wiring =======
+    entityBtns.forEach(btn => {
+      btn.addEventListener('click', () => setEntity(btn.dataset.entity));
+    });
+
+    slitBtns.forEach(btn => {
+      btn.addEventListener('click', () => setSlits(parseInt(btn.dataset.slits, 10)));
+    });
+
+    dispBtns.forEach(btn => {
+      btn.addEventListener('click', () => setDisplay(btn.dataset.disp));
+    });
+
+    lambdaSlider.addEventListener('input', () => {
+      state.lambda_nm = parseInt(lambdaSlider.value, 10);
+      lambdaVal.textContent = String(state.lambda_nm);
+      recomputeImax();
+      updateUIText();
+    });
+
+    vSlider.addEventListener('input', () => {
+      state.V = parseInt(vSlider.value, 10);
+      vVal.textContent = String(state.V);
+      recomputeImax();
+      updateUIText();
+    });
+
+    intSlider.addEventListener('input', () => {
+      state.intensity = parseInt(intSlider.value, 10);
+      intVal.textContent = String(state.intensity);
+      updateUIText();
+    });
+
+    dSlider.addEventListener('input', () => {
+      state.d_mm = parseFloat(dSlider.value);
+      dVal.textContent = state.d_mm.toFixed(2);
+      recomputeImax();
+      updateUIText();
+    });
+
+    aSlider.addEventListener('input', () => {
+      state.a_mm = parseFloat(aSlider.value);
+      aVal.textContent = state.a_mm.toFixed(2);
+      recomputeImax();
+      updateUIText();
+    });
+
+    pauseBtn.addEventListener('click', () => {
+      state.running = !state.running;
+      pauseBtn.textContent = state.running ? '⏸ Pause' : '▶ Resume';
+      updateUIText();
+    });
+
+    resetBtn.addEventListener('click', () => {
+      state.hits = [];
+      state.flyers = [];
+      state.spawnAcc = 0;
+      updateUIText();
+    });
+
+    nSlider.addEventListener('input', () => {
+      nVal.textContent = String(nSlider.value);
+      drawOrbit();
+    });
+
+    rSlider.addEventListener('input', () => {
+      rVal.textContent = parseFloat(rSlider.value).toFixed(2);
+      drawOrbit();
+    });
+
+    termButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        termButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const key = btn.dataset.term;
+        const d = termData[key];
+        if (d) {
+          termTitle.textContent = d.title;
+          termText.textContent = d.text;
+        }
+      });
+    });
+
+    // ======= Init =======
+    function init() {
+      // set initial UI values
+      state.lambda_nm = parseInt(lambdaSlider.value, 10);
+      state.V = parseInt(vSlider.value, 10);
+      state.intensity = parseInt(intSlider.value, 10);
+      state.d_mm = parseFloat(dSlider.value);
+      state.a_mm = parseFloat(aSlider.value);
+
+      nVal.textContent = String(nSlider.value);
+      rVal.textContent = parseFloat(rSlider.value).toFixed(2);
+
+      recomputeImax();
+      updateUIText();
+      drawOrbit();
+      requestAnimationFrame(loop);
+    }
+
+    init();
+  </script>
+</body>
+</html>
