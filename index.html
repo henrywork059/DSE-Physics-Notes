@@ -4,27 +4,173 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DSE Physics Notes</title>
-  <link rel="stylesheet" href="./assets/site.css">
-</head>
-<body>
-  <header class="topbar">
-    <div class="wrap">
-      <h1>DSE Physics Notes</h1>
-      <p class="sub">Start here. All notes open as separate HTML pages.</p>
-    </div>
-  </header>
 
-  <main class="wrap">
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --accent: #174b8f;
+      --accent-soft: #e1ecff;
+      --border: #d0d7e2;
+      --text-main: #111827;
+      --text-muted: #4b5563;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left,#e0ebff 0,#f5f7fb 40%,#f5f7fb 100%);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 28px 18px 48px;
+      display: flex;
+      justify-content: center;
+    }
+
+    main {
+      width: 100%;
+      max-width: 960px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: var(--accent);
+    }
+
+    header p {
+      margin-top: 6px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 32px rgba(15,23,42,0.12);
+      padding: 22px 24px 26px;
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .tile {
+      display: block;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #f9fafb;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    }
+
+    .tile:hover {
+      background: var(--accent-soft);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(23,75,143,0.25);
+    }
+
+    .tile strong {
+      display: block;
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+
+    .tile span {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header>
+      <h1>DSE Physics Notes</h1>
+      <p>Structured revision notes & interactive simulations (HKDSE syllabus)</p>
+    </header>
+
     <section class="card">
-      <h2>Elective E2: Atomic World</h2>
+      <h2>Elective E2 — Atomic World</h2>
+      <div class="subtitle">
+        All notes open as separate HTML pages.  
+        Content strictly follows the HKDSE Physics syllabus.
+      </div>
+
       <div class="grid">
-        <a class="tile" href="./e2/photoelectric.html">E201 Photoelectric Effect</a>
-        <a class="tile" href="./e2/rutherford.html">E202 Rutherford Model</a>
-        <a class="tile" href="./e2/line_spectra.html">E203 Line Spectra Evidence</a>
-        <a class="tile" href="./e2/bohr_energy_levels.html">E203 Bohr + Energy Levels</a>
-        <a class="tile" href="./e2/wave_particle_duality.html">E2 — Wave–Particle Duality (Interactive)</a>
+        <a class="tile" href="e2/photoelectric.html">
+          <strong>E201 — Photoelectric Effect</strong>
+          <span>Photon model, threshold frequency, stopping potential</span>
+        </a>
+
+        <a class="tile" href="e2/rutherford.html">
+          <strong>E202 — Rutherford Atomic Model</strong>
+          <span>α-particle scattering & nuclear structure</span>
+        </a>
+
+        <a class="tile" href="e2/line_spectra.html">
+          <strong>E203 — Line Spectra Evidence</strong>
+          <span>Emission & absorption spectra</span>
+        </a>
+
+        <a class="tile" href="e2/bohr_energy_levels.html">
+          <strong>E203 — Bohr Model & Energy Levels</strong>
+          <span>Quantised orbits, transitions & spectra</span>
+        </a>
+
+        <a class="tile" href="e2/wave_particle_duality.html">
+          <strong>E2 — Wave–Particle Duality</strong>
+          <span>Electron waves, de Broglie wavelength</span>
+        </a>
+
+        <a class="tile" href="e2/nanoscale_microscopes.html">
+          <strong>E203 — Probing the Nanoscale & Microscopes</strong>
+          <span>Electron microscopes, resolution & limits</span>
+        </a>
       </div>
     </section>
+
+    <footer>
+      © HKDSE Physics — Atomic World (E2) · Built for concept understanding, not memorisation
+    </footer>
   </main>
 </body>
 </html>
