@@ -1,1 +1,516 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E2 Section 3 — Bohr Model and Hydrogen Spectra (HKDSE)</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card-bg: #ffffff;
+      --accent: #174b8f;
+      --accent-soft: #e1ecff;
+      --border: #d0d7e2;
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --danger: #b91c1c;
+      --danger-soft: #fef2f2;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left,#e0ebff 0,#f5f7fb 40%,#f5f7fb 100%);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 22px 14px 32px;
+    }
+
+    .page-wrapper {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    header.page-header {
+      margin-bottom: 18px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 6px;
+    }
+    header.page-header h1 {
+      margin: 0 0 4px;
+      font-size: 1.7rem;
+      color: var(--accent);
+    }
+    header.page-header .meta {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .pill-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 11px;
+      font-size: 0.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #f9fafb;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+
+    h2.section-title {
+      margin: 4px 0 6px;
+      font-size: 1.4rem;
+      color: var(--accent);
+    }
+
+    .section-intro {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .badge-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+      font-size: 0.75rem;
+    }
+    .badge {
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      color: #4b5563;
+    }
+    .badge.exam {
+      border-color: rgba(37,99,235,0.35);
+      background: rgba(59,130,246,0.06);
+      color: #1d4ed8;
+    }
+    .badge.skills {
+      border-color: rgba(16,185,129,0.35);
+      background: rgba(16,185,129,0.06);
+      color: #047857;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 14px 16px 12px;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+      margin-bottom: 14px;
+    }
+
+    h3 {
+      margin: 4px 0 6px;
+      font-size: 1.1rem;
+      color: var(--accent);
+    }
+    h4 {
+      margin: 2px 0 4px;
+      font-size: 1.0rem;
+      color: #111827;
+    }
+
+    p {
+      margin: 3px 0 7px;
+      color: var(--text-main);
+    }
+
+    ul {
+      margin: 4px 0 6px 18px;
+      padding-left: 0;
+    }
+    li {
+      margin: 2px 0;
+    }
+
+    .key-list li::marker {
+      color: var(--accent);
+    }
+
+    .eq {
+      display: block;
+      margin: 4px 0 8px 16px;
+      font-family: "Times New Roman", serif;
+      font-size: 0.98rem;
+      padding: 3px 8px;
+      background: #f3f4f6;
+      border-radius: 6px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .frac {
+      display: inline-block;
+      vertical-align: middle;
+      text-align: center;
+    }
+    .frac .top {
+      display: block;
+      padding: 0 2px;
+    }
+    .frac .bottom {
+      display: block;
+      border-top: 1px solid currentColor;
+      padding: 0 2px;
+    }
+
+    .highlight {
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .card-traps {
+      background: var(--danger-soft);
+      border-color: rgba(220,38,38,0.3);
+      border-left: 4px solid var(--danger);
+    }
+    .card-traps h3,
+    .card-traps h4 {
+      color: var(--danger);
+    }
+
+    /* Key terms interactive block */
+    .terms-wrapper {
+      margin-top: 6px;
+    }
+    .term-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .term-btn {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #f9fafb;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.08s ease;
+    }
+    .term-btn:hover {
+      background: #e5edff;
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .term-btn.active {
+      background: linear-gradient(90deg,#1d4ed8,#0ea5e9);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.35);
+    }
+
+    .term-definition {
+      border-radius: 10px;
+      border: 1px dashed var(--border);
+      background: #f9fafb;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      min-height: 56px;
+    }
+    .term-title {
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 16px 10px 24px; }
+      header.page-header h1 { font-size: 1.45rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="page-header">
+      <h1>Section 3 — Bohr Model and Line Spectra of Hydrogen</h1>
+      <div class="meta">
+        HKDSE Physics Elective E2 · Bohr’s atomic model of hydrogen and explanation of line spectra.
+      </div>
+    </header>
+
+    <div class="pill-title">E202 · Bohr model and hydrogen spectra</div>
+    <h2 class="section-title">3. Bohr’s Model and Line Spectra</h2>
+    <p class="section-intro">
+      Explain the special features of hydrogen line spectra using quantised energy levels.
+      Apply Bohr’s energy-level formula and the wavelength expression to typical HKDSE questions.
+    </p>
+
+    <div class="badge-strip">
+      <span class="badge exam">Exam focus: line spectra, E<sub>n</sub>, 1/λ formula</span>
+      <span class="badge skills">Skills: reading energy-level diagrams, comparing wavelength / energy</span>
+    </div>
+
+    <!-- 3.1 Line spectra -->
+    <div class="card">
+      <h3>3.1 Line spectra</h3>
+      <ul class="key-list">
+        <li><strong>Emission spectrum</strong>: bright coloured lines on a dark background (e.g. low-pressure hydrogen gas in a discharge tube).</li>
+        <li><strong>Absorption spectrum</strong>: dark lines on a continuous background (e.g. dark lines in the Sun’s spectrum when light from the hot interior passes through cooler gas in the outer layers).</li>
+        <li>In an absorption spectrum, photons of particular wavelengths are absorbed by atoms in a cooler gas, exciting electrons to higher levels; the atoms then re-emit photons of the same energy in random directions, so along the original direction of the beam these wavelengths are missing and appear as dark lines.</li>
+        <li>Each element has its own characteristic pattern of spectral lines, acting like a <em>fingerprint</em> for that element.</li>
+        <li>For hydrogen, lines in a series get closer together toward shorter wavelength (higher energy) and converge to a <strong>series limit</strong> (corresponding to transitions from higher and higher levels to the same lower level).</li>
+        <li>Line spectra show that atoms emit or absorb <strong>photons of discrete energies only</strong> → strong evidence that atomic energy levels are <strong>quantised</strong>.</li>
+        <li>Names of spectral series (Lyman, Balmer, Paschen, etc.) are <strong>not required</strong> in HKDSE.</li>
+      </ul>
+    </div>
+
+    <!-- 3.2 Bohr’s postulates -->
+    <div class="card">
+      <h3>3.2 Bohr’s postulates for hydrogen</h3>
+      <ul class="key-list">
+        <li>Electrons move in certain allowed circular <strong>stationary orbits</strong> around the nucleus <strong>without radiating energy</strong>.</li>
+        <li>Angular momentum of an electron in an allowed orbit is quantised:
+          <span class="eq">
+            2&pi; m<sub>e</sub> v<sub>n</sub> r<sub>n</sub> = n h, &nbsp; n = 1, 2, 3, ...
+          </span>
+        </li>
+        <li>When an electron <strong>jumps</strong> between energy levels, radiation is emitted or absorbed:
+          <span class="eq">
+            h f = E<sub>high</sub> - E<sub>low</sub>
+          </span>
+        </li>
+        <li><strong>Classical aspects</strong>: electron moves in a circular orbit under Coulomb attraction, similar to a planet orbiting the Sun.</li>
+        <li><strong>Quantum aspects</strong>: only certain orbits (energy levels) are allowed; angular momentum is restricted to discrete values
+          <span class="eq">
+            L =
+            <span class="frac">
+              <span class="top">n h</span>
+              <span class="bottom">2&pi;</span>
+            </span>
+          </span>
+          and radiation is emitted / absorbed only when the electron jumps between levels.
+        </li>
+        <li>The condition
+          <span class="eq">
+            2&pi; m<sub>e</sub> v<sub>n</sub> r<sub>n</sub> = n h
+          </span>
+          represents <strong>quantisation of angular momentum</strong> of the electron.
+        </li>
+      </ul>
+      <div class="highlight">
+        In HKDSE, you are not required to derive Bohr’s postulates.
+        You should be able to <strong>state them</strong> and distinguish clearly which parts are classical and which are quantum.
+      </div>
+    </div>
+
+    <!-- 3.3 Energy levels -->
+    <div class="card">
+      <h3>3.3 Energy levels of hydrogen</h3>
+      <p>Total energy of the electron in the <em>n</em>-th Bohr orbit:</p>
+      <span class="eq">
+        E<sub>n</sub> = -
+        <span class="frac">
+          <span class="top">13.6 eV</span>
+          <span class="bottom">n<sup>2</sup></span>
+        </span>, &nbsp; n = 1, 2, 3, ...
+      </span>
+      <ul class="key-list">
+        <li><em>n</em> = 1: <strong>ground state</strong> (lowest energy).</li>
+        <li><em>n</em> &gt; 1: <strong>excited states</strong>.</li>
+        <li>As <em>n</em> increases, levels become closer together and energy approaches 0 eV from below; <em>E</em> = 0 corresponds to the electron just free from the atom.</li>
+        <li><strong>Ionisation energy</strong>: energy required to move an electron from a bound level (often the ground state) to <em>E</em> = 0 (free electron).</li>
+        <li><strong>Excitation energy</strong>: energy required to move an electron from a lower bound level to a higher bound level.</li>
+        <li>If a photon has energy exactly equal to the difference between two bound levels, the atom is excited. If the photon energy is greater than the ionisation energy from that level, the atom is ionised and the electron is liberated with kinetic energy equal to the excess.</li>
+        <li>Energy is often expressed in electron-volt: 1 eV = 1.60 × 10<sup>−19</sup> J.</li>
+      </ul>
+      <div class="highlight">
+        In exam questions, the negative sign in <code>E<sub>n</sub></code> means the electron is <strong>bound</strong> to the nucleus.
+        We choose the reference level so that a free electron at infinite separation has <code>E = 0</code>.
+        Work must be done to move an electron from a bound level (e.g. <em>n</em> = 1 or 3) to <code>E = 0</code>,
+        so the <strong>ionisation energy</strong> from that level is
+        <code>E<sub>∞</sub> − E<sub>n</sub> = 0 − E<sub>n</sub> = |E<sub>n</sub>|</code>, which is always a <strong>positive</strong> quantity
+        (e.g. 0.85 eV from <em>n</em> = 3).
+      </div>
+    </div>
+
+    <!-- 3.4 Wavelength formula -->
+    <div class="card">
+      <h3>3.4 Wavelength of hydrogen spectral lines</h3>
+      <p>For a transition between levels <em>a</em> and <em>b</em> (Bohr energy levels):</p>
+
+      <h4>Emission (electron falls from <em>a</em> to <em>b</em>, with <em>a</em> &gt; <em>b</em>)</h4>
+      <span class="eq">
+        <span class="frac">
+          <span class="top">1</span>
+          <span class="bottom">&lambda;<sub>ab</sub></span>
+        </span>
+        =
+        <span class="frac">
+          <span class="top">13.6 eV</span>
+          <span class="bottom">h c</span>
+        </span>
+        &times;
+        (
+        <span class="frac">
+          <span class="top">1</span>
+          <span class="bottom">b<sup>2</sup></span>
+        </span>
+        &minus;
+        <span class="frac">
+          <span class="top">1</span>
+          <span class="bottom">a<sup>2</sup></span>
+        </span>
+        )
+      </span>
+
+      <h4>Absorption (electron rises from <em>b</em> to <em>a</em>, with <em>a</em> &gt; <em>b</em>)</h4>
+      <span class="eq">
+        <span class="frac">
+          <span class="top">1</span>
+          <span class="bottom">&lambda;<sub>ba</sub></span>
+        </span>
+        =
+        <span class="frac">
+          <span class="top">13.6 eV</span>
+          <span class="bottom">h c</span>
+        </span>
+        &times;
+        (
+        <span class="frac">
+          <span class="top">1</span>
+          <span class="bottom">a<sup>2</sup></span>
+        </span>
+        &minus;
+        <span class="frac">
+          <span class="top">1</span>
+          <span class="bottom">b<sup>2</sup></span>
+        </span>
+        )
+      </span>
+
+      <p>Typical exam skills:</p>
+      <ul class="key-list">
+        <li>Draw simple energy-level diagrams for hydrogen and mark transitions correctly.</li>
+        <li>Compare photon wavelengths, frequencies and energies for different transitions.</li>
+        <li>Use <code>E = h f = h c / &lambda;</code> and the Bohr energy formula to solve numerical problems.</li>
+      </ul>
+      <div class="highlight">
+        You are expected to be able to obtain the 1/λ expression by combining
+        <code>E<sub>n</sub> = −13.6 eV / n<sup>2</sup></code> with <code>E = h f = h c / &lambda;</code>,
+        but the algebraic steps are usually brief in HKDSE.
+      </div>
+    </div>
+
+    <!-- 3.5 Key terms (interactive) -->
+    <div class="card">
+      <h3>3.5 Key terms for HKDSE (Bohr model &amp; spectra)</h3>
+      <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:6px;">
+        Click a term to see its precise HKDSE-style definition.
+      </p>
+
+      <div class="terms-wrapper">
+        <div class="term-buttons">
+          <button class="term-btn active" data-term="line-spectrum">Line spectrum</button>
+          <button class="term-btn" data-term="emission-spectrum">Emission spectrum</button>
+          <button class="term-btn" data-term="absorption-spectrum">Absorption spectrum</button>
+          <button class="term-btn" data-term="ground-state">Ground state</button>
+          <button class="term-btn" data-term="excited-state">Excited state</button>
+          <button class="term-btn" data-term="excitation-energy">Excitation energy</button>
+          <button class="term-btn" data-term="ionisation-energy">Ionisation energy</button>
+          <button class="term-btn" data-term="photon">Photon (in E2)</button>
+        </div>
+
+        <div class="term-definition" id="termDefinition">
+          <div class="term-title" id="termTitle">Line spectrum</div>
+          <div id="termText">
+            A spectrum consisting of discrete bright or dark lines, each corresponding to radiation
+            of a specific wavelength or frequency, produced when atoms emit or absorb photons during
+            transitions between quantised energy levels.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Common traps -->
+    <div class="card card-traps">
+      <h3>HKDSE common traps &amp; mistakes (Bohr model &amp; spectra)</h3>
+      <ul class="key-list">
+        <li>Confusing <strong>emission</strong> and <strong>absorption</strong> processes: for emission the electron falls from a higher to a lower level and the atom emits a photon; for absorption the electron goes from a lower to a higher level.</li>
+        <li>Putting the levels in the wrong order in the wavelength expression; for emission with <em>a &gt; b</em>, the factor in brackets must be <code>1/b<sup>2</sup> − 1/a<sup>2</sup></code>.</li>
+        <li>Forgetting that bound energy levels are <strong>negative</strong> and approach 0 eV as <em>n</em> increases; the ground state (<em>n</em> = 1) has the most negative energy.</li>
+        <li>Mixing up <strong>excitation</strong> and <strong>ionisation</strong>, or saying that an atom absorbs only part of a photon’s energy. If the photon energy is not equal to an allowed energy difference, it is <strong>not absorbed</strong>.</li>
+        <li>Drawing energy-level diagrams in a non-standard way (levels not horizontal, wrong ordering of energies), making it difficult to show correct transitions for visible lines.</li>
+        <li>Stating ionisation energy as a negative value (e.g. I.E. = E<sub>3</sub> = −0.85 eV). Ionisation energy is the energy required to remove an electron, so it should be a <strong>positive</strong> quantity (e.g. 0.85 eV from <em>n</em> = 3).</li>
+        <li>Explaining why Bohr energy levels are negative without mentioning the <strong>total energy</strong> of a bound electron and the convention that a free electron at infinity has <code>E = 0</code>. Simply saying “E<sub>n</sub> &lt; 0” is not enough for full credit.</li>
+      </ul>
+    </div>
+
+    <p style="font-size:0.84rem; color:var(--text-muted); margin-top:10px;">
+      End of Section 3 — Bohr model and hydrogen spectra (HKDSE E2).
+    </p>
+  </div>
+
+  <script>
+    // Simple key-term switcher
+    const termData = {
+      "line-spectrum": {
+        title: "Line spectrum",
+        text: "A spectrum consisting of discrete bright or dark lines, each corresponding to radiation of a specific wavelength or frequency, produced when atoms emit or absorb photons during transitions between quantised energy levels."
+      },
+      "emission-spectrum": {
+        title: "Emission spectrum",
+        text: "A spectrum of bright coloured lines on a dark background, produced when excited atoms drop to lower energy levels and emit photons of discrete energies."
+      },
+      "absorption-spectrum": {
+        title: "Absorption spectrum",
+        text: "A spectrum showing dark lines on a continuous background, produced when photons of specific wavelengths are absorbed as atoms in a cooler gas are excited from lower to higher energy levels; the atoms then re-emit photons of the same energy in random directions, so along the original beam these wavelengths appear as dark lines."
+      },
+      "ground-state": {
+        title: "Ground state",
+        text: "The lowest energy state of an atom, corresponding to the electron being in the n = 1 level in the Bohr model of hydrogen."
+      },
+      "excited-state": {
+        title: "Excited state",
+        text: "Any energy state of an atom with energy higher than the ground state (n > 1 in the Bohr model), in which the electron has been promoted to a higher energy level."
+      },
+      "excitation-energy": {
+        title: "Excitation energy",
+        text: "The energy required to move an electron from a lower bound level to a higher bound level within an atom, without removing the electron completely from the atom."
+      },
+      "ionisation-energy": {
+        title: "Ionisation energy",
+        text: "The energy required to remove an electron completely from an atom, taking it from a bound level (often the ground state) to the zero-energy level of a free electron (E = 0)."
+      },
+      "photon": {
+        title: "Photon (in E2)",
+        text: "A quantum (packet) of electromagnetic radiation with energy E = h f. In this section, photons are emitted or absorbed when electrons in hydrogen atoms make transitions between quantised energy levels."
+      }
+    };
+
+    const buttons = Array.from(document.querySelectorAll('.term-btn'));
+    const termTitle = document.getElementById('termTitle');
+    const termText = document.getElementById('termText');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const key = btn.getAttribute('data-term');
+        const data = termData[key];
+        if (data) {
+          termTitle.textContent = data.title;
+          termText.textContent = data.text;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
