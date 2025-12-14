@@ -4,29 +4,139 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DSE Physics Notes</title>
+
+  <!-- Main site stylesheet -->
   <link rel="stylesheet" href="./assets/site.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left,#e0ebff 0,#f5f7fb 40%,#f5f7fb 100%);
+      color: #111827;
+    }
+
+    .wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header.topbar {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    header.topbar h1 {
+      margin: 0;
+      font-size: 1.9rem;
+      color: #174b8f;
+    }
+
+    header.topbar .sub {
+      margin-top: 4px;
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 14px;
+      border: 1px solid #d0d7e2;
+      padding: 18px 20px;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+      margin-bottom: 18px;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      color: #174b8f;
+      font-size: 1.4rem;
+    }
+
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid #d0d7e2;
+      background: #e5edff;
+      color: #174b8f;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: background 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      background: #d7e3ff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(148,163,184,0.45);
+    }
+
+    footer {
+      margin-top: 28px;
+      font-size: 0.8rem;
+      color: #6b7280;
+      text-align: center;
+    }
+  </style>
 </head>
+
 <body>
+
   <header class="topbar">
     <div class="wrap">
       <h1>DSE Physics Notes</h1>
-      <p class="sub">Start here. All notes open as separate HTML pages.</p>
+      <p class="sub">
+        Single-entry navigation hub · HKDSE-aligned physics notes
+      </p>
     </div>
   </header>
 
   <main class="wrap">
+
     <section class="card">
-      <h2>Elective E2: Atomic World</h2>
+      <h2>Elective E2 — Atomic World</h2>
 
       <div class="section-nav">
-        <a class="nav-btn" href="./e2/photoelectric.html">Photoelectric effect</a>
-        <a class="nav-btn" href="./e2/wave_particle_duality.html">Wave–particle duality</a>
-        <a class="nav-btn" href="./e2/rutherford.html">Rutherford model</a>
-        <a class="nav-btn" href="./e2/line_spectra.html">Line spectra</a>
-        <a class="nav-btn" href="./e2/bohr_energy_levels.html">Bohr energy levels</a>
-        <a class="nav-btn" href="./e2/nanoscale_microscopes.html">Nano-scale & microscopes</a>
+        <a class="nav-btn" href="./e2/wave_particle_duality.html">
+          Wave–particle duality
+        </a>
+
+        <a class="nav-btn" href="./e2/photoelectric.html">
+          Photoelectric effect
+        </a>
+
+        <a class="nav-btn" href="./e2/rutherford.html">
+          Rutherford’s atomic model
+        </a>
+
+        <a class="nav-btn" href="./e2/bohr_energy_levels.html">
+          Bohr model – energy levels
+        </a>
+
+        <a class="nav-btn" href="./e2/line_spectra.html">
+          Hydrogen line spectra
+        </a>
+
+        <a class="nav-btn" href="./e2/nanoscale_microscopes.html">
+          Nano-scale & microscopes
+        </a>
       </div>
     </section>
+
+    <footer>
+      © HKDSE Physics Notes · Designed for exam-aligned revision
+    </footer>
+
   </main>
+
 </body>
 </html>
