@@ -1,199 +1,202 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>E2 Atomic World – 2. Rutherford's Atomic Model (HKDSE)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E2 — Rutherford Atomic Model | DSE Physics Notes</title>
   <style>
     :root {
-      --bg: #f5f7fb;
-      --card-bg: #ffffff;
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1f2a44;
+      --text-muted: #5b6b86;
       --accent: #174b8f;
-      --accent-soft: #e1ecff;
-      --border: #d0d7e2;
-      --text-main: #111827;
-      --text-muted: #4b5563;
-      --danger: #b91c1c;
-      --danger-soft: #fef2f2;
+      --accent-2: #3a7bd5;
+      --border: #d9e2ef;
+      --shadow: 0 10px 30px rgba(31, 42, 68, 0.08);
+      --radius: 16px;
     }
-    * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left,#e0ebff 0,#f5f7fb 40%,#f5f7fb 100%);
-      color: var(--text-main);
-      line-height: 1.6;
-      padding: 24px 18px 40px;
-      display: flex;
-      justify-content: center;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
     }
     main {
-      width: 100%;
-      max-width: 960px;
-      background: #f9fafb;
-      border-radius: 18px;
-      box-shadow: 0 16px 40px rgba(15,23,42,0.16);
-      border: 1px solid #e5e7eb;
-      padding: 24px 24px 32px;
-    }
-    header.page-header { margin-bottom: 18px; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; }
-    header.page-header h1 {
-      margin: 0 0 4px;
-      font-size: 1.8rem;
-      color: var(--accent);
-    }
-    header.page-header .meta {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-    h2 {
-      position: relative;
-      scroll-margin-top: 90px;
-      margin-top: 16px;
-      margin-bottom: 6px;
-      color: var(--accent);
-      font-size: 1.3rem;
-    }
-    h3 {
-      margin-top: 12px;
-      margin-bottom: 4px;
-      color: #1f2937;
-      font-size: 1.02rem;
-    }
-    p {
-      margin: 4px 0 8px;
-      color: var(--text-main);
-    }
-    ul {
-      margin: 4px 0 8px 20px;
-      padding-left: 0;
-    }
-    li { margin: 2px 0; }
-    .section-intro {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-    }
-    .card {
-      background: var(--card-bg);
-      border-radius: 12px;
+      max-width: 980px;
+      margin: 24px auto;
+      padding: 26px 22px 30px;
+      background: var(--card);
       border: 1px solid var(--border);
-      padding: 14px 18px 12px;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
-      margin-bottom: 14px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
-    .card-traps {
-      background: var(--danger-soft);
-      border-color: rgba(220,38,38,0.25);
-      border-left: 4px solid var(--danger);
+    .page-header h1 {
+      margin: 0 0 6px;
+      font-size: 1.85rem;
+      letter-spacing: -0.02em;
     }
-    .card-traps h3 { color: var(--danger); }
-    .card-note {
-      margin-top: 4px;
-      padding: 6px 10px;
-      border-radius: 8px;
-      background: #eff6ff;
-      border: 1px dashed #bfdbfe;
-      font-size: 0.8rem;
+    .meta {
       color: var(--text-muted);
+      font-size: 0.95rem;
     }
-    .card-note strong { color: var(--accent); }
-    .sec-pill {
-      display: inline-block;
-      margin-left: 8px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+    .section-intro {
+      margin: 14px 0 0;
+      font-size: 1.02rem;
+      color: var(--text);
     }
     .badge-strip {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 10px;
-      font-size: 0.75rem;
-    }
-    .badge {
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid #e5e7eb;
-      background: #f9fafb;
-      color: #4b5563;
-    }
-    .badge.exam {
-      border-color: rgba(37,99,235,0.35);
-      background: rgba(59,130,246,0.06);
-      color: #1d4ed8;
-    }
-    .badge.skills {
-      border-color: rgba(16,185,129,0.35);
-      background: rgba(16,185,129,0.06);
-      color: #047857;
-    }
-    .section-nav {
+      margin: 14px 0 0;
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin: 8px 0 16px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #f8fbff;
+      color: var(--text);
+      font-size: 0.92rem;
+    }
+    .badge.exam { border-color: rgba(23,75,143,0.35); }
+    .badge.skills { border-color: rgba(58,123,213,0.35); }
+
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 6px;
+      padding: 0;
     }
     .nav-btn {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      padding: 5px 11px;
+      gap: 8px;
+      padding: 10px 12px;
       border-radius: 999px;
       border: 1px solid var(--border);
-      background: #e5edff;
+      background: #ffffff;
       color: var(--accent);
-      font-size: 0.8rem;
       text-decoration: none;
-      cursor: pointer;
-      transition: background 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease;
-    }
-    .nav-btn:hover {
-      background: #d7e3ff;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 10px rgba(148,163,184,0.45);
-    }
-    .nav-btn span {
       font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 14px rgba(31, 42, 68, 0.06);
+      transition: transform 0.08s ease;
     }
-    .key-list li::marker { color: var(--accent); }
-    h2:target {
-      background: linear-gradient(to right, rgba(129,140,248,0.14), transparent);
-      padding-inline: 6px;
-      border-radius: 10px;
+    .nav-btn:hover { transform: translateY(-1px); }
+    .nav-btn span {
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
     }
-    @media (max-width: 768px) {
-      main { padding: 18px 14px 24px; border-radius: 0; }
+
+    section { margin-top: 12px; }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 16px 14px;
+      background: #ffffff;
+      box-shadow: 0 8px 22px rgba(31, 42, 68, 0.06);
+      margin: 12px 0;
     }
-      .term-tabs {
-      margin-top: 6px;
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+      scroll-margin-top: 90px;
     }
-    .term-radio {
-      display: none;
+    .card h3 {
+      margin: 12px 0 8px;
+      font-size: 1.05rem;
     }
+    .sec-pill {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: rgba(23,75,143,0.08);
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(23,75,143,0.12);
+      margin-left: 8px;
+    }
+
+    ul.key-list {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .key-list li { margin: 6px 0; }
+    .key-list li::marker { color: var(--accent-2); }
+
+    .card-note {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-left: 4px solid var(--accent);
+      background: rgba(23,75,143,0.06);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .card-warn {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-left: 5px solid #f59e0b;
+      background: #fffbeb;
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .eq {
+      display: inline-block;
+      margin: 8px 0;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fbfdff;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 1.06rem;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 820px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    .term-tabs {
+      position: relative;
+      margin-top: 8px;
+    }
+    .term-radio { position: absolute; left: -9999px; }
     .term-tab-bar {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 8px;
+      gap: 8px;
+      margin-bottom: 10px;
     }
     .term-tab-btn {
-      padding: 4px 10px;
+      cursor: pointer;
+      user-select: none;
+      padding: 9px 10px;
       border-radius: 999px;
       border: 1px solid var(--border);
-      background: #eef2ff;
+      background: #f8fbff;
       color: var(--accent);
-      font-size: 0.8rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.08s ease;
+      font-weight: 700;
+      font-size: 0.92rem;
+      box-shadow: 0 4px 14px rgba(31, 42, 68, 0.06);
+      transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.08s ease;
     }
     .term-tab-btn:hover {
       background: #e0e7ff;
@@ -202,184 +205,215 @@
     }
     .term-panel {
       display: none;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid var(--border);
       background: #ffffff;
-      padding: 8px 10px;
-      font-size: 0.9rem;
+      padding: 10px 12px;
+      font-size: 0.95rem;
     }
-    /* Active tab button styling for Section 2 key terms */
-    #term-rutherford:checked ~ .term-tab-bar label[for="term-rutherford"],
+
+    /* Active tab button styling */
+    #term-model:checked ~ .term-tab-bar label[for="term-model"],
     #term-nucleus:checked ~ .term-tab-bar label[for="term-nucleus"],
     #term-alpha:checked ~ .term-tab-bar label[for="term-alpha"],
     #term-scatter:checked ~ .term-tab-bar label[for="term-scatter"],
-    #term-thomson:checked ~ .term-tab-bar label[for="term-thomson"],
-    #term-lines:checked ~ .term-tab-bar label[for="term-lines"] {
+    #term-limit:checked ~ .term-tab-bar label[for="term-limit"],
+    #term-line:checked ~ .term-tab-bar label[for="term-line"] {
       background: var(--accent);
       color: #ffffff;
       border-color: var(--accent);
       box-shadow: 0 3px 10px rgba(23,75,143,0.4);
     }
+
     /* Show the matching panel */
-    #term-rutherford:checked ~ #panel-term-rutherford,
+    #term-model:checked ~ #panel-term-model,
     #term-nucleus:checked ~ #panel-term-nucleus,
     #term-alpha:checked ~ #panel-term-alpha,
     #term-scatter:checked ~ #panel-term-scatter,
-    #term-thomson:checked ~ #panel-term-thomson,
-    #term-lines:checked ~ #panel-term-lines {
+    #term-limit:checked ~ #panel-term-limit,
+    #term-line:checked ~ #panel-term-line {
       display: block;
+    }
+
+    /* Subtle highlight when jumping to anchors */
+    :target {
+      outline: 0;
+      box-shadow: 0 0 0 4px rgba(58,123,213,0.18);
+      border-radius: 10px;
+      padding: 2px 4px;
+    }
+
+    @media (max-width: 768px) {
+      main { padding: 18px 14px 24px; border-radius: 0; margin: 0; }
     }
   </style>
 </head>
 <body>
   <main>
     <header class="page-header">
-      <h1>2. Rutherford's Atomic Model (E202)</h1>
+      <h1>E2 — Rutherford Atomic Model</h1>
       <div class="meta">
-        HKDSE Physics &mdash; Elective E2: Atomic World &middot; Structure of atom and &alpha;-particle scattering.
+        HKDSE Physics &mdash; Elective E2: Atomic World &middot; &alpha;-particle scattering evidence and Rutherford&rsquo;s model.
       </div>
     </header>
 
-    <p class="section-intro">Describe the structure of the atom and explain how &alpha;-particle scattering provides evidence for a small, dense, positively charged nucleus. State the limitations of Rutherford's model and understand the importance of scattering experiments.</p>
+    <!-- Required top navigation (Back / Previous / Next) -->
+    <div class="section-nav">
+      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
 
-    <div class="badge-strip">
-      <span class="badge exam">Exam focus: &alpha;-particle scattering observations &amp; conclusions</span>
-      <span class="badge skills">Skills: explaining evidence, linking experiment to model</span>
+      <!-- Page-to-page navigation -->
+      <a class="nav-btn" href="photoelectric.html">&larr; Previous</a>
+      <a class="nav-btn" href="bohr_energy_levels.html">Next &rarr;</a>
     </div>
 
-            <div class="section-nav">
-      <a href="#sec21" class="nav-btn"><span>2.1</span> Structure of the atom</a>
-      <a href="#sec22" class="nav-btn"><span>2.2</span> &alpha;-particle scattering</a>
-      <a href="#sec23" class="nav-btn"><span>2.3</span> Limitations of model</a>
-      <a href="#sec24" class="nav-btn"><span>2.4</span> Importance of scattering</a>
+    <p class="section-intro">
+      Use &alpha;-particle scattering results to infer the structure of atoms, describe Rutherford&rsquo;s atomic model, and state why the model fails to account for atomic stability and line spectra.
+    </p>
+
+    <div class="badge-strip">
+      <span class="badge exam">Exam focus: observations &rarr; conclusions (empty space, nucleus)</span>
+      <span class="badge skills">Skills: explain limitations (stability + line spectra)</span>
+    </div>
+
+    <!-- Section jump bar -->
+    <div class="section-nav">
+      <a href="#sec21" class="nav-btn"><span>2.1</span> Model features</a>
+      <a href="#sec22" class="nav-btn"><span>2.2</span> Scattering evidence</a>
+      <a href="#sec23" class="nav-btn"><span>2.3</span> Limitations</a>
+      <a href="#sec24" class="nav-btn"><span>2.4</span> Importance</a>
       <a href="#sec25" class="nav-btn"><span>2.5</span> Key terms</a>
       <a href="#sec2traps" class="nav-btn">Common traps</a>
     </div>
 
     <section>
-            <div class="card">
+      <div class="card">
         <h2 id="sec21">2.1 Structure of the atom (Rutherford model) <span class="sec-pill">Model</span></h2>
         <ul class="key-list">
-          <li>An atom consists of a tiny, dense, positively charged <strong>nucleus</strong> at the centre.</li>
-          <li>Almost all the <strong>mass</strong> of the atom is concentrated in the nucleus.</li>
-          <li><strong>Electrons</strong> move around the nucleus.</li>
-          <li>Most of the volume of an atom is <strong>empty space</strong> between the nucleus and the electrons.</li>
+          <li>An atom consists of a tiny <strong>nucleus</strong> and electrons around it.</li>
+          <li><strong>All positive charge</strong> and <strong>most of the mass</strong> of the atom are concentrated in the nucleus.</li>
+          <li>Electrons orbit the nucleus under the <strong>electric force</strong> of attraction.</li>
+          <li>The rest of the atom is largely <strong>empty space</strong>.</li>
         </ul>
         <div class="card-note">
-          <strong>HKDSE note:</strong> You only need to <strong>describe</strong> the structure. Numerical estimates of nuclear radius or detailed nuclear composition are not required here.
+          A scientific model is proposed to explain observations and may be modified or replaced if it fails to explain new observations.
         </div>
       </div>
 
       <div class="card">
-        <h2 id="sec22">2.2 &alpha;-particle scattering (gold-foil experiment) <span class="sec-pill">Evidence</span></h2>
-        <h3>Basic idea</h3>
-        <ul class="key-list">
-          <li>A narrow beam of <strong>&alpha;-particles</strong> is directed at a very thin metal foil (e.g. gold).</li>
-          <li>A fluorescent screen around the foil detects where the &alpha;-particles arrive.</li>
-        </ul>
-        <div class="card-note">
-          <strong>HKDSE note:</strong> Detailed design or names of detectors are not required; focus on the <strong>observations</strong> and <strong>conclusions</strong>.
+        <h2 id="sec22">2.2 &alpha;-particle scattering (evidence) <span class="sec-pill">Evidence</span></h2>
+        <div class="two-col">
+          <div>
+            <h3>Key observations</h3>
+            <ul class="key-list">
+              <li>Nearly all &alpha; particles pass straight through a thin metal foil.</li>
+              <li>A very small number are deflected by large angles, and a few even bounce back.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Conclusions (link observation &rarr; model)</h3>
+            <ul class="key-list">
+              <li>Since most &alpha; particles pass through, the atom is mostly <strong>empty space</strong>.</li>
+              <li>Large-angle deflections and backscattering imply a <strong>small, dense, positively charged nucleus</strong> that can strongly repel &alpha; particles.</li>
+            </ul>
+          </div>
         </div>
-        <h3>Main observations</h3>
-        <ul class="key-list">
-          <li><strong>Most</strong> &alpha;-particles pass straight through the foil or are only slightly deflected.</li>
-          <li>A <strong>small fraction</strong> of &alpha;-particles are deflected through large angles.</li>
-          <li>A <strong>very few</strong> &alpha;-particles are scattered backwards (rebound).</li>
-        </ul>
-        <h3>Conclusions from scattering</h3>
-        <ul class="key-list">
-          <li>Since most &alpha;-particles pass straight through, atoms must be <strong>mostly empty space</strong>.</li>
-          <li>Large-angle deflections and backscattering show that there is a <strong>small, dense, positively charged nucleus</strong> which strongly repels &alpha;-particles when they come very close.</li>
-          <li>Because only a tiny fraction of &alpha;-particles suffer large deflection, the nucleus must occupy only a <strong>very small volume</strong> compared with the whole atom.</li>
-        </ul>
-        <h3>Comparison with Thomson's "plum pudding" model</h3>
-        <ul class="key-list">
-          <li>In Thomson's model, positive charge and mass are spread uniformly throughout the atom.</li>
-          <li>If charge and mass were spread out, &alpha;-particles would <strong>not</strong> be deflected through very large angles.</li>
-          <li>The observed large-angle scattering therefore <strong>contradicts</strong> Thomson's model and supports Rutherford's nuclear model.</li>
-        </ul>
-      </div>
 
-      <div class="card">
-        <h2 id="sec23">2.3 Limitations of Rutherford's model <span class="sec-pill">Problems</span></h2>
+        <h3>Why only a few are deflected a lot?</h3>
         <ul class="key-list">
-          <li>According to classical electromagnetism, an electron moving in a circular orbit is an <strong>accelerating charge</strong> and should radiate energy continuously.</li>
-          <li>If electrons radiate energy, they would lose energy and spiral into the nucleus in a very short time &rarr; the atom would be <strong>unstable</strong>.</li>
-          <li>Real atoms are stable, so Rutherford's model <strong>cannot explain atomic stability</strong>.</li>
-          <li>Rutherford's model also cannot explain <strong>discrete line spectra</strong> of atoms (it would predict continuous spectra instead).</li>
+          <li>&alpha; particles passing far from nuclei feel little repulsion and continue almost straight.</li>
+          <li>If an &alpha; particle passes very close to a nucleus, the repulsive electric force is very strong, so the deflection is large (or it may bounce back).</li>
+          <li>Collisions with electrons cause negligible change in path because electrons have much smaller mass than an &alpha; particle.</li>
         </ul>
-        <div class="card-note">
-          <strong>Link to Bohr:</strong> Bohr's model introduces <strong>quantised energy levels</strong> and stationary orbits to explain both stability and line spectra.
+
+        <div class="card-warn">
+          <strong>Syllabus boundary:</strong> You are expected to realise the importance of scattering experiments, but the detailed setups of different scattering experiments and the names of new particles are <strong>not required</strong>.
         </div>
       </div>
 
       <div class="card">
-        <h2 id="sec24">2.4 Importance of scattering experiments <span class="sec-pill">Significance</span></h2>
+        <h2 id="sec23">2.3 Limitations of Rutherford&rsquo;s model <span class="sec-pill">Why it fails</span></h2>
         <ul class="key-list">
-          <li>Rutherford's &alpha;-particle scattering experiment provided direct evidence for the <strong>nuclear model</strong> of the atom.</li>
-          <li>Scattering experiments are powerful tools to probe the <strong>internal structure</strong> of atoms and nuclei.</li>
-          <li>Similar ideas are used in modern physics to investigate smaller particles and to search for <strong>new particles</strong> (details not required in HKDSE).</li>
+          <li><strong>Atomic stability problem:</strong> an electron in circular motion is accelerating. According to classical electromagnetism, it should emit electromagnetic waves, lose energy and spiral into the nucleus. The atom would collapse, but atoms are stable.</li>
+          <li><strong>Line spectra problem:</strong> in Rutherford&rsquo;s model, the electron orbital frequency can take any value. It would emit electromagnetic waves with a continuous range of frequencies. However, monatomic gases produce <strong>discrete</strong> line spectra.</li>
+        </ul>
+        <div class="card-note">
+          These limitations show that Rutherford&rsquo;s model must be modified &mdash; leading to Bohr&rsquo;s model with quantised orbits/energy levels.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 id="sec24">2.4 Importance of scattering experiments <span class="sec-pill">Big idea</span></h2>
+        <ul class="key-list">
+          <li>Scattering experiments with energetic particles are a major tool for studying the <strong>structure of atoms and nuclei</strong>.</li>
+          <li>They can also contribute to <strong>searching for new particles</strong> in modern physics (details and names not required).</li>
         </ul>
       </div>
 
       <div class="card">
-        <h2 id="sec25">2.5 Key terms for HKDSE (Rutherford&rsquo;s atomic model) <span class="sec-pill">Glossary</span></h2>
+        <h2 id="sec25">2.5 Key terms (Rutherford topic) <span class="sec-pill">Glossary</span></h2>
         <div class="term-tabs">
-          <input type="radio" name="term-ruth-key" id="term-rutherford" class="term-radio" checked>
-          <input type="radio" name="term-ruth-key" id="term-nucleus" class="term-radio">
-          <input type="radio" name="term-ruth-key" id="term-alpha" class="term-radio">
-          <input type="radio" name="term-ruth-key" id="term-scatter" class="term-radio">
-          <input type="radio" name="term-ruth-key" id="term-thomson" class="term-radio">
-          <input type="radio" name="term-ruth-key" id="term-lines" class="term-radio">
+          <input type="radio" name="term-r" id="term-model" class="term-radio" checked>
+          <input type="radio" name="term-r" id="term-nucleus" class="term-radio">
+          <input type="radio" name="term-r" id="term-alpha" class="term-radio">
+          <input type="radio" name="term-r" id="term-scatter" class="term-radio">
+          <input type="radio" name="term-r" id="term-limit" class="term-radio">
+          <input type="radio" name="term-r" id="term-line" class="term-radio">
 
           <div class="term-tab-bar">
-            <label for="term-rutherford" class="term-tab-btn">Rutherford&rsquo;s atomic model</label>
+            <label for="term-model" class="term-tab-btn">Rutherford model</label>
             <label for="term-nucleus" class="term-tab-btn">Nucleus</label>
-            <label for="term-alpha" class="term-tab-btn">&alpha;-particle</label>
-            <label for="term-scatter" class="term-tab-btn">Scattering experiment</label>
-            <label for="term-thomson" class="term-tab-btn">Thomson&rsquo;s model</label>
-            <label for="term-lines" class="term-tab-btn">Line spectrum</label>
+            <label for="term-alpha" class="term-tab-btn">&alpha; particle</label>
+            <label for="term-scatter" class="term-tab-btn">Scattering</label>
+            <label for="term-limit" class="term-tab-btn">Limitation</label>
+            <label for="term-line" class="term-tab-btn">Line spectrum</label>
           </div>
 
-          <div class="term-panel" id="panel-term-rutherford">
-            <p><strong>Rutherford&rsquo;s atomic model</strong>: an atomic model in which an atom consists of a tiny, dense, positively charged nucleus containing almost all the mass, with electrons moving around it and most of the volume being empty space.</p>
+          <div class="term-panel" id="panel-term-model">
+            <p><strong>Rutherford&rsquo;s atomic model</strong>: an atom has a tiny nucleus containing all positive charge and most mass, with electrons around it; the rest of the atom is largely empty space.</p>
           </div>
           <div class="term-panel" id="panel-term-nucleus">
-            <p><strong>Nucleus</strong>: the small, dense, positively charged core at the centre of an atom containing almost all of the atom&rsquo;s mass.</p>
+            <p><strong>Nucleus</strong>: the tiny central core of an atom where positive charge and most of the atom&rsquo;s mass are concentrated.</p>
           </div>
           <div class="term-panel" id="panel-term-alpha">
-            <p><strong>&alpha;-particle</strong>: a positively charged particle (helium nucleus) with charge +2e and relatively large mass, often used as a probe in scattering experiments.</p>
+            <p><strong>&alpha; particle</strong>: a positively charged particle emitted by some radioactive sources, used as the incident particles in the scattering experiment.</p>
           </div>
           <div class="term-panel" id="panel-term-scatter">
-            <p><strong>Scattering experiment</strong>: an experiment in which a beam of particles (e.g. &alpha;-particles) is directed at a target and the directions of the scattered particles are observed to deduce the internal structure of the target.</p>
+            <p><strong>Scattering</strong>: a process in which particles (or waves) are deflected from their original paths by a force field.</p>
           </div>
-          <div class="term-panel" id="panel-term-thomson">
-            <p><strong>Thomson&rsquo;s &ldquo;plum pudding&rdquo; model</strong>: an earlier atomic model in which positive charge and mass were spread more or less uniformly throughout the atom with electrons embedded inside, which cannot explain the observed large-angle &alpha;-particle scattering.</p>
+          <div class="term-panel" id="panel-term-limit">
+            <p><strong>Limitation of a model</strong>: a situation where the model cannot correctly explain an observation (e.g. atomic stability or line spectra), so the model needs modification or replacement.</p>
           </div>
-          <div class="term-panel" id="panel-term-lines">
-            <p><strong>Line spectrum</strong>: a spectrum that consists of discrete bright or dark lines at particular wavelengths, showing that the atom can have only certain allowed energies (detailed treatment in the Bohr&rsquo;s model section).</p>
+          <div class="term-panel" id="panel-term-line">
+            <p><strong>Line spectrum</strong>: an emission (or absorption) spectrum showing discrete lines at certain wavelengths/frequencies, indicating discrete energy differences in atoms.</p>
           </div>
-        </div>
-        <div class="card-note">
-          <strong>HKDSE tip:</strong> Be able to match each <strong>observation</strong> in the &alpha;-particle scattering experiment with a correct <strong>conclusion</strong> about atomic structure, and use these key terms precisely in explanation questions.
         </div>
       </div>
 
-      <div class="card card-traps" id="sec2traps">
-        <h3>HKDSE common traps &amp; mistakes (Rutherford's model)</h3>
+      <div class="card card-warn" id="sec2traps">
+        <h3>HKDSE common traps &amp; mistakes (Rutherford topic)</h3>
         <ul class="key-list">
-          <li>Saying that <strong>most</strong> &alpha;-particles are deflected; in fact, <strong>most pass straight through</strong>, showing atoms are mostly empty space.</li>
-          <li>Describing the nucleus as large or occupying most of the volume; it should be described as <strong>tiny</strong> but containing almost all the mass and positive charge.</li>
-          <li>Explaining the instability of Rutherford's model only by &ldquo;electrons are attracted to the nucleus&rdquo; without mentioning that an <strong>accelerating charge radiates energy</strong>.</li>
-          <li>Giving detailed apparatus designs or names of modern experiments and particles, which are <strong>not required</strong> in HKDSE.</li>
-          <li>Failing to link each <strong>observation</strong> (e.g. most pass through, some deflect) to a clear <strong>conclusion</strong> in explanation questions.</li>
+          <li>Stating &ldquo;most &alpha; particles pass through&rdquo; but not concluding that the atom is mostly <strong>empty space</strong>.</li>
+          <li>Saying &ldquo;nucleus is positive&rdquo; but not linking it to <strong>repulsion</strong> of &alpha; particles and large-angle deflection.</li>
+          <li>Mixing up the limitation: don&rsquo;t say Rutherford model &ldquo;cannot explain why atoms are neutral&rdquo; (neutrality is not a difficulty for the model).</li>
+          <li>Explaining line spectra using the wrong idea (e.g. &ldquo;electrons lose some energy and leave&rdquo;). Correct point: Rutherford model predicts a <strong>continuous</strong> emission spectrum, but observed spectra are <strong>line</strong> spectra.</li>
+          <li>Going beyond syllabus by describing detailed experimental setups of other scattering experiments or naming newly discovered particles.</li>
         </ul>
+      </div>
+
+      <!-- Required bottom navigation (Back / Previous / Next) -->
+      <div class="section-nav" style="margin-top: 18px;">
+        <a class="nav-btn" href="../index.html">&larr; Back to index</a>
+
+        <!-- Page-to-page navigation -->
+        <a class="nav-btn" href="photoelectric.html">&larr; Previous</a>
+        <a class="nav-btn" href="bohr_energy_levels.html">Next &rarr;</a>
       </div>
     </section>
 
     <p style="font-size:0.85rem; color:var(--text-muted); margin-top:10px;">
-      End of Section 2 &mdash; Rutherford's atomic model (HKDSE E202-aligned).
+      End of E2 &mdash; Rutherford Atomic Model.
     </p>
   </main>
 </body>
 </html>
+
