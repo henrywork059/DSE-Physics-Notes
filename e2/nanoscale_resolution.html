@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E2 Atomic World – 5. Wave–Particle Duality (de Broglie) (HKDSE)</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card-bg: #ffffff;
+      --accent: #174b8f;
+      --accent-soft: #e1ecff;
+      --border: #d0d7e2;
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --danger: #b91c1c;
+      --danger-soft: #fef2f2;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left,#e0ebff 0,#f5f7fb 40%,#f5f7fb 100%);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 24px 18px 40px;
+      display: flex;
+      justify-content: center;
+    }
+    main {
+      width: 100%;
+      max-width: 960px;
+      background: #f9fafb;
+      border-radius: 18px;
+      box-shadow: 0 16px 40px rgba(15,23,42,0.16);
+      border: 1px solid #e5e7eb;
+      padding: 24px 24px 32px;
+    }
+    header.page-header { margin-bottom: 18px; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; }
+    header.page-header h1 {
+      margin: 0 0 4px;
+      font-size: 1.8rem;
+      color: var(--accent);
+    }
+    header.page-header .meta {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .section-intro {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin: 8px 0 10px;
+    }
+    h2 {
+      position: relative;
+      scroll-margin-top: 90px;
+      margin-top: 16px;
+      margin-bottom: 6px;
+      color: var(--accent);
+      font-size: 1.3rem;
+    }
+    h3 {
+      margin-top: 12px;
+      margin-bottom: 4px;
+      color: #1f2937;
+      font-size: 1.02rem;
+    }
+    p { margin: 4px 0 8px; }
+    ul { margin: 4px 0 8px 20px; padding-left: 0; }
+    li { margin: 2px 0; }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 14px 18px 12px;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+      margin-bottom: 14px;
+    }
+    .card-traps {
+      background: var(--danger-soft);
+      border-color: rgba(220,38,38,0.25);
+      border-left: 4px solid var(--danger);
+    }
+    .card-traps h3 { color: var(--danger); }
+
+    .card-note {
+      margin-top: 6px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #eff6ff;
+      border: 1px dashed #bfdbfe;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .card-note strong { color: var(--accent); }
+
+    .sec-pill {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .eq {
+      display: block;
+      margin: 6px 0 10px 18px;
+      font-family: "Times New Roman", serif;
+      font-size: 1.0rem;
+      padding: 4px 10px;
+      background: #f3f4f6;
+      border-radius: 8px;
+      border-left: 3px solid var(--accent);
+      overflow-x: auto;
+    }
+
+    .badge-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 10px 0 12px;
+      font-size: 0.75rem;
+    }
+    .badge {
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      color: #4b5563;
+    }
+    .badge.exam {
+      border-color: rgba(37,99,235,0.35);
+      background: rgba(59,130,246,0.06);
+      color: #1d4ed8;
+    }
+    .badge.skills {
+      border-color: rgba(16,185,129,0.35);
+      background: rgba(16,185,129,0.06);
+      color: #047857;
+    }
+
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 8px 0 16px;
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #e5edff;
+      color: var(--accent);
+      font-size: 0.82rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease;
+    }
+    .nav-btn:hover {
+      background: #d7e3ff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(148,163,184,0.45);
+    }
+    .nav-btn span { font-weight: 700; }
+
+    .key-list li::marker { color: var(--accent); }
+    h2:target {
+      background: linear-gradient(to right, rgba(129,140,248,0.14), transparent);
+      padding-inline: 6px;
+      border-radius: 10px;
+    }
+
+    .term-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .term-list details {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      padding: 6px 10px;
+    }
+    .term-list details[open] {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(23,75,143,0.15);
+      background: #f3f6ff;
+    }
+    .term-summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .term-summary::-webkit-details-marker { display: none; }
+    .term-summary::after {
+      content: "▾";
+      font-size: 0.7rem;
+      margin-left: 8px;
+      color: var(--text-muted);
+    }
+    details[open] > .term-summary::after { content: "▴"; }
+
+    footer {
+      margin-top: 18px;
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      text-align: center;
+    }
+    .muted { color: var(--text-muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <h1>E2 — Wave–Particle Duality (de Broglie)</h1>
+      <div class="meta">HKDSE Physics &mdash; Elective E2: Atomic World &middot; Particles or Waves (Topic d)</div>
+    </header>
+
+    <!-- Top page-to-page navigation (required) -->
+    <div class="section-nav">
+      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
+      <a class="nav-btn" href="line_spectra.html">&larr; Previous</a>
+      <a class="nav-btn" href="nanoscale_resolution.html">Next &rarr;</a>
+    </div>
+
+    <p class="section-intro">Realise the wave&ndash;particle duality of <strong>electrons</strong> and <strong>light</strong>, describe the evidences, and apply the de Broglie formula <span class="muted">(&lambda; = h/p)</span> in numerical problems.</p>
+
+    <div class="badge-strip">
+      <span class="badge exam">Exam focus: evidence + de Broglie &lambda; = h/p</span>
+      <span class="badge skills">Skills: compare wavelengths; use K to find p</span>
+      <span class="badge skills">Link: TEM resolution depends on &lambda;</span>
+    </div>
+
+    <!-- Section jump bar -->
+    <div class="section-nav">
+      <a href="#sec51" class="nav-btn"><span>5.1</span> Duality idea</a>
+      <a href="#sec52" class="nav-btn"><span>5.2</span> Evidences</a>
+      <a href="#sec53" class="nav-btn"><span>5.3</span> de Broglie formula</a>
+      <a href="#sec54" class="nav-btn"><span>5.4</span> Problem skills</a>
+      <a href="#sec55" class="nav-btn"><span>5.5</span> Key terms</a>
+      <a href="#sec5traps" class="nav-btn">Common traps</a>
+    </div>
+
+    <section>
+      <div class="card">
+        <h2 id="sec51">5.1 What is wave&ndash;particle duality? <span class="sec-pill">Concept</span></h2>
+        <p>In classical physics, <strong>waves</strong> and <strong>particles</strong> are very different. In the microscopic world, experiments show that:</p>
+        <ul class="key-list">
+          <li><strong>Light</strong> (well known as a wave) can show <strong>particle</strong> behaviour.</li>
+          <li><strong>Electrons</strong> (well known as particles) can show <strong>wave</strong> behaviour.</li>
+        </ul>
+        <div class="card-note"><strong>HKDSE focus:</strong> You should be able to <em>describe the evidences</em> and <em>use the de Broglie formula</em> to link the wave and particle properties.</div>
+      </div>
+
+      <div class="card">
+        <h2 id="sec52">5.2 Evidences of duality <span class="sec-pill">Evidence</span></h2>
+        <h3>(A) Light</h3>
+        <ul class="key-list">
+          <li><strong>Wave nature:</strong> <em>interference</em> and <em>diffraction</em> patterns.</li>
+          <li><strong>Particle nature:</strong> <em>photoelectric effect</em> (photons eject electrons from a metal surface).</li>
+        </ul>
+
+        <h3>(B) Electrons (matter)</h3>
+        <ul class="key-list">
+          <li><strong>Particle behaviour:</strong> electrons have mass and charge; they carry momentum and can be counted as individual impacts.</li>
+          <li><strong>Wave behaviour:</strong> electrons can form <strong>diffraction</strong> and <strong>interference</strong> patterns.</li>
+        </ul>
+
+        <div class="card-note">
+          <strong>Typical experimental observations:</strong>
+          <ul class="key-list">
+            <li>Electron beam onto a <strong>thin metal foil / crystal</strong> &rarr; a diffraction pattern of bright and dark rings.</li>
+            <li>Electron beam through a <strong>double slit</strong> (very small slit width) &rarr; an interference pattern.</li>
+          </ul>
+          These give strong support to the <strong>wave nature</strong> of electrons.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 id="sec53">5.3 de Broglie wavelength <span class="sec-pill">Formula</span></h2>
+        <p>de Broglie proposed that a moving particle is associated with a wavelength (&ldquo;matter wave&rdquo;):</p>
+        <span class="eq">&lambda; = <span style="white-space:nowrap;">\(\dfrac{h}{p}\)</span></span>
+        <ul class="key-list">
+          <li><strong>&lambda;</strong>: de Broglie wavelength (m)</li>
+          <li><strong>h</strong>: Planck constant (J s)</li>
+          <li><strong>p</strong>: momentum (kg m s<sup>&ndash;1</sup>)</li>
+        </ul>
+
+        <p class="muted">For a non-relativistic particle, <strong>p = mv</strong>, so &lambda; = h/(mv).</p>
+
+        <div class="card-note">
+          <strong>Important trend:</strong> larger momentum <strong>p</strong> &rarr; smaller wavelength <strong>&lambda;</strong>.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 id="sec54">5.4 Problem skills (HKDSE style) <span class="sec-pill">Apply</span></h2>
+
+        <h3>(A) Compare wavelengths (same speed)</h3>
+        <p>If two particles travel at the same speed, then <strong>&lambda; \(\propto\) 1/m</strong>.</p>
+        <ul class="key-list">
+          <li>If mass doubles &rarr; wavelength halves.</li>
+          <li>If mass is half &rarr; wavelength doubles.</li>
+        </ul>
+
+        <h3>(B) Given kinetic energy K</h3>
+        <p>Using <span class="muted">K = p<sup>2</sup>/(2m)</span> (non-relativistic),</p>
+        <span class="eq">p = \(\sqrt{2mK}\)  &nbsp; &rarr; &nbsp; &lambda; = \(\dfrac{h}{\sqrt{2mK}}\)</span>
+
+        <h3>(C) Typical numerical examples</h3>
+        <div class="card-note">
+          <p><strong>Example 1 (order of magnitude):</strong></p>
+          <ul class="key-list">
+            <li>50 g ball at 60 m s<sup>&ndash;1</sup>: &lambda; = h/(mv) &asymp; 2.21 &times; 10<sup>&ndash;34</sup> m (extremely small, no observable diffraction).</li>
+            <li>Electron at 5.0 &times; 10<sup>6</sup> m s<sup>&ndash;1</sup>: &lambda; &asymp; 1.46 &times; 10<sup>&ndash;10</sup> m (comparable to atomic spacing, diffraction possible).</li>
+          </ul>
+          <p class="muted">This explains why wave behaviour is obvious for microscopic particles but not for everyday objects.</p>
+        </div>
+
+        <div class="card-note">
+          <p><strong>Example 2 (fast electron):</strong> Find &lambda; for an electron of kinetic energy 10 keV.</p>
+          <ul class="key-list">
+            <li>Convert: 10 keV = 10 &times; 10<sup>3</sup> eV = 10 &times; 10<sup>3</sup> &times; 1.60 &times; 10<sup>&ndash;19</sup> J = 1.60 &times; 10<sup>&ndash;15</sup> J</li>
+            <li>p = \(\sqrt{2m_e K}\)</li>
+            <li>&lambda; = h/p &asymp; 1.23 &times; 10<sup>&ndash;11</sup> m</li>
+          </ul>
+        </div>
+
+        <div class="card-note">
+          <strong>Link to TEM (next topics):</strong> If an electron is accelerated through a p.d. <strong>V</strong>, then its kinetic energy is approximately <strong>K = eV</strong> (in J). So you may use
+          <div class="eq">&lambda; = \(\dfrac{h}{\sqrt{2m_e eV}}\)</div>
+          to estimate what voltage is needed to achieve wavelengths of the order of atomic size.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 id="sec55">5.5 Key terms <span class="sec-pill">Terms</span></h2>
+        <div class="term-list">
+          <details>
+            <summary class="term-summary">Wave&ndash;particle duality</summary>
+            <p>Both wave and particle properties can be shown by the same object (light or electrons), depending on the experiment.</p>
+          </details>
+          <details>
+            <summary class="term-summary">de Broglie wavelength</summary>
+            <p>The wavelength associated with a moving particle: <strong>&lambda; = h/p</strong>.</p>
+          </details>
+          <details>
+            <summary class="term-summary">Why diffraction happens for electrons</summary>
+            <p>Diffraction is significant when the wavelength is comparable to the spacing/size involved (atomic spacing is typically about 10<sup>&ndash;10</sup> m).</p>
+          </details>
+        </div>
+      </div>
+
+      <div class="card card-traps" id="sec5traps">
+        <h2>Common traps</h2>
+        <h3>1) Mixing up the trend</h3>
+        <ul class="key-list">
+          <li>More momentum (bigger <strong>p</strong>) &rarr; <strong>smaller</strong> de Broglie wavelength (<strong>&lambda;</strong>).</li>
+        </ul>
+
+        <h3>2) Forgetting unit conversion</h3>
+        <ul class="key-list">
+          <li>1 eV = 1.60 &times; 10<sup>&ndash;19</sup> J (needed when K is in eV or keV).</li>
+        </ul>
+
+        <h3>3) Using out-of-syllabus extras</h3>
+        <ul class="key-list">
+          <li>Relativistic corrections are not required for standard HKDSE questions in this topic. Use the non-relativistic relations given above unless the question explicitly provides otherwise.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Bottom page-to-page navigation (required) -->
+    <div class="section-nav">
+      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
+      <a class="nav-btn" href="line_spectra.html">&larr; Previous</a>
+      <a class="nav-btn" href="nanoscale_resolution.html">Next &rarr;</a>
+    </div>
+
+    <footer>
+      End of note: Wave&ndash;Particle Duality (de Broglie) &middot; Next: optical resolution and nano-scale viewing.
+    </footer>
+  </main>
+</body>
+</html>
