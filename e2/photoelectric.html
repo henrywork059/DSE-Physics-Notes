@@ -2,284 +2,210 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>E2 Atomic World – 1. Photoelectric Effect (HKDSE)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E2 — Photoelectric Effect | DSE Physics Notes</title>
   <style>
     :root {
-      --bg: #f5f7fb;
-      --card-bg: #ffffff;
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1f2a44;
+      --text-muted: #5b6b86;
       --accent: #174b8f;
-      --accent-soft: #e1ecff;
-      --border: #d0d7e2;
-      --text-main: #111827;
-      --text-muted: #4b5563;
-      --danger: #b91c1c;
-      --danger-soft: #fef2f2;
+      --accent-2: #3a7bd5;
+      --border: #d9e2ef;
+      --shadow: 0 10px 30px rgba(31, 42, 68, 0.08);
+      --radius: 16px;
     }
-    * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left,#e0ebff 0,#f5f7fb 40%,#f5f7fb 100%);
-      color: var(--text-main);
-      line-height: 1.6;
-      padding: 24px 18px 40px;
-      display: flex;
-      justify-content: center;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
     }
     main {
-      width: 100%;
-      max-width: 960px;
-      background: #f9fafb;
-      border-radius: 18px;
-      box-shadow: 0 16px 40px rgba(15,23,42,0.16);
-      border: 1px solid #e5e7eb;
-      padding: 24px 24px 32px;
+      max-width: 980px;
+      margin: 24px auto;
+      padding: 26px 22px 30px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
-    header.page-header { margin-bottom: 18px; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; }
-    header.page-header h1 {
-      margin: 0 0 4px;
-      font-size: 1.8rem;
-      color: var(--accent);
+    .page-header h1 {
+      margin: 0 0 6px;
+      font-size: 1.85rem;
+      letter-spacing: -0.02em;
     }
-    header.page-header .meta {
+    .meta {
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
     }
-    h2 {
-      position: relative;
-      scroll-margin-top: 90px;
-      margin-top: 16px;
-      margin-bottom: 6px;
-      color: var(--accent);
-      font-size: 1.3rem;
-    }
-    h3 {
-      margin-top: 12px;
-      margin-bottom: 4px;
-      color: #1f2937;
-      font-size: 1.02rem;
-    }
-    p {
-      margin: 4px 0 8px;
-      color: var(--text-main);
-    }
-    ul {
-      margin: 4px 0 8px 20px;
-      padding-left: 0;
-    }
-    li { margin: 2px 0; }
     .section-intro {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-bottom: 10px;
+      margin: 14px 0 0;
+      font-size: 1.02rem;
+      color: var(--text);
     }
+    .badge-strip {
+      margin: 14px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #f8fbff;
+      color: var(--text);
+      font-size: 0.92rem;
+    }
+    .badge.exam { border-color: rgba(23,75,143,0.35); }
+    .badge.skills { border-color: rgba(58,123,213,0.35); }
+
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 6px;
+      padding: 0;
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 14px rgba(31, 42, 68, 0.06);
+      transition: transform 0.08s ease;
+    }
+    .nav-btn:hover { transform: translateY(-1px); }
+    .nav-btn span {
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    section { margin-top: 12px; }
     .card {
-      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 16px 14px;
+      background: #ffffff;
+      box-shadow: 0 8px 22px rgba(31, 42, 68, 0.06);
+      margin: 12px 0;
+    }
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+      scroll-margin-top: 90px;
+    }
+    .card h3 {
+      margin: 12px 0 8px;
+      font-size: 1.05rem;
+    }
+    .sec-pill {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: rgba(23,75,143,0.08);
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(23,75,143,0.12);
+      margin-left: 8px;
+    }
+
+    ul.key-list {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .key-list li { margin: 6px 0; }
+    .key-list li::marker { color: var(--accent-2); }
+
+    .card-note {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-left: 4px solid var(--accent);
+      background: rgba(23,75,143,0.06);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .eq {
+      display: inline-block;
+      margin: 8px 0;
+      padding: 10px 12px;
       border-radius: 12px;
       border: 1px solid var(--border);
-      padding: 14px 18px 12px;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
-      margin-bottom: 14px;
-    }
-    .card-traps {
-      background: var(--danger-soft);
-      border-color: rgba(220,38,38,0.25);
-      border-left: 4px solid var(--danger);
-    }
-    .card-traps h3 { color: var(--danger); }
-    .card-note {
-      margin-top: 4px;
-      padding: 6px 10px;
-      border-radius: 8px;
-      background: #eff6ff;
-      border: 1px dashed #bfdbfe;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-    .card-note strong { color: var(--accent); }
-    .sec-pill {
-      display: inline-block;
-      margin-left: 8px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    .term-list details[open] {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(23,75,143,0.15);
-      background: #f3f6ff;
-    }
-    .eq {
-      display: block;
-      margin: 4px 0 10px 18px;
-      font-family: "Times New Roman", serif;
-      font-size: 0.98rem;
-      padding: 3px 8px;
-      background: #f3f4f6;
-      border-radius: 6px;
-      border-left: 3px solid var(--accent);
+      background: #fbfdff;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 1.08rem;
     }
     .frac {
       display: inline-block;
       vertical-align: middle;
       text-align: center;
+      line-height: 1.1;
+      margin: 0 2px;
     }
-    .frac .top {
-      display: block;
-      padding: 0 2px;
-    }
-    .frac .bottom {
-      display: block;
-      border-top: 1px solid currentColor;
-      padding: 0 2px;
-    }
-    code {
-      font-family: "JetBrains Mono", Consolas, monospace;
-      font-size: 0.85rem;
-      background: #f3f4f6;
-      padding: 1px 4px;
-      border-radius: 4px;
-    }
-    .badge-strip {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 10px;
-      font-size: 0.75rem;
-    }
-    .badge {
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid #e5e7eb;
-      background: #f9fafb;
-      color: #4b5563;
-    }
-    .badge.exam {
-      border-color: rgba(37,99,235,0.35);
-      background: rgba(59,130,246,0.06);
-      color: #1d4ed8;
-    }
-    .badge.skills {
-      border-color: rgba(16,185,129,0.35);
-      background: rgba(16,185,129,0.06);
-      color: #047857;
-    }
-    .section-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 8px 0 16px;
-    }
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 5px 11px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: #e5edff;
-      color: var(--accent);
-      font-size: 0.8rem;
-      text-decoration: none;
-      cursor: pointer;
-      transition: background 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease;
-    }
-    .nav-btn:hover {
-      background: #d7e3ff;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 10px rgba(148,163,184,0.45);
-    }
-    .nav-btn span {
-      font-weight: 600;
-    }
-    .term-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-top: 6px;
-    }
-    .term-list details {
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: #ffffff;
-      padding: 6px 10px;
-    }
-    .term-summary {
-      cursor: pointer;
-      list-style: none;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-weight: 600;
-      color: var(--accent);
-    }
-    .term-summary::-webkit-details-marker {
-      display: none;
-    }
-    .term-summary::after {
-      content: "▾";
-      font-size: 0.7rem;
-      margin-left: 8px;
-      color: var(--text-muted);
-    }
-    details[open] > .term-summary::after {
-      content: "▴";
-    }
-    .key-list li::marker { color: var(--accent); }
-    h2:target {
-      background: linear-gradient(to right, rgba(129,140,248,0.14), transparent);
-      padding-inline: 6px;
-      border-radius: 10px;
-    }
+    .frac .top { display: block; border-bottom: 1px solid currentColor; padding: 0 3px 2px; }
+    .frac .bottom { display: block; padding: 2px 3px 0; }
+
     .compare-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 6px;
-      font-size: 0.87rem;
+      margin-top: 10px;
+      font-size: 0.95rem;
     }
     .compare-table th,
     .compare-table td {
       border: 1px solid var(--border);
-      padding: 6px 8px;
+      padding: 10px 10px;
       vertical-align: top;
-      text-align: left;
     }
-    .compare-table thead th {
-      background: #e5edff;
+    .compare-table th {
+      background: #f2f7ff;
       color: var(--accent);
-      font-weight: 600;
+      text-align: left;
+      font-weight: 800;
     }
-    .compare-table tbody tr:nth-child(even) {
-      background: #f9fafb;
-    }
+
     .term-tabs {
-      margin-top: 6px;
+      position: relative;
+      margin-top: 8px;
     }
-    .term-radio {
-      display: none;
-    }
+    .term-radio { position: absolute; left: -9999px; }
     .term-tab-bar {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 8px;
+      gap: 8px;
+      margin-bottom: 10px;
     }
     .term-tab-btn {
-      padding: 4px 10px;
+      cursor: pointer;
+      user-select: none;
+      padding: 9px 10px;
       border-radius: 999px;
       border: 1px solid var(--border);
-      background: #eef2ff;
+      background: #f8fbff;
       color: var(--accent);
-      font-size: 0.8rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.08s ease;
+      font-weight: 700;
+      font-size: 0.92rem;
+      box-shadow: 0 4px 14px rgba(31, 42, 68, 0.06);
+      transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.08s ease;
     }
     .term-tab-btn:hover {
       background: #e0e7ff;
@@ -288,12 +214,13 @@
     }
     .term-panel {
       display: none;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid var(--border);
       background: #ffffff;
-      padding: 8px 10px;
-      font-size: 0.9rem;
+      padding: 10px 12px;
+      font-size: 0.95rem;
     }
+
     /* Active tab button styling */
     #term-pe:checked ~ .term-tab-bar label[for="term-pe"],
     #term-photon:checked ~ .term-tab-bar label[for="term-photon"],
@@ -307,6 +234,7 @@
       border-color: var(--accent);
       box-shadow: 0 3px 10px rgba(23,75,143,0.4);
     }
+
     /* Show the matching panel */
     #term-pe:checked ~ #panel-term-pe,
     #term-photon:checked ~ #panel-term-photon,
@@ -317,32 +245,58 @@
     #term-current:checked ~ #panel-term-current {
       display: block;
     }
+
+    .card-traps {
+      border-left: 5px solid #f59e0b;
+      background: #fffbeb;
+    }
+
+    /* Subtle highlight when jumping to anchors */
+    :target {
+      outline: 0;
+      box-shadow: 0 0 0 4px rgba(58,123,213,0.18);
+      border-radius: 10px;
+      padding: 2px 4px;
+    }
+
     @media (max-width: 768px) {
-      main { padding: 18px 14px 24px; border-radius: 0; }
+      main { padding: 18px 14px 24px; border-radius: 0; margin: 0; }
     }
   </style>
 </head>
 <body>
   <main>
     <header class="page-header">
-      <h1>1. Photoelectric Effect (E201)</h1>
+      <h1>E2 — Photoelectric Effect</h1>
       <div class="meta">
         HKDSE Physics &mdash; Elective E2: Atomic World &middot; Photon model of light and photoelectric effect.
       </div>
     </header>
 
-    <p class="section-intro">Interpret experimental observations of the photoelectric effect using the photon model of light and apply Einstein&rsquo;s photoelectric equation in numerical problems.</p>
+    <!-- Required top navigation (Back / Previous / Next) -->
+    <div class="section-nav">
+      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
+
+      <!-- Page-to-page navigation -->
+      <a class="nav-btn" href="../index.html">&larr; Previous</a>
+      <a class="nav-btn" href="rutherford.html">Next &rarr;</a>
+    </div>
+
+    <p class="section-intro">
+      Interpret experimental observations of the photoelectric effect using the photon model of light and apply Einstein&rsquo;s photoelectric equation in numerical problems.
+    </p>
 
     <div class="badge-strip">
       <span class="badge exam">Exam focus: f<sub>0</sub>, work function, stopping potential</span>
       <span class="badge skills">Skills: graph of V<sub>s</sub> against f, unit conversion</span>
     </div>
 
+    <!-- Section jump bar -->
     <div class="section-nav">
       <a href="#sec11" class="nav-btn"><span>1.1</span> Basic arrangement</a>
       <a href="#sec12" class="nav-btn"><span>1.2</span> Observations</a>
       <a href="#sec13" class="nav-btn"><span>1.3</span> Photon model</a>
-      <a href="#sec14" class="nav-btn"><span>1.4</span> Equation</a>
+      <a href="#sec14" class="nav-btn"><span>1.4</span> Equations &amp; graphs</a>
       <a href="#sec15" class="nav-btn"><span>1.5</span> Significance</a>
       <a href="#sec16" class="nav-btn"><span>1.6</span> Key terms</a>
       <a href="#sec1traps" class="nav-btn">Common traps</a>
@@ -356,18 +310,20 @@
           <li>The cathode and anode form a photocell connected to a microammeter and a variable d.c. power supply to measure the photocurrent for different applied potentials.</li>
         </ul>
         <div class="card-note">
-          <strong>HKDSE note:</strong> use of gold-leaf electroscope and practical applications of photocells are not required in the syllabus; only the basic photocell arrangement and its behaviour are examined.
+          <strong>HKDSE note:</strong> Use of gold-leaf electroscope and practical applications of photocells are <strong>not required</strong> in the syllabus.
+          Focus on the basic photocell arrangement and its behaviour.
         </div>
       </div>
 
-            <div class="card">
+      <div class="card">
         <h2 id="sec12">1.2 Main observations <span class="sec-pill">Evidence</span></h2>
         <ul class="key-list">
           <li><strong>Threshold frequency</strong> <em>f</em><sub>0</sub>: for <em>f</em> &lt; <em>f</em><sub>0</sub>, no photoelectrons are emitted, regardless of light intensity.</li>
           <li>For <em>f</em> &gt; <em>f</em><sub>0</sub>, emission of photoelectrons is <strong>almost instantaneous</strong>, even for very weak light.</li>
           <li>At fixed <em>f</em> &gt; <em>f</em><sub>0</sub>, increasing light intensity increases the <strong>photocurrent</strong> (number of electrons emitted per second).</li>
-          <li>For a given metal, the maximum kinetic energy (or stopping potential) of the photoelectrons depends only on <em>f</em>, not on light intensity.</li>
+          <li>For a given metal, the <strong>maximum kinetic energy</strong> (or stopping potential) of the photoelectrons depends only on <em>f</em>, not on light intensity.</li>
         </ul>
+
         <h3>Comparison: wave model vs photon model</h3>
         <table class="compare-table">
           <thead>
@@ -384,14 +340,14 @@
               <td>Each photon has energy <em>hf</em>. If <em>hf</em> &lt; &phi;, no electron can escape. Increasing intensity only increases the number of photons, not the energy of each photon.</td>
             </tr>
             <tr>
-              <td>For <em>f</em> &gt; <em>f</em><sub>0</sub>, emission of photoelectrons is almost instantaneous, even for very weak light.</td>
-              <td>At very low intensity, the wave carries little power, so surface electrons should need a noticeable time to accumulate enough energy before leaving the metal.</td>
+              <td>For <em>f</em> &gt; <em>f</em><sub>0</sub>, emission is almost instantaneous, even for very weak light.</td>
+              <td>At very low intensity, the wave carries little power, so surface electrons should need time to accumulate enough energy before leaving the metal.</td>
               <td>A single photon can give all its energy to one electron in one interaction, so emission occurs without time lag provided <em>hf</em> &gt; &phi;.</td>
             </tr>
             <tr>
-              <td>For a given metal, the maximum kinetic energy (or stopping potential) of photoelectrons depends only on <em>f</em>, not on light intensity.</td>
-              <td>If light is a wave, higher intensity (larger amplitude) should give more energy to each electron &rarr; larger maximum kinetic energy is expected.</td>
-              <td>Einstein&rsquo;s equation <em>K</em><sub>max</sub> = <em>hf</em> &minus; &phi; shows that the maximum energy depends only on frequency. Intensity changes the number of emitted electrons, not <em>K</em><sub>max</sub>.</td>
+              <td>For a given metal, the maximum kinetic energy (or stopping potential) depends only on <em>f</em>, not on intensity.</td>
+              <td>Higher intensity (larger amplitude) should give more energy to each electron &rarr; larger maximum kinetic energy is expected.</td>
+              <td><em>K</em><sub>max</sub> = <em>hf</em> &minus; &phi; shows maximum energy depends only on frequency. Intensity changes the number of emitted electrons, not <em>K</em><sub>max</sub>.</td>
             </tr>
             <tr>
               <td>At fixed <em>f</em> &gt; <em>f</em><sub>0</sub>, photocurrent increases with light intensity.</td>
@@ -406,12 +362,10 @@
         <h2 id="sec13">1.3 Photon model of light <span class="sec-pill">Model</span></h2>
         <ul class="key-list">
           <li>Light consists of particles called <strong>photons</strong>.</li>
-          <li>Energy of each photon:
-            <span class="eq">E = h f</span>
-            where <em>h</em> is Planck constant and <em>f</em> is frequency.
-          </li>
-          <li>At a given <em>f</em>, the intensity <em>I</em> of the light is proportional to the number of photons incident per second per unit area. Higher intensity &rarr; more photons per second &rarr; more photoelectrons are emitted (larger photocurrent).</li>
-          <li>For a monochromatic beam of power <em>P</em> and frequency <em>f</em>, the number of photons emitted per second is <strong>P &divide; (h f)</strong>.</li>
+          <li>Energy of each photon: <span class="eq">E = h f</span></li>
+          <li>At a given <em>f</em>, the intensity <em>I</em> is proportional to the number of photons incident per second per unit area.
+            Higher intensity &rarr; more photons per second &rarr; larger photocurrent.</li>
+          <li>For a monochromatic beam of power <em>P</em> and frequency <em>f</em>, number of photons emitted per second is <strong>P &divide; (h f)</strong>.</li>
         </ul>
       </div>
 
@@ -421,46 +375,53 @@
         <span class="eq">h f = &phi; + <span class="frac"><span class="top">1</span><span class="bottom">2</span></span> m<sub>e</sub> v<sub>max</sub><sup>2</sup></span>
         <span class="eq">K<sub>max</sub> = <span class="frac"><span class="top">1</span><span class="bottom">2</span></span> m<sub>e</sub> v<sub>max</sub><sup>2</sup> = h f - &phi;</span>
         <ul class="key-list">
-          <li><strong>&phi;</strong> (phi): work function of the metal (minimum energy needed to just remove an electron from the surface).</li>
-          <li><strong>v</strong><sub>max</sub>: maximum speed of emitted photoelectrons.</li>
-          <li>Electrons inside a metal have different initial energies and depths. As a result, photoelectrons are emitted with a <strong>range</strong> of kinetic energies from 0 up to <em>K</em><sub>max</sub>.</li>
+          <li><strong>&phi;</strong> (work function): minimum energy required to just remove an electron from the surface.</li>
+          <li>Photoelectrons are emitted with a <strong>range</strong> of kinetic energies from 0 up to <em>K</em><sub>max</sub>.</li>
         </ul>
+
         <h3>Threshold frequency</h3>
         <p>At threshold, electrons just escape with zero kinetic energy:</p>
         <span class="eq">&phi; = h f<sub>0</sub></span>
-        <p>The corresponding <strong>threshold wavelength</strong> &lambda;<sub>0</sub> satisfies
-          <span class="eq">f<sub>0</sub> = <span class="frac"><span class="top">c</span><span class="bottom">&lambda;<sub>0</sub></span></span>, so &lambda;<sub>0</sub> = <span class="frac"><span class="top">c</span><span class="bottom">f<sub>0</sub></span></span>.</span>
+        <p>
+          The corresponding threshold wavelength &lambda;<sub>0</sub> satisfies
+          <span class="eq">f<sub>0</sub> = <span class="frac"><span class="top">c</span><span class="bottom">&lambda;<sub>0</sub></span></span>, so &lambda;<sub>0</sub> = <span class="frac"><span class="top">c</span><span class="bottom">f<sub>0</sub></span></span></span>.
         </p>
-        <ul class="key-list">
-          <li>Different metals have different work functions, so they have different threshold frequencies (and threshold wavelengths).</li>
-          <li>A smaller work function &rarr; lower threshold frequency (larger threshold wavelength), so electrons are more easily emitted.</li>
-        </ul>
-        <span class="eq">1&nbsp;eV = 1.60 &times; 10<sup>&minus;19</sup> J</span>
+
         <h3>Stopping potential</h3>
-        <p>When a retarding potential <em>V</em><sub>s</sub> just stops the most energetic electrons:</p>
-        <span class="eq">e V<sub>s</sub> = <span class="frac"><span class="top">1</span><span class="bottom">2</span></span> m<sub>e</sub> v<sub>max</sub><sup>2</sup> = h f - &phi;</span>
+        <p>
+          When a retarding potential is just enough to stop the most energetic photoelectrons,
+          its <strong>magnitude</strong> is the stopping potential <em>V</em><sub>s</sub>.
+          (If the anode is made negative, at stopping: <em>V</em> = &minus;<em>V</em><sub>s</sub>.)
+        </p>
+        <span class="eq">e V<sub>s</sub> = K<sub>max</sub> = h f - &phi;</span>
         <div class="eq" style="margin-top:6px;">
           Graph of <em>V</em><sub>s</sub> against <em>f</em> is a straight line with slope
           <strong><span class="frac"><span class="top">h</span><span class="bottom">e</span></span></strong>
           and intercept
           <strong><span class="frac"><span class="top">&minus;&phi;</span><span class="bottom">e</span></span></strong>.
         </div>
+        <div class="card-note">
+          <strong>HKDSE note:</strong> You are not required to learn the detailed design/history of Millikan&rsquo;s photoelectric experiment.
+          However, using the <em>V</em><sub>s</sub>–<em>f</em> straight-line relationship to find <em>f</em><sub>0</sub>, <em>h</em>, or &phi; is examinable.
+        </div>
+
         <h3>Alternative form in terms of wavelength</h3>
-        <p>Since <em>c</em> = <em>f</em>&lambda;, Einstein&#8217;s equation can also be written as</p>
+        <p>Since <em>c</em> = <em>f</em>&lambda;, Einstein&rsquo;s equation can also be written as</p>
         <span class="eq">K<sub>max</sub> = h f - &phi; = <span class="frac"><span class="top">h c</span><span class="bottom">&lambda;</span></span> - &phi;</span>
-        <p>Therefore, a graph of K<sub>max</sub> against <span class="frac"><span class="top">1</span><span class="bottom">&lambda;</span></span> is a straight line with:</p>
+        <p>Therefore, a graph of <em>K</em><sub>max</sub> against <span class="frac"><span class="top">1</span><span class="bottom">&lambda;</span></span> is a straight line with:</p>
         <ul class="key-list">
           <li>slope <strong>h c</strong> (same for all metals)</li>
           <li>vertical intercept <strong>&minus;&phi;</strong></li>
           <li>horizontal intercept at <span class="frac"><span class="top">1</span><span class="bottom">&lambda;<sub>0</sub></span></span>, which gives the threshold wavelength &lambda;<sub>0</sub></li>
         </ul>
+
         <h3>Photocurrent versus applied potential (qualitative)</h3>
         <ul class="key-list">
           <li>At <em>V</em> = 0, some photoelectrons still reach the anode &rarr; a non-zero photocurrent flows if <em>f</em> &gt; <em>f</em><sub>0</sub>.</li>
-          <li>As the anode is made more positive (increasing accelerating potential), more emitted electrons are collected and the photocurrent increases, then reaches a <strong>saturation value</strong> when all emitted electrons are collected.</li>
-          <li>If the anode is made negative, the potential retards the electrons. The photocurrent decreases and becomes zero at the <strong>stopping potential</strong> <em>V</em><sub>s</sub>, when even the most energetic photoelectrons can just no longer reach the anode.</li>
-          <li>For a given frequency <em>f</em> &gt; <em>f</em><sub>0</sub>, increasing the light intensity increases the number of photons incident per second. More electrons are emitted per second, so the <strong>saturation photocurrent</strong> increases but the stopping potential <em>V</em><sub>s</sub> remains unchanged.</li>
-          <li>For a given intensity, increasing the frequency (above <em>f</em><sub>0</sub>) increases the maximum kinetic energy K<sub>max</sub> of photoelectrons, so the stopping potential <em>V</em><sub>s</sub> becomes more negative in magnitude, while the saturation photocurrent stays approximately the same.</li>
+          <li>As the anode is made more positive, more emitted electrons are collected and the photocurrent increases, then reaches a <strong>saturation value</strong> when all emitted electrons are collected.</li>
+          <li>If the anode is made negative, the potential retards the electrons. The photocurrent decreases and becomes zero when the retarding potential is just enough to stop the most energetic photoelectrons.</li>
+          <li>For fixed <em>f</em> &gt; <em>f</em><sub>0</sub>, increasing intensity increases the saturation photocurrent but <em>V</em><sub>s</sub> remains unchanged.</li>
+          <li>For fixed intensity, increasing <em>f</em> (above <em>f</em><sub>0</sub>) increases <em>K</em><sub>max</sub> and hence increases <em>V</em><sub>s</sub>, while the saturation photocurrent stays approximately the same.</li>
         </ul>
       </div>
 
@@ -497,20 +458,20 @@
             <p><strong>Photoelectric effect</strong>: emission of electrons from the surface of a metal when electromagnetic radiation of sufficiently high frequency is incident on it.</p>
           </div>
           <div class="term-panel" id="panel-term-photon">
-            <p><strong>Photon</strong>: a quantum (packet) of light energy with energy <em>E</em> = <em>h f</em>, where <em>h</em> is Planck constant and <em>f</em> is the frequency of the light.</p>
+            <p><strong>Photon</strong>: a quantum (packet) of light energy with energy <em>E</em> = <em>h f</em>.</p>
           </div>
           <div class="term-panel" id="panel-term-photoelectron">
             <p><strong>Photoelectron</strong>: an electron emitted from a metal surface as a result of the photoelectric effect.</p>
           </div>
           <div class="term-panel" id="panel-term-work">
-            <p><strong>Work function</strong> <strong>&phi;</strong>: the minimum energy required to just remove an electron from the surface of a metal. It can be expressed in joule (J) or electron‑volt (eV).</p>
+            <p><strong>Work function</strong> <strong>&phi;</strong>: the minimum energy required to just remove an electron from the surface of a metal. It can be expressed in J or eV.</p>
             <span class="eq">&phi; = h f<sub>0</sub></span>
           </div>
           <div class="term-panel" id="panel-term-f0">
-            <p><strong>Threshold frequency</strong> <em>f</em><sub>0</sub>: the minimum frequency of incident radiation that can just cause photoelectrons to be emitted from a metal surface. For <em>f</em> &lt; <em>f</em><sub>0</sub>, no photoelectrons are emitted, no matter how intense the light is.</p>
+            <p><strong>Threshold frequency</strong> <em>f</em><sub>0</sub>: the minimum frequency that can just cause photoelectrons to be emitted. For <em>f</em> &lt; <em>f</em><sub>0</sub>, no photoelectrons are emitted no matter how intense the light is.</p>
           </div>
           <div class="term-panel" id="panel-term-vs">
-            <p><strong>Stopping potential</strong> <em>V</em><sub>s</sub>: the smallest retarding potential applied between anode and cathode that just stops the most energetic photoelectrons so that the photocurrent falls to zero.</p>
+            <p><strong>Stopping potential</strong> <em>V</em><sub>s</sub>: the smallest <em>retarding</em> potential magnitude that just stops the most energetic photoelectrons so that the photocurrent falls to zero.</p>
           </div>
           <div class="term-panel" id="panel-term-current">
             <p><strong>Photocurrent</strong>: the electric current in the external circuit due to the motion of photoelectrons emitted from the cathode and collected by the anode.</p>
@@ -521,21 +482,30 @@
       <div class="card card-traps" id="sec1traps">
         <h3>HKDSE common traps &amp; mistakes (Photoelectric effect)</h3>
         <ul class="key-list">
-          <li>Mixing up the roles of frequency and intensity: K<sub>max</sub> and <em>V</em><sub>s</sub> depend on <em>f</em> only (for <em>f</em> &gt; <em>f</em><sub>0</sub>), while photocurrent and saturation current depend mainly on intensity.</li>
-          <li>Not recognising from a current&ndash;voltage graph that the photocurrent reaches a saturation value at some positive potential, and thinking it will keep increasing indefinitely.</li>
-          <li>Confusing maximum kinetic energy, work function and stopping potential, and treating them as if they were the same quantity.</li>
+          <li>Mixing up the roles of frequency and intensity: <em>K</em><sub>max</sub> and <em>V</em><sub>s</sub> depend on <em>f</em> only (for <em>f</em> &gt; <em>f</em><sub>0</sub>), while photocurrent and saturation current depend mainly on intensity.</li>
+          <li>Not recognising from an <em>I</em>–<em>V</em> graph that the photocurrent reaches a <strong>saturation</strong> value at some positive potential.</li>
+          <li>Confusing maximum kinetic energy, work function and stopping potential as if they were the same quantity.</li>
           <li>Using <code>hf = eV<sub>s</sub></code> directly without subtracting the work function. Correct relation: <code>eV<sub>s</sub> = hf - &phi;</code>.</li>
           <li>Forgetting that no photoelectrons are emitted when <em>f</em> &lt; <em>f</em><sub>0</sub> (or &lambda; &gt; &lambda;<sub>0</sub>), no matter how strong the light is.</li>
           <li>Not converting properly between eV and J when substituting into equations.</li>
-          <li>Misreading a graph of <em>V</em><sub>s</sub> against <em>f</em> or K<sub>max</sub> against <span class="frac"><span class="top">1</span><span class="bottom">&lambda;</span></span>: assuming the straight line must pass through the origin, confusing the slope, or not identifying the threshold frequency / threshold wavelength from the axis intercepts.</li>
+          <li>Misreading a graph of <em>V</em><sub>s</sub> against <em>f</em> (or <em>K</em><sub>max</sub> against <span class="frac"><span class="top">1</span><span class="bottom">&lambda;</span></span>): assuming the line must pass through the origin, confusing the slope, or not identifying the threshold intercept correctly.</li>
         </ul>
       </div>
+
+      <!-- Required bottom navigation (Back / Previous / Next) -->
+      <div class="section-nav" style="margin-top: 18px;">
+        <a class="nav-btn" href="../index.html">&larr; Back to index</a>
+
+        <!-- Page-to-page navigation -->
+        <a class="nav-btn" href="../index.html">&larr; Previous</a>
+        <a class="nav-btn" href="rutherford.html">Next &rarr;</a>
+      </div>
+
     </section>
 
     <p style="font-size:0.85rem; color:var(--text-muted); margin-top:10px;">
-      End of Section 1 &mdash; Photoelectric effect (HKDSE E201-aligned).
+      End of E2 &mdash; Photoelectric Effect.
     </p>
   </main>
 </body>
 </html>
-
