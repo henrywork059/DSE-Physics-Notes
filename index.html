@@ -1,15 +1,197 @@
-<div class="card">
-  <h2>E2 — Atomic World</h2>
-  <p class="muted">Select a topic to open the note (single entry via index).</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DSE Physics Notes</title>
+  <link rel="stylesheet" href="./assets/site.css" />
+  <style>
+    /* Small, index-only enhancements (keeps your global site.css untouched) */
+    .topbar .subtitle { margin: 6px 0 0; opacity: 0.92; font-size: 0.95rem; }
+    .topbar .kpi { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 10px; border-radius: 999px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: rgba(255,255,255,0.95);
+      font-weight: 600; font-size: 0.88rem;
+    }
+    .chip .dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(255,255,255,0.75); }
 
-  <div class="section-nav">
-    <a class="nav-btn" href="./e2/photoelectric.html">E2 — Photoelectric Effect</a>
-    <a class="nav-btn" href="./e2/rutherford.html">E2 — Rutherford Atomic Model</a>
-    <a class="nav-btn" href="./e2/bohr_energy_levels.html">E2 — Bohr Model &amp; Energy Levels</a>
-    <a class="nav-btn" href="./e2/line_spectra.html">E2 — Hydrogen Line Spectra</a>
-    <a class="nav-btn" href="./e2/wave_particle_duality.html">E2 — Wave–Particle Duality (de Broglie)</a>
-    <a class="nav-btn" href="./e2/nanoscale_resolution.html">E2 — Nano Scale &amp; Optical Resolution (Rayleigh criterion)</a>
-    <a class="nav-btn" href="./e2/nanoscale_microscopes.html">E2 — Nano-scale Microscopes (TEM &amp; STM)</a>
-    <a class="nav-btn" href="./e2/nanotechnology.html">E2 — Nanotechnology: Applications &amp; Hazards</a>
-  </div>
-</div>
+    .e2-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 10px; }
+    .e2-header .muted { margin: 6px 0 0; }
+
+    .searchbar {
+      margin-top: 10px;
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    }
+    .searchbar input {
+      flex: 1;
+      min-width: 220px;
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 999px;
+      padding: 10px 12px;
+      font-size: 0.95rem;
+      outline: none;
+      background: #fff;
+    }
+    .searchbar input:focus { border-color: rgba(23,75,143,0.45); box-shadow: 0 0 0 3px rgba(23,75,143,0.12); }
+
+    .nav-btn .num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px;
+      border-radius: 999px;
+      background: rgba(23,75,143,0.12);
+      color: rgba(23,75,143,1);
+      font-weight: 800;
+      font-size: 0.85rem;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+
+    /* Make the first topic visually "start here" */
+    .nav-btn.start {
+      border-color: rgba(23,75,143,0.35);
+      box-shadow: 0 8px 22px rgba(23,75,143,0.12);
+      position: relative;
+    }
+    .nav-btn.start::after {
+      content: "Start here";
+      margin-left: 6px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(23,75,143,0.10);
+      color: rgba(23,75,143,1);
+      font-weight: 800;
+      font-size: 0.78rem;
+      border: 1px solid rgba(23,75,143,0.16);
+    }
+
+    .hint {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px dashed rgba(0,0,0,0.12);
+      background: rgba(23,75,143,0.04);
+    }
+
+    .hidden { display: none !important; }
+
+    footer.site-footer {
+      margin-top: 18px;
+      padding: 12px 0 20px;
+      opacity: 0.9;
+    }
+    footer.site-footer .muted { font-size: 0.92rem; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <h1>DSE Physics Notes</h1>
+      <p class="subtitle">Single-entry navigation • E2 — Atomic World</p>
+      <div class="kpi" aria-label="Summary">
+        <span class="chip"><span class="dot"></span>8 topics</span>
+        <span class="chip"><span class="dot"></span>Recommended order</span>
+        <span class="chip"><span class="dot"></span>Use Previous / Next inside notes</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- E2 — Atomic World (student-facing) -->
+    <div class="card">
+      <div class="e2-header">
+        <div>
+          <h2>E2 — Atomic World</h2>
+          <p class="muted">Open a note below. Photoelectric effect is the recommended starting point.</p>
+        </div>
+      </div>
+
+      <div class="searchbar" aria-label="Search topics">
+        <input id="topicSearch" type="search" placeholder="Search E2 topics (e.g. Bohr, spectra, TEM...)" autocomplete="off" />
+      </div>
+
+      <div class="section-nav" id="e2List" aria-label="E2 topic list">
+        <a class="nav-btn start" href="./e2/photoelectric.html" data-title="photoelectric effect">
+          <span class="num">1</span> E2 — Photoelectric Effect
+        </a>
+        <a class="nav-btn" href="./e2/rutherford.html" data-title="rutherford atomic model">
+          <span class="num">2</span> E2 — Rutherford Atomic Model
+        </a>
+        <a class="nav-btn" href="./e2/bohr_energy_levels.html" data-title="bohr model energy levels">
+          <span class="num">3</span> E2 — Bohr Model &amp; Energy Levels
+        </a>
+        <a class="nav-btn" href="./e2/line_spectra.html" data-title="hydrogen line spectra">
+          <span class="num">4</span> E2 — Hydrogen Line Spectra
+        </a>
+        <a class="nav-btn" href="./e2/wave_particle_duality.html" data-title="wave particle duality de broglie">
+          <span class="num">5</span> E2 — Wave–Particle Duality (de Broglie)
+        </a>
+        <a class="nav-btn" href="./e2/nanoscale_resolution.html" data-title="nano scale optical resolution rayleigh criterion">
+          <span class="num">6</span> E2 — Nano Scale &amp; Optical Resolution (Rayleigh criterion)
+        </a>
+        <a class="nav-btn" href="./e2/nanoscale_microscopes.html" data-title="nano-scale microscopes tem stm">
+          <span class="num">7</span> E2 — Nano-scale Microscopes (TEM &amp; STM)
+        </a>
+        <a class="nav-btn" href="./e2/nanotechnology.html" data-title="nanotechnology applications hazards">
+          <span class="num">8</span> E2 — Nanotechnology: Applications &amp; Hazards
+        </a>
+      </div>
+
+      <div class="hint">
+        <p class="muted" style="margin:0;">
+          Tip: every note page includes <strong>← Back to index</strong> and <strong>← Previous / Next →</strong> buttons at the top and bottom.
+        </p>
+      </div>
+    </div>
+
+    <!-- Optional: short how-to card (keeps index clean, helps students) -->
+    <div class="card">
+      <h2>How to study E2 efficiently</h2>
+      <ul class="muted" style="margin: 8px 0 0 18px;">
+        <li>Follow the order from Topic 1 → 8 (each page has Next →).</li>
+        <li>For revision, use the search box to jump to a topic quickly.</li>
+        <li>When doing past paper questions, open the related note and copy the wording style.</li>
+      </ul>
+    </div>
+
+    <footer class="site-footer">
+      <p class="muted">HKDSE Physics Notes • E2 — Atomic World</p>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      const input = document.getElementById('topicSearch');
+      const list = document.getElementById('e2List');
+      if (!input || !list) return;
+
+      const items = Array.from(list.querySelectorAll('a.nav-btn'));
+
+      function norm(s) {
+        return (s || '').toLowerCase().replace(/\s+/g, ' ').trim();
+      }
+
+      function applyFilter() {
+        const q = norm(input.value);
+        let shown = 0;
+        items.forEach(a => {
+          const t = norm(a.getAttribute('data-title') || a.textContent);
+          const ok = q === '' || t.includes(q);
+          a.classList.toggle('hidden', !ok);
+          if (ok) shown++;
+        });
+
+        // If everything is hidden, gently show all again when query is cleared.
+        // (No extra UI needed.)
+      }
+
+      input.addEventListener('input', applyFilter);
+      input.addEventListener('search', applyFilter);
+    })();
+  </script>
+</body>
+</html>
