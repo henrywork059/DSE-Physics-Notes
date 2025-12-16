@@ -6,100 +6,189 @@
   <title>DSE Physics Notes</title>
   <link rel="stylesheet" href="./assets/site.css" />
   <style>
-    :root {
-      --accent: #174b8f;
-      --accent-2: #3a7bd5;
-      --border: #d9e2ef;
+    :root{
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --text:#1f2a44;
+      --text-muted:#5b6b86;
+      --accent:#174b8f;
+      --accent-2:#3a7bd5;
+      --border:#d9e2ef;
+      --shadow:0 10px 30px rgba(31,42,68,0.08);
+      --radius:16px;
     }
 
-    /* Small, index-only enhancements (keeps your global site.css untouched) */
-    .topbar .subtitle { margin: 6px 0 0; opacity: 0.92; font-size: 0.95rem; }
-    .topbar .kpi { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; }
+    /* Index-only enhancements (keeps global site.css untouched) */
+    body{ background:var(--bg); color:var(--text); }
 
-    .chip {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 6px 10px; border-radius: 999px;
-      background: rgba(255,255,255,0.14);
-      border: 1px solid rgba(255,255,255,0.22);
-      color: rgba(255,255,255,0.95);
-      font-weight: 600; font-size: 0.88rem;
-    }
-    .chip .dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(255,255,255,0.75); }
+    .topbar .subtitle{ margin:6px 0 0; opacity:0.92; font-size:0.95rem; }
+    .topbar .kpi{ margin-top:10px; display:flex; flex-wrap:wrap; gap:8px; }
 
-    .e2-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 10px; }
-    .e2-header .muted { margin: 6px 0 0; }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px; border-radius:999px;
+      background:rgba(255,255,255,0.14);
+      border:1px solid rgba(255,255,255,0.22);
+      color:rgba(255,255,255,0.96);
+      font-weight:650; font-size:0.88rem;
+    }
+    .chip .dot{ width:8px; height:8px; border-radius:999px; background:rgba(255,255,255,0.75); }
 
-    .searchbar {
-      margin-top: 10px;
-      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    .e2-header{ display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:10px; }
+    .e2-header .muted{ margin:6px 0 0; }
+
+    .searchbar{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
     }
-    .searchbar input {
-      flex: 1;
-      min-width: 220px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 10px 12px;
-      font-size: 0.95rem;
-      outline: none;
-      background: #fff;
+
+    .searchbar input{
+      flex:1;
+      min-width:220px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      padding:10px 14px;
+      font-size:0.95rem;
+      outline:none;
+      background:#fff;
     }
-    .searchbar input:focus {
-      border-color: rgba(58,123,213,0.55);
-      box-shadow: 0 0 0 4px rgba(58,123,213,0.16);
+
+    .searchbar input:focus{
+      border-color:rgba(58,123,213,0.55);
+      box-shadow:0 0 0 4px rgba(58,123,213,0.16);
+    }
+
+    .btn-ghost{
+      border:1px solid var(--border);
+      background:#ffffff;
+      color:var(--accent);
+      border-radius:999px;
+      padding:10px 12px;
+      font-weight:700;
+      font-size:0.92rem;
+      cursor:pointer;
+      box-shadow:0 4px 14px rgba(31,42,68,0.06);
+      transition:transform 0.08s ease;
+    }
+
+    .btn-ghost:hover{ transform:translateY(-1px); }
+
+    .search-meta{
+      margin-top:8px;
+      color:var(--text-muted);
+      font-size:0.92rem;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid var(--border);
+      background:#f8fbff;
+      padding:6px 10px;
+      border-radius:999px;
+      color:var(--text);
+      font-weight:650;
+      font-size:0.88rem;
     }
 
     /* Match note pages: pill buttons + gradient number tag */
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: #ffffff;
-      color: var(--accent);
-      font-weight: 700;
-      font-size: 0.95rem;
-      text-decoration: none;
-      box-shadow: 0 4px 14px rgba(31, 42, 68, 0.06);
-      transition: transform 0.08s ease;
-    }
-    .nav-btn:hover { transform: translateY(-1px); }
-    .nav-btn:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 4px rgba(58,123,213,0.18), 0 4px 14px rgba(31, 42, 68, 0.06);
+    .nav-btn{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#ffffff;
+      color:var(--accent);
+      font-weight:750;
+      font-size:0.95rem;
+      text-decoration:none;
+      box-shadow:0 4px 14px rgba(31,42,68,0.06);
+      transition:transform 0.08s ease, box-shadow 0.08s ease;
+      min-height:44px;
     }
 
-    .nav-btn .num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 28px;
-      height: 22px;
-      padding: 0 8px;
-      border-radius: 999px;
-      color: #ffffff;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      font-weight: 800;
-      font-size: 0.82rem;
-      line-height: 1;
-      flex: 0 0 auto;
+    .nav-btn:hover{ transform:translateY(-1px); }
+
+    .nav-btn:focus-visible{
+      outline:none;
+      box-shadow:0 0 0 4px rgba(58,123,213,0.18), 0 4px 14px rgba(31,42,68,0.06);
     }
 
-    .hidden { display: none !important; }
+    .nav-left{ display:inline-flex; align-items:center; gap:10px; min-width:0; }
 
-    footer.site-footer {
-      margin-top: 18px;
-      padding: 12px 0 20px;
-      opacity: 0.9;
+    .nav-title{
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
-    footer.site-footer .muted { font-size: 0.92rem; }
+
+    .num{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:28px;
+      height:22px;
+      padding:0 8px;
+      border-radius:999px;
+      color:#ffffff;
+      background:linear-gradient(135deg, var(--accent), var(--accent-2));
+      font-weight:850;
+      font-size:0.82rem;
+      line-height:1;
+      flex:0 0 auto;
+    }
+
+    .tag{
+      flex:0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      border-radius:999px;
+      padding:6px 10px;
+      border:1px solid rgba(23,75,143,0.18);
+      background:rgba(23,75,143,0.06);
+      color:var(--accent);
+      font-weight:750;
+      font-size:0.86rem;
+      white-space:nowrap;
+    }
+
+    .hidden{ display:none !important; }
+
+    .empty-state{
+      margin-top:12px;
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:12px 14px;
+      background:#ffffff;
+      color:var(--text-muted);
+      box-shadow:0 6px 18px rgba(31,42,68,0.06);
+    }
+
+    footer.site-footer{ margin-top:18px; padding:12px 0 20px; opacity:0.92; }
+    footer.site-footer .muted{ font-size:0.92rem; }
 
     /* Grid layout for E2 buttons (index only) */
-    .section-nav#e2List {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 12px;
+    .section-nav#e2List{
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+      gap:12px;
+      margin-top:12px;
+    }
+
+    @media (max-width:520px){
+      .section-nav#e2List{ grid-template-columns:1fr; }
+      .nav-btn{ border-radius:16px; }
     }
   </style>
 </head>
@@ -118,7 +207,6 @@
 
   <main class="wrap">
 
-    <!-- E2 — Atomic World (student-facing) -->
     <div class="card">
       <div class="e2-header">
         <div>
@@ -128,44 +216,62 @@
       </div>
 
       <div class="searchbar" aria-label="Search topics">
-        <input id="topicSearch" type="search" placeholder="Search E2 topics (e.g. Bohr, spectra, TEM...)" autocomplete="off" />
+        <input id="topicSearch" type="search" placeholder="Search E2 topics (e.g. Bohr, spectra, TEM...)" autocomplete="off" aria-label="Search E2 topics" />
+        <button id="clearSearch" class="btn-ghost" type="button">Clear</button>
+      </div>
+
+      <div class="search-meta" aria-live="polite">
+        <span class="pill" id="matchCount">Showing 8 / 8</span>
+        <span class="muted">Try keywords like “Rayleigh”, “STM”, “de Broglie”.</span>
       </div>
 
       <div class="section-nav" id="e2List" aria-label="E2 topic list">
-        <a class="nav-btn" href="./e2/photoelectric.html" data-title="photoelectric effect">
-          <span class="num">1</span> E2 — Photoelectric Effect
+        <a class="nav-btn" href="./e2/photoelectric.html" data-title="photoelectric effect" data-tags="photoelectric threshold frequency work function stopping potential">
+          <span class="nav-left"><span class="num">1</span><span class="nav-title">E2 — Photoelectric Effect</span></span>
+          <span class="tag">Recommended first</span>
         </a>
-        <a class="nav-btn" href="./e2/rutherford.html" data-title="rutherford atomic model">
-          <span class="num">2</span> E2 — Rutherford Atomic Model
+        <a class="nav-btn" href="./e2/rutherford.html" data-title="rutherford atomic model" data-tags="rutherford alpha scattering nucleus gold foil">
+          <span class="nav-left"><span class="num">2</span><span class="nav-title">E2 — Rutherford Atomic Model</span></span>
+          <span class="tag">Model evidence</span>
         </a>
-        <a class="nav-btn" href="./e2/bohr_energy_levels.html" data-title="bohr model energy levels">
-          <span class="num">3</span> E2 — Bohr Model &amp; Energy Levels
+        <a class="nav-btn" href="./e2/bohr_energy_levels.html" data-title="bohr model energy levels" data-tags="bohr energy levels excitation ionization">
+          <span class="nav-left"><span class="num">3</span><span class="nav-title">E2 — Bohr Model &amp; Energy Levels</span></span>
+          <span class="tag">Quantisation</span>
         </a>
-        <a class="nav-btn" href="./e2/line_spectra.html" data-title="hydrogen line spectra">
-          <span class="num">4</span> E2 — Hydrogen Line Spectra
+        <a class="nav-btn" href="./e2/line_spectra.html" data-title="hydrogen line spectra" data-tags="hydrogen line spectra wavelength frequency">
+          <span class="nav-left"><span class="num">4</span><span class="nav-title">E2 — Hydrogen Line Spectra</span></span>
+          <span class="tag">Spectra</span>
         </a>
-        <a class="nav-btn" href="./e2/wave_particle_duality.html" data-title="wave particle duality de broglie">
-          <span class="num">5</span> E2 — Wave–Particle Duality (de Broglie)
+        <a class="nav-btn" href="./e2/wave_particle_duality.html" data-title="wave particle duality de broglie" data-tags="de broglie matter waves electron diffraction">
+          <span class="nav-left"><span class="num">5</span><span class="nav-title">E2 — Wave–Particle Duality (de Broglie)</span></span>
+          <span class="tag">Matter waves</span>
         </a>
-        <a class="nav-btn" href="./e2/nanoscale_resolution.html" data-title="nano scale optical resolution rayleigh criterion">
-          <span class="num">6</span> E2 — Nano Scale &amp; Optical Resolution (Rayleigh criterion)
+        <a class="nav-btn" href="./e2/nanoscale_resolution.html" data-title="nano scale optical resolution rayleigh criterion" data-tags="rayleigh criterion resolution diffraction limit">
+          <span class="nav-left"><span class="num">6</span><span class="nav-title">E2 — Nano Scale &amp; Optical Resolution (Rayleigh criterion)</span></span>
+          <span class="tag">Resolution</span>
         </a>
-        <a class="nav-btn" href="./e2/nanoscale_microscopes.html" data-title="nano-scale microscopes tem stm">
-          <span class="num">7</span> E2 — Nano-scale Microscopes (TEM &amp; STM)
+        <a class="nav-btn" href="./e2/nanoscale_microscopes.html" data-title="nano-scale microscopes tem stm" data-tags="tem stm electron microscope scanning tunnelling">
+          <span class="nav-left"><span class="num">7</span><span class="nav-title">E2 — Nano-scale Microscopes (TEM &amp; STM)</span></span>
+          <span class="tag">Microscopes</span>
         </a>
-        <a class="nav-btn" href="./e2/nanotechnology.html" data-title="nanotechnology applications hazards">
-          <span class="num">8</span> E2 — Nanotechnology: Applications &amp; Hazards
+        <a class="nav-btn" href="./e2/nanotechnology.html" data-title="nanotechnology applications hazards" data-tags="nanotechnology applications hazards risk">
+          <span class="nav-left"><span class="num">8</span><span class="nav-title">E2 — Nanotechnology: Applications &amp; Hazards</span></span>
+          <span class="tag">Applications</span>
         </a>
-      </div></div>
+      </div>
 
-    <!-- Optional: short how-to card (keeps index clean, helps students) -->
+      <div id="emptyState" class="empty-state hidden">
+        No topics match your search. Try shorter keywords (e.g. “Bohr”, “STM”, “Rayleigh”).
+      </div>
+    </div>
+
     <div class="card">
       <h2>How to study E2 efficiently</h2>
-      <ul class="muted" style="margin: 8px 0 0 18px;">
-        <li>Follow the order from Topic 1 → 8 (each page has Next →).</li>
-        <li>For revision, use the search box to jump to a topic quickly.</li>
+      <ol class="muted" style="margin: 10px 0 0 18px;">
+        <li>Follow Topic 1 → 8 once for full understanding.</li>
+        <li>Use the search box to jump to a topic during revision.</li>
         <li>When doing past paper questions, open the related note and copy the wording style.</li>
-      </ul>
+      </ol>
     </div>
 
     <footer class="site-footer">
@@ -176,31 +282,62 @@
   <script>
     (function () {
       const input = document.getElementById('topicSearch');
+      const clearBtn = document.getElementById('clearSearch');
       const list = document.getElementById('e2List');
+      const count = document.getElementById('matchCount');
+      const empty = document.getElementById('emptyState');
+
       if (!input || !list) return;
 
       const items = Array.from(list.querySelectorAll('a.nav-btn'));
+      const total = items.length;
 
       function norm(s) {
-        return (s || '').toLowerCase().replace(/\s+/g, ' ').trim();
+        const str = (s || '').toLowerCase();
+        let out = '';
+        let prevSpace = true;
+        for (let i = 0; i < str.length; i++) {
+          const ch = str[i];
+          const isWS = ch <= ' ';
+          if (isWS) {
+            if (!prevSpace) out += ' ';
+            prevSpace = true;
+          } else {
+            out += ch;
+            prevSpace = false;
+          }
+        }
+        return out.trim();
       }
 
       function applyFilter() {
         const q = norm(input.value);
         let shown = 0;
+
         items.forEach(a => {
-          const t = norm(a.getAttribute('data-title') || a.textContent);
-          const ok = q === '' || t.includes(q);
+          const title = norm(a.getAttribute('data-title') || a.textContent);
+          const tags = norm(a.getAttribute('data-tags') || '');
+          const ok = q === '' || title.includes(q) || tags.includes(q);
           a.classList.toggle('hidden', !ok);
           if (ok) shown++;
         });
 
-        // If everything is hidden, gently show all again when query is cleared.
-        // (No extra UI needed.)
+        if (count) count.textContent = 'Showing ' + shown + ' / ' + total;
+        if (empty) empty.classList.toggle('hidden', shown !== 0);
       }
 
       input.addEventListener('input', applyFilter);
       input.addEventListener('search', applyFilter);
+
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          input.value = '';
+          applyFilter();
+          input.focus();
+        });
+      }
+
+      applyFilter();
     })();
   </script>
 </body>
