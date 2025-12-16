@@ -2,246 +2,286 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>E2 Atomic World – 5. Wave–Particle Duality (de Broglie) (HKDSE)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E2 — Wave–Particle Duality (de Broglie) | DSE Physics Notes</title>
   <style>
     :root {
-      --bg: #f5f7fb;
-      --card-bg: #ffffff;
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1f2a44;
+      --text-muted: #5b6b86;
       --accent: #174b8f;
-      --accent-soft: #e1ecff;
-      --border: #d0d7e2;
-      --text-main: #111827;
-      --text-muted: #4b5563;
-      --danger: #b91c1c;
-      --danger-soft: #fef2f2;
+      --accent-2: #3a7bd5;
+      --border: #d9e2ef;
+      --shadow: 0 10px 30px rgba(31, 42, 68, 0.08);
+      --radius: 16px;
     }
-    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left,#e0ebff 0,#f5f7fb 40%,#f5f7fb 100%);
-      color: var(--text-main);
-      line-height: 1.6;
-      padding: 24px 18px 40px;
-      display: flex;
-      justify-content: center;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
     }
+
     main {
-      width: 100%;
-      max-width: 960px;
-      background: #f9fafb;
-      border-radius: 18px;
-      box-shadow: 0 16px 40px rgba(15,23,42,0.16);
-      border: 1px solid #e5e7eb;
-      padding: 24px 24px 32px;
-    }
-    header.page-header { margin-bottom: 18px; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; }
-    header.page-header h1 {
-      margin: 0 0 4px;
-      font-size: 1.8rem;
-      color: var(--accent);
-    }
-    header.page-header .meta {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-    .section-intro {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      margin: 8px 0 10px;
-    }
-    h2 {
-      position: relative;
-      scroll-margin-top: 90px;
-      margin-top: 16px;
-      margin-bottom: 6px;
-      color: var(--accent);
-      font-size: 1.3rem;
-    }
-    h3 {
-      margin-top: 12px;
-      margin-bottom: 4px;
-      color: #1f2937;
-      font-size: 1.02rem;
-    }
-    p { margin: 4px 0 8px; }
-    ul { margin: 4px 0 8px 20px; padding-left: 0; }
-    li { margin: 2px 0; }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: 12px;
+      max-width: 980px;
+      margin: 24px auto;
+      padding: 26px 22px 30px;
+      background: var(--card);
       border: 1px solid var(--border);
-      padding: 14px 18px 12px;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
-      margin-bottom: 14px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
-    .card-traps {
-      background: var(--danger-soft);
-      border-color: rgba(220,38,38,0.25);
-      border-left: 4px solid var(--danger);
-    }
-    .card-traps h3 { color: var(--danger); }
 
-    .card-note {
-      margin-top: 6px;
-      padding: 8px 10px;
-      border-radius: 10px;
-      background: #eff6ff;
-      border: 1px dashed #bfdbfe;
-      font-size: 0.88rem;
+    .page-header h1 {
+      margin: 0 0 6px;
+      font-size: 1.85rem;
+      letter-spacing: -0.02em;
+    }
+
+    .meta {
       color: var(--text-muted);
-    }
-    .card-note strong { color: var(--accent); }
-
-    .sec-pill {
-      display: inline-block;
-      margin-left: 8px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      font-size: 0.95rem;
     }
 
-    .eq {
-      display: block;
-      margin: 6px 0 10px 18px;
-      font-family: "Times New Roman", serif;
-      font-size: 1.0rem;
-      padding: 4px 10px;
-      background: #f3f4f6;
-      border-radius: 8px;
-      border-left: 3px solid var(--accent);
-      overflow-x: auto;
+    .section-intro {
+      margin: 14px 0 0;
+      font-size: 1.02rem;
+      color: var(--text);
     }
 
     .badge-strip {
+      margin: 14px 0 0;
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin: 10px 0 12px;
-      font-size: 0.75rem;
+      gap: 8px;
     }
+
     .badge {
-      padding: 2px 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
       border-radius: 999px;
-      border: 1px solid #e5e7eb;
-      background: #f9fafb;
-      color: #4b5563;
+      border: 1px solid var(--border);
+      background: #f8fbff;
+      color: var(--text);
+      font-size: 0.92rem;
     }
-    .badge.exam {
-      border-color: rgba(37,99,235,0.35);
-      background: rgba(59,130,246,0.06);
-      color: #1d4ed8;
-    }
-    .badge.skills {
-      border-color: rgba(16,185,129,0.35);
-      background: rgba(16,185,129,0.06);
-      color: #047857;
-    }
+
+    .badge.exam { border-color: rgba(23,75,143,0.35); }
+    .badge.skills { border-color: rgba(58,123,213,0.35); }
 
     .section-nav {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin: 8px 0 16px;
+      gap: 10px;
+      margin: 16px 0 6px;
+      padding: 0;
     }
+
     .nav-btn {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      padding: 5px 11px;
+      gap: 8px;
+      padding: 10px 12px;
       border-radius: 999px;
       border: 1px solid var(--border);
-      background: #e5edff;
-      color: var(--accent);
-      font-size: 0.82rem;
-      text-decoration: none;
-      cursor: pointer;
-      transition: background 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease;
-    }
-    .nav-btn:hover {
-      background: #d7e3ff;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 10px rgba(148,163,184,0.45);
-    }
-    .nav-btn span { font-weight: 700; }
-
-    .key-list li::marker { color: var(--accent); }
-    h2:target {
-      background: linear-gradient(to right, rgba(129,140,248,0.14), transparent);
-      padding-inline: 6px;
-      border-radius: 10px;
-    }
-
-    .term-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-top: 6px;
-    }
-    .term-list details {
-      border-radius: 10px;
-      border: 1px solid var(--border);
       background: #ffffff;
-      padding: 6px 10px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 14px rgba(31, 42, 68, 0.06);
+      transition: transform 0.08s ease;
     }
-    .term-list details[open] {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(23,75,143,0.15);
-      background: #f3f6ff;
+
+    .nav-btn:hover { transform: translateY(-1px); }
+
+    .nav-btn span {
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
     }
-    .term-summary {
-      cursor: pointer;
-      list-style: none;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+
+    section { margin-top: 12px; }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 16px 14px;
+      background: #ffffff;
+      box-shadow: 0 8px 22px rgba(31, 42, 68, 0.06);
+      margin: 12px 0;
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+      scroll-margin-top: 90px;
+    }
+
+    .card h3 {
+      margin: 12px 0 8px;
+      font-size: 1.05rem;
+    }
+
+    .sec-pill {
+      font-size: 0.8rem;
       font-weight: 700;
       color: var(--accent);
-    }
-    .term-summary::-webkit-details-marker { display: none; }
-    .term-summary::after {
-      content: "▾";
-      font-size: 0.7rem;
+      background: rgba(23,75,143,0.08);
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(23,75,143,0.12);
       margin-left: 8px;
-      color: var(--text-muted);
     }
-    details[open] > .term-summary::after { content: "▴"; }
 
-    footer {
-      margin-top: 18px;
-      color: var(--text-muted);
-      font-size: 0.86rem;
-      text-align: center;
+    ul.key-list {
+      margin: 0;
+      padding-left: 18px;
     }
-    .muted { color: var(--text-muted); }
+
+    .key-list li { margin: 6px 0; }
+    .key-list li::marker { color: var(--accent-2); }
+
+    .card-note {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-left: 4px solid var(--accent);
+      background: rgba(23,75,143,0.06);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .eq {
+      display: inline-block;
+      margin: 8px 0;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fbfdff;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 1.08rem;
+    }
+
+    .frac {
+      display: inline-block;
+      vertical-align: middle;
+      text-align: center;
+      line-height: 1.1;
+      margin: 0 2px;
+    }
+
+    .frac .top { display: block; border-bottom: 1px solid currentColor; padding: 0 3px 2px; }
+    .frac .bottom { display: block; padding: 2px 3px 0; }
+
+    .calc {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .calc .box {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #ffffff;
+    }
+
+    .calc label {
+      display: block;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+
+    .calc input, .calc select {
+      width: 100%;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fbfdff;
+      font-size: 0.98rem;
+      outline: none;
+    }
+
+    .calc input:focus, .calc select:focus {
+      box-shadow: 0 0 0 4px rgba(58,123,213,0.16);
+      border-color: rgba(58,123,213,0.55);
+    }
+
+    .calc .out {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-weight: 800;
+      color: var(--accent);
+      font-size: 1.05rem;
+      margin-top: 8px;
+      word-break: break-word;
+    }
+
+    .calc .hint {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    .card-traps {
+      border-left: 5px solid #f59e0b;
+      background: #fffbeb;
+    }
+
+    :target {
+      outline: 0;
+      box-shadow: 0 0 0 4px rgba(58,123,213,0.18);
+      border-radius: 10px;
+      padding: 2px 4px;
+    }
+
+    @media (max-width: 900px) {
+      .calc { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      main { padding: 18px 14px 24px; border-radius: 0; margin: 0; }
+    }
   </style>
 </head>
 <body>
   <main>
     <header class="page-header">
       <h1>E2 — Wave–Particle Duality (de Broglie)</h1>
-      <div class="meta">HKDSE Physics &mdash; Elective E2: Atomic World &middot; Particles or Waves (Topic d)</div>
+      <div class="meta">
+        HKDSE Physics &mdash; Elective E2: Atomic World &middot; Evidence of duality and de Broglie wavelength.
+      </div>
     </header>
 
-    <!-- Top page-to-page navigation (required) -->
+    <!-- Required top navigation (Back / Previous / Next) -->
     <div class="section-nav">
       <a class="nav-btn" href="../index.html">&larr; Back to index</a>
+
+      <!-- Page-to-page navigation -->
       <a class="nav-btn" href="line_spectra.html">&larr; Previous</a>
       <a class="nav-btn" href="nanoscale_resolution.html">Next &rarr;</a>
     </div>
 
-    <p class="section-intro">Realise the wave&ndash;particle duality of <strong>electrons</strong> and <strong>light</strong>, describe the evidences, and apply the de Broglie formula <span class="muted">(&lambda; = h/p)</span> in numerical problems.</p>
+    <p class="section-intro">
+      Describe the <strong>wave&ndash;particle duality</strong> of light and electrons, quote the evidence (diffraction/interference and photoelectric effect), and apply de Broglie&rsquo;s relation to find the wavelength of a moving particle.
+    </p>
 
     <div class="badge-strip">
-      <span class="badge exam">Exam focus: evidence + de Broglie &lambda; = h/p</span>
-      <span class="badge skills">Skills: compare wavelengths; use K to find p</span>
-      <span class="badge skills">Link: TEM resolution depends on &lambda;</span>
+      <span class="badge exam">Exam focus: evidence + &lambda; = h / p</span>
+      <span class="badge skills">Skills: compare wavelengths; use p = mv or p = (2mK)<sup>1/2</sup></span>
+      <span class="badge skills">Link: TEM needs small &lambda;</span>
     </div>
 
     <!-- Section jump bar -->
@@ -257,12 +297,12 @@
     <section>
       <div class="card">
         <h2 id="sec51">5.1 What is wave&ndash;particle duality? <span class="sec-pill">Concept</span></h2>
-        <p>In classical physics, <strong>waves</strong> and <strong>particles</strong> are very different. In the microscopic world, experiments show that:</p>
+        <p>In classical physics, <strong>waves</strong> and <strong>particles</strong> are described differently. Experiments in the microscopic world show that:</p>
         <ul class="key-list">
-          <li><strong>Light</strong> (well known as a wave) can show <strong>particle</strong> behaviour.</li>
-          <li><strong>Electrons</strong> (well known as particles) can show <strong>wave</strong> behaviour.</li>
+          <li><strong>Light</strong> (often described as a wave) can show <strong>particle</strong> behaviour.</li>
+          <li><strong>Electrons</strong> (often described as particles) can show <strong>wave</strong> behaviour.</li>
         </ul>
-        <div class="card-note"><strong>HKDSE focus:</strong> You should be able to <em>describe the evidences</em> and <em>use the de Broglie formula</em> to link the wave and particle properties.</div>
+        <div class="card-note"><strong>HKDSE focus:</strong> You should be able to <em>state the evidences</em> and <em>use the de Broglie formula</em> to link the wave and particle properties.</div>
       </div>
 
       <div class="card">
@@ -275,15 +315,15 @@
 
         <h3>(B) Electrons (matter)</h3>
         <ul class="key-list">
-          <li><strong>Particle behaviour:</strong> electrons have mass and charge; they carry momentum and can be counted as individual impacts.</li>
+          <li><strong>Particle behaviour:</strong> electrons have mass and charge; they carry momentum and can be detected as individual impacts.</li>
           <li><strong>Wave behaviour:</strong> electrons can form <strong>diffraction</strong> and <strong>interference</strong> patterns.</li>
         </ul>
 
         <div class="card-note">
-          <strong>Typical experimental observations:</strong>
+          <strong>Typical observations (electron diffraction):</strong>
           <ul class="key-list">
             <li>Electron beam onto a <strong>thin metal foil / crystal</strong> &rarr; a diffraction pattern of bright and dark rings.</li>
-            <li>Electron beam through a <strong>double slit</strong> (very small slit width) &rarr; an interference pattern.</li>
+            <li>Electron beam through a very small <strong>double slit</strong> &rarr; an interference pattern.</li>
           </ul>
           These give strong support to the <strong>wave nature</strong> of electrons.
         </div>
@@ -291,15 +331,16 @@
 
       <div class="card">
         <h2 id="sec53">5.3 de Broglie wavelength <span class="sec-pill">Formula</span></h2>
-        <p>de Broglie proposed that a moving particle is associated with a wavelength (&ldquo;matter wave&rdquo;):</p>
-        <span class="eq">&lambda; = <span style="white-space:nowrap;">\(\dfrac{h}{p}\)</span></span>
+        <p>de Broglie proposed that a moving particle is associated with a wavelength (a &ldquo;matter wave&rdquo;):</p>
+        <span class="eq">&lambda; = <span class="frac"><span class="top">h</span><span class="bottom">p</span></span></span>
         <ul class="key-list">
           <li><strong>&lambda;</strong>: de Broglie wavelength (m)</li>
           <li><strong>h</strong>: Planck constant (J s)</li>
-          <li><strong>p</strong>: momentum (kg m s<sup>&ndash;1</sup>)</li>
+          <li><strong>p</strong>: momentum (kg m s<sup>&minus;1</sup>)</li>
         </ul>
 
-        <p class="muted">For a non-relativistic particle, <strong>p = mv</strong>, so &lambda; = h/(mv).</p>
+        <p>For a non-relativistic particle, <span class="eq">p = mv</span>, so</p>
+        <span class="eq">&lambda; = <span class="frac"><span class="top">h</span><span class="bottom">mv</span></span></span>
 
         <div class="card-note">
           <strong>Important trend:</strong> larger momentum <strong>p</strong> &rarr; smaller wavelength <strong>&lambda;</strong>.
@@ -310,89 +351,197 @@
         <h2 id="sec54">5.4 Problem skills (HKDSE style) <span class="sec-pill">Apply</span></h2>
 
         <h3>(A) Compare wavelengths (same speed)</h3>
-        <p>If two particles travel at the same speed, then <strong>&lambda; \(\propto\) 1/m</strong>.</p>
+        <p>If two particles travel at the same speed, then <span class="eq">&lambda; &prop; 1/m</span>.</p>
         <ul class="key-list">
           <li>If mass doubles &rarr; wavelength halves.</li>
           <li>If mass is half &rarr; wavelength doubles.</li>
         </ul>
 
         <h3>(B) Given kinetic energy K</h3>
-        <p>Using <span class="muted">K = p<sup>2</sup>/(2m)</span> (non-relativistic),</p>
-        <span class="eq">p = \(\sqrt{2mK}\)  &nbsp; &rarr; &nbsp; &lambda; = \(\dfrac{h}{\sqrt{2mK}}\)</span>
+        <p>Using <span class="eq">K = p<sup>2</sup> / (2m)</span> (non-relativistic),</p>
+        <span class="eq">p = (2mK)<sup>1/2</sup> &nbsp;&rarr;&nbsp; &lambda; = <span class="frac"><span class="top">h</span><span class="bottom">(2mK)<sup>1/2</sup></span></span></span>
 
-        <h3>(C) Typical numerical examples</h3>
+        <h3>(C) Numerical examples (order of magnitude)</h3>
         <div class="card-note">
-          <p><strong>Example 1 (order of magnitude):</strong></p>
-          <ul class="key-list">
-            <li>50 g ball at 60 m s<sup>&ndash;1</sup>: &lambda; = h/(mv) &asymp; 2.21 &times; 10<sup>&ndash;34</sup> m (extremely small, no observable diffraction).</li>
-            <li>Electron at 5.0 &times; 10<sup>6</sup> m s<sup>&ndash;1</sup>: &lambda; &asymp; 1.46 &times; 10<sup>&ndash;10</sup> m (comparable to atomic spacing, diffraction possible).</li>
-          </ul>
-          <p class="muted">This explains why wave behaviour is obvious for microscopic particles but not for everyday objects.</p>
+          <p><strong>Example 1:</strong> 50 g ball at 60 m s<sup>&minus;1</sup></p>
+          <p><strong>Formula:</strong> <span class="eq">&lambda; = h / (mv)</span></p>
+          <p><strong>Substitute:</strong> <span class="eq">&lambda; = 6.63&times;10<sup>&minus;34</sup> / (0.050 &times; 60)</span></p>
+          <p><strong>Answer:</strong> <span class="eq">&lambda; &asymp; 2.21&times;10<sup>&minus;34</sup> m</span> (extremely small, no observable diffraction).</p>
         </div>
 
         <div class="card-note">
-          <p><strong>Example 2 (fast electron):</strong> Find &lambda; for an electron of kinetic energy 10 keV.</p>
+          <p><strong>Example 2:</strong> Electron at 5.0&times;10<sup>6</sup> m s<sup>&minus;1</sup></p>
+          <p><strong>Formula:</strong> <span class="eq">&lambda; = h / (mv)</span></p>
+          <p><strong>Answer:</strong> <span class="eq">&lambda; &asymp; 1.46&times;10<sup>&minus;10</sup> m</span> (comparable to atomic spacing, diffraction possible).</p>
+        </div>
+
+        <div class="card-note">
+          <p><strong>Example 3:</strong> Electron of kinetic energy 10 keV</p>
           <ul class="key-list">
-            <li>Convert: 10 keV = 10 &times; 10<sup>3</sup> eV = 10 &times; 10<sup>3</sup> &times; 1.60 &times; 10<sup>&ndash;19</sup> J = 1.60 &times; 10<sup>&ndash;15</sup> J</li>
-            <li>p = \(\sqrt{2m_e K}\)</li>
-            <li>&lambda; = h/p &asymp; 1.23 &times; 10<sup>&ndash;11</sup> m</li>
+            <li>Convert: 10 keV = 10&times;10<sup>3</sup> eV = 1.60&times;10<sup>&minus;15</sup> J</li>
+            <li>Use <span class="eq">p = (2mK)<sup>1/2</sup></span>, then <span class="eq">&lambda; = h/p</span></li>
+            <li><strong>Answer:</strong> <span class="eq">&lambda; &asymp; 1.23&times;10<sup>&minus;11</sup> m</span></li>
           </ul>
         </div>
 
         <div class="card-note">
-          <strong>Link to TEM (next topics):</strong> If an electron is accelerated through a p.d. <strong>V</strong>, then its kinetic energy is approximately <strong>K = eV</strong> (in J). So you may use
-          <div class="eq">&lambda; = \(\dfrac{h}{\sqrt{2m_e eV}}\)</div>
-          to estimate what voltage is needed to achieve wavelengths of the order of atomic size.
+          <strong>Link to microscopes:</strong> If an electron is accelerated through a p.d. <strong>V</strong>, then its kinetic energy is approximately <span class="eq">K = eV</span> (in J). So you may use
+          <div class="eq">&lambda; = <span class="frac"><span class="top">h</span><span class="bottom">(2m<sub>e</sub> eV)<sup>1/2</sup></span></span></div>
+          to estimate the voltage needed for &lambda; of the order of atomic size.
+        </div>
+
+        <h3>(Optional) Quick calculator</h3>
+        <div class="calc" aria-label="De Broglie calculator">
+          <div class="box">
+            <label for="calcMode">Choose input type</label>
+            <select id="calcMode">
+              <option value="mv">Given mass m and speed v</option>
+              <option value="p">Given momentum p</option>
+              <option value="eV">Electron accelerated through p.d. V</option>
+            </select>
+
+            <div id="row-m" style="margin-top:10px;">
+              <label for="mVal">Mass m (kg)</label>
+              <input id="mVal" type="number" step="any" value="9.11e-31" />
+              <div class="hint">Tip: electron mass &asymp; 9.11&times;10<sup>&minus;31</sup> kg</div>
+            </div>
+
+            <div id="row-v" style="margin-top:10px;">
+              <label for="vVal">Speed v (m s<sup>&minus;1</sup>)</label>
+              <input id="vVal" type="number" step="any" value="5.0e6" />
+            </div>
+
+            <div id="row-p" style="margin-top:10px; display:none;">
+              <label for="pVal">Momentum p (kg m s<sup>&minus;1</sup>)</label>
+              <input id="pVal" type="number" step="any" value="5.40e-23" />
+            </div>
+
+            <div id="row-V" style="margin-top:10px; display:none;">
+              <label for="VVal">Voltage V (V)</label>
+              <input id="VVal" type="number" step="any" value="10000" />
+              <div class="hint">Uses non-relativistic approximation: <strong>K &asymp; eV</strong>.</div>
+            </div>
+          </div>
+
+          <div class="box">
+            <div style="font-weight:800; color:var(--accent);">Result</div>
+            <div class="out" id="lambdaOut">&lambda; = ...</div>
+            <div class="hint" id="lambdaHint">
+              Reminder: &lambda; becomes smaller when momentum becomes larger.
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="card">
         <h2 id="sec55">5.5 Key terms <span class="sec-pill">Terms</span></h2>
-        <div class="term-list">
-          <details>
-            <summary class="term-summary">Wave&ndash;particle duality</summary>
-            <p>Both wave and particle properties can be shown by the same object (light or electrons), depending on the experiment.</p>
-          </details>
-          <details>
-            <summary class="term-summary">de Broglie wavelength</summary>
-            <p>The wavelength associated with a moving particle: <strong>&lambda; = h/p</strong>.</p>
-          </details>
-          <details>
-            <summary class="term-summary">Why diffraction happens for electrons</summary>
-            <p>Diffraction is significant when the wavelength is comparable to the spacing/size involved (atomic spacing is typically about 10<sup>&ndash;10</sup> m).</p>
-          </details>
-        </div>
+        <ul class="key-list">
+          <li><strong>Wave&ndash;particle duality:</strong> both wave and particle properties can be shown by the same object, depending on the experiment.</li>
+          <li><strong>de Broglie wavelength:</strong> wavelength associated with a moving particle, given by <span class="eq">&lambda; = h/p</span>.</li>
+          <li><strong>Diffraction condition (idea):</strong> diffraction is significant when the wavelength is comparable to the spacing/size involved (atomic spacing is typically about 10<sup>&minus;10</sup> m).</li>
+        </ul>
       </div>
 
       <div class="card card-traps" id="sec5traps">
         <h2>Common traps</h2>
-        <h3>1) Mixing up the trend</h3>
         <ul class="key-list">
-          <li>More momentum (bigger <strong>p</strong>) &rarr; <strong>smaller</strong> de Broglie wavelength (<strong>&lambda;</strong>).</li>
-        </ul>
-
-        <h3>2) Forgetting unit conversion</h3>
-        <ul class="key-list">
-          <li>1 eV = 1.60 &times; 10<sup>&ndash;19</sup> J (needed when K is in eV or keV).</li>
-        </ul>
-
-        <h3>3) Using out-of-syllabus extras</h3>
-        <ul class="key-list">
-          <li>Relativistic corrections are not required for standard HKDSE questions in this topic. Use the non-relativistic relations given above unless the question explicitly provides otherwise.</li>
+          <li><strong>Trend:</strong> larger momentum (bigger <span class="eq">p</span>) &rarr; smaller de Broglie wavelength (smaller <span class="eq">&lambda;</span>).</li>
+          <li><strong>Unit conversion:</strong> 1 eV = 1.60&times;10<sup>&minus;19</sup> J (needed when kinetic energy is in eV or keV).</li>
+          <li><strong>Over-adding extras:</strong> relativistic corrections are not required for standard HKDSE questions in this topic. Use the non-relativistic relations above unless the question explicitly provides otherwise.</li>
         </ul>
       </div>
     </section>
 
-    <!-- Bottom page-to-page navigation (required) -->
-    <div class="section-nav">
+    <!-- Required bottom navigation (Back / Previous / Next) -->
+    <div class="section-nav" style="margin-top: 18px;">
       <a class="nav-btn" href="../index.html">&larr; Back to index</a>
+
+      <!-- Page-to-page navigation -->
       <a class="nav-btn" href="line_spectra.html">&larr; Previous</a>
       <a class="nav-btn" href="nanoscale_resolution.html">Next &rarr;</a>
     </div>
 
-    <footer>
-      End of note: Wave&ndash;Particle Duality (de Broglie) &middot; Next: optical resolution and nano-scale viewing.
-    </footer>
+    <p style="font-size:0.85rem; color:var(--text-muted); margin-top:10px;">
+      End of E2 &mdash; Wave&ndash;Particle Duality (de Broglie).
+    </p>
   </main>
+
+  <script>
+    (function () {
+      const h = 6.63e-34;     // J s
+      const e = 1.60e-19;     // C
+      const me = 9.11e-31;    // kg
+
+      function sci(x, sig) {
+        if (!isFinite(x) || x === 0) return String(x);
+        const s = sig || 3;
+        const exp = Math.floor(Math.log10(Math.abs(x)));
+        const mant = x / Math.pow(10, exp);
+        return mant.toFixed(s - 1) + ' × 10^' + exp;
+      }
+
+      function showMode(mode) {
+        const rowM = document.getElementById('row-m');
+        const rowV = document.getElementById('row-v');
+        const rowP = document.getElementById('row-p');
+        const rowVol = document.getElementById('row-V');
+
+        rowM.style.display = (mode === 'mv') ? 'block' : (mode === 'eV' ? 'none' : 'none');
+        rowV.style.display = (mode === 'mv') ? 'block' : 'none';
+        rowP.style.display = (mode === 'p') ? 'block' : 'none';
+        rowVol.style.display = (mode === 'eV') ? 'block' : 'none';
+
+        const mVal = document.getElementById('mVal');
+        if (mode === 'mv') {
+          if (!mVal.value) mVal.value = me;
+        }
+      }
+
+      function calcLambda() {
+        const mode = document.getElementById('calcMode').value;
+        const out = document.getElementById('lambdaOut');
+        const hint = document.getElementById('lambdaHint');
+
+        let lambda = NaN;
+
+        if (mode === 'mv') {
+          const m = Number(document.getElementById('mVal').value);
+          const v = Number(document.getElementById('vVal').value);
+          if (m > 0 && v > 0) lambda = h / (m * v);
+          hint.textContent = 'Using λ = h / (mv).';
+        } else if (mode === 'p') {
+          const p = Number(document.getElementById('pVal').value);
+          if (p > 0) lambda = h / p;
+          hint.textContent = 'Using λ = h / p.';
+        } else if (mode === 'eV') {
+          const V = Number(document.getElementById('VVal').value);
+          if (V > 0) lambda = h / Math.sqrt(2 * me * e * V);
+          hint.textContent = 'Using λ = h / (2mₑeV)^{1/2} (non-relativistic).';
+        }
+
+        if (!isFinite(lambda) || lambda <= 0) {
+          out.textContent = 'λ = (check inputs)';
+          return;
+        }
+
+        out.textContent = 'λ ≈ ' + sci(lambda, 3) + ' m';
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const mode = document.getElementById('calcMode');
+        const inputs = ['mVal', 'vVal', 'pVal', 'VVal'].map(id => document.getElementById(id));
+
+        function refresh() {
+          showMode(mode.value);
+          calcLambda();
+        }
+
+        mode.addEventListener('change', refresh);
+        inputs.forEach(el => el && el.addEventListener('input', calcLambda));
+
+        refresh();
+      });
+    })();
+  </script>
 </body>
 </html>
