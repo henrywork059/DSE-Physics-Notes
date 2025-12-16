@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <meta name="supported-color-schemes" content="light" />
   <title>DSE Physics Notes</title>
   <link rel="stylesheet" href="./assets/site.css" />
   <style>
@@ -18,8 +20,23 @@
       --radius:16px;
     }
 
+    /* Ensure colours stay LIGHT even when the browser/OS is in dark mode */
+    html{ color-scheme: light; }
+
     /* Index-only enhancements (keeps global site.css untouched) */
     body{ background:var(--bg); color:var(--text); }
+    .topbar{ background:linear-gradient(135deg, var(--accent), var(--accent-2)) !important; color:#ffffff !important; }
+    .card{ background:var(--card) !important; border-color:var(--border) !important; color:var(--text) !important; }
+    .muted{ color:var(--text-muted) !important; }
+    a{ color:var(--accent); }
+
+    @media (prefers-color-scheme: dark){
+      html{ color-scheme: light; }
+      body{ background:var(--bg) !important; color:var(--text) !important; }
+      .topbar{ background:linear-gradient(135deg, var(--accent), var(--accent-2)) !important; color:#ffffff !important; }
+      .card{ background:var(--card) !important; border-color:var(--border) !important; color:var(--text) !important; }
+      .muted{ color:var(--text-muted) !important; }
+    }
 
     .topbar .subtitle{ margin:6px 0 0; opacity:0.92; font-size:0.95rem; }
     .topbar .kpi{ margin-top:10px; display:flex; flex-wrap:wrap; gap:8px; }
@@ -54,6 +71,7 @@
       font-size:0.95rem;
       outline:none;
       background:#fff;
+      color:var(--text);
     }
 
     .searchbar input:focus{
