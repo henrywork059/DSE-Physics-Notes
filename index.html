@@ -117,13 +117,16 @@
       font-size:0.88rem;
     }
 
-    /* Match note pages: pill buttons + gradient number tag */
-    .nav-btn{
+    /* Topic buttons (index only) */
+    #e2List .nav-btn{
+      display:flex;
+      align-items:center;
+      width:100%;
+      box-sizing:border-box;
       justify-content:flex-start;
-      padding-right:42px;
-      position:relative;
       gap:12px;
       padding:12px 12px;
+      padding-right:42px;
       border-radius:999px;
       border:1px solid var(--border);
       background:#ffffff;
@@ -136,14 +139,14 @@
       min-height:44px;
     }
 
-    .nav-btn:hover{ transform:translateY(-1px); }
+    #e2List .nav-btn:hover{ transform:translateY(-1px); }
 
-    .nav-btn:focus-visible{
+    #e2List .nav-btn:focus-visible{
       outline:none;
       box-shadow:0 0 0 4px rgba(58,123,213,0.18), 0 4px 14px rgba(31,42,68,0.06);
     }
 
-    .nav-btn::after{
+    #e2List .nav-btn::after{
       content:"›";
       position:absolute;
       right:16px;
@@ -152,17 +155,27 @@
       color:rgba(23,75,143,0.55);
       font-weight:900;
       font-size:1.1rem;
+      pointer-events:none;
     }
 
-    .nav-left{ display:inline-flex; align-items:center; gap:10px; min-width:0; }
+    #e2List .nav-left{ display:inline-flex; align-items:center; gap:10px; min-width:0; }
 
-    .nav-title{
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+    /* Stop site.css from styling ALL spans inside buttons as number pills */
+    #e2List .nav-btn span{
+      background:none;
+      padding:0;
+      border-radius:0;
+      border:0;
+      color:inherit;
+      font-weight:inherit;
     }
 
-    .num{
+    #e2List .nav-btn .nav-title{
+      white-space:normal;
+      line-height:1.25;
+    }
+
+    #e2List .nav-btn .num{
       display:inline-flex;
       align-items:center;
       justify-content:center;
