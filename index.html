@@ -119,9 +119,9 @@
 
     /* Match note pages: pill buttons + gradient number tag */
     .nav-btn{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+      justify-content:flex-start;
+      padding-right:42px;
+      position:relative;
       gap:12px;
       padding:12px 12px;
       border-radius:999px;
@@ -141,6 +141,17 @@
     .nav-btn:focus-visible{
       outline:none;
       box-shadow:0 0 0 4px rgba(58,123,213,0.18), 0 4px 14px rgba(31,42,68,0.06);
+    }
+
+    .nav-btn::after{
+      content:"›";
+      position:absolute;
+      right:16px;
+      top:50%;
+      transform:translateY(-50%);
+      color:rgba(23,75,143,0.55);
+      font-weight:900;
+      font-size:1.1rem;
     }
 
     .nav-left{ display:inline-flex; align-items:center; gap:10px; min-width:0; }
@@ -165,20 +176,6 @@
       font-size:0.82rem;
       line-height:1;
       flex:0 0 auto;
-    }
-
-    .tag{
-      flex:0 0 auto;
-      display:inline-flex;
-      align-items:center;
-      border-radius:999px;
-      padding:6px 10px;
-      border:1px solid rgba(23,75,143,0.18);
-      background:rgba(23,75,143,0.06);
-      color:var(--accent);
-      font-weight:750;
-      font-size:0.86rem;
-      white-space:nowrap;
     }
 
     .hidden{ display:none !important; }
@@ -217,9 +214,7 @@
       <p class="subtitle">Single-entry navigation • E2 — Atomic World</p>
       <div class="kpi" aria-label="Summary">
         <span class="chip"><span class="dot"></span>8 topics</span>
-        <span class="chip"><span class="dot"></span>Recommended order</span>
-        <span class="chip"><span class="dot"></span>Use Previous / Next inside notes</span>
-      </div>
+        </div>
     </div>
   </header>
 
@@ -229,7 +224,7 @@
       <div class="e2-header">
         <div>
           <h2>E2 — Atomic World</h2>
-          <p class="muted">Open a note below. Photoelectric effect is the recommended starting point.</p>
+          <p class="muted">Open a note below.</p>
         </div>
       </div>
 
@@ -246,35 +241,27 @@
       <div class="section-nav" id="e2List" aria-label="E2 topic list">
         <a class="nav-btn" href="./e2/photoelectric.html" data-title="photoelectric effect" data-tags="photoelectric threshold frequency work function stopping potential">
           <span class="nav-left"><span class="num">1</span><span class="nav-title">E2 — Photoelectric Effect</span></span>
-          <span class="tag">Recommended first</span>
         </a>
         <a class="nav-btn" href="./e2/rutherford.html" data-title="rutherford atomic model" data-tags="rutherford alpha scattering nucleus gold foil">
           <span class="nav-left"><span class="num">2</span><span class="nav-title">E2 — Rutherford Atomic Model</span></span>
-          <span class="tag">Model evidence</span>
         </a>
         <a class="nav-btn" href="./e2/bohr_energy_levels.html" data-title="bohr model energy levels" data-tags="bohr energy levels excitation ionization">
           <span class="nav-left"><span class="num">3</span><span class="nav-title">E2 — Bohr Model &amp; Energy Levels</span></span>
-          <span class="tag">Quantisation</span>
         </a>
         <a class="nav-btn" href="./e2/line_spectra.html" data-title="hydrogen line spectra" data-tags="hydrogen line spectra wavelength frequency">
           <span class="nav-left"><span class="num">4</span><span class="nav-title">E2 — Hydrogen Line Spectra</span></span>
-          <span class="tag">Spectra</span>
         </a>
         <a class="nav-btn" href="./e2/wave_particle_duality.html" data-title="wave particle duality de broglie" data-tags="de broglie matter waves electron diffraction">
           <span class="nav-left"><span class="num">5</span><span class="nav-title">E2 — Wave–Particle Duality (de Broglie)</span></span>
-          <span class="tag">Matter waves</span>
         </a>
         <a class="nav-btn" href="./e2/nanoscale_resolution.html" data-title="nano scale optical resolution rayleigh criterion" data-tags="rayleigh criterion resolution diffraction limit">
           <span class="nav-left"><span class="num">6</span><span class="nav-title">E2 — Nano Scale &amp; Optical Resolution (Rayleigh criterion)</span></span>
-          <span class="tag">Resolution</span>
         </a>
         <a class="nav-btn" href="./e2/nanoscale_microscopes.html" data-title="nano-scale microscopes tem stm" data-tags="tem stm electron microscope scanning tunnelling">
           <span class="nav-left"><span class="num">7</span><span class="nav-title">E2 — Nano-scale Microscopes (TEM &amp; STM)</span></span>
-          <span class="tag">Microscopes</span>
         </a>
         <a class="nav-btn" href="./e2/nanotechnology.html" data-title="nanotechnology applications hazards" data-tags="nanotechnology applications hazards risk">
           <span class="nav-left"><span class="num">8</span><span class="nav-title">E2 — Nanotechnology: Applications &amp; Hazards</span></span>
-          <span class="tag">Applications</span>
         </a>
       </div>
 
