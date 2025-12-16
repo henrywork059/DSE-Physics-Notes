@@ -3,227 +3,596 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>E2 — Nano Scale & Optical Resolution (Rayleigh criterion)</title>
+  <title>E2 — Nano Scale &amp; Optical Resolution (Rayleigh criterion) | DSE Physics Notes</title>
   <style>
-    :root{
-      --bg:#f4f7fb; --card:#ffffff; --ink:#102a43; --muted:#52606d;
-      --accent:#2563eb; --accent2:#1e40af; --line:#e5e7eb;
-      --shadow:0 10px 30px rgba(16,42,67,.08);
-      --radius:16px;
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1f2a44;
+      --text-muted: #5b6b86;
+      --accent: #174b8f;
+      --accent-2: #3a7bd5;
+      --border: #d9e2ef;
+      --shadow: 0 10px 30px rgba(31, 42, 68, 0.08);
+      --radius: 16px;
     }
-    *{box-sizing:border-box}
-    body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; background:var(--bg); color:var(--ink); line-height:1.55}
-    .topbar{background:linear-gradient(90deg,var(--accent2),var(--accent)); color:#fff; padding:18px 0}
-    .wrap{max-width:980px; margin:0 auto; padding:0 16px}
-    .title{display:flex; align-items:flex-start; justify-content:space-between; gap:12px}
-    h1{margin:0; font-size:1.45rem}
-    .badge{display:inline-block; font-weight:700; letter-spacing:.02em; font-size:.78rem; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.25)}
 
-    .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; margin:16px 0}
-    .muted{color:var(--muted)}
+    * { box-sizing: border-box; }
 
-    .section-nav{display:flex; flex-wrap:wrap; gap:10px; margin:12px 0 0}
-    .nav-btn{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; border:1px solid var(--line); background:#fff; color:var(--ink); text-decoration:none; font-weight:650}
-    .nav-btn:hover{border-color:#cbd5e1; transform:translateY(-1px)}
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
 
-    h2{margin:0 0 10px; font-size:1.15rem}
-    h3{margin:16px 0 8px; font-size:1.02rem}
-    ul{margin:8px 0 0 18px}
-    code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace}
+    main {
+      max-width: 980px;
+      margin: 24px auto;
+      padding: 26px 22px 30px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
 
-    .formula{background:#0b1220; color:#e5e7eb; border-radius:14px; padding:12px 14px; overflow:auto; border:1px solid rgba(255,255,255,.08)}
-    .formula .lbl{color:#93c5fd; font-weight:800}
+    .page-header h1 {
+      margin: 0 0 6px;
+      font-size: 1.85rem;
+      letter-spacing: -0.02em;
+    }
 
-    .grid2{display:grid; grid-template-columns:1fr; gap:12px}
-    @media (min-width:820px){.grid2{grid-template-columns:1fr 1fr}}
+    .meta {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
 
-    details{background:#fbfdff; border:1px dashed #cbd5e1; border-radius:14px; padding:10px 12px}
-    summary{cursor:pointer; font-weight:700}
+    .section-intro {
+      margin: 14px 0 0;
+      font-size: 1.02rem;
+      color: var(--text);
+    }
 
-    .callout{border-left:5px solid var(--accent); background:#f0f7ff; padding:12px 14px; border-radius:14px; color:#0b2447}
-    .mini{font-size:.92rem}
+    .badge-strip {
+      margin: 14px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
 
-    footer{padding:18px 0 26px; color:var(--muted); font-size:.92rem}
-    .hr{height:1px; background:var(--line); margin:14px 0}
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #f8fbff;
+      color: var(--text);
+      font-size: 0.92rem;
+    }
+
+    .badge.exam { border-color: rgba(23,75,143,0.35); }
+    .badge.skills { border-color: rgba(58,123,213,0.35); }
+
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 6px;
+      padding: 0;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 14px rgba(31, 42, 68, 0.06);
+      transition: transform 0.08s ease;
+    }
+
+    .nav-btn:hover { transform: translateY(-1px); }
+
+    .nav-btn span {
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    section { margin-top: 12px; }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 16px 14px;
+      background: #ffffff;
+      box-shadow: 0 8px 22px rgba(31, 42, 68, 0.06);
+      margin: 12px 0;
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+      scroll-margin-top: 90px;
+    }
+
+    .card h3 {
+      margin: 12px 0 8px;
+      font-size: 1.05rem;
+    }
+
+    .sec-pill {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: rgba(23,75,143,0.08);
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(23,75,143,0.12);
+      margin-left: 8px;
+    }
+
+    ul.key-list {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .key-list li { margin: 6px 0; }
+    .key-list li::marker { color: var(--accent-2); }
+
+    .card-note {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-left: 4px solid var(--accent);
+      background: rgba(23,75,143,0.06);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .eq {
+      display: inline-block;
+      margin: 8px 0;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fbfdff;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 1.08rem;
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .grid2 .mini {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #ffffff;
+    }
+
+    .mini-title {
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .diagram {
+      margin-top: 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      padding: 10px 12px;
+      overflow-x: auto;
+    }
+
+    .card-traps {
+      border-left: 5px solid #f59e0b;
+      background: #fffbeb;
+    }
+
+    details {
+      margin-top: 10px;
+      border: 1px dashed rgba(91,107,134,0.35);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #fbfdff;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .calc {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .calc .box {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #ffffff;
+    }
+
+    .calc label {
+      display: block;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+
+    .calc input {
+      width: 100%;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fbfdff;
+      font-size: 0.98rem;
+      outline: none;
+    }
+
+    .calc input:focus {
+      box-shadow: 0 0 0 4px rgba(58,123,213,0.16);
+      border-color: rgba(58,123,213,0.55);
+    }
+
+    .calc .out {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-weight: 900;
+      color: var(--accent);
+      font-size: 1.03rem;
+      margin-top: 8px;
+      word-break: break-word;
+    }
+
+    .hint {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    :target {
+      outline: 0;
+      box-shadow: 0 0 0 4px rgba(58,123,213,0.18);
+      border-radius: 10px;
+      padding: 2px 4px;
+    }
+
+    @media (max-width: 900px) {
+      .grid2 { grid-template-columns: 1fr; }
+      .calc { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      main { padding: 18px 14px 24px; border-radius: 0; margin: 0; }
+    }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="wrap">
-      <div class="title">
-        <div>
-          <div class="badge">E2 — Atomic World</div>
-          <h1>Nano Scale &amp; Optical Resolution (Rayleigh criterion)</h1>
-          <div class="muted" style="color:rgba(255,255,255,.88)">Why optical microscopes cannot see nano-sized details (diffraction limit).</div>
-        </div>
-      </div>
+  <main>
+    <header class="page-header">
+      <h1>E2 — Nano Scale &amp; Optical Resolution (Rayleigh criterion)</h1>
+      <div class="meta">HKDSE Physics &mdash; Elective E2: Atomic World &middot; Diffraction limit of optical instruments.</div>
+    </header>
 
-      <!-- Required navigation template -->
-      <div class="section-nav">
-        <a class="nav-btn" href="../index.html">← Back to index</a>
-        <a class="nav-btn" href="wave_particle_duality.html">← Previous</a>
-        <a class="nav-btn" href="nanoscale_microscopes.html">Next →</a>
-      </div>
+    <!-- Required top navigation (Back / Previous / Next) -->
+    <div class="section-nav">
+      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
 
-      <!-- Section jump bar -->
-      <div class="section-nav" style="margin-top:10px">
-        <a class="nav-btn" href="#sec01">1. Big idea</a>
-        <a class="nav-btn" href="#sec02">2. Key terms</a>
-        <a class="nav-btn" href="#sec03">3. Rayleigh criterion</a>
-        <a class="nav-btn" href="#sec04">4. Formula &amp; trends</a>
-        <a class="nav-btn" href="#sec05">5. Minimum distance s</a>
-        <a class="nav-btn" href="#sec06">6. Worked example</a>
-        <a class="nav-btn" href="#sec07">7. DSE checkpoints</a>
-      </div>
-    </div>
-  </header>
-
-  <main class="wrap">
-
-    <section class="card" id="sec01">
-      <h2>1. Big idea: why optical microscopes have a limit</h2>
-      <p class="muted">In HKDSE, the key limitation discussed for optical microscopes is <b>diffraction of light</b> at the <b>aperture</b>. (Spherical / chromatic aberrations are <b>not required</b>.)</p>
-      <div class="callout">
-        <b>Resolution</b> (or <b>resolving power</b>) is the ability to distinguish two nearby points as two separate points.
-      </div>
-      <p class="mini">When light from two points passes through a finite aperture (e.g. pupil / objective lens), each point forms a diffraction pattern. If the patterns overlap too much, the points cannot be distinguished.</p>
-    </section>
-
-    <section class="card" id="sec02">
-      <h2>2. Key terms (HKDSE wording)</h2>
-      <div class="grid2">
-        <div>
-          <h3>Resolved / not resolved</h3>
-          <ul>
-            <li><b>Resolved</b>: two points can be distinguished as two separate points.</li>
-            <li><b>Not resolved</b>: the images overlap so much that they appear as one.</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Angles &amp; aperture</h3>
-          <ul>
-            <li><b>Angular separation</b>: angle between lines of sight to two points.</li>
-            <li><b>Angular resolution</b> <code>θR</code>: <b>minimum</b> angular separation that can be resolved (in rad).</li>
-            <li><b>Aperture</b>: the opening of the instrument (diameter <code>d</code>).</li>
-            <li><code>λ</code>: wavelength of light used.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="card" id="sec03">
-      <h2>3. Rayleigh criterion (concept)</h2>
-      <p class="mini">Two points can <b>just</b> be resolved when:</p>
-      <div class="callout">
-        The <b>central maximum</b> of the diffraction pattern of one point is centred on the <b>first-order minimum</b> of the diffraction pattern of the other.
-      </div>
-      <p class="muted mini">(The detailed reason for bright/dark fringes is beyond this topic.)</p>
-    </section>
-
-    <section class="card" id="sec04">
-      <h2>4. Formula &amp; trends</h2>
-      <div class="formula" aria-label="Rayleigh criterion formula">
-        <div><span class="lbl">Rayleigh criterion (angular resolution)</span></div>
-        <div style="margin-top:6px; font-size:1.05rem"><b>θ<sub>R</sub> ≈ 1.22&nbsp;λ / d</b></div>
-        <div class="mini" style="margin-top:6px">(Derivation is not required.)</div>
-      </div>
-
-      <div class="grid2" style="margin-top:12px">
-        <div>
-          <h3>How to increase resolving power</h3>
-          <ul>
-            <li>Use <b>shorter wavelength</b> (smaller <code>λ</code>)</li>
-            <li>Use a <b>larger aperture</b> (larger <code>d</code>)</li>
-          </ul>
-          <p class="mini muted">Because smaller <code>θR</code> means higher resolving power.</p>
-        </div>
-        <div>
-          <h3>Common MCQ trap</h3>
-          <ul>
-            <li>Increasing <b>brightness</b> does <b>not</b> increase resolving power.</li>
-            <li>Moving closer to an object increases its <b>angular separation</b>, so it may become resolvable.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="card" id="sec05">
-      <h2>5. Minimum resolvable distance on the object</h2>
-      <p class="mini">If the object (or two points on a sample) is at distance <code>r</code> from the aperture, then for small angles:</p>
-      <div class="formula" aria-label="minimum resolvable distance formula">
-        <div><span class="lbl">Minimum resolvable distance</span></div>
-        <div style="margin-top:6px; font-size:1.05rem"><b>s ≈ r&nbsp;θ<sub>R</sub></b></div>
-      </div>
-      <ul class="mini">
-        <li><code>s</code>: shortest distance between two points that can be resolved</li>
-        <li><code>r</code>: distance from aperture to object (e.g. objective lens to sample)</li>
-      </ul>
-    </section>
-
-    <section class="card" id="sec06">
-      <h2>6. Worked example (optical microscope)</h2>
-      <p class="mini">Suppose an optical microscope has:</p>
-      <ul class="mini">
-        <li>aperture diameter <code>d = 6 mm = 6 × 10⁻³ m</code></li>
-        <li>distance to sample <code>r = 1 cm = 0.01 m</code></li>
-        <li>wavelength <code>λ = 500 nm = 5.00 × 10⁻⁷ m</code></li>
-      </ul>
-      <div class="formula">
-        <div><span class="lbl">Calculation</span></div>
-        <div class="mini" style="margin-top:6px">
-          θ<sub>R</sub> ≈ 1.22λ/d = 1.22(5.00×10⁻⁷)/(6×10⁻³)
-          <br/>s ≈ rθ<sub>R</sub> = 0.01 × 1.22(5.00×10⁻⁷)/(6×10⁻³)
-          <br/><b>= 1.02 × 10⁻⁶ m</b>
-        </div>
-      </div>
-      <div class="callout" style="margin-top:12px">
-        <b>Conclusion:</b> the minimum resolvable detail is about <b>1 μm</b>, so a school optical microscope is <b>not</b> good enough to observe nano materials (1–100 nm).
-      </div>
-
-      <details style="margin-top:12px">
-        <summary>Mini-check: red vs violet (ratio thinking)</summary>
-        <div class="mini" style="margin-top:8px">
-          For the same aperture <code>d</code>, <code>θR ∝ λ</code>. Red light has a longer wavelength (~700 nm) than violet (~400 nm), so <b>red gives larger θR</b> → <b>lower resolving power</b>.
-        </div>
-      </details>
-    </section>
-
-    <section class="card" id="sec07">
-      <h2>7. DSE checkpoints (fast marks)</h2>
-
-      <h3>Checklist answers (short &amp; exam-style)</h3>
-      <ul class="mini">
-        <li><b>What limits resolving power of an optical microscope?</b> Diffraction of light at the aperture (Rayleigh criterion).</li>
-        <li><b>How to increase resolving power?</b> Use shorter wavelength / larger aperture.</li>
-        <li><b>If observer walks towards two lamps:</b> angular separation increases → easier to resolve.</li>
-        <li><b>If lamps become brighter:</b> resolving power unchanged (brightness does not change θR).</li>
-      </ul>
-
-      <details style="margin-top:10px">
-        <summary>Quick MCQ pattern: compare two instruments</summary>
-        <div class="mini" style="margin-top:8px">
-          If two instruments use the <b>same λ</b>, then <b>θR ∝ 1/d</b>. Larger <code>d</code> → smaller <code>θR</code> → higher resolving power.
-        </div>
-      </details>
-    </section>
-
-    <!-- Bottom navigation (required) -->
-    <div class="card">
-      <div class="section-nav">
-        <a class="nav-btn" href="../index.html">← Back to index</a>
-        <a class="nav-btn" href="wave_particle_duality.html">← Previous</a>
-        <a class="nav-btn" href="nanoscale_microscopes.html">Next →</a>
-      </div>
-      <div class="hr"></div>
-      <div class="muted mini">Next up: microscopes for nano scale (TEM &amp; STM) and why using particles/electrons helps (shorter de Broglie wavelength).</div>
+      <!-- Page-to-page navigation -->
+      <a class="nav-btn" href="wave_particle_duality.html">&larr; Previous</a>
+      <a class="nav-btn" href="nanoscale_microscopes.html">Next &rarr;</a>
     </div>
 
-    <footer>
-      <div class="wrap">
-        End of note — E2. Keep units consistent (m, rad) and state the trend clearly.
-      </div>
-    </footer>
+    <p class="section-intro">
+      Explain why a normal optical microscope cannot resolve nano-scale details. Use the Rayleigh criterion:
+      <strong>&theta;<sub>R</sub> &asymp; 1.22&lambda;/d</strong> and relate it to the minimum resolvable separation <strong>s</strong>.
+    </p>
 
+    <div class="badge-strip">
+      <span class="badge exam">Exam focus: diffraction limit, trends with &lambda; and d</span>
+      <span class="badge skills">Skills: use &theta;<sub>R</sub> &asymp; 1.22&lambda;/d and s &asymp; r&theta;<sub>R</sub></span>
+      <span class="badge skills">Link: nano needs shorter &lambda; (TEM)</span>
+    </div>
+
+    <!-- Section jump bar -->
+    <div class="section-nav">
+      <a class="nav-btn" href="#sec61"><span>6.1</span> Big idea</a>
+      <a class="nav-btn" href="#sec62"><span>6.2</span> Key terms</a>
+      <a class="nav-btn" href="#sec63"><span>6.3</span> Rayleigh criterion</a>
+      <a class="nav-btn" href="#sec64"><span>6.4</span> Formula &amp; trends</a>
+      <a class="nav-btn" href="#sec65"><span>6.5</span> Minimum distance</a>
+      <a class="nav-btn" href="#sec66"><span>6.6</span> Worked example</a>
+      <a class="nav-btn" href="#sec6traps">Common traps</a>
+    </div>
+
+    <section>
+      <div class="card">
+        <h2 id="sec61">6.1 Big idea: why optical microscopes have a limit <span class="sec-pill">Concept</span></h2>
+        <ul class="key-list">
+          <li>The key limitation (HKDSE) is <strong>diffraction of light</strong> at a <strong>finite aperture</strong> (e.g. objective lens / pupil).</li>
+          <li>Each point image is not a perfect point: it spreads into a diffraction pattern.</li>
+          <li>If two diffraction patterns overlap too much, two points appear as one.</li>
+        </ul>
+        <div class="card-note"><strong>Reminder:</strong> Aberrations (spherical/chromatic) are not the focus here. For this note, use diffraction + Rayleigh criterion.</div>
+      </div>
+
+      <div class="card">
+        <h2 id="sec62">6.2 Key terms (HKDSE wording) <span class="sec-pill">Terms</span></h2>
+        <div class="grid2">
+          <div class="mini">
+            <div class="mini-title">Resolved / not resolved</div>
+            <ul class="key-list">
+              <li><strong>Resolved:</strong> two points can be distinguished as two separate points.</li>
+              <li><strong>Not resolved:</strong> images overlap so much that they appear as one.</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <div class="mini-title">Angular resolution</div>
+            <ul class="key-list">
+              <li><strong>Angular separation:</strong> angle between lines of sight to the two points.</li>
+              <li><strong>Angular resolution</strong> <span class="eq">&theta;<sub>R</sub></span>: <strong>minimum</strong> angular separation that can be resolved (rad).</li>
+              <li><strong>Aperture diameter</strong> <span class="eq">d</span> and wavelength <span class="eq">&lambda;</span> affect <span class="eq">&theta;<sub>R</sub></span>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 id="sec63">6.3 Rayleigh criterion <span class="sec-pill">Idea</span></h2>
+        <p>Two point images are <strong>just resolved</strong> when:</p>
+        <div class="card-note">
+          The <strong>central maximum</strong> of one diffraction pattern is centred on the <strong>first minimum</strong> of the other.
+        </div>
+
+        <div class="diagram" aria-label="Rayleigh criterion sketch">
+          <div id="rayleighSketch"></div>
+        </div>
+
+        <div class="hint">The detailed formation of maxima/minima is not required. Use the criterion as a stated condition.</div>
+      </div>
+
+      <div class="card">
+        <h2 id="sec64">6.4 Formula &amp; trends <span class="sec-pill">Formula</span></h2>
+
+        <h3>Rayleigh criterion (angular resolution)</h3>
+        <div class="eq">&theta;<sub>R</sub> &asymp; 1.22&nbsp;<span style="font-family:'Times New Roman',Times,serif;">&lambda;</span> / d</div>
+        <div class="hint">Derivation is not required.</div>
+
+        <h3>How to increase resolving power</h3>
+        <ul class="key-list">
+          <li>Use <strong>shorter wavelength</strong> (smaller <span class="eq">&lambda;</span>)</li>
+          <li>Use a <strong>larger aperture</strong> (larger <span class="eq">d</span>)</li>
+        </ul>
+        <div class="card-note"><strong>Exam sentence:</strong> Smaller <span class="eq">&theta;<sub>R</sub></span> means higher resolving power.</div>
+
+        <details>
+          <summary>Common MCQ pattern: brightness vs resolution</summary>
+          <div class="hint" style="margin-top:8px;">
+            Increasing <strong>brightness</strong> does <strong>not</strong> change resolving power. Resolution depends on <span class="eq">&lambda;</span> and <span class="eq">d</span> (diffraction), not intensity.
+          </div>
+        </details>
+      </div>
+
+      <div class="card">
+        <h2 id="sec65">6.5 Minimum resolvable distance on the object <span class="sec-pill">Apply</span></h2>
+        <p>For small angles, when the object is at distance <span class="eq">r</span> from the aperture:</p>
+        <div class="eq">s &asymp; r&nbsp;&theta;<sub>R</sub></div>
+        <ul class="key-list">
+          <li><span class="eq">s</span>: minimum separation of two points on the object that can be resolved (m)</li>
+          <li><span class="eq">r</span>: distance from aperture to object (m)</li>
+        </ul>
+
+        <div class="card-note"><strong>Combine</strong> the two formulas to get the trend:
+          <div class="eq">s &asymp; r(1.22&lambda;/d)</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 id="sec66">6.6 Worked example (optical microscope) <span class="sec-pill">Example</span></h2>
+        <p>Suppose an optical microscope has:</p>
+        <ul class="key-list">
+          <li>aperture diameter <span class="eq">d = 6 mm = 6 &times; 10<sup>&minus;3</sup> m</span></li>
+          <li>distance to sample <span class="eq">r = 1 cm = 1.0 &times; 10<sup>&minus;2</sup> m</span></li>
+          <li>wavelength <span class="eq">&lambda; = 500 nm = 5.00 &times; 10<sup>&minus;7</sup> m</span></li>
+        </ul>
+
+        <div class="card-note">
+          <div><strong>Step 1:</strong> <span class="eq">&theta;<sub>R</sub> &asymp; 1.22&lambda;/d</span></div>
+          <div class="eq">&theta;<sub>R</sub> &asymp; 1.22(5.00&times;10<sup>&minus;7</sup>)/(6&times;10<sup>&minus;3</sup>) = 1.02&times;10<sup>&minus;4</sup> rad</div>
+          <div style="margin-top:8px;"><strong>Step 2:</strong> <span class="eq">s &asymp; r&theta;<sub>R</sub></span></div>
+          <div class="eq">s &asymp; (1.0&times;10<sup>&minus;2</sup>)(1.02&times;10<sup>&minus;4</sup>) = 1.02&times;10<sup>&minus;6</sup> m</div>
+        </div>
+
+        <div class="card-note"><strong>Conclusion:</strong> minimum resolvable detail is about <strong>1 &mu;m</strong>. So an optical microscope is not suitable for nano materials (1&ndash;100 nm).</div>
+
+        <details>
+          <summary>Mini-check: red vs violet (ratio thinking)</summary>
+          <div class="hint" style="margin-top:8px;">
+            For the same <span class="eq">d</span>, <span class="eq">&theta;<sub>R</sub> &prop; &lambda;</span>. Red light has longer wavelength than violet, so <strong>red gives larger &theta;<sub>R</sub></strong> &rarr; <strong>lower resolving power</strong>.
+          </div>
+        </details>
+
+        <h3>Optional quick calculator</h3>
+        <div class="calc" aria-label="Rayleigh calculator">
+          <div class="box">
+            <label for="lam">Wavelength &lambda; (m)</label>
+            <input id="lam" type="number" step="any" value="5.00e-7" />
+
+            <div style="margin-top:10px;">
+              <label for="d">Aperture diameter d (m)</label>
+              <input id="d" type="number" step="any" value="6.00e-3" />
+            </div>
+
+            <div style="margin-top:10px;">
+              <label for="r">Distance r (m)</label>
+              <input id="r" type="number" step="any" value="1.00e-2" />
+            </div>
+
+            <div class="hint">Uses <span class="eq">&theta;<sub>R</sub> &asymp; 1.22&lambda;/d</span> and <span class="eq">s &asymp; r&theta;<sub>R</sub></span>.</div>
+          </div>
+          <div class="box">
+            <div style="font-weight:900; color:var(--accent);">Result</div>
+            <div class="out" id="outTheta">&theta;<sub>R</sub> = ...</div>
+            <div class="out" id="outS">s = ...</div>
+            <div class="hint" id="outHint">Smaller &lambda; or larger d gives smaller &theta;<sub>R</sub> (better resolving power).</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-traps" id="sec6traps">
+        <h2>Common traps (fast marks) <span class="sec-pill">Traps</span></h2>
+        <ul class="key-list">
+          <li><strong>Brightness trap:</strong> intensity does not change resolving power; diffraction depends on <span class="eq">&lambda;</span> and <span class="eq">d</span>.</li>
+          <li><strong>Approaching the object:</strong> angular separation increases, so it may become resolvable (even if <span class="eq">&theta;<sub>R</sub></span> is unchanged).</li>
+          <li><strong>Units:</strong> keep everything in metres and radians; convert nm and mm carefully.</li>
+          <li><strong>Nano-scale meaning:</strong> 1&ndash;100 nm is much smaller than typical optical resolution (~1 &mu;m).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Required bottom navigation (Back / Previous / Next) -->
+    <div class="section-nav" style="margin-top: 18px;">
+      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
+
+      <!-- Page-to-page navigation -->
+      <a class="nav-btn" href="wave_particle_duality.html">&larr; Previous</a>
+      <a class="nav-btn" href="nanoscale_microscopes.html">Next &rarr;</a>
+    </div>
+
+    <p style="font-size:0.85rem; color:var(--text-muted); margin-top:10px;">
+      End of E2 &mdash; Nano Scale &amp; Optical Resolution (Rayleigh criterion).
+    </p>
   </main>
+
+  <script>
+    (function () {
+      function sci(x, sig) {
+        if (!isFinite(x) || x === 0) return String(x);
+        const s = sig || 3;
+        const exp = Math.floor(Math.log10(Math.abs(x)));
+        const mant = x / Math.pow(10, exp);
+        return mant.toFixed(s - 1) + ' × 10^' + exp;
+      }
+
+      // Simple Rayleigh sketch (concept only)
+      function drawRayleighSketch() {
+        const host = document.getElementById('rayleighSketch');
+        if (!host) return;
+
+        const W = 760;
+        const H = 170;
+        const pad = { l: 16, r: 16, t: 12, b: 20 };
+
+        const svgNS = 'http://www.w3.org/2000/svg';
+        const svg = document.createElementNS(svgNS, 'svg');
+        svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+        svg.setAttribute('width', '100%');
+        svg.setAttribute('height', 'auto');
+
+        const css = getComputedStyle(document.documentElement);
+        const a = (css.getPropertyValue('--accent') || '#174b8f').trim();
+        const m = (css.getPropertyValue('--text-muted') || '#5b6b86').trim();
+        const border = (css.getPropertyValue('--border') || '#d9e2ef').trim();
+
+        const mk = (name, attrs) => {
+          const el = document.createElementNS(svgNS, name);
+          Object.entries(attrs || {}).forEach(([k, v]) => el.setAttribute(k, String(v)));
+          return el;
+        };
+
+        // Baseline
+        svg.appendChild(mk('line', { x1: pad.l, y1: H - pad.b, x2: W - pad.r, y2: H - pad.b, stroke: border, 'stroke-width': 2 }));
+
+        // Two "Airy-like" peaks (not to scale; just concept)
+        function peak(x0, amp, width) {
+          const pts = [];
+          for (let i = 0; i <= 220; i++) {
+            const x = pad.l + (W - pad.l - pad.r) * (i / 220);
+            const u = (x - x0) / width;
+            const y = (H - pad.b) - amp * Math.exp(-u * u) * (0.75 + 0.25 * Math.cos(6 * u));
+            pts.push([x, y]);
+          }
+          return pts.map(p => p[0].toFixed(2) + ',' + p[1].toFixed(2)).join(' ');
+        }
+
+        const xA = W * 0.42;
+        const xB = W * 0.58;
+
+        svg.appendChild(mk('polyline', { points: peak(xA, 78, 56), fill: 'none', stroke: a, 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0.95 }));
+        svg.appendChild(mk('polyline', { points: peak(xB, 78, 56), fill: 'none', stroke: a, 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0.55 }));
+
+        // Mark "central max" and "first min" position (conceptual)
+        svg.appendChild(mk('line', { x1: xA, y1: pad.t, x2: xA, y2: H - pad.b, stroke: m, 'stroke-width': 2, 'stroke-dasharray': '6 6' }));
+        svg.appendChild(mk('line', { x1: xB - 44, y1: pad.t, x2: xB - 44, y2: H - pad.b, stroke: m, 'stroke-width': 2, 'stroke-dasharray': '6 6' }));
+
+        const t1 = mk('text', { x: xA + 6, y: pad.t + 14, 'font-size': 12, fill: m, 'font-weight': 700 });
+        t1.textContent = 'central maximum (A)';
+        svg.appendChild(t1);
+
+        const t2 = mk('text', { x: (xB - 44) + 6, y: pad.t + 14, 'font-size': 12, fill: m, 'font-weight': 700 });
+        t2.textContent = 'first minimum (B)';
+        svg.appendChild(t2);
+
+        host.innerHTML = '';
+        host.appendChild(svg);
+      }
+
+      function calc() {
+        const lam = Number(document.getElementById('lam')?.value);
+        const d = Number(document.getElementById('d')?.value);
+        const r = Number(document.getElementById('r')?.value);
+
+        const outTheta = document.getElementById('outTheta');
+        const outS = document.getElementById('outS');
+
+        if (!(lam > 0 && d > 0 && r > 0)) {
+          if (outTheta) outTheta.innerHTML = '&theta;<sub>R</sub> = (check inputs)';
+          if (outS) outS.textContent = 's = (check inputs)';
+          return;
+        }
+
+        const theta = 1.22 * lam / d;
+        const s = r * theta;
+
+        if (outTheta) outTheta.innerHTML = '&theta;<sub>R</sub> ≈ ' + sci(theta, 3) + ' rad';
+        if (outS) outS.textContent = 's ≈ ' + sci(s, 3) + ' m';
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        drawRayleighSketch();
+
+        const ids = ['lam', 'd', 'r'];
+        ids.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener('input', calc);
+        });
+        calc();
+      });
+    })();
+  </script>
 </body>
 </html>
