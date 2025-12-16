@@ -1,398 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>E2 Atomic World – 5. Wave–Particle Duality (de Broglie) (HKDSE)</title>
+  <title>E2 — Nano Scale & Optical Resolution (Rayleigh criterion)</title>
   <style>
-    :root {
-      --bg: #f5f7fb;
-      --card-bg: #ffffff;
-      --accent: #174b8f;
-      --accent-soft: #e1ecff;
-      --border: #d0d7e2;
-      --text-main: #111827;
-      --text-muted: #4b5563;
-      --danger: #b91c1c;
-      --danger-soft: #fef2f2;
+    :root{
+      --bg:#f4f7fb; --card:#ffffff; --ink:#102a43; --muted:#52606d;
+      --accent:#2563eb; --accent2:#1e40af; --line:#e5e7eb;
+      --shadow:0 10px 30px rgba(16,42,67,.08);
+      --radius:16px;
     }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left,#e0ebff 0,#f5f7fb 40%,#f5f7fb 100%);
-      color: var(--text-main);
-      line-height: 1.6;
-      padding: 24px 18px 40px;
-      display: flex;
-      justify-content: center;
-    }
-    main {
-      width: 100%;
-      max-width: 960px;
-      background: #f9fafb;
-      border-radius: 18px;
-      box-shadow: 0 16px 40px rgba(15,23,42,0.16);
-      border: 1px solid #e5e7eb;
-      padding: 24px 24px 32px;
-    }
-    header.page-header { margin-bottom: 18px; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; }
-    header.page-header h1 {
-      margin: 0 0 4px;
-      font-size: 1.8rem;
-      color: var(--accent);
-    }
-    header.page-header .meta {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-    .section-intro {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      margin: 8px 0 10px;
-    }
-    h2 {
-      position: relative;
-      scroll-margin-top: 90px;
-      margin-top: 16px;
-      margin-bottom: 6px;
-      color: var(--accent);
-      font-size: 1.3rem;
-    }
-    h3 {
-      margin-top: 12px;
-      margin-bottom: 4px;
-      color: #1f2937;
-      font-size: 1.02rem;
-    }
-    p { margin: 4px 0 8px; }
-    ul { margin: 4px 0 8px 20px; padding-left: 0; }
-    li { margin: 2px 0; }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; background:var(--bg); color:var(--ink); line-height:1.55}
+    .topbar{background:linear-gradient(90deg,var(--accent2),var(--accent)); color:#fff; padding:18px 0}
+    .wrap{max-width:980px; margin:0 auto; padding:0 16px}
+    .title{display:flex; align-items:flex-start; justify-content:space-between; gap:12px}
+    h1{margin:0; font-size:1.45rem}
+    .badge{display:inline-block; font-weight:700; letter-spacing:.02em; font-size:.78rem; padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.25)}
 
-    .card {
-      background: var(--card-bg);
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      padding: 14px 18px 12px;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
-      margin-bottom: 14px;
-    }
-    .card-traps {
-      background: var(--danger-soft);
-      border-color: rgba(220,38,38,0.25);
-      border-left: 4px solid var(--danger);
-    }
-    .card-traps h3 { color: var(--danger); }
+    .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; margin:16px 0}
+    .muted{color:var(--muted)}
 
-    .card-note {
-      margin-top: 6px;
-      padding: 8px 10px;
-      border-radius: 10px;
-      background: #eff6ff;
-      border: 1px dashed #bfdbfe;
-      font-size: 0.88rem;
-      color: var(--text-muted);
-    }
-    .card-note strong { color: var(--accent); }
+    .section-nav{display:flex; flex-wrap:wrap; gap:10px; margin:12px 0 0}
+    .nav-btn{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; border:1px solid var(--line); background:#fff; color:var(--ink); text-decoration:none; font-weight:650}
+    .nav-btn:hover{border-color:#cbd5e1; transform:translateY(-1px)}
 
-    .sec-pill {
-      display: inline-block;
-      margin-left: 8px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
+    h2{margin:0 0 10px; font-size:1.15rem}
+    h3{margin:16px 0 8px; font-size:1.02rem}
+    ul{margin:8px 0 0 18px}
+    code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace}
 
-    .eq {
-      display: block;
-      margin: 6px 0 10px 18px;
-      font-family: "Times New Roman", serif;
-      font-size: 1.0rem;
-      padding: 4px 10px;
-      background: #f3f4f6;
-      border-radius: 8px;
-      border-left: 3px solid var(--accent);
-      overflow-x: auto;
-    }
+    .formula{background:#0b1220; color:#e5e7eb; border-radius:14px; padding:12px 14px; overflow:auto; border:1px solid rgba(255,255,255,.08)}
+    .formula .lbl{color:#93c5fd; font-weight:800}
 
-    .badge-strip {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin: 10px 0 12px;
-      font-size: 0.75rem;
-    }
-    .badge {
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid #e5e7eb;
-      background: #f9fafb;
-      color: #4b5563;
-    }
-    .badge.exam {
-      border-color: rgba(37,99,235,0.35);
-      background: rgba(59,130,246,0.06);
-      color: #1d4ed8;
-    }
-    .badge.skills {
-      border-color: rgba(16,185,129,0.35);
-      background: rgba(16,185,129,0.06);
-      color: #047857;
-    }
+    .grid2{display:grid; grid-template-columns:1fr; gap:12px}
+    @media (min-width:820px){.grid2{grid-template-columns:1fr 1fr}}
 
-    .section-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 8px 0 16px;
-    }
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 5px 11px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: #e5edff;
-      color: var(--accent);
-      font-size: 0.82rem;
-      text-decoration: none;
-      cursor: pointer;
-      transition: background 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease;
-    }
-    .nav-btn:hover {
-      background: #d7e3ff;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 10px rgba(148,163,184,0.45);
-    }
-    .nav-btn span { font-weight: 700; }
+    details{background:#fbfdff; border:1px dashed #cbd5e1; border-radius:14px; padding:10px 12px}
+    summary{cursor:pointer; font-weight:700}
 
-    .key-list li::marker { color: var(--accent); }
-    h2:target {
-      background: linear-gradient(to right, rgba(129,140,248,0.14), transparent);
-      padding-inline: 6px;
-      border-radius: 10px;
-    }
+    .callout{border-left:5px solid var(--accent); background:#f0f7ff; padding:12px 14px; border-radius:14px; color:#0b2447}
+    .mini{font-size:.92rem}
 
-    .term-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-top: 6px;
-    }
-    .term-list details {
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: #ffffff;
-      padding: 6px 10px;
-    }
-    .term-list details[open] {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(23,75,143,0.15);
-      background: #f3f6ff;
-    }
-    .term-summary {
-      cursor: pointer;
-      list-style: none;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-weight: 700;
-      color: var(--accent);
-    }
-    .term-summary::-webkit-details-marker { display: none; }
-    .term-summary::after {
-      content: "▾";
-      font-size: 0.7rem;
-      margin-left: 8px;
-      color: var(--text-muted);
-    }
-    details[open] > .term-summary::after { content: "▴"; }
-
-    footer {
-      margin-top: 18px;
-      color: var(--text-muted);
-      font-size: 0.86rem;
-      text-align: center;
-    }
-    .muted { color: var(--text-muted); }
+    footer{padding:18px 0 26px; color:var(--muted); font-size:.92rem}
+    .hr{height:1px; background:var(--line); margin:14px 0}
   </style>
 </head>
 <body>
-  <main>
-    <header class="page-header">
-      <h1>E2 — Wave–Particle Duality (de Broglie)</h1>
-      <div class="meta">HKDSE Physics &mdash; Elective E2: Atomic World &middot; Particles or Waves (Topic d)</div>
-    </header>
-
-    <!-- Top page-to-page navigation (required) -->
-    <div class="section-nav">
-      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
-      <a class="nav-btn" href="line_spectra.html">&larr; Previous</a>
-      <a class="nav-btn" href="nanoscale_resolution.html">Next &rarr;</a>
-    </div>
-
-    <p class="section-intro">Realise the wave&ndash;particle duality of <strong>electrons</strong> and <strong>light</strong>, describe the evidences, and apply the de Broglie formula <span class="muted">(&lambda; = h/p)</span> in numerical problems.</p>
-
-    <div class="badge-strip">
-      <span class="badge exam">Exam focus: evidence + de Broglie &lambda; = h/p</span>
-      <span class="badge skills">Skills: compare wavelengths; use K to find p</span>
-      <span class="badge skills">Link: TEM resolution depends on &lambda;</span>
-    </div>
-
-    <!-- Section jump bar -->
-    <div class="section-nav">
-      <a href="#sec51" class="nav-btn"><span>5.1</span> Duality idea</a>
-      <a href="#sec52" class="nav-btn"><span>5.2</span> Evidences</a>
-      <a href="#sec53" class="nav-btn"><span>5.3</span> de Broglie formula</a>
-      <a href="#sec54" class="nav-btn"><span>5.4</span> Problem skills</a>
-      <a href="#sec55" class="nav-btn"><span>5.5</span> Key terms</a>
-      <a href="#sec5traps" class="nav-btn">Common traps</a>
-    </div>
-
-    <section>
-      <div class="card">
-        <h2 id="sec51">5.1 What is wave&ndash;particle duality? <span class="sec-pill">Concept</span></h2>
-        <p>In classical physics, <strong>waves</strong> and <strong>particles</strong> are very different. In the microscopic world, experiments show that:</p>
-        <ul class="key-list">
-          <li><strong>Light</strong> (well known as a wave) can show <strong>particle</strong> behaviour.</li>
-          <li><strong>Electrons</strong> (well known as particles) can show <strong>wave</strong> behaviour.</li>
-        </ul>
-        <div class="card-note"><strong>HKDSE focus:</strong> You should be able to <em>describe the evidences</em> and <em>use the de Broglie formula</em> to link the wave and particle properties.</div>
-      </div>
-
-      <div class="card">
-        <h2 id="sec52">5.2 Evidences of duality <span class="sec-pill">Evidence</span></h2>
-        <h3>(A) Light</h3>
-        <ul class="key-list">
-          <li><strong>Wave nature:</strong> <em>interference</em> and <em>diffraction</em> patterns.</li>
-          <li><strong>Particle nature:</strong> <em>photoelectric effect</em> (photons eject electrons from a metal surface).</li>
-        </ul>
-
-        <h3>(B) Electrons (matter)</h3>
-        <ul class="key-list">
-          <li><strong>Particle behaviour:</strong> electrons have mass and charge; they carry momentum and can be counted as individual impacts.</li>
-          <li><strong>Wave behaviour:</strong> electrons can form <strong>diffraction</strong> and <strong>interference</strong> patterns.</li>
-        </ul>
-
-        <div class="card-note">
-          <strong>Typical experimental observations:</strong>
-          <ul class="key-list">
-            <li>Electron beam onto a <strong>thin metal foil / crystal</strong> &rarr; a diffraction pattern of bright and dark rings.</li>
-            <li>Electron beam through a <strong>double slit</strong> (very small slit width) &rarr; an interference pattern.</li>
-          </ul>
-          These give strong support to the <strong>wave nature</strong> of electrons.
+  <header class="topbar">
+    <div class="wrap">
+      <div class="title">
+        <div>
+          <div class="badge">E2 — Atomic World</div>
+          <h1>Nano Scale &amp; Optical Resolution (Rayleigh criterion)</h1>
+          <div class="muted" style="color:rgba(255,255,255,.88)">Why optical microscopes cannot see nano-sized details (diffraction limit).</div>
         </div>
       </div>
 
-      <div class="card">
-        <h2 id="sec53">5.3 de Broglie wavelength <span class="sec-pill">Formula</span></h2>
-        <p>de Broglie proposed that a moving particle is associated with a wavelength (&ldquo;matter wave&rdquo;):</p>
-        <span class="eq">&lambda; = <span style="white-space:nowrap;">\(\dfrac{h}{p}\)</span></span>
-        <ul class="key-list">
-          <li><strong>&lambda;</strong>: de Broglie wavelength (m)</li>
-          <li><strong>h</strong>: Planck constant (J s)</li>
-          <li><strong>p</strong>: momentum (kg m s<sup>&ndash;1</sup>)</li>
-        </ul>
-
-        <p class="muted">For a non-relativistic particle, <strong>p = mv</strong>, so &lambda; = h/(mv).</p>
-
-        <div class="card-note">
-          <strong>Important trend:</strong> larger momentum <strong>p</strong> &rarr; smaller wavelength <strong>&lambda;</strong>.
-        </div>
+      <!-- Required navigation template -->
+      <div class="section-nav">
+        <a class="nav-btn" href="../index.html">← Back to index</a>
+        <a class="nav-btn" href="wave_particle_duality.html">← Previous</a>
+        <a class="nav-btn" href="nanoscale_microscopes.html">Next →</a>
       </div>
 
-      <div class="card">
-        <h2 id="sec54">5.4 Problem skills (HKDSE style) <span class="sec-pill">Apply</span></h2>
+      <!-- Section jump bar -->
+      <div class="section-nav" style="margin-top:10px">
+        <a class="nav-btn" href="#sec01">1. Big idea</a>
+        <a class="nav-btn" href="#sec02">2. Key terms</a>
+        <a class="nav-btn" href="#sec03">3. Rayleigh criterion</a>
+        <a class="nav-btn" href="#sec04">4. Formula &amp; trends</a>
+        <a class="nav-btn" href="#sec05">5. Minimum distance s</a>
+        <a class="nav-btn" href="#sec06">6. Worked example</a>
+        <a class="nav-btn" href="#sec07">7. DSE checkpoints</a>
+      </div>
+    </div>
+  </header>
 
-        <h3>(A) Compare wavelengths (same speed)</h3>
-        <p>If two particles travel at the same speed, then <strong>&lambda; \(\propto\) 1/m</strong>.</p>
-        <ul class="key-list">
-          <li>If mass doubles &rarr; wavelength halves.</li>
-          <li>If mass is half &rarr; wavelength doubles.</li>
-        </ul>
+  <main class="wrap">
 
-        <h3>(B) Given kinetic energy K</h3>
-        <p>Using <span class="muted">K = p<sup>2</sup>/(2m)</span> (non-relativistic),</p>
-        <span class="eq">p = \(\sqrt{2mK}\)  &nbsp; &rarr; &nbsp; &lambda; = \(\dfrac{h}{\sqrt{2mK}}\)</span>
+    <section class="card" id="sec01">
+      <h2>1. Big idea: why optical microscopes have a limit</h2>
+      <p class="muted">In HKDSE, the key limitation discussed for optical microscopes is <b>diffraction of light</b> at the <b>aperture</b>. (Spherical / chromatic aberrations are <b>not required</b>.)</p>
+      <div class="callout">
+        <b>Resolution</b> (or <b>resolving power</b>) is the ability to distinguish two nearby points as two separate points.
+      </div>
+      <p class="mini">When light from two points passes through a finite aperture (e.g. pupil / objective lens), each point forms a diffraction pattern. If the patterns overlap too much, the points cannot be distinguished.</p>
+    </section>
 
-        <h3>(C) Typical numerical examples</h3>
-        <div class="card-note">
-          <p><strong>Example 1 (order of magnitude):</strong></p>
-          <ul class="key-list">
-            <li>50 g ball at 60 m s<sup>&ndash;1</sup>: &lambda; = h/(mv) &asymp; 2.21 &times; 10<sup>&ndash;34</sup> m (extremely small, no observable diffraction).</li>
-            <li>Electron at 5.0 &times; 10<sup>6</sup> m s<sup>&ndash;1</sup>: &lambda; &asymp; 1.46 &times; 10<sup>&ndash;10</sup> m (comparable to atomic spacing, diffraction possible).</li>
-          </ul>
-          <p class="muted">This explains why wave behaviour is obvious for microscopic particles but not for everyday objects.</p>
-        </div>
-
-        <div class="card-note">
-          <p><strong>Example 2 (fast electron):</strong> Find &lambda; for an electron of kinetic energy 10 keV.</p>
-          <ul class="key-list">
-            <li>Convert: 10 keV = 10 &times; 10<sup>3</sup> eV = 10 &times; 10<sup>3</sup> &times; 1.60 &times; 10<sup>&ndash;19</sup> J = 1.60 &times; 10<sup>&ndash;15</sup> J</li>
-            <li>p = \(\sqrt{2m_e K}\)</li>
-            <li>&lambda; = h/p &asymp; 1.23 &times; 10<sup>&ndash;11</sup> m</li>
+    <section class="card" id="sec02">
+      <h2>2. Key terms (HKDSE wording)</h2>
+      <div class="grid2">
+        <div>
+          <h3>Resolved / not resolved</h3>
+          <ul>
+            <li><b>Resolved</b>: two points can be distinguished as two separate points.</li>
+            <li><b>Not resolved</b>: the images overlap so much that they appear as one.</li>
           </ul>
         </div>
-
-        <div class="card-note">
-          <strong>Link to TEM (next topics):</strong> If an electron is accelerated through a p.d. <strong>V</strong>, then its kinetic energy is approximately <strong>K = eV</strong> (in J). So you may use
-          <div class="eq">&lambda; = \(\dfrac{h}{\sqrt{2m_e eV}}\)</div>
-          to estimate what voltage is needed to achieve wavelengths of the order of atomic size.
+        <div>
+          <h3>Angles &amp; aperture</h3>
+          <ul>
+            <li><b>Angular separation</b>: angle between lines of sight to two points.</li>
+            <li><b>Angular resolution</b> <code>θR</code>: <b>minimum</b> angular separation that can be resolved (in rad).</li>
+            <li><b>Aperture</b>: the opening of the instrument (diameter <code>d</code>).</li>
+            <li><code>λ</code>: wavelength of light used.</li>
+          </ul>
         </div>
-      </div>
-
-      <div class="card">
-        <h2 id="sec55">5.5 Key terms <span class="sec-pill">Terms</span></h2>
-        <div class="term-list">
-          <details>
-            <summary class="term-summary">Wave&ndash;particle duality</summary>
-            <p>Both wave and particle properties can be shown by the same object (light or electrons), depending on the experiment.</p>
-          </details>
-          <details>
-            <summary class="term-summary">de Broglie wavelength</summary>
-            <p>The wavelength associated with a moving particle: <strong>&lambda; = h/p</strong>.</p>
-          </details>
-          <details>
-            <summary class="term-summary">Why diffraction happens for electrons</summary>
-            <p>Diffraction is significant when the wavelength is comparable to the spacing/size involved (atomic spacing is typically about 10<sup>&ndash;10</sup> m).</p>
-          </details>
-        </div>
-      </div>
-
-      <div class="card card-traps" id="sec5traps">
-        <h2>Common traps</h2>
-        <h3>1) Mixing up the trend</h3>
-        <ul class="key-list">
-          <li>More momentum (bigger <strong>p</strong>) &rarr; <strong>smaller</strong> de Broglie wavelength (<strong>&lambda;</strong>).</li>
-        </ul>
-
-        <h3>2) Forgetting unit conversion</h3>
-        <ul class="key-list">
-          <li>1 eV = 1.60 &times; 10<sup>&ndash;19</sup> J (needed when K is in eV or keV).</li>
-        </ul>
-
-        <h3>3) Using out-of-syllabus extras</h3>
-        <ul class="key-list">
-          <li>Relativistic corrections are not required for standard HKDSE questions in this topic. Use the non-relativistic relations given above unless the question explicitly provides otherwise.</li>
-        </ul>
       </div>
     </section>
 
-    <!-- Bottom page-to-page navigation (required) -->
-    <div class="section-nav">
-      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
-      <a class="nav-btn" href="line_spectra.html">&larr; Previous</a>
-      <a class="nav-btn" href="nanoscale_resolution.html">Next &rarr;</a>
+    <section class="card" id="sec03">
+      <h2>3. Rayleigh criterion (concept)</h2>
+      <p class="mini">Two points can <b>just</b> be resolved when:</p>
+      <div class="callout">
+        The <b>central maximum</b> of the diffraction pattern of one point is centred on the <b>first-order minimum</b> of the diffraction pattern of the other.
+      </div>
+      <p class="muted mini">(The detailed reason for bright/dark fringes is beyond this topic.)</p>
+    </section>
+
+    <section class="card" id="sec04">
+      <h2>4. Formula &amp; trends</h2>
+      <div class="formula" aria-label="Rayleigh criterion formula">
+        <div><span class="lbl">Rayleigh criterion (angular resolution)</span></div>
+        <div style="margin-top:6px; font-size:1.05rem"><b>θ<sub>R</sub> ≈ 1.22&nbsp;λ / d</b></div>
+        <div class="mini" style="margin-top:6px">(Derivation is not required.)</div>
+      </div>
+
+      <div class="grid2" style="margin-top:12px">
+        <div>
+          <h3>How to increase resolving power</h3>
+          <ul>
+            <li>Use <b>shorter wavelength</b> (smaller <code>λ</code>)</li>
+            <li>Use a <b>larger aperture</b> (larger <code>d</code>)</li>
+          </ul>
+          <p class="mini muted">Because smaller <code>θR</code> means higher resolving power.</p>
+        </div>
+        <div>
+          <h3>Common MCQ trap</h3>
+          <ul>
+            <li>Increasing <b>brightness</b> does <b>not</b> increase resolving power.</li>
+            <li>Moving closer to an object increases its <b>angular separation</b>, so it may become resolvable.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="sec05">
+      <h2>5. Minimum resolvable distance on the object</h2>
+      <p class="mini">If the object (or two points on a sample) is at distance <code>r</code> from the aperture, then for small angles:</p>
+      <div class="formula" aria-label="minimum resolvable distance formula">
+        <div><span class="lbl">Minimum resolvable distance</span></div>
+        <div style="margin-top:6px; font-size:1.05rem"><b>s ≈ r&nbsp;θ<sub>R</sub></b></div>
+      </div>
+      <ul class="mini">
+        <li><code>s</code>: shortest distance between two points that can be resolved</li>
+        <li><code>r</code>: distance from aperture to object (e.g. objective lens to sample)</li>
+      </ul>
+    </section>
+
+    <section class="card" id="sec06">
+      <h2>6. Worked example (optical microscope)</h2>
+      <p class="mini">Suppose an optical microscope has:</p>
+      <ul class="mini">
+        <li>aperture diameter <code>d = 6 mm = 6 × 10⁻³ m</code></li>
+        <li>distance to sample <code>r = 1 cm = 0.01 m</code></li>
+        <li>wavelength <code>λ = 500 nm = 5.00 × 10⁻⁷ m</code></li>
+      </ul>
+      <div class="formula">
+        <div><span class="lbl">Calculation</span></div>
+        <div class="mini" style="margin-top:6px">
+          θ<sub>R</sub> ≈ 1.22λ/d = 1.22(5.00×10⁻⁷)/(6×10⁻³)
+          <br/>s ≈ rθ<sub>R</sub> = 0.01 × 1.22(5.00×10⁻⁷)/(6×10⁻³)
+          <br/><b>= 1.02 × 10⁻⁶ m</b>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:12px">
+        <b>Conclusion:</b> the minimum resolvable detail is about <b>1 μm</b>, so a school optical microscope is <b>not</b> good enough to observe nano materials (1–100 nm).
+      </div>
+
+      <details style="margin-top:12px">
+        <summary>Mini-check: red vs violet (ratio thinking)</summary>
+        <div class="mini" style="margin-top:8px">
+          For the same aperture <code>d</code>, <code>θR ∝ λ</code>. Red light has a longer wavelength (~700 nm) than violet (~400 nm), so <b>red gives larger θR</b> → <b>lower resolving power</b>.
+        </div>
+      </details>
+    </section>
+
+    <section class="card" id="sec07">
+      <h2>7. DSE checkpoints (fast marks)</h2>
+
+      <h3>Checklist answers (short &amp; exam-style)</h3>
+      <ul class="mini">
+        <li><b>What limits resolving power of an optical microscope?</b> Diffraction of light at the aperture (Rayleigh criterion).</li>
+        <li><b>How to increase resolving power?</b> Use shorter wavelength / larger aperture.</li>
+        <li><b>If observer walks towards two lamps:</b> angular separation increases → easier to resolve.</li>
+        <li><b>If lamps become brighter:</b> resolving power unchanged (brightness does not change θR).</li>
+      </ul>
+
+      <details style="margin-top:10px">
+        <summary>Quick MCQ pattern: compare two instruments</summary>
+        <div class="mini" style="margin-top:8px">
+          If two instruments use the <b>same λ</b>, then <b>θR ∝ 1/d</b>. Larger <code>d</code> → smaller <code>θR</code> → higher resolving power.
+        </div>
+      </details>
+    </section>
+
+    <!-- Bottom navigation (required) -->
+    <div class="card">
+      <div class="section-nav">
+        <a class="nav-btn" href="../index.html">← Back to index</a>
+        <a class="nav-btn" href="wave_particle_duality.html">← Previous</a>
+        <a class="nav-btn" href="nanoscale_microscopes.html">Next →</a>
+      </div>
+      <div class="hr"></div>
+      <div class="muted mini">Next up: microscopes for nano scale (TEM &amp; STM) and why using particles/electrons helps (shorter de Broglie wavelength).</div>
     </div>
 
     <footer>
-      End of note: Wave&ndash;Particle Duality (de Broglie) &middot; Next: optical resolution and nano-scale viewing.
+      <div class="wrap">
+        End of note — E2. Keep units consistent (m, rad) and state the trend clearly.
+      </div>
     </footer>
+
   </main>
 </body>
 </html>
