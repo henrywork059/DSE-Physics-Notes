@@ -293,6 +293,7 @@
       border-left:4px solid rgba(23,75,143,0.55);
     }
 
+    #term-exp:checked ~ .term-tab-bar label[for="term-exp"],
     #term-model:checked ~ .term-tab-bar label[for="term-model"],
     #term-nucleus:checked ~ .term-tab-bar label[for="term-nucleus"],
     #term-alpha:checked ~ .term-tab-bar label[for="term-alpha"],
@@ -305,6 +306,7 @@
       box-shadow:0 3px 10px rgba(23,75,143,0.4);
     }
 
+    #term-exp:checked ~ #panel-term-exp,
     #term-model:checked ~ #panel-term-model,
     #term-nucleus:checked ~ #panel-term-nucleus,
     #term-alpha:checked ~ #panel-term-alpha,
@@ -328,7 +330,7 @@
   <main>
     <header class="page-header">
       <h1>E2 — Rutherford Atomic Model</h1>
-      <div class="meta">HKDSE Physics &mdash; Elective E2: Atomic World &middot; <span class="m">&alpha;</span>-particle scattering evidence and Rutherford&rsquo;s model.</div>
+      <div class="meta">HKDSE Physics — Elective E2: Atomic World · <span class="m">&alpha;</span>-particle scattering evidence and Rutherford’s model.</div>
     </header>
 
     <!-- Required top navigation (Back / Previous / Next) -->
@@ -339,13 +341,13 @@
     </div>
 
     <p class="section-intro">
-      Use <span class="m">&alpha;</span>-particle scattering results to infer the structure of atoms, describe Rutherford&rsquo;s atomic model,
+      Use <span class="m">&alpha;</span>-particle scattering results to infer the structure of atoms, describe Rutherford’s atomic model,
       and state why the model fails to account for atomic stability and line spectra.
     </p>
 
     <div class="badge-strip">
-      <span class="badge exam">Exam focus: observations &rarr; conclusions (empty space, nucleus)</span>
-      <span class="badge skills">Skills: explain limitations (stability + line spectra)</span>
+      <span class="badge exam">Exam focus: observations &rarr; conclusions; why thin foil / vacuum; <span class="m">&alpha;</span> vs <span class="m">&beta;</span></span>
+      <span class="badge skills">Skills: explain limitations (stability + line spectra); compare with Bohr (1 similarity + 1 difference)</span>
     </div>
 
     <!-- Section jump bar -->
@@ -365,7 +367,7 @@
           <li>An atom consists of a tiny <strong>nucleus</strong> and electrons around it.</li>
           <li><strong>All positive charge</strong> and <strong>most of the mass</strong> of the atom are concentrated in the nucleus.</li>
           <li>Electrons orbit the nucleus under the <strong>electric force</strong> of attraction.</li>
-          <li>The rest of the atom is largely <strong>empty space</strong>.</li>
+          <li>The rest of the atom is largely <strong>empty space</strong> (nucleus is tiny compared with the whole atom).</li>
         </ul>
         <div class="card-note">
           A scientific model is proposed to explain observations and may be modified or replaced if it fails to explain new observations.
@@ -411,41 +413,62 @@
           </tbody>
         </table>
 
-        <h3>Why only a few are deflected a lot?</h3>
+        <h3>Experiment essentials (often tested)</h3>
         <ul class="key-list">
-          <li><span class="m">&alpha;</span> particles passing far from nuclei feel little repulsion and continue almost straight.</li>
-          <li>If an <span class="m">&alpha;</span> particle passes very close to a nucleus, the repulsive electric force is very strong, so the deflection is large (or it may bounce back).</li>
-          <li>Collisions with electrons cause negligible change in path because electrons have much smaller mass than an <span class="m">&alpha;</span> particle.</li>
+          <li><strong>Thin gold foil:</strong> so each <span class="m">&alpha;</span> particle would most likely be scattered by <strong>one nucleus only</strong> (not multiple nuclei).</li>
+          <li><strong>In vacuum:</strong> reduce collisions with air molecules so the scattering is mainly due to the foil.</li>
+          <li><strong>Why not use <span class="m">&beta;</span> particles?</strong> <span class="m">&beta;</span> particles are much lighter and can be deflected noticeably by <strong>both nuclei and electrons</strong>, so the result would not give clear evidence about a small nucleus.</li>
         </ul>
 
-        <div class="card-traps">
-          <strong>Syllabus boundary:</strong> You are expected to realise the importance of scattering experiments, but detailed setups of different scattering experiments and names of newly discovered particles are <strong>not required</strong>.
+        <div class="card-note">
+          The backscattering result is strong evidence against the idea that positive charge is spread out over the whole atom (you do NOT need the detailed Thomson model description).
+        </div>
+
+        <h3>What can / cannot be concluded</h3>
+        <div class="two-col">
+          <div>
+            <ul class="key-list">
+              <li><strong>Can conclude:</strong> nucleus is <strong>positively charged</strong>; atom is mostly <strong>empty space</strong>; nucleus contains <strong>most mass</strong>.</li>
+            </ul>
+          </div>
+          <div>
+            <ul class="key-list">
+              <li><strong>Cannot conclude:</strong> the <em>composition</em> of the nucleus (e.g. “protons + neutrons”) from this experiment alone.</li>
+            </ul>
+          </div>
         </div>
       </div>
 
       <div class="card">
-        <h2 id="sec23">2.3 Limitations of Rutherford&rsquo;s model <span class="sec-pill">Why it fails</span></h2>
+        <h2 id="sec23">2.3 Limitations of Rutherford’s model <span class="sec-pill">Why it fails</span></h2>
         <ul class="key-list">
-          <li><strong>Atomic stability problem:</strong> an electron in circular motion is accelerating. In classical physics, it should emit electromagnetic waves, lose energy and spiral into the nucleus. The atom would collapse, but atoms are stable.</li>
-          <li><strong>Line spectra problem:</strong> the electron orbital frequency can take any value, so it would emit electromagnetic waves with a continuous range of frequencies. However, monatomic gases produce <strong>discrete</strong> line spectra.</li>
+          <li><strong>Atomic stability problem:</strong> an electron in circular motion is accelerating. In classical physics, it should emit electromagnetic waves continuously, lose energy and spiral into the nucleus. The atom would collapse, but atoms are stable.</li>
+          <li><strong>Line spectra problem:</strong> if electron energy can change continuously, the emitted electromagnetic waves would have a continuous range of frequencies. However, monatomic gases produce <strong>discrete</strong> line spectra.</li>
         </ul>
         <div class="card-note">
-          These limitations show that Rutherford&rsquo;s model must be modified &mdash; leading to Bohr&rsquo;s model with quantised energy levels.
+          These limitations show that Rutherford’s model must be modified — leading to Bohr’s model with quantised energy levels.
         </div>
+
+        <h3>Common 2-mark add-on: Rutherford vs Bohr</h3>
+        <ul class="key-list">
+          <li><strong>Similarity:</strong> both have a tiny nucleus with electrons moving around it (orbital picture).</li>
+          <li><strong>Difference:</strong> Bohr’s model has <strong>quantised</strong> orbits / energy levels; Rutherford’s model does not.</li>
+        </ul>
       </div>
 
       <div class="card">
         <h2 id="sec24">2.4 Importance of scattering experiments <span class="sec-pill">Big idea</span></h2>
         <ul class="key-list">
           <li>Scattering experiments with energetic particles are a major tool for studying the <strong>structure of atoms and nuclei</strong>.</li>
-          <li>They can also contribute to <strong>searching for new particles</strong> in modern physics (details and names not required).</li>
+          <li>They also have impact on <strong>searching for new particles</strong> in modern physics (detailed setups and names are not required).</li>
         </ul>
       </div>
 
       <div class="card">
         <h2 id="sec25">2.5 Key terms (Rutherford topic) <span class="sec-pill">Glossary</span></h2>
         <div class="term-tabs">
-          <input type="radio" name="term-r" id="term-model" class="term-radio" checked>
+          <input type="radio" name="term-r" id="term-exp" class="term-radio" checked>
+          <input type="radio" name="term-r" id="term-model" class="term-radio">
           <input type="radio" name="term-r" id="term-nucleus" class="term-radio">
           <input type="radio" name="term-r" id="term-alpha" class="term-radio">
           <input type="radio" name="term-r" id="term-scatter" class="term-radio">
@@ -453,6 +476,7 @@
           <input type="radio" name="term-r" id="term-line" class="term-radio">
 
           <div class="term-tab-bar">
+            <label for="term-exp" class="term-tab-btn">Geiger–Marsden exp.</label>
             <label for="term-model" class="term-tab-btn">Rutherford model</label>
             <label for="term-nucleus" class="term-tab-btn">Nucleus</label>
             <label for="term-alpha" class="term-tab-btn"><span class="m">&alpha;</span> particle</label>
@@ -461,11 +485,14 @@
             <label for="term-line" class="term-tab-btn">Line spectrum</label>
           </div>
 
+          <div class="term-panel" id="panel-term-exp">
+            <p><strong>Geiger–Marsden experiment</strong>: a thin metal foil is bombarded by <span class="m">&alpha;</span> particles and the deflection pattern is observed. The results give evidence for a tiny, positively charged nucleus and that the atom is mostly empty space.</p>
+          </div>
           <div class="term-panel" id="panel-term-model">
-            <p><strong>Rutherford&rsquo;s atomic model</strong>: an atom has a tiny nucleus containing all positive charge and most mass, with electrons around it; the rest of the atom is largely empty space.</p>
+            <p><strong>Rutherford’s atomic model</strong>: an atom has a tiny nucleus containing all positive charge and most mass, with electrons around it; the rest of the atom is largely empty space.</p>
           </div>
           <div class="term-panel" id="panel-term-nucleus">
-            <p><strong>Nucleus</strong>: the tiny central core of an atom where positive charge and most of the atom&rsquo;s mass are concentrated.</p>
+            <p><strong>Nucleus</strong>: the tiny central core of an atom where positive charge and most of the atom’s mass are concentrated.</p>
           </div>
           <div class="term-panel" id="panel-term-alpha">
             <p><strong><span class="m">&alpha;</span> particle</strong>: a positively charged particle emitted by some radioactive sources, used as the incident particles in the scattering experiment.</p>
@@ -486,10 +513,11 @@
         <h2>2.6 HKDSE common traps &amp; mistakes <span class="sec-pill">Traps</span></h2>
         <div class="card-traps">
           <ul class="key-list">
-            <li>Stating &ldquo;most <span class="m">&alpha;</span> particles pass through&rdquo; but not concluding that the atom is mostly <strong>empty space</strong>.</li>
-            <li>Saying &ldquo;nucleus is positive&rdquo; but not linking it to <strong>repulsion</strong> of <span class="m">&alpha;</span> particles and large-angle deflection.</li>
-            <li>Mixing up the limitation: don&rsquo;t say Rutherford model &ldquo;cannot explain why atoms are neutral&rdquo; (neutrality is not a difficulty for the model).</li>
-            <li>Explaining line spectra using the wrong idea (e.g. &ldquo;electrons lose some energy and leave&rdquo;). Correct point: Rutherford model predicts a <strong>continuous</strong> emission spectrum, but observed spectra are <strong>line</strong> spectra.</li>
+            <li>Stating “most <span class="m">&alpha;</span> particles pass through” but not concluding that the atom is mostly <strong>empty space</strong>.</li>
+            <li>Saying “nucleus is positive” but not linking it to <strong>repulsion</strong> of <span class="m">&alpha;</span> particles and large-angle deflection.</li>
+            <li>Mixing up the limitation: don’t say Rutherford model “cannot explain why atoms are neutral”.</li>
+            <li>For the experiment details: don’t claim “gold foil was used because gold contains free electrons” (wrong reason).</li>
+            <li>Over-claiming: Geiger–Marsden results do <strong>not</strong> tell you the nucleus is made of protons and neutrons.</li>
             <li>Going beyond syllabus by describing detailed setups of other scattering experiments or naming newly discovered particles.</li>
           </ul>
         </div>
@@ -503,7 +531,7 @@
       </div>
     </section>
 
-    <p style="font-size:0.85rem; color:var(--text-muted); margin-top:10px;">End of E2 &mdash; Rutherford Atomic Model.</p>
+    <p style="font-size:0.85rem; color:var(--text-muted); margin-top:10px;">End of E2 — Rutherford Atomic Model.</p>
   </main>
 </body>
 </html>
