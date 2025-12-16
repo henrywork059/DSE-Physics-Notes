@@ -5,216 +5,250 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>E2 — Bohr Model &amp; Energy Levels | DSE Physics Notes</title>
   <style>
-    :root {
-      --bg: #f4f7fb;
-      --card: #ffffff;
-      --text: #1f2a44;
-      --text-muted: #5b6b86;
-      --accent: #174b8f;
-      --accent-2: #3a7bd5;
-      --border: #d9e2ef;
-      --shadow: 0 10px 30px rgba(31, 42, 68, 0.08);
-      --radius: 16px;
+    :root{
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --text:#1f2a44;
+      --text-muted:#5b6b86;
+      --accent:#174b8f;
+      --accent-2:#3a7bd5;
+      --border:#d9e2ef;
+      --shadow:0 10px 30px rgba(31,42,68,0.08);
+      --radius:16px;
     }
 
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.55;
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
     }
 
-    main {
-      max-width: 980px;
-      margin: 24px auto;
-      padding: 26px 22px 30px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+    main{
+      max-width:980px;
+      margin:24px auto;
+      padding:26px 22px 30px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
     }
 
-    .page-header h1 {
-      margin: 0 0 6px;
-      font-size: 1.85rem;
-      letter-spacing: -0.02em;
+    .page-header h1{
+      margin:0 0 6px;
+      font-size:1.85rem;
+      letter-spacing:-0.02em;
     }
 
-    .meta {
-      color: var(--text-muted);
-      font-size: 0.95rem;
+    .meta{
+      color:var(--text-muted);
+      font-size:0.95rem;
     }
 
-    .section-intro {
-      margin: 14px 0 0;
-      font-size: 1.02rem;
-      color: var(--text);
+    .section-intro{
+      margin:14px 0 0;
+      font-size:1.02rem;
+      color:var(--text);
     }
 
-    .badge-strip {
-      margin: 14px 0 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+    .badge-strip{
+      margin:14px 0 0;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
     }
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: #f8fbff;
-      color: var(--text);
-      font-size: 0.92rem;
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#f8fbff;
+      color:var(--text);
+      font-size:0.92rem;
     }
 
-    .badge.exam { border-color: rgba(23,75,143,0.35); }
-    .badge.skills { border-color: rgba(58,123,213,0.35); }
+    .badge.exam{ border-color:rgba(23,75,143,0.35); }
+    .badge.skills{ border-color:rgba(58,123,213,0.35); }
 
-    .section-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 16px 0 6px;
-      padding: 0;
+    .section-nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:16px 0 6px;
+      padding:0;
     }
 
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: #ffffff;
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      box-shadow: 0 4px 14px rgba(31, 42, 68, 0.06);
-      transition: transform 0.08s ease;
+    .nav-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#ffffff;
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:600;
+      font-size:0.95rem;
+      box-shadow:0 4px 14px rgba(31,42,68,0.06);
+      transition:transform 0.08s ease;
+      white-space:nowrap;
     }
 
-    .nav-btn:hover { transform: translateY(-1px); }
+    .nav-btn:hover{ transform:translateY(-1px); }
 
-    .nav-btn span {
-      color: #ffffff;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      border-radius: 999px;
-      padding: 2px 8px;
-      font-size: 0.82rem;
-      font-weight: 700;
+    .nav-btn span{
+      color:#ffffff;
+      background:linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-radius:999px;
+      padding:2px 8px;
+      font-size:0.82rem;
+      font-weight:700;
     }
 
-    section { margin-top: 12px; }
+    section{ margin-top:12px; }
 
-    .card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px 16px 14px;
-      background: #ffffff;
-      box-shadow: 0 8px 22px rgba(31, 42, 68, 0.06);
-      margin: 12px 0;
+    .card{
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:16px 16px 14px;
+      background:#ffffff;
+      box-shadow:0 8px 22px rgba(31,42,68,0.06);
+      margin:12px 0;
     }
 
-    .card h2 {
-      margin: 0 0 10px;
-      font-size: 1.25rem;
-      scroll-margin-top: 90px;
+    .card h2{
+      margin:0 0 10px;
+      font-size:1.25rem;
+      scroll-margin-top:90px;
     }
 
-    .card h3 {
-      margin: 12px 0 8px;
-      font-size: 1.05rem;
+    .card h3{
+      margin:12px 0 8px;
+      font-size:1.05rem;
     }
 
-    .sec-pill {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--accent);
-      background: rgba(23,75,143,0.08);
-      padding: 3px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(23,75,143,0.12);
-      margin-left: 8px;
+    .sec-pill{
+      font-size:0.8rem;
+      font-weight:700;
+      color:var(--accent);
+      background:rgba(23,75,143,0.08);
+      padding:3px 10px;
+      border-radius:999px;
+      border:1px solid rgba(23,75,143,0.12);
+      margin-left:8px;
     }
 
-    ul.key-list {
-      margin: 0;
-      padding-left: 18px;
+    ul.key-list{
+      margin:0;
+      padding-left:18px;
     }
 
-    .key-list li { margin: 6px 0; }
-    .key-list li::marker { color: var(--accent-2); }
+    .key-list li{ margin:6px 0; }
+    .key-list li::marker{ color:var(--accent-2); }
 
-    .card-note {
-      margin-top: 10px;
-      padding: 10px 12px;
-      border-left: 4px solid var(--accent);
-      background: rgba(23,75,143,0.06);
-      border-radius: 12px;
-      color: var(--text);
-      font-size: 0.95rem;
+    .card-note{
+      margin-top:10px;
+      padding:10px 12px;
+      border-left:4px solid var(--accent);
+      background:rgba(23,75,143,0.06);
+      border-radius:12px;
+      color:var(--text);
+      font-size:0.95rem;
     }
 
-    .eq {
-      display: inline-block;
-      margin: 8px 0;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: #fbfdff;
-      font-family: "Times New Roman", Times, serif;
-      font-size: 1.08rem;
+    .card-traps{
+      border-left:5px solid #f59e0b;
+      background:#fffbeb;
     }
 
-    .table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      font-size: 0.95rem;
+    .eq{
+      display:inline-block;
+      margin:8px 0;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:#fbfdff;
+      font-size:1.08rem;
     }
 
-    .table th,
-    .table td {
-      border: 1px solid var(--border);
-      padding: 10px 10px;
-      vertical-align: top;
+    .frac{
+      display:inline-block;
+      vertical-align:middle;
+      text-align:center;
+      line-height:1.1;
+      margin:0 2px;
     }
 
-    .table th {
-      background: #f2f7ff;
-      color: var(--accent);
-      text-align: left;
-      font-weight: 800;
+    .frac .top{ display:block; border-bottom:1px solid currentColor; padding:0 3px 2px; }
+    .frac .bottom{ display:block; padding:2px 3px 0; }
+
+    .compare-table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:10px;
+      font-size:0.95rem;
     }
 
-    .diagram {
-      margin-top: 10px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: #ffffff;
-      padding: 10px 12px;
-      overflow-x: auto;
+    .compare-table th,
+    .compare-table td{
+      border:1px solid var(--border);
+      padding:10px 10px;
+      vertical-align:top;
     }
 
-    .card-traps {
-      border-left: 5px solid #f59e0b;
-      background: #fffbeb;
+    .compare-table th{
+      background:#f2f7ff;
+      color:var(--accent);
+      text-align:left;
+      font-weight:800;
     }
 
-    :target {
-      outline: 0;
-      box-shadow: 0 0 0 4px rgba(58,123,213,0.18);
-      border-radius: 10px;
-      padding: 2px 4px;
+    .diagram{
+      margin-top:10px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:#ffffff;
+      padding:10px 12px;
+      overflow-x:auto;
     }
 
-    @media (max-width: 768px) {
-      main { padding: 18px 14px 24px; border-radius: 0; margin: 0; }
+    /* Unified math look (Times + italic, no LaTeX) */
+    .eq{ font-family:"Times New Roman", Times, serif; font-style:italic; }
+    main em, .m, .mi{ font-family:"Times New Roman", Times, serif; font-style:italic; }
+    .eq, .eq *, .frac, .frac *{ font-family:"Times New Roman", Times, serif; font-style:italic; }
+
+    sub, sup{
+      font-family:"Times New Roman", Times, serif;
+      font-style:italic;
+      font-size:0.78em;
+      line-height:0;
+      position:relative;
+      vertical-align:baseline;
+    }
+
+    sub{ bottom:-0.28em; }
+    sup{ top:-0.55em; }
+
+    .eq sub{ bottom:-0.22em; }
+    .eq sup{ top:-0.48em; }
+
+    /* Subtle highlight when jumping to anchors */
+    :target{
+      outline:0;
+      box-shadow:0 0 0 4px rgba(58,123,213,0.18);
+      border-radius:10px;
+      padding:2px 4px;
+    }
+
+    @media (max-width:768px){
+      main{ padding:18px 14px 24px; border-radius:0; margin:0; }
     }
   </style>
 </head>
@@ -228,8 +262,6 @@
     <!-- Required top navigation (Back / Previous / Next) -->
     <div class="section-nav">
       <a class="nav-btn" href="../index.html">&larr; Back to index</a>
-
-      <!-- Page-to-page navigation -->
       <a class="nav-btn" href="rutherford.html">&larr; Previous</a>
       <a class="nav-btn" href="line_spectra.html">Next &rarr;</a>
     </div>
@@ -239,64 +271,86 @@
     </p>
 
     <div class="badge-strip">
-      <span class="badge exam">Exam focus: E<sub>n</sub>, &Delta;E, excitation vs ionization</span>
-      <span class="badge skills">Skills: reading energy level diagrams; hf = E<sub>a</sub> &minus; E<sub>b</sub></span>
+      <span class="badge exam">Exam focus: <span class="m">E<sub>n</sub></span>, <span class="m">&Delta;E</span>, excitation vs ionization</span>
+      <span class="badge skills">Skills: reading energy-level diagrams; <span class="m">h f = E<sub>a</sub> &minus; E<sub>b</sub></span></span>
     </div>
 
     <!-- Section jump bar -->
     <div class="section-nav">
-      <a href="#sec31" class="nav-btn"><span>3.1</span> What Bohr fixed</a>
-      <a href="#sec32" class="nav-btn"><span>3.2</span> Postulates</a>
-      <a href="#sec33" class="nav-btn"><span>3.3</span> Energy levels</a>
-      <a href="#sec34" class="nav-btn"><span>3.4</span> Excitation vs ionization</a>
-      <a href="#sec35" class="nav-btn"><span>3.5</span> Worked examples</a>
-      <a href="#sec3traps" class="nav-btn">Common traps</a>
+      <a href="#sec01" class="nav-btn"><span>1</span> What Bohr fixed</a>
+      <a href="#sec02" class="nav-btn"><span>2</span> Postulates</a>
+      <a href="#sec03" class="nav-btn"><span>3</span> Energy levels</a>
+      <a href="#sec04" class="nav-btn"><span>4</span> Excitation vs ionization</a>
+      <a href="#sec05" class="nav-btn"><span>5</span> Worked examples</a>
+      <a href="#sec06" class="nav-btn"><span>6</span> Common traps</a>
     </div>
 
     <section>
       <div class="card">
-        <h2 id="sec31">3.1 What Bohr&rsquo;s model fixed <span class="sec-pill">Motivation</span></h2>
+        <h2 id="sec01">1. What Bohr&rsquo;s model fixed <span class="sec-pill">Motivation</span></h2>
         <ul class="key-list">
           <li><strong>Rutherford model problem:</strong> orbiting electrons should radiate continuously and spiral into the nucleus &rarr; cannot explain <strong>stable atoms</strong> and <strong>discrete</strong> line spectra.</li>
-          <li><strong>Bohr&rsquo;s idea:</strong> electrons can occupy only <strong>discrete orbits</strong> (labelled by <span class="eq">n = 1, 2, 3, &hellip;</span>). Each orbit corresponds to a discrete total energy <span class="eq">E<sub>n</sub></span>.</li>
+          <li><strong>Bohr&rsquo;s idea:</strong> electrons can occupy only <strong>discrete orbits</strong> (labelled by <span class="m">n = 1, 2, 3, &hellip;</span>). Each orbit corresponds to a discrete total energy <span class="m">E<sub>n</sub></span>.</li>
         </ul>
         <div class="card-note"><strong>HKDSE wording:</strong> &ldquo;energy levels of the hydrogen atom&rdquo; and &ldquo;energy levels of the electron&rdquo; are used interchangeably.</div>
       </div>
 
       <div class="card">
-        <h2 id="sec32">3.2 Bohr postulates <span class="sec-pill">Postulates</span></h2>
+        <h2 id="sec02">2. Bohr postulates <span class="sec-pill">Postulates</span></h2>
 
-        <h3>(A) Quantization of angular momentum</h3>
-        <p>
-          Only orbits satisfying the Bohr quantization condition are allowed:
-          <span class="eq">m<sub>e</sub> v r = n h / (2&pi;)</span>
-          (equivalently <span class="eq">2&pi; m<sub>e</sub> v r = n h</span>), where <span class="eq">n = 1, 2, 3, &hellip;</span>.
-        </p>
-        <div class="card-note"><strong>HKDSE note:</strong> Derivation is not required. Use the condition as a stated postulate.</div>
-
-        <h3>(B) Electron transitions (photon emission / absorption)</h3>
+        <h3>Classical aspect</h3>
         <ul class="key-list">
-          <li><strong>Emission:</strong> electron drops from a higher level <span class="eq">E<sub>a</sub></span> to a lower level <span class="eq">E<sub>b</sub></span>, emitting a photon with energy <span class="eq">hf = E<sub>a</sub> &minus; E<sub>b</sub></span>.</li>
-          <li><strong>Absorption (excitation):</strong> electron can jump to a higher level only if it absorbs a photon whose energy equals the level difference exactly.</li>
+          <li>Electrons are treated as particles moving in circular orbits around the nucleus.</li>
+          <li>The centripetal force is provided by the electric (Coulomb) force of attraction between the electron and the nucleus.</li>
         </ul>
+
+        <h3>Quantum aspects</h3>
+        <ul class="key-list">
+          <li>Only certain <strong>discrete</strong> orbits are allowed (labelled by <span class="m">n = 1, 2, 3, &hellip;</span>). These are called <strong>stationary orbits</strong>.</li>
+          <li>An electron in a stationary orbit <strong>does not radiate</strong> electromagnetic energy.</li>
+          <li>Radiation is emitted or absorbed only when the electron jumps between energy levels.</li>
+        </ul>
+
+        <div class="eq">
+          h f =
+          <span class="frac"><span class="top">h c</span><span class="bottom"><span class="m">&lambda;</span></span></span>
+          = E<sub>a</sub> &minus; E<sub>b</sub>
+        </div>
+        <div class="card-note">
+          <strong>Meaning:</strong> photon energy equals the <strong>difference between a higher and a lower energy level</strong>.
+          <strong>Emission:</strong> higher &rarr; lower. <strong>Absorption (excitation):</strong> lower &rarr; higher (photon energy must match the level difference exactly).
+        </div>
+
+        <h3>Quantization condition (Bohr)</h3>
+        <div class="eq">
+          m<sub>e</sub> v r =
+          <span class="frac"><span class="top">n h</span><span class="bottom">2&pi;</span></span>
+          &nbsp;&nbsp;(n = 1, 2, 3, &hellip;)
+        </div>
+        <div class="eq">2&pi; m<sub>e</sub> v r = n h</div>
+        <div class="card-note"><strong>HKDSE note:</strong> Basic knowledge: angular momentum <span class="m">= m v r</span>. Derivation is not required.</div>
       </div>
 
       <div class="card">
-        <h2 id="sec33">3.3 Energy levels of the hydrogen atom <span class="sec-pill">Energy levels</span></h2>
+        <h2 id="sec03">3. Energy levels of the hydrogen atom <span class="sec-pill">Energy levels</span></h2>
 
         <h3>Bohr energy equation (hydrogen)</h3>
-        <div class="eq">E<sub>n</sub> = &minus;13.6 eV / n<sup>2</sup> &nbsp; (n = 1, 2, 3, &hellip;)</div>
+        <div class="eq">E<sub>n</sub> = <span class="frac"><span class="top">&minus;13.6 eV</span><span class="bottom">n<sup>2</sup></span></span>  (n = 1, 2, 3, &hellip;)</div>
 
         <ul class="key-list">
           <li>The negative sign means the electron is <strong>bound</strong> to the nucleus; energy must be supplied to remove it to infinity.</li>
-          <li>At <span class="eq">n = &infin;</span>, the electron is free and <span class="eq">E<sub>&infin;</sub> = 0</span>.</li>
-          <li>Energy levels get closer together as <span class="eq">n</span> increases.</li>
+          <li>At <span class="m">n = &infin;</span>, the electron is free and <span class="m">E<sub>&infin;</sub> = 0</span>.</li>
+          <li>Energy levels get closer together as <span class="m">n</span> increases.</li>
         </ul>
 
         <h3>Typical values</h3>
-        <table class="table">
+        <table class="compare-table">
           <thead>
-            <tr><th>Quantum number n</th><th>State</th><th>Total energy E<sub>n</sub> / eV</th></tr>
+            <tr>
+              <th>Quantum number <span class="m">n</span></th>
+              <th>State</th>
+              <th>Total energy <span class="m">E<sub>n</sub></span> / eV</th>
+            </tr>
           </thead>
           <tbody>
             <tr><td>1</td><td>Ground state</td><td>&minus;13.6</td></tr>
@@ -307,84 +361,88 @@
           </tbody>
         </table>
 
-        <h3>Energy level diagram (scaled)</h3>
+        <h3>Energy level diagram (not to scale)</h3>
         <div class="diagram">
           <div id="energyDiagram" data-title="energy / eV"></div>
         </div>
 
-        <div class="card-note"><strong>Unit reminder:</strong> 1 eV = 1.60 &times; 10<sup>&minus;19</sup> J.</div>
+        <div class="card-note"><strong>Unit reminder:</strong> <span class="m">1 eV = 1.60 &times; 10<sup>&minus;19</sup> J</span>.</div>
       </div>
 
       <div class="card">
-        <h2 id="sec34">3.4 Excitation energy vs ionization energy <span class="sec-pill">Exam</span></h2>
+        <h2 id="sec04">4. Excitation energy vs ionization energy <span class="sec-pill">Exam</span></h2>
 
         <h3>Excitation (exact energy needed)</h3>
         <ul class="key-list">
-          <li>Excitation from level <span class="eq">b</span> to <span class="eq">a</span> requires <span class="eq">&Delta;E = E<sub>a</sub> &minus; E<sub>b</sub></span>.</li>
-          <li>A photon can excite the atom only if its energy equals <span class="eq">&Delta;E</span> exactly.</li>
+          <li>Excitation from level <span class="m">b</span> to <span class="m">a</span> requires the exact energy difference:</li>
+        </ul>
+        <div class="eq">&Delta;E = E<sub>a</sub> &minus; E<sub>b</sub></div>
+        <ul class="key-list">
+          <li>A photon can excite the atom only if its energy equals <span class="m">&Delta;E</span> exactly.</li>
         </ul>
 
         <h3>Ionization (minimum energy, not exact)</h3>
         <ul class="key-list">
-          <li>Ionization means the electron escapes completely to <span class="eq">n = &infin;</span> where <span class="eq">E<sub>&infin;</sub> = 0</span>.</li>
-          <li>Minimum energy to ionize an atom in state <span class="eq">n</span>:
-            <span class="eq">E<sub>min</sub> = E<sub>&infin;</sub> &minus; E<sub>n</sub> = 0 &minus; E<sub>n</sub></span>.</li>
-          <li>The atom can absorb any photon with energy <strong>&ge;</strong> <span class="eq">E<sub>min</sub></span>. Any extra energy becomes kinetic energy after ionization.</li>
+          <li>Ionization means the electron escapes completely to <span class="m">n = &infin;</span> where <span class="m">E<sub>&infin;</sub> = 0</span>.</li>
+          <li>Minimum energy to ionize an atom in state <span class="m">n</span>:</li>
+        </ul>
+        <div class="eq">E<sub>min</sub> = E<sub>&infin;</sub> &minus; E<sub>n</sub> = 0 &minus; E<sub>n</sub></div>
+        <ul class="key-list">
+          <li>The atom can absorb any photon with energy <strong>&ge;</strong> <span class="m">E<sub>min</sub></span>. Any extra energy becomes kinetic energy after ionization.</li>
         </ul>
 
         <h3>Quick checkpoints</h3>
         <ul class="key-list">
-          <li>From <span class="eq">n = 1</span> to <span class="eq">n = 2</span>: <span class="eq">&Delta;E = (&minus;3.40) &minus; (&minus;13.6) = 10.2 eV</span>.</li>
-          <li>Ionization energy from ground state: <span class="eq">E<sub>min</sub> = 0 &minus; (&minus;13.6) = 13.6 eV</span>.</li>
-          <li>Ionization energy from <span class="eq">n = 2</span>: <span class="eq">E<sub>min</sub> = 0 &minus; (&minus;3.40) = 3.40 eV</span>.</li>
+          <li>From <span class="m">n = 1</span> to <span class="m">n = 2</span>:
+            <span class="m">&Delta;E = (&minus;3.40) &minus; (&minus;13.6) = 10.2 eV</span>.</li>
+          <li>Ionization energy from ground state:
+            <span class="m">E<sub>min</sub> = 0 &minus; (&minus;13.6) = 13.6 eV</span>.</li>
+          <li>Ionization energy from <span class="m">n = 2</span>:
+            <span class="m">E<sub>min</sub> = 0 &minus; (&minus;3.40) = 3.40 eV</span>.</li>
         </ul>
       </div>
 
       <div class="card">
-        <h2 id="sec35">3.5 Worked examples <span class="sec-pill">Skills</span></h2>
+        <h2 id="sec05">5. Worked examples <span class="sec-pill">Skills</span></h2>
 
-        <h3>Example 1: Find the energy level at n = 3</h3>
-        <p><strong>Formula:</strong> <span class="eq">E<sub>n</sub> = &minus;13.6 eV / n<sup>2</sup></span></p>
-        <p><strong>Substitute:</strong> <span class="eq">E<sub>3</sub> = &minus;13.6 / 3<sup>2</sup> = &minus;13.6 / 9 = &minus;1.51 eV</span></p>
+        <h3>Example 1: Find the energy level at <span class="m">n = 3</span></h3>
+        <p><strong>Formula:</strong> <span class="eq">E<sub>n</sub> = <span class="frac"><span class="top">&minus;13.6 eV</span><span class="bottom">n<sup>2</sup></span></span></span></p>
+        <p><strong>Substitute:</strong> <span class="m">E<sub>3</sub> = &minus;13.6 / 3<sup>2</sup> = &minus;13.6 / 9 = &minus;1.51 eV</span></p>
         <p><strong>Answer:</strong> <span class="eq">E<sub>3</sub> = &minus;1.51 eV</span></p>
 
-        <h3>Example 2: Can a 12.2 eV photon excite a hydrogen atom in the ground state to n = 3?</h3>
-        <p><strong>Excitation requires exact energy:</strong> <span class="eq">&Delta;E = E<sub>3</sub> &minus; E<sub>1</sub></span></p>
-        <p><strong>Using levels:</strong> <span class="eq">&Delta;E = (&minus;1.51) &minus; (&minus;13.6) = 12.09 eV</span></p>
+        <h3>Example 2: Can a 12.2 eV photon excite a hydrogen atom in the ground state to <span class="m">n = 3</span>?</h3>
+        <p><strong>Excitation requires exact energy:</strong> <span class="m">&Delta;E = E<sub>3</sub> &minus; E<sub>1</sub></span></p>
+        <p><strong>Using levels:</strong> <span class="m">&Delta;E = (&minus;1.51) &minus; (&minus;13.6) = 12.09 eV</span></p>
         <p><strong>Compare:</strong> 12.2 eV &ne; 12.09 eV</p>
         <p><strong>Conclusion:</strong> <strong>No</strong>, the photon cannot excite the atom (it will not be absorbed for excitation).</p>
         <div class="card-note"><strong>Note:</strong> A collision with a particle (e.g. an electron) can still excite the atom if the particle has kinetic energy larger than the required excitation energy.</div>
 
         <h3>Example 3: Can a 10 eV photon ionize a hydrogen atom in the first excited state?</h3>
-        <p><strong>Ionization minimum energy from n = 2:</strong> <span class="eq">E<sub>min</sub> = 0 &minus; (&minus;3.40) = 3.40 eV</span></p>
+        <p><strong>Ionization minimum energy from <span class="m">n = 2</span>:</strong> <span class="m">E<sub>min</sub> = 0 &minus; (&minus;3.40) = 3.40 eV</span></p>
         <p><strong>Since</strong> 10 eV &ge; 3.40 eV, <strong>yes</strong> the atom can absorb the photon and becomes ionized. Extra energy becomes kinetic energy after ionization.</p>
 
-        <div class="card-note"><strong>Next:</strong> In the line spectra note, we combine <span class="eq">hf = E<sub>a</sub> &minus; E<sub>b</sub></span> with Bohr energy levels to obtain the wavelength relation for spectral lines.</div>
+        <div class="card-note"><strong>Next:</strong> In the line spectra note, we combine <span class="m">h f = E<sub>a</sub> &minus; E<sub>b</sub></span> with Bohr energy levels to obtain the wavelength relation for spectral lines.</div>
       </div>
 
-      <div class="card card-traps" id="sec3traps">
-        <h3>HKDSE common traps &amp; mistakes (Bohr model)</h3>
+      <div class="card card-traps">
+        <h2 id="sec06">6. Common traps <span class="sec-pill">Traps</span></h2>
         <ul class="key-list">
           <li><strong>Excitation vs ionization:</strong> excitation needs an <strong>exact</strong> energy difference; ionization needs energy <strong>&ge;</strong> a minimum value.</li>
           <li><strong>&ldquo;Photon loses some energy and leaves&rdquo;:</strong> for ionization, the <strong>whole photon is absorbed</strong> if it causes ionization; extra energy becomes kinetic energy after ionization.</li>
-          <li>Mixing up signs: energy levels are negative; ionization energy from level n is <span class="eq">0 &minus; E<sub>n</sub></span> (a positive value).</li>
+          <li>Mixing up signs: energy levels are negative; ionization energy from level <span class="m">n</span> is <span class="m">0 &minus; E<sub>n</sub></span> (a positive value).</li>
           <li>Over-memorising series names (Lyman, Balmer, Paschen): <strong>not required</strong> in the syllabus.</li>
         </ul>
       </div>
 
       <!-- Required bottom navigation (Back / Previous / Next) -->
-      <div class="section-nav" style="margin-top: 18px;">
+      <div class="section-nav" style="margin-top:18px;">
         <a class="nav-btn" href="../index.html">&larr; Back to index</a>
-
-        <!-- Page-to-page navigation -->
         <a class="nav-btn" href="rutherford.html">&larr; Previous</a>
         <a class="nav-btn" href="line_spectra.html">Next &rarr;</a>
       </div>
     </section>
 
-    <p style="font-size:0.85rem; color:var(--text-muted); margin-top:10px;">
-      End of E2 &mdash; Bohr Model &amp; Energy Levels.
-    </p>
+    <p style="font-size:0.85rem; color:var(--text-muted); margin-top:10px;">End of E2 &mdash; Bohr Model &amp; Energy Levels.</p>
   </main>
 
   <script>
@@ -444,7 +502,7 @@
             const y = yOf(l.E);
             svg.appendChild(mk('line', { x1: x0 - 6, y1: y, x2: x0, y2: y, stroke: border, 'stroke-width': 2 }));
             const t = mk('text', { x: x0 - 10, y: y + 4, 'text-anchor': 'end', 'font-size': 12, fill: muted, 'font-weight': 650 });
-            t.textContent = (l.E === 0 ? '0' : l.E.toString());
+            t.textContent = (l.tick != null ? l.tick : (l.E === 0 ? '0' : String(l.E)));
             svg.appendChild(t);
           });
 
@@ -486,11 +544,11 @@
         if (!el) return;
 
         const levels = [
-          { nLabel: 'n = ∞', E: 0, state: '(free electron)' },
-          { nLabel: 'n = 4', E: -0.85, state: '' },
-          { nLabel: 'n = 3', E: -1.51, state: '' },
-          { nLabel: 'n = 2', E: -3.40, state: '' },
-          { nLabel: 'n = 1', E: -13.6, state: '(ground state)' }
+          { nLabel: 'n = ∞', E: 0, tick: '0', state: '(free electron)' },
+          { nLabel: 'n = 4', E: -0.85, tick: '-0.85', state: '' },
+          { nLabel: 'n = 3', E: -1.51, tick: '-1.51', state: '' },
+          { nLabel: 'n = 2', E: -3.40, tick: '-3.40', state: '' },
+          { nLabel: 'n = 1', E: -13.6, tick: '-13.6', state: '(ground state)' }
         ];
 
         buildEnergyDiagram(el, levels);
