@@ -119,6 +119,7 @@
 
     /* Topic buttons (index only) */
     #e2List .nav-btn{
+      position:relative;
       display:flex;
       align-items:center;
       width:100%;
@@ -158,7 +159,7 @@
       pointer-events:none;
     }
 
-    #e2List .nav-left{ display:inline-flex; align-items:center; gap:10px; min-width:0; }
+    #e2List .nav-left{ display:inline-flex; align-items:center; gap:0; min-width:0; }
 
     /* Stop site.css from styling ALL spans inside buttons as number pills */
     #e2List .nav-btn span{
@@ -173,22 +174,6 @@
     #e2List .nav-btn .nav-title{
       white-space:normal;
       line-height:1.25;
-    }
-
-    #e2List .nav-btn .num{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width:28px;
-      height:22px;
-      padding:0 8px;
-      border-radius:999px;
-      color:#ffffff;
-      background:linear-gradient(135deg, var(--accent), var(--accent-2));
-      font-weight:850;
-      font-size:0.82rem;
-      line-height:1;
-      flex:0 0 auto;
     }
 
     .hidden{ display:none !important; }
@@ -226,7 +211,7 @@
       <h1>DSE Physics Notes</h1>
       <p class="subtitle">Single-entry navigation • E2 — Atomic World</p>
       <div class="kpi" aria-label="Summary">
-        <span class="chip"><span class="dot"></span>8 topics</span>
+        <span class="chip"><span class="dot"></span>9 topics</span>
         </div>
     </div>
   </header>
@@ -247,34 +232,45 @@
       </div>
 
       <div class="search-meta" aria-live="polite">
-        <span class="pill" id="matchCount">Showing 8 / 8</span>
+        <span class="pill" id="matchCount">Showing 9 / 9</span>
         <span class="muted">Try keywords like “Rayleigh”, “STM”, “de Broglie”.</span>
       </div>
 
       <div class="section-nav" id="e2List" aria-label="E2 topic list">
-        <a class="nav-btn" href="./e2/photoelectric.html" data-title="photoelectric effect" data-tags="photoelectric threshold frequency work function stopping potential">
-          <span class="nav-left"><span class="num">1</span><span class="nav-title">E2 — Photoelectric Effect</span></span>
+        <a class="nav-btn" href="./e2/photoelectric.html" data-title="photoelectric effect" data-tags="photoelectric effect photon work function phi threshold frequency f0 stopping potential Vs photocurrent intensity">
+          <span class="nav-left"><span class="nav-title">E2 — Photoelectric Effect</span></span>
         </a>
-        <a class="nav-btn" href="./e2/rutherford.html" data-title="rutherford atomic model" data-tags="rutherford alpha scattering nucleus gold foil">
-          <span class="nav-left"><span class="num">2</span><span class="nav-title">E2 — Rutherford Atomic Model</span></span>
+
+        <a class="nav-btn" href="./e2/photoelectric_equation_graphs.html" data-title="photoelectric equation graphs" data-tags="einstein equation eVs hf phi stopping potential Vs graph slope h over e threshold frequency f0">
+          <span class="nav-left"><span class="nav-title">E2 — Photoelectric Effect: Equation &amp; Graphs</span></span>
         </a>
-        <a class="nav-btn" href="./e2/bohr_energy_levels.html" data-title="bohr model energy levels" data-tags="bohr energy levels excitation ionization">
-          <span class="nav-left"><span class="num">3</span><span class="nav-title">E2 — Bohr Model &amp; Energy Levels</span></span>
+
+        <a class="nav-btn" href="./e2/rutherford.html" data-title="rutherford atomic model" data-tags="alpha scattering gold foil nucleus evidence atomic model">
+          <span class="nav-left"><span class="nav-title">E2 — Rutherford Atomic Model</span></span>
         </a>
-        <a class="nav-btn" href="./e2/line_spectra.html" data-title="hydrogen line spectra" data-tags="hydrogen line spectra wavelength frequency">
-          <span class="nav-left"><span class="num">4</span><span class="nav-title">E2 — Hydrogen Line Spectra</span></span>
+
+        <a class="nav-btn" href="./e2/bohr_energy_levels.html" data-title="bohr model energy levels" data-tags="bohr model quantized energy levels excitation ionization eV">
+          <span class="nav-left"><span class="nav-title">E2 — Bohr Model &amp; Energy Levels</span></span>
         </a>
-        <a class="nav-btn" href="./e2/wave_particle_duality.html" data-title="wave particle duality de broglie" data-tags="de broglie matter waves electron diffraction">
-          <span class="nav-left"><span class="num">5</span><span class="nav-title">E2 — Wave–Particle Duality (de Broglie)</span></span>
+
+        <a class="nav-btn" href="./e2/line_spectra.html" data-title="hydrogen line spectra" data-tags="hydrogen spectrum spectral lines hf energy transition balmer lyman not required">
+          <span class="nav-left"><span class="nav-title">E2 — Hydrogen Line Spectra</span></span>
         </a>
-        <a class="nav-btn" href="./e2/nanoscale_resolution.html" data-title="nano scale optical resolution rayleigh criterion" data-tags="rayleigh criterion resolution diffraction limit">
-          <span class="nav-left"><span class="num">6</span><span class="nav-title">E2 — Nano Scale &amp; Optical Resolution (Rayleigh criterion)</span></span>
+
+        <a class="nav-btn" href="./e2/wave_particle_duality.html" data-title="wave particle duality de broglie" data-tags="de broglie wavelength matter waves electron diffraction">
+          <span class="nav-left"><span class="nav-title">E2 — Wave–Particle Duality (de Broglie)</span></span>
         </a>
-        <a class="nav-btn" href="./e2/nanoscale_microscopes.html" data-title="nano-scale microscopes tem stm" data-tags="tem stm electron microscope scanning tunnelling">
-          <span class="nav-left"><span class="num">7</span><span class="nav-title">E2 — Nano-scale Microscopes (TEM &amp; STM)</span></span>
+
+        <a class="nav-btn" href="./e2/nanoscale_resolution.html" data-title="nano scale optical resolution rayleigh criterion" data-tags="rayleigh criterion diffraction limit resolving power resolution">
+          <span class="nav-left"><span class="nav-title">E2 — Nano Scale &amp; Optical Resolution (Rayleigh criterion)</span></span>
         </a>
-        <a class="nav-btn" href="./e2/nanotechnology.html" data-title="nanotechnology applications hazards" data-tags="nanotechnology applications hazards risk">
-          <span class="nav-left"><span class="num">8</span><span class="nav-title">E2 — Nanotechnology: Applications &amp; Hazards</span></span>
+
+        <a class="nav-btn" href="./e2/nanoscale_microscopes.html" data-title="nano scale microscopes tem stm" data-tags="TEM STM electron microscope scanning tunnelling microscope">
+          <span class="nav-left"><span class="nav-title">E2 — Nano-scale Microscopes (TEM &amp; STM)</span></span>
+        </a>
+
+        <a class="nav-btn" href="./e2/nanotechnology.html" data-title="nanotechnology applications hazards" data-tags="nanotechnology applications hazards health environment">
+          <span class="nav-left"><span class="nav-title">E2 — Nanotechnology: Applications &amp; Hazards</span></span>
         </a>
       </div>
 
@@ -286,7 +282,7 @@
     <div class="card">
       <h2>How to study E2 efficiently</h2>
       <ol class="muted" style="margin: 10px 0 0 18px;">
-        <li>Follow Topic 1 → 8 once for full understanding.</li>
+        <li>Follow the topic list once (top → bottom) for full understanding.</li>
         <li>Use the search box to jump to a topic during revision.</li>
         <li>When doing past paper questions, open the related note and copy the wording style.</li>
       </ol>
