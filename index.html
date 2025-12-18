@@ -1,357 +1,526 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="light" />
-  <meta name="supported-color-schemes" content="light" />
-  <title>DSE Physics Notes</title>
-  <link rel="stylesheet" href="./assets/site.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>DSE Physics • Elective Notes</title>
+
   <style>
-    :root{
-      --bg:#f4f7fb;
-      --card:#ffffff;
-      --text:#1f2a44;
-      --text-muted:#5b6b86;
-      --accent:#174b8f;
-      --accent-2:#3a7bd5;
-      --border:#d9e2ef;
-      --shadow:0 10px 30px rgba(31,42,68,0.08);
-      --radius:16px;
+    /* --- CSS Variables & Reset --- */
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --primary: #3b82f6;
+      --primary-dim: rgba(59, 130, 246, 0.1);
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-header: rgba(248, 250, 252, 0.85);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+      --shadow-hover: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.025);
+      --radius: 12px;
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Ensure colours stay LIGHT even when the browser/OS is in dark mode */
-    html{ color-scheme: light; }
-
-    /* Index-only enhancements (keeps global site.css untouched) */
-    body{ background:var(--bg); color:var(--text); }
-    .topbar{ background:linear-gradient(135deg, var(--accent), var(--accent-2)) !important; color:#ffffff !important; }
-    .card{ background:var(--card) !important; border-color:var(--border) !important; color:var(--text) !important; }
-    .muted{ color:var(--text-muted) !important; }
-    a{ color:var(--accent); }
-
-    @media (prefers-color-scheme: dark){
-      html{ color-scheme: light; }
-      body{ background:var(--bg) !important; color:var(--text) !important; }
-      .topbar{ background:linear-gradient(135deg, var(--accent), var(--accent-2)) !important; color:#ffffff !important; }
-      .card{ background:var(--card) !important; border-color:var(--border) !important; color:var(--text) !important; }
-      .muted{ color:var(--text-muted) !important; }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --bg-header: rgba(15, 23, 42, 0.85);
+        --text-main: #f1f5f9;
+        --text-muted: #94a3b8;
+        --border: #334155;
+        --primary: #60a5fa;
+        --primary-dim: rgba(96, 165, 250, 0.15);
+        --shadow: 0 1px 2px rgba(0,0,0,0.3);
+      }
     }
 
-    .topbar .subtitle{ margin:6px 0 0; opacity:0.92; font-size:0.95rem; }
-    .topbar .kpi{ margin-top:10px; display:flex; flex-wrap:wrap; gap:8px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    .chip{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px; border-radius:999px;
-      background:rgba(255,255,255,0.14);
-      border:1px solid rgba(255,255,255,0.22);
-      color:rgba(255,255,255,0.96);
-      font-weight:650; font-size:0.88rem;
-    }
-    .chip .dot{ width:8px; height:8px; border-radius:999px; background:rgba(255,255,255,0.75); }
-
-    .e2-header{ display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:10px; }
-    .e2-header .muted{ margin:6px 0 0; }
-
-    .searchbar{
-      margin-top:12px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
+    body {
+      background: var(--bg-body);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 40px;
     }
 
-    .searchbar input{
-      flex:1;
-      min-width:220px;
-      border:1px solid var(--border);
-      border-radius:999px;
-      padding:10px 14px;
-      font-size:0.95rem;
-      outline:none;
-      background:#fff;
-      color:var(--text);
+    a { text-decoration: none; color: inherit; }
+
+    /* --- Layout Utilities --- */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
 
-    .searchbar input:focus{
-      border-color:rgba(58,123,213,0.55);
-      box-shadow:0 0 0 4px rgba(58,123,213,0.16);
+    /* --- Hero Header --- */
+    .hero {
+      padding: 40px 0 30px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p { color: var(--text-muted); font-size: 1rem; }
+
+    .stats-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 99px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 16px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; }
+    .divider { opacity: 0.4; }
+
+    /* --- Sticky Search Bar --- */
+    .sticky-bar {
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      margin-bottom: 30px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: var(--bg-header);
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      display: flex;
+      gap: 12px;
+      align-items: center;
     }
 
-    .btn-ghost{
-      border:1px solid var(--border);
-      background:#ffffff;
-      color:var(--accent);
-      border-radius:999px;
-      padding:10px 12px;
-      font-weight:700;
-      font-size:0.92rem;
-      cursor:pointer;
-      box-shadow:0 4px 14px rgba(31,42,68,0.06);
-      transition:transform 0.08s ease;
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
     }
 
-    .btn-ghost:hover{ transform:translateY(-1px); }
-
-    .search-meta{
-      margin-top:8px;
-      color:var(--text-muted);
-      font-size:0.92rem;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      color: var(--text-muted);
+      width: 18px;
+      height: 18px;
+      pointer-events: none;
     }
 
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      border:1px solid var(--border);
-      background:#f8fbff;
-      padding:6px 10px;
-      border-radius:999px;
-      color:var(--text);
-      font-weight:650;
-      font-size:0.88rem;
+    input[type="search"] {
+      width: 100%;
+      padding: 12px 12px 12px 42px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      background: var(--bg-body);
+      color: var(--text-main);
+      font-size: 1rem;
+      outline: none;
+      transition: var(--transition);
     }
 
-    /* Topic buttons (index only) */
-    #e2List .nav-btn{
-      position:relative;
-      display:flex;
-      align-items:center;
-      width:100%;
-      box-sizing:border-box;
-      justify-content:flex-start;
-      gap:12px;
-      padding:12px 12px;
-      padding-right:42px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background:#ffffff;
-      color:var(--accent);
-      font-weight:750;
-      font-size:0.95rem;
-      text-decoration:none;
-      box-shadow:0 4px 14px rgba(31,42,68,0.06);
-      transition:transform 0.08s ease, box-shadow 0.08s ease;
-      min-height:44px;
+    input[type="search"]:focus {
+      background: var(--bg-card);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-dim);
     }
 
-    #e2List .nav-btn:hover{ transform:translateY(-1px); }
+    .btn-clear {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0 16px;
+      height: 44px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .btn-clear:hover { background: var(--bg-body); color: var(--text-main); }
 
-    #e2List .nav-btn:focus-visible{
-      outline:none;
-      box-shadow:0 0 0 4px rgba(58,123,213,0.18), 0 4px 14px rgba(31,42,68,0.06);
+    /* --- Section Headers --- */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 40px 0 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-icon {
+      width: 32px; height: 32px;
+      display: grid; place-items: center;
+      background: var(--primary-dim);
+      color: var(--primary);
+      border-radius: 8px;
+    }
+    .section-header h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
     }
 
-    #e2List .nav-btn::after{
-      content:"›";
-      position:absolute;
-      right:16px;
-      top:50%;
-      transform:translateY(-50%);
-      color:rgba(23,75,143,0.55);
-      font-weight:900;
-      font-size:1.1rem;
-      pointer-events:none;
+    /* --- Grid Layout for Cards --- */
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
     }
 
-    #e2List .nav-left{ display:inline-flex; align-items:center; gap:0; min-width:0; }
-
-    /* Stop site.css from styling ALL spans inside buttons as number pills */
-    #e2List .nav-btn span{
-      background:none;
-      padding:0;
-      border-radius:0;
-      border:0;
-      color:inherit;
-      font-weight:inherit;
+    .topic-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 80px;
+      position: relative;
+      overflow: hidden;
     }
 
-    #e2List .nav-btn .nav-title{
-      white-space:normal;
-      line-height:1.25;
+    .topic-card::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--border);
+      transition: var(--transition);
     }
 
-    .hidden{ display:none !important; }
+    .topic-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--primary);
+    }
+    .topic-card:hover::before { background: var(--primary); }
 
-    .empty-state{
-      margin-top:12px;
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:12px 14px;
-      background:#ffffff;
-      color:var(--text-muted);
-      box-shadow:0 6px 18px rgba(31,42,68,0.06);
+    .topic-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 4px;
+      padding-left: 12px;
     }
 
-    footer.site-footer{ margin-top:18px; padding:12px 0 20px; opacity:0.92; }
-    footer.site-footer .muted{ font-size:0.92rem; }
-
-    /* Grid layout for E2 buttons (index only) */
-    .section-nav#e2List{
-      display:grid;
-      grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
-      gap:12px;
-      margin-top:12px;
+    .topic-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      padding-left: 12px;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    @media (max-width:520px){
-      .section-nav#e2List{ grid-template-columns:1fr; }
-      .nav-btn{ border-radius:16px; }
+    /* --- Empty State --- */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px dashed var(--border);
+      display: none;
+    }
+    .empty-state.visible { display: block; }
+
+    /* --- Footer --- */
+    .footer {
+      margin-top: 60px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
     }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="wrap">
+
+  <div class="container">
+
+    <!-- Hero Section -->
+    <header class="hero">
       <h1>DSE Physics Notes</h1>
-      <p class="subtitle">Single-entry navigation • E2 — Atomic World</p>
-      <div class="kpi" aria-label="Summary">
-        <span class="chip"><span class="dot"></span>9 topics</span>
+      <p>Elective Part (E2 &amp; E3) • Single-entry Navigation</p>
+      <div class="stats-pill" aria-live="polite">
+        <span class="dot"></span>
+        <span id="totalCount">28 topics available</span>
+        <span class="divider">•</span>
+        <span id="showingCount">Showing 28 / 28</span>
+      </div>
+    </header>
+
+    <!-- Sticky Search -->
+    <div class="sticky-bar" aria-label="Search topics">
+      <div class="search-wrapper">
+        <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <input type="search" id="topicSearch" placeholder="Search topics (e.g., Bohr, EELS, COP, flux, OTTV...)" autocomplete="off" aria-label="Search topics">
+      </div>
+      <button class="btn-clear" id="clearSearch" type="button">Clear</button>
+    </div>
+
+    <!-- Empty State Message -->
+    <div id="emptyState" class="empty-state">
+      <p>No matching topics found.</p>
+      <p style="font-size: 0.9em; margin-top: 8px;">Try keyword: “EELS”, “photoelectric”, “illuminance”, “COP”, “OTTV”.</p>
+    </div>
+
+    <!-- E2 Section -->
+    <div id="groupE2">
+      <div class="section-header">
+        <div class="section-icon" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
         </div>
+        <h2>E2 — Atomic World</h2>
+      </div>
+
+      <div class="topic-grid" id="e2List">
+        <a href="./e2/photoelectric.html" class="topic-card" data-tags="e2 photoelectric effect photons electrons threshold frequency f0 stopping potential vs photocurrent intensity">
+          <span class="topic-title">E2 — Photoelectric Effect</span>
+          <span class="topic-meta">Threshold frequency, stopping potential</span>
+        </a>
+
+        <a href="./e2/photoelectric_equation_graphs.html" class="topic-card" data-tags="e2 photoelectric equation graphs hf phi eVs slope h over e threshold frequency">
+          <span class="topic-title">E2 — Photoelectric Effect: Equation &amp; Graphs</span>
+          <span class="topic-meta">Einstein’s equation, graph interpretation</span>
+        </a>
+
+        <a href="./e2/rutherford.html" class="topic-card" data-tags="e2 rutherford gold foil alpha scattering nucleus atomic model evidence">
+          <span class="topic-title">E2 — Rutherford Atomic Model</span>
+          <span class="topic-meta">α-scattering, nuclear model</span>
+        </a>
+
+        <a href="./e2/bohr_energy_levels.html" class="topic-card" data-tags="e2 bohr model hydrogen atom energy levels emission absorption transition n ground excited">
+          <span class="topic-title">E2 — Bohr Model &amp; Energy Levels</span>
+          <span class="topic-meta">Energy level transitions</span>
+        </a>
+
+        <a href="./e2/line_spectra.html" class="topic-card" data-tags="e2 line spectra emission absorption hydrogen spectral lines">
+          <span class="topic-title">E2 — Line Spectra</span>
+          <span class="topic-meta">Emission vs absorption</span>
+        </a>
+
+        <a href="./e2/wave_particle_duality.html" class="topic-card" data-tags="e2 wave particle duality de broglie wavelength electrons diffraction interference">
+          <span class="topic-title">E2 — Wave–Particle Duality</span>
+          <span class="topic-meta">de Broglie wavelength</span>
+        </a>
+
+        <a href="./e2/nanoscale_resolution.html" class="topic-card" data-tags="e2 nanoscale resolution rayleigh criterion diffraction limit microscope 1.22 lambda over d">
+          <span class="topic-title">E2 — Nanoscale: Resolution Limit</span>
+          <span class="topic-meta">Rayleigh criterion (1.22λ/D)</span>
+        </a>
+
+        <a href="./e2/nanoscale_microscopes.html" class="topic-card" data-tags="e2 nanoscale microscopes stm afm sem tem imaging">
+          <span class="topic-title">E2 — Nanoscale: Microscopes</span>
+          <span class="topic-meta">STM, AFM, SEM, TEM</span>
+        </a>
+
+        <a href="./e2/nanotechnology.html" class="topic-card" data-tags="e2 nanotechnology applications hazards health environment">
+          <span class="topic-title">E2 — Nanotechnology</span>
+          <span class="topic-meta">Applications &amp; hazards</span>
+        </a>
+      </div>
     </div>
-  </header>
 
-  <main class="wrap">
-
-    <div class="card">
-      <div class="e2-header">
-        <div>
-          <h2>E2 — Atomic World</h2>
-          <p class="muted">Open a note below.</p>
+    <!-- E3 Section -->
+    <div id="groupE3">
+      <div class="section-header">
+        <div class="section-icon" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
         </div>
+        <h2>E3 — Energy &amp; Use of Energy</h2>
       </div>
 
-      <div class="searchbar" aria-label="Search topics">
-        <input id="topicSearch" type="search" placeholder="Search E2 topics (e.g. Bohr, spectra, TEM...)" autocomplete="off" aria-label="Search E2 topics" />
-        <button id="clearSearch" class="btn-ghost" type="button">Clear</button>
-      </div>
-
-      <div class="search-meta" aria-live="polite">
-        <span class="pill" id="matchCount">Showing 9 / 9</span>
-        <span class="muted">Try keywords like “Rayleigh”, “STM”, “de Broglie”.</span>
-      </div>
-
-      <div class="section-nav" id="e2List" aria-label="E2 topic list">
-        <a class="nav-btn" href="./e2/photoelectric.html" data-title="photoelectric effect" data-tags="photoelectric effect photon work function phi threshold frequency f0 stopping potential Vs photocurrent intensity">
-          <span class="nav-left"><span class="nav-title">E2 — Photoelectric Effect</span></span>
+      <div class="topic-grid" id="e3List">
+        <a href="./e3/energy_efficiency_home.html" class="topic-card" data-tags="e3 electricity at home domestic energy end-use energy efficiency useful output input running cost kwh">
+          <span class="topic-title">E3 — Electricity at Home: Efficiency &amp; Cost</span>
+          <span class="topic-meta">Energy efficiency, kWh running cost</span>
         </a>
 
-        <a class="nav-btn" href="./e2/photoelectric_equation_graphs.html" data-title="photoelectric equation graphs" data-tags="einstein equation eVs hf phi stopping potential Vs graph slope h over e threshold frequency f0">
-          <span class="nav-left"><span class="nav-title">E2 — Photoelectric Effect: Equation &amp; Graphs</span></span>
+        <a href="./e3/eels.html" class="topic-card" data-tags="e3 eels energy efficiency labelling scheme grade 1 2 3 4 5 label interpretation energy saving devices">
+          <span class="topic-title">E3 — Energy Efficiency Labelling Scheme (EELS)</span>
+          <span class="topic-meta">Read labels, solve EELS problems</span>
         </a>
 
-        <a class="nav-btn" href="./e2/rutherford.html" data-title="rutherford atomic model" data-tags="alpha scattering gold foil nucleus evidence atomic model">
-          <span class="nav-left"><span class="nav-title">E2 — Rutherford Atomic Model</span></span>
+        <a href="./e3/lamps_incandescent_discharge_led.html" class="topic-card" data-tags="e3 lamps incandescent gas discharge led light emitting diode energy change atomic level eye response wavelength">
+          <span class="topic-title">E3 — Lamps: Incandescent, Gas Discharge &amp; LED</span>
+          <span class="topic-meta">Lamp types and comparisons</span>
         </a>
 
-        <a class="nav-btn" href="./e2/bohr_energy_levels.html" data-title="bohr model energy levels" data-tags="bohr model quantized energy levels excitation ionization eV">
-          <span class="nav-left"><span class="nav-title">E2 — Bohr Model &amp; Energy Levels</span></span>
+        <a href="./e3/lighting_luminous_flux.html" class="topic-card" data-tags="e3 lighting luminous flux lumen lm eye response wavelength">
+          <span class="topic-title">E3 — Lighting: Luminous Flux (lm)</span>
+          <span class="topic-meta">Total light output</span>
         </a>
 
-        <a class="nav-btn" href="./e2/line_spectra.html" data-title="hydrogen line spectra" data-tags="hydrogen spectrum spectral lines hf energy transition balmer lyman not required">
-          <span class="nav-left"><span class="nav-title">E2 — Hydrogen Line Spectra</span></span>
+        <a href="./e3/lighting_illuminance.html" class="topic-card" data-tags="e3 lighting illuminance lux inverse square law lambert cosine law">
+          <span class="topic-title">E3 — Lighting: Illuminance (lux)</span>
+          <span class="topic-meta">Inverse square &amp; cosine laws</span>
         </a>
 
-        <a class="nav-btn" href="./e2/wave_particle_duality.html" data-title="wave particle duality de broglie" data-tags="de broglie wavelength matter waves electron diffraction">
-          <span class="nav-left"><span class="nav-title">E2 — Wave–Particle Duality (de Broglie)</span></span>
+        <a href="./e3/lighting_efficacy.html" class="topic-card" data-tags="e3 lighting efficacy lumen per watt lm w-1 cost effectiveness">
+          <span class="topic-title">E3 — Lighting: Efficacy (lm W⁻¹)</span>
+          <span class="topic-meta">Lumens per watt</span>
         </a>
 
-        <a class="nav-btn" href="./e2/nanoscale_resolution.html" data-title="nano scale optical resolution rayleigh criterion" data-tags="rayleigh criterion diffraction limit resolving power resolution">
-          <span class="nav-left"><span class="nav-title">E2 — Nano Scale &amp; Optical Resolution (Rayleigh criterion)</span></span>
+        <a href="./e3/cooking_without_fire.html" class="topic-card" data-tags="e3 cooking without fire induction cooker microwave oven electric hotplate heat generation">
+          <span class="topic-title">E3 — Cooking without Fire</span>
+          <span class="topic-meta">Induction &amp; microwave cooking</span>
         </a>
 
-        <a class="nav-btn" href="./e2/nanoscale_microscopes.html" data-title="nano scale microscopes tem stm" data-tags="TEM STM electron microscope scanning tunnelling microscope">
-          <span class="nav-left"><span class="nav-title">E2 — Nano-scale Microscopes (TEM &amp; STM)</span></span>
+        <a href="./e3/heat_pump_aircon_COP.html" class="topic-card" data-tags="e3 heat pump air conditioner cooling capacity kilowatt cop coefficient of performance">
+          <span class="topic-title">E3 — Heat Pump (Air-conditioner) &amp; COP</span>
+          <span class="topic-meta">Cooling capacity and COP</span>
         </a>
 
-        <a class="nav-btn" href="./e2/nanotechnology.html" data-title="nanotechnology applications hazards" data-tags="nanotechnology applications hazards health environment">
-          <span class="nav-left"><span class="nav-title">E2 — Nanotechnology: Applications &amp; Hazards</span></span>
+        <a href="./e3/buildings_conduction_uvalue.html" class="topic-card" data-tags="e3 buildings conduction rate of energy transfer kA(Thot-Tcold)/d u value thermal transmittance">
+          <span class="topic-title">E3 — Buildings: Conduction &amp; U-value</span>
+          <span class="topic-meta">Conduction &amp; thermal transmittance</span>
         </a>
-      </div>
 
-      <div id="emptyState" class="empty-state hidden">
-        No topics match your search. Try shorter keywords (e.g. “Bohr”, “STM”, “Rayleigh”).
+        <a href="./e3/buildings_ottv.html" class="topic-card" data-tags="e3 buildings ottv overall thermal transfer value building envelope solar radiation factors">
+          <span class="topic-title">E3 — Buildings: OTTV</span>
+          <span class="topic-meta">Overall thermal transfer value</span>
+        </a>
+
+        <a href="./e3/heat_radiation.html" class="topic-card" data-tags="e3 heat radiation emission absorption infrared black dull shiny surface">
+          <span class="topic-title">E3 — Heat Radiation (Emission &amp; Absorption)</span>
+          <span class="topic-meta">Radiation heat transfer</span>
+        </a>
+
+        <a href="./e3/window_radiation_control.html" class="topic-card" data-tags="e3 window radiation control solar control film selective transmission electromagnetic waves">
+          <span class="topic-title">E3 — Window Radiation Control (Solar Control Film)</span>
+          <span class="topic-meta">Selective transmission of EM waves</span>
+        </a>
+
+        <a href="./e3/transport_electric_vehicles.html" class="topic-card" data-tags="e3 transportation electric vehicles ev battery motor controller hybrid vehicle regenerative braking">
+          <span class="topic-title">E3 — Transportation: Electric Vehicles (EVs)</span>
+          <span class="topic-meta">EV system and efficiency</span>
+        </a>
+
+        <a href="./e3/transport_public_transport.html" class="topic-card" data-tags="e3 transportation public transport energy efficiency per passenger kilometre examples advantages">
+          <span class="topic-title">E3 — Transportation: Public Transportation</span>
+          <span class="topic-meta">Energy efficiency and examples</span>
+        </a>
+
+        <a href="./e3/environmental_impact.html" class="topic-card" data-tags="e3 environmental impact extraction conversion distribution greenhouse gases global warming fuel consumption data">
+          <span class="topic-title">E3 — Environmental Impact</span>
+          <span class="topic-meta">Greenhouse gases and data analysis</span>
+        </a>
+
+        <a href="./e3/renewable_energy.html" class="topic-card" data-tags="e3 renewable energy solar constant wind turbine maximum power hydroelectric">
+          <span class="topic-title">E3 — Renewable Energy</span>
+          <span class="topic-meta">Solar, wind, hydro</span>
+        </a>
+
+        <a href="./e3/solar_cell.html" class="topic-card" data-tags="e3 solar cell photovoltaic pn junction electric field photons current">
+          <span class="topic-title">E3 — Solar Cell</span>
+          <span class="topic-meta">Photovoltaic effect</span>
+        </a>
+
+        <a href="./e3/nuclear_energy.html" class="topic-card" data-tags="e3 nuclear energy fission reactor moderator coolant control rods chain reaction">
+          <span class="topic-title">E3 — Nuclear Energy</span>
+          <span class="topic-meta">Fission and reactors</span>
+        </a>
+
+        <a href="./e3/binding_energy.html" class="topic-card" data-tags="e3 binding energy mass defect delta m c squared binding energy per nucleon stability fission fusion">
+          <span class="topic-title">E3 — Binding Energy</span>
+          <span class="topic-meta">Mass defect and stability</span>
+        </a>
       </div>
     </div>
 
-    <div class="card">
-      <h2>How to study E2 efficiently</h2>
-      <ol class="muted" style="margin: 10px 0 0 18px;">
-        <li>Follow the topic list once (top → bottom) for full understanding.</li>
-        <li>Use the search box to jump to a topic during revision.</li>
-        <li>When doing past paper questions, open the related note and copy the wording style.</li>
-      </ol>
-    </div>
-
-    <footer class="site-footer">
-      <p class="muted">HKDSE Physics Notes • E2 — Atomic World</p>
+    <footer class="footer">
+      <p>HKDSE Physics • Elective Part Revision</p>
+      <p style="margin-top:4px; opacity:0.7;">Tip: Use the search bar to jump to a topic quickly.</p>
     </footer>
-  </main>
+
+  </div>
 
   <script>
     (function () {
       const input = document.getElementById('topicSearch');
       const clearBtn = document.getElementById('clearSearch');
-      const list = document.getElementById('e2List');
-      const count = document.getElementById('matchCount');
       const empty = document.getElementById('emptyState');
+      const totalCount = document.getElementById('totalCount');
+      const showingCount = document.getElementById('showingCount');
 
-      if (!input || !list) return;
+      const groups = {
+        e2: document.getElementById('groupE2'),
+        e3: document.getElementById('groupE3')
+      };
 
-      const items = Array.from(list.querySelectorAll('a.nav-btn'));
-      const total = items.length;
+      if (!input) return;
 
-      function norm(s) {
-        const str = (s || '').toLowerCase();
-        let out = '';
-        let prevSpace = true;
-        for (let i = 0; i < str.length; i++) {
-          const ch = str[i];
-          const isWS = ch <= ' ';
-          if (isWS) {
-            if (!prevSpace) out += ' ';
-            prevSpace = true;
-          } else {
-            out += ch;
-            prevSpace = false;
-          }
-        }
-        return out.trim();
+      const cards = Array.from(document.querySelectorAll('.topic-card'));
+      const total = cards.length;
+
+      if (totalCount) totalCount.textContent = `${total} topics available`;
+
+      function norm(str) {
+        return (str || '').toLowerCase().replace(/\s+/g, ' ').trim();
       }
 
-      function applyFilter() {
-        const q = norm(input.value);
-        let shown = 0;
+      function filterTopics() {
+        const query = norm(input.value);
+        let matchCount = 0;
+        let e2Count = 0;
+        let e3Count = 0;
 
-        items.forEach(a => {
-          const title = norm(a.getAttribute('data-title') || a.textContent);
-          const tags = norm(a.getAttribute('data-tags') || '');
-          const ok = q === '' || title.includes(q) || tags.includes(q);
-          a.classList.toggle('hidden', !ok);
-          if (ok) shown++;
+        cards.forEach(card => {
+          const text = norm(card.innerText + ' ' + (card.getAttribute('data-tags') || ''));
+          const isMatch = !query || text.includes(query);
+
+          card.style.display = isMatch ? 'flex' : 'none';
+
+          if (isMatch) {
+            matchCount++;
+            if (card.parentElement && card.parentElement.id === 'e2List') e2Count++;
+            if (card.parentElement && card.parentElement.id === 'e3List') e3Count++;
+          }
         });
 
-        if (count) count.textContent = 'Showing ' + shown + ' / ' + total;
-        if (empty) empty.classList.toggle('hidden', shown !== 0);
+        if (groups.e2) groups.e2.style.display = e2Count > 0 ? 'block' : 'none';
+        if (groups.e3) groups.e3.style.display = e3Count > 0 ? 'block' : 'none';
+
+        if (showingCount) showingCount.textContent = `Showing ${matchCount} / ${total}`;
+
+        if (matchCount === 0) empty.classList.add('visible');
+        else empty.classList.remove('visible');
       }
 
-      input.addEventListener('input', applyFilter);
-      input.addEventListener('search', applyFilter);
+      input.addEventListener('input', filterTopics);
 
       if (clearBtn) {
         clearBtn.addEventListener('click', () => {
           input.value = '';
-          applyFilter();
+          filterTopics();
           input.focus();
         });
       }
 
-      applyFilter();
+      filterTopics();
     })();
   </script>
 </body>
