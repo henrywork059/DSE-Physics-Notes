@@ -2,750 +2,664 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="color-scheme" content="light" />
-  <title>E2 — Photoelectric Effect: Equation & Graphs (HKDSE) | DSE Physics Notes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>E2 — Photoelectric Effect | DSE Physics Notes</title>
+
+  <!-- MathJax for professional equation rendering -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['$$','$$']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
   <style>
-    :root{
-      --bg:#f4f7fb;
-      --card:#ffffff;
-      --text:#1f2a44;
-      --text-muted:#5b6b86;
-      --accent:#174b8f;
-      --accent-2:#3a7bd5;
-      --border:#d9e2ef;
-      --shadow:0 10px 30px rgba(31,42,68,0.08);
-      --radius:16px;
+    /* =============================
+       Design System: Modern DSE
+       ============================= */
+    :root {
+      --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+      /* Palette: Slate & Blue */
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-dim: rgba(59, 130, 246, 0.08);
+
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-header: #ffffff;
+
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+
+      --border: #e2e8f0;
+      --radius: 16px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 4px 14px -4px rgba(15, 23, 42, 0.14), 0 2px 6px -2px rgba(15, 23, 42, 0.10);
+
+      /* Semantic Colors */
+      --accent-amber: #f59e0b;
+      --accent-amber-bg: #fffbeb;
+      --accent-amber-border: rgba(245, 158, 11, 0.35);
+
+      --accent-info: #3b82f6;
+      --accent-info-bg: rgba(59, 130, 246, 0.08);
+      --accent-info-border: rgba(59, 130, 246, 0.28);
     }
 
-    html, body{ background:var(--bg); color:var(--text); }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --bg-header: #1e293b;
 
-    body{
-      margin:0;
-      font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      line-height:1.55;
+        --text-main: #f1f5f9;
+        --text-muted: #94a3b8;
+
+        --border: #334155;
+
+        --primary: #60a5fa;
+        --primary-dark: #3b82f6;
+        --primary-dim: rgba(96, 165, 250, 0.10);
+
+        --accent-amber-bg: rgba(245, 158, 11, 0.10);
+        --accent-amber-border: rgba(245, 158, 11, 0.30);
+
+        --accent-info-bg: rgba(59, 130, 246, 0.10);
+        --accent-info-border: rgba(59, 130, 246, 0.30);
+      }
     }
 
-    main{
-      max-width:980px;
-      margin:24px auto;
-      padding:26px 22px 30px;
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
+    /* --- Base --- */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .page-header h1{
-      margin:0 0 6px;
-      font-size:1.85rem;
-      letter-spacing:-0.02em;
+    a { color: inherit; text-decoration: none; }
+    
+    /* --- Layout --- */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
     }
 
-    .meta{ color:var(--text-muted); font-size:0.95rem; }
-
-    .section-intro{
-      margin:14px 0 0;
-      font-size:1.02rem;
-      color:var(--text);
+    /* --- Hero Header (Radial Gradient) --- */
+    .hero-header {
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 20px 30px;
+      text-align: center;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
     }
 
-    .badge-strip{
-      margin:14px 0 0;
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
+    .nav-breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.90rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      background: var(--bg-body);
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
     }
 
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:7px 10px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background:#f8fbff;
-      color:var(--text);
-      font-size:0.92rem;
+    h1 {
+      font-size: 2.2rem;
+      margin: 0 0 10px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      background: linear-gradient(135deg, var(--primary), rgba(59,130,246,0.55));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
-    .badge.exam{ border-color:rgba(23,75,143,0.35); }
-    .badge.skills{ border-color:rgba(58,123,213,0.35); }
-
-    .section-nav{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin:16px 0 6px;
-      padding:0;
-      align-items:center;
+    .meta-subtitle {
+      font-size: 1.0rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 18px;
     }
 
-    .nav-btn{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background:#ffffff;
-      color:var(--accent);
-      text-decoration:none;
-      font-weight:600;
-      font-size:0.95rem;
-      box-shadow:0 4px 14px rgba(31,42,68,0.06);
-      transition:transform 0.08s ease;
-      line-height:1.15;
+    /* --- Navigation Buttons --- */
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 0;
+      padding: 0;
     }
 
-    .nav-btn:hover{ transform:translateY(-1px); }
-
-    .nav-btn .pill{
-      color:#ffffff;
-      background:linear-gradient(135deg, var(--accent), var(--accent-2));
-      border-radius:999px;
-      padding:2px 8px;
-      font-size:0.82rem;
-      font-weight:700;
-      flex:0 0 auto;
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
-    section{ margin-top:12px; }
-
-    .card{
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:16px 16px 14px;
-      background:linear-gradient(180deg, rgba(58,123,213,0.06) 0%, #ffffff 34%);
-      box-shadow:0 8px 22px rgba(31,42,68,0.06);
-      margin:12px 0;
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .nav-btn span {
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      margin-right: 4px;
     }
 
-    .card h2{
-      margin:0 0 10px;
-      font-size:1.25rem;
-      scroll-margin-top:90px;
+    /* --- Badges --- */
+    .badge-strip {
+      margin: 14px 0 0;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
-    .card h3{
-      margin:12px 0 8px;
-      font-size:1.05rem;
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid;
+      font-size: 0.90rem;
+      font-weight: 600;
+    }
+    
+    .badge.exam {
+      background: var(--accent-info-bg);
+      color: var(--primary);
+      border-color: var(--accent-info-border);
+    }
+    
+    .badge.skills {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+      border-color: rgba(16, 185, 129, 0.2);
     }
 
-    ul.key-list{ margin:0; padding-left:18px; }
-    .key-list li{ margin:6px 0; }
-    .key-list li::marker{ color:var(--accent-2); }
+    /* --- Content Cards --- */
+    section { margin-top: 14px; }
 
-    .card-note{
-      margin-top:10px;
-      padding:10px 12px;
-      border-left:4px solid var(--accent);
-      background:rgba(23,75,143,0.06);
-      border-radius:12px;
-      color:var(--text);
-      font-size:0.95rem;
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin: 22px 0;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .card-traps{
-      margin-top:10px;
-      padding:10px 12px;
-      border-left:5px solid #f59e0b;
-      background:#fffbeb;
-      border-radius:12px;
-      color:var(--text);
-      font-size:0.95rem;
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
     }
 
-    /* Math (no LaTeX) */
-    .eq{
-      display:inline-block;
-      margin:8px 0;
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:#fbfdff;
-      font-family:"Times New Roman", Times, serif;
-      font-style:italic;
-      font-size:1.08rem;
+    .card h2 {
+      margin: 0 0 18px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      padding-left: 14px;
+      position: relative;
+      scroll-margin-top: 120px;
+      color: var(--text-main);
     }
 
-    main em, .m, .mi{ font-family:"Times New Roman", Times, serif; font-style:italic; }
-    .eq, .eq *, .frac, .frac *{ font-family:"Times New Roman", Times, serif; font-style:italic; }
-
-    .m{ display:inline-block; }
-
-    .frac{
-      display:inline-block;
-      vertical-align:middle;
-      text-align:center;
-      line-height:1.05;
+    .card h2::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.2em;
+      width: 6px;
+      height: 1.1em;
+      border-radius: 99px;
+      background: var(--primary);
     }
 
-    .frac .top{
-      display:block;
-      padding:0 6px 2px;
-      border-bottom:1.5px solid rgba(31,42,68,0.85);
+    .card h3 {
+      margin: 24px 0 12px;
+      font-size: 1.1rem;
+      font-weight: 650;
+      color: var(--text-main);
     }
 
-    .frac .bottom{
-      display:block;
-      padding:2px 6px 0;
+    ul.key-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text-muted);
     }
 
-    sub, sup{
-      font-family:"Times New Roman", Times, serif;
-      font-style:italic;
-      font-size:0.78em;
-      line-height:0;
-      position:relative;
-      vertical-align:baseline;
+    .key-list li { margin: 8px 0; }
+    .key-list li::marker { color: var(--primary); }
+    strong { color: var(--text-main); font-weight: 650; }
+
+    /* --- Semantic Callouts --- */
+    .callout {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin: 18px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      font-size: 0.95rem;
+      border: 1px solid;
     }
 
-    sub{ bottom:-0.28em; }
-    sup{ top:-0.55em; }
-    .eq sub{ bottom:-0.22em; }
-    .eq sup{ top:-0.48em; }
+    .co-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      margin-top: 2px;
+    }
+    .co-icon svg { width: 100%; height: 100%; }
 
-    .compare-table{
-      width:100%;
-      border-collapse:separate;
-      border-spacing:0;
-      border:1px solid var(--border);
-      border-radius:12px;
-      overflow:hidden;
-      font-size:0.95rem;
-      margin-top:10px;
-      background:#ffffff;
-      box-shadow:0 6px 18px rgba(31,42,68,0.06);
+    .co-title {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 4px;
+      font-size: 0.80rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
-    .compare-table th,
-    .compare-table td{
-      padding:10px 12px;
-      border-bottom:1px solid var(--border);
-      vertical-align:top;
+    .co-content { color: var(--text-main); }
+
+    /* Note Style */
+    .callout.note {
+      background: var(--accent-info-bg);
+      border-color: var(--accent-info-border);
+    }
+    .callout.note .co-icon, .callout.note .co-title { color: var(--primary); }
+
+    /* Trap Style */
+    .callout.trap {
+      background: var(--accent-amber-bg);
+      border-color: var(--accent-amber-border);
+    }
+    .callout.trap .co-icon, .callout.trap .co-title { color: var(--accent-amber); }
+
+    /* --- Tables --- */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-card);
+      margin-top: 12px;
     }
 
-    .compare-table th{
-      background:#f2f7ff;
-      color:var(--accent);
-      font-weight:700;
-      text-align:left;
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+      font-size: 0.95rem;
     }
 
-    .compare-table tr:last-child td{ border-bottom:none; }
-
-    /* Term tabs */
-    .term-tabs{ position:relative; margin-top:8px; }
-    .term-radio{ position:absolute; left:-9999px; }
-    .term-tab-bar{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
-
-    .term-tab-btn{
-      cursor:pointer;
-      user-select:none;
-      padding:9px 10px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background:#ffffff;
-      color:var(--accent);
-      font-weight:700;
-      font-size:0.92rem;
-      box-shadow:0 4px 14px rgba(31,42,68,0.06);
-      transition:transform 0.08s ease;
-      line-height:1.15;
+    .data-table th {
+      background: var(--bg-body);
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
     }
 
-    .term-tab-btn:hover{ transform:translateY(-1px); }
-
-    .term-panel{
-      display:none;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:#ffffff;
-      padding:10px 12px;
-      font-size:0.95rem;
-      box-shadow:0 6px 18px rgba(31,42,68,0.06);
-      border-left:4px solid rgba(23,75,143,0.55);
+    .data-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      vertical-align: top;
     }
 
-    #term-eq:checked ~ .term-tab-bar label[for="term-eq"],
-    #term-kmax:checked ~ .term-tab-bar label[for="term-kmax"],
-    #term-vs:checked ~ .term-tab-bar label[for="term-vs"],
-    #term-sat:checked ~ .term-tab-bar label[for="term-sat"],
-    #term-work:checked ~ .term-tab-bar label[for="term-work"],
-    #term-f0:checked ~ .term-tab-bar label[for="term-f0"],
-    #term-h:checked ~ .term-tab-bar label[for="term-h"],
-    #term-ret:checked ~ .term-tab-bar label[for="term-ret"]{
-      background:var(--accent);
-      color:#ffffff;
-      border-color:var(--accent);
-      box-shadow:0 3px 10px rgba(23,75,143,0.4);
+    .data-table tr:last-child td { border-bottom: none; }
+
+    /* --- Segmented Tabs --- */
+    .term-tabs { position: relative; margin-top: 10px; }
+    .term-radio { position: absolute; left: -9999px; }
+
+    .term-tab-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      background: var(--bg-body);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
     }
 
-    #term-eq:checked ~ #panel-term-eq,
-    #term-kmax:checked ~ #panel-term-kmax,
-    #term-vs:checked ~ #panel-term-vs,
-    #term-sat:checked ~ #panel-term-sat,
+    .term-tab-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .term-tab-btn:hover { color: var(--text-main); }
+
+    /* Active State Logic */
+    input:checked + label {
+      background: var(--bg-card);
+      color: var(--primary);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .term-panel {
+      display: none;
+      padding: 20px;
+      border-radius: 12px;
+      background: var(--accent-info-bg);
+      border: 1px dashed var(--accent-info-border);
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Panel Visibility Logic */
+    #term-pe:checked ~ #panel-term-pe,
+    #term-photon:checked ~ #panel-term-photon,
+    #term-photoelectron:checked ~ #panel-term-photoelectron,
     #term-work:checked ~ #panel-term-work,
     #term-f0:checked ~ #panel-term-f0,
-    #term-h:checked ~ #panel-term-h,
-    #term-ret:checked ~ #panel-term-ret{ display:block; }
+    #term-vs:checked ~ #panel-term-vs,
+    #term-current:checked ~ #panel-term-current,
+    #term-int:checked ~ #panel-term-int { display: block; }
 
-    :target{
-      outline:0;
-      box-shadow:0 0 0 4px rgba(58,123,213,0.18);
-      border-radius:10px;
-      padding:2px 4px;
-    }
-
-    /* Small diagram widgets */
-    .viz svg{ max-width:100%; height:auto; display:block; }
-
-    .viz{
-
-      margin-top:10px;
-      border:1px solid var(--border);
-      border-radius:12px;
-      background:#ffffff;
-      padding:10px 12px;
-      box-shadow:0 6px 18px rgba(31,42,68,0.06);
-      overflow:auto;
-    }
-
-    .viz-title{
-      margin:0 0 6px;
-      font-weight:800;
-      color:var(--accent);
-      font-size:0.96rem;
-    }
-
-    .tiny{ font-size:0.92rem; color:var(--text-muted); }
-
-    .mini-btn{
-      appearance:none;
-      border:1px solid var(--border);
-      background:#ffffff;
-      color:var(--accent);
-      border-radius:999px;
-      padding:8px 10px;
-      font-weight:800;
-      cursor:pointer;
-      box-shadow:0 4px 14px rgba(31,42,68,0.06);
-      transition:transform 0.08s ease;
-    }
-
-    .mini-btn:hover{ transform:translateY(-1px); }
-
-    .mini-btn[aria-pressed="true"]{
-      background:var(--accent);
-      color:#ffffff;
-      border-color:var(--accent);
-      box-shadow:0 3px 10px rgba(23,75,143,0.35);
-    }
-
-    @media (max-width:768px){
-      main{ padding:18px 14px 24px; border-radius:0; margin:0; }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { padding: 0 16px 60px; }
+      h1 { font-size: 1.8rem; }
+      .card { padding: 20px; }
     }
   </style>
 </head>
 <body>
-  <main>
-    <header class="page-header">
-      <h1>E2 — Photoelectric Effect: Equation &amp; Graphs</h1>
-      <div class="meta">
-        HKDSE Physics &mdash; Elective E2: Atomic World &middot; Einstein&rsquo;s equation, stopping potential, and how to read / sketch the exam graphs.
-      </div>
-    </header>
 
-    <!-- Required top navigation (Back / Previous / Next) -->
-    <div class="section-nav">
-      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
-      <a class="nav-btn" href="photoelectric.html">&larr; Previous</a>
-      <a class="nav-btn" href="rutherford.html">Next &rarr;</a>
+  <!-- Hero Header -->
+  <header class="hero-header">
+    <div class="nav-breadcrumb">
+      <!-- Icon -->
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--primary)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+      Index / E2
     </div>
 
-    <p class="section-intro">
-      Focus here: how to measure <span class="m">K</span><sub>max</sub> using stopping potential, use Einstein&rsquo;s photoelectric equation,
-      and interpret straight-line graphs (especially <span class="m">V</span><sub>s</sub> against <em>f</em>).
+    <h1>E2 — Photoelectric Effect</h1>
+    <p class="meta-subtitle">
+      HKDSE Physics &mdash; Elective E2: Atomic World &middot; Evidence from the photoelectric effect and the photon model.
     </p>
 
-    <div class="badge-strip">
-      <span class="badge exam">Exam focus: <span class="m">eV</span><sub>s</sub> = <span class="m">h f</span> &minus; <span class="m">&phi;</span>, <span class="m">f</span><sub>0</sub>, <span class="m">V</span><sub>s</sub>&ndash;<em>f</em> graph</span>
-      <span class="badge skills">Skills: measure <span class="m">V</span><sub>s</sub>, find slope/intercepts, eV &harr; J, use <span class="m">c</span> = <em>f</em><span class="m">&lambda;</span></span>
+    <div class="section-nav" style="justify-content:center;">
+      <a class="nav-btn" href="../index.html">Back to Index</a>
     </div>
+  </header>
 
-    <!-- Section jump bar -->
-    <div class="section-nav" aria-label="Jump to section">
-      <a href="#sec01" class="nav-btn"><span class="pill">1</span> <span class="m">I</span>&ndash;<span class="m">V</span> curve &amp; <span class="m">V</span><sub>s</sub></a>
-      <a href="#sec02" class="nav-btn"><span class="pill">2</span> Einstein equation</a>
-      <a href="#sec03" class="nav-btn"><span class="pill">3</span> Straight-line graphs</a>
-      <a href="#sec04" class="nav-btn"><span class="pill">4</span> Worked examples</a>
-      <a href="#sec05" class="nav-btn"><span class="pill">5</span> Key terms</a>
-      <a href="#sec06" class="nav-btn"><span class="pill">6</span> Common traps</a>
-    </div>
+  <div class="container">
+    <main>
 
-    <section>
-      <div class="card">
-        <h2 id="sec01">1. <span class="m">I</span>&ndash;<span class="m">V</span> curve and stopping potential</h2>
+      <p class="section-intro" style="text-align:center;">
+        Focus here: the <strong>experiment</strong>, the <strong>main observations</strong>, and how the <strong>photon model</strong> explains them.
+        (Einstein&rsquo;s photoelectric equation, stopping potential and graphs are in the next note.)
+      </p>
 
-        <h3>What is stopping potential?</h3>
-        <ul class="key-list">
-          <li>Apply a <strong>retarding</strong> potential (anode negative) to oppose photoelectrons.</li>
-          <li>The stopping potential <span class="m">V</span><sub>s</sub> is the <strong>magnitude</strong> of the retarding potential that just stops the most energetic photoelectrons so the photocurrent becomes zero.</li>
-        </ul>
-
-        <div class="card-note">
-          <strong>How to measure in the lab (DSE wording):</strong>
-          adjust the output voltage until the ammeter reading just drops to zero.
-          The voltmeter reading gives the stopping potential <span class="m">V</span><sub>s</sub>.
-        </div>
-
-        <h3>Link to maximum kinetic energy</h3>
-        <div class="eq"><span class="m">K</span><sub>max</sub> = <span class="m">eV</span><sub>s</sub></div>
-
-        <div class="viz" aria-label="I-V curve">
-          <p class="viz-title">Typical photocurrent (<span class="m">I</span>) vs applied p.d. (<span class="m">V</span>)</p>
-          <svg viewBox="0 0 700 250" role="img" aria-label="Photocurrent-voltage graph with stopping potential" style="width:100%; height:auto;">
-            <defs>
-              <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
-                <stop offset="0" stop-color="#174b8f" stop-opacity="0.95" />
-                <stop offset="1" stop-color="#3a7bd5" stop-opacity="0.95" />
-              </linearGradient>
-
-              <marker id="arrowIV" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
-                <path d="M0,0 L6,3 L0,6 Z" fill="#1f2a44" />
-              </marker>
-            </defs>
-
-            <!-- frame -->
-            <rect x="10" y="10" width="680" height="230" rx="14" ry="14" fill="#ffffff" stroke="#d9e2ef" />
-
-            <!-- axes -->
-            <line x1="90" y1="200" x2="650" y2="200" stroke="#1f2a44" stroke-width="2" marker-end="url(#arrowIV)" />
-            <line x1="390" y1="200" x2="390" y2="40" stroke="#1f2a44" stroke-width="2" marker-end="url(#arrowIV)" />
-
-            <!-- guide lines (aligned with key ticks) -->
-            <line x1="260" y1="200" x2="260" y2="40" stroke="#d9e2ef" stroke-width="1" stroke-dasharray="6 6" />
-
-            <!-- labels -->
-            <text x="655" y="205" font-size="14" fill="#1f2a44" style="font-family:'Times New Roman',Times,serif; font-style:italic;">V</text>
-            <text x="368" y="42" font-size="14" fill="#1f2a44" style="font-family:'Times New Roman',Times,serif; font-style:italic;">I</text>
-
-            <!-- V = 0 (axis crossing) -->
-            <text x="390" y="226" font-size="12" fill="#5b6b86" text-anchor="middle">0</text>
-
-            <!-- -Vs tick -->
-            <line x1="260" y1="200" x2="260" y2="206" stroke="#1f2a44" stroke-width="2" />
-            <text x="260" y="226" font-size="12" fill="#5b6b86" text-anchor="middle" style="font-family:'Times New Roman',Times,serif; font-style:italic;">&minus;V<tspan baseline-shift="sub">s</tspan></text>
-
-            <!-- curve -->
-            <path d="M260,200 C285,150 320,115 390,105 C470,95 540,95 610,95" fill="none" stroke="url(#g1)" stroke-width="4" />
-
-            <!-- saturation label -->
-            <line x1="610" y1="95" x2="648" y2="95" stroke="#f59e0b" stroke-width="3" />
-            <text x="510" y="82" font-size="12" fill="#5b6b86">saturation current</text>
-
-            <!-- stopping point -->
-            <circle cx="260" cy="200" r="5" fill="#f59e0b" />
-            <line x1="230" y1="150" x2="258" y2="198" stroke="#f59e0b" stroke-width="2" opacity="0.55" />
-            <text x="120" y="146" font-size="12" fill="#5b6b86">
-              <tspan x="120" dy="0">stopping point (I = 0)</tspan>
-              <tspan x="120" dy="16">at V = &minus;V<tspan baseline-shift="sub">s</tspan></tspan>
-            </text>
-          </svg>
-          <p class="tiny">Reading tip: <span class="m">V</span><sub>s</sub> is the <strong>magnitude</strong> of the x-value where the current first becomes zero on the retarding side.</p>
-        </div>
+      <div class="badge-strip">
+        <span class="badge exam">Exam focus: \( f_0 \), \( \phi \), \( V_s \)</span>
+        <span class="badge skills">Skills: explain observations using photon model; relate Intensity to photon rate</span>
       </div>
 
-      <div class="card">
-        <h2 id="sec02">2. Einstein&rsquo;s photoelectric equation</h2>
-
-        <h3>Main equation</h3>
-        <div class="eq"><span class="m">K</span><sub>max</sub> = <span class="m">h f</span> &minus; <span class="m">&phi;</span></div>
-        <div class="eq"><span class="m">eV</span><sub>s</sub> = <span class="m">h f</span> &minus; <span class="m">&phi;</span></div>
-
-        <ul class="key-list">
-          <li><span class="m">h f</span> is the energy of one photon.</li>
-          <li><span class="m">&phi;</span> (work function) is the minimum energy needed for an electron to escape from the metal surface.</li>
-          <li>Any remaining energy becomes the maximum kinetic energy of the emitted photoelectrons.</li>
-        </ul>
-
-        <h3>Threshold condition</h3>
-        <p>At threshold, photoelectrons just escape with <span class="m">K</span><sub>max</sub> = 0:</p>
-        <div class="eq"><span class="m">&phi;</span> = <span class="m">h f</span><sub>0</sub></div>
-        <p class="tiny">So <span class="m">f</span><sub>0</sub> depends on the metal only. Larger <span class="m">&phi;</span> &rarr; larger <span class="m">f</span><sub>0</sub>.</p>
-
-        <h3>Using wavelength</h3>
-        <p>Since <span class="m">c</span> = <em>f</em><span class="m">&lambda;</span>:</p>
-        <div class="eq"><span class="m">K</span><sub>max</sub> = <span class="m">h f</span> &minus; <span class="m">&phi;</span> = <span class="frac"><span class="top"><span class="m">h c</span></span><span class="bottom"><span class="m">&lambda;</span></span></span> &minus; <span class="m">&phi;</span></div>
-
-        <div class="card-note">
-          <strong>HKDSE note:</strong> You are not required to learn the detailed design/history of Millikan&rsquo;s photoelectric experiment.
-          However, using <span class="m">eV</span><sub>s</sub> = <span class="m">h f</span> &minus; <span class="m">&phi;</span> to find <span class="m">h</span>, <span class="m">f</span><sub>0</sub>, or <span class="m">&phi;</span> from graphs/data is examinable.
-        </div>
+      <!-- Jump Bar -->
+      <div class="section-nav" aria-label="Jump to section" style="margin-top:20px; justify-content:center;">
+        <a href="#sec01" class="nav-btn"><span>1</span> Arrangement</a>
+        <a href="#sec02" class="nav-btn"><span>2</span> Observations</a>
+        <a href="#sec03" class="nav-btn"><span>3</span> Photon model</a>
+        <a href="#sec04" class="nav-btn"><span>4</span> Intensity</a>
+        <a href="#sec05" class="nav-btn"><span>5</span> Terms</a>
+        <a href="#sec06" class="nav-btn"><span>6</span> Traps</a>
       </div>
 
-      <div class="card">
-        <h2 id="sec03">3. Straight-line graphs you must recognise</h2>
-
-        <h3>(A) Graph of <span class="m">V</span><sub>s</sub> against <em>f</em></h3>
-        <div class="eq"><span class="m">V</span><sub>s</sub> = <span class="frac"><span class="top"><span class="m">h</span></span><span class="bottom"><span class="m">e</span></span></span> <em>f</em> &minus; <span class="frac"><span class="top"><span class="m">&phi;</span></span><span class="bottom"><span class="m">e</span></span></span></div>
-
-        <table class="compare-table">
-          <thead>
-            <tr>
-              <th>Feature on the graph</th>
-              <th>Meaning</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Slope</td>
-              <td><span class="m">h</span>/<span class="m">e</span> (same for all metals)</td>
-            </tr>
-            <tr>
-              <td>x-intercept</td>
-              <td>threshold frequency <span class="m">f</span><sub>0</sub></td>
-            </tr>
-            <tr>
-              <td>y-intercept</td>
-              <td><span class="m">&minus;&phi;</span>/<span class="m">e</span> (negative)</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="viz" aria-label="Vs-f straight line">
-          <p class="viz-title"><span class="m">V</span><sub>s</sub>&ndash;<em>f</em> line: same slope, different intercepts</p>
-          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:8px;">
-            <button class="mini-btn" id="btnA" type="button" aria-pressed="true">Metal A (larger <span class="m">&phi;</span>)</button>
-            <button class="mini-btn" id="btnB" type="button" aria-pressed="false">Metal B (smaller <span class="m">&phi;</span>)</button>
-            <span class="tiny">Tip: larger <span class="m">&phi;</span> &rarr; larger <span class="m">f</span><sub>0</sub> (shift right).</span>
-          </div>
-
-          <svg id="vsf" viewBox="0 0 740 260" role="img" aria-label="Stopping potential versus frequency straight line graph" style="width:100%; height:auto;">
-            <defs>
-              <linearGradient id="g2" x1="0" x2="1" y1="0" y2="1">
-                <stop offset="0" stop-color="#174b8f" stop-opacity="0.95" />
-                <stop offset="1" stop-color="#3a7bd5" stop-opacity="0.95" />
-              </linearGradient>
-              <linearGradient id="g3" x1="0" x2="1" y1="0" y2="1">
-                <stop offset="0" stop-color="#0f3c78" stop-opacity="0.95" />
-                <stop offset="1" stop-color="#2f6fc6" stop-opacity="0.95" />
-              </linearGradient>
-
-              <marker id="arrowVF" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
-                <path d="M0,0 L6,3 L0,6 Z" fill="#1f2a44" />
-              </marker>
-            </defs>
-
-            <!-- frame -->
-            <rect x="10" y="10" width="720" height="240" rx="14" ry="14" fill="#ffffff" stroke="#d9e2ef" />
-
-            <!-- axes -->
-            <line x1="90" y1="210" x2="700" y2="210" stroke="#1f2a44" stroke-width="2" marker-end="url(#arrowVF)" />
-            <line x1="90" y1="210" x2="90" y2="40" stroke="#1f2a44" stroke-width="2" marker-end="url(#arrowVF)" />
-
-            <!-- labels -->
-            <text x="705" y="215" font-size="14" fill="#1f2a44" style="font-family:'Times New Roman',Times,serif; font-style:italic;">f</text>
-            
-            <!-- y-axis zero tick -->
-            <line x1="90" y1="210" x2="84" y2="210" stroke="#1f2a44" stroke-width="2" />
-            <text x="78" y="214" font-size="12" fill="#5b6b86" text-anchor="end">0</text>
-            <text x="70" y="42" font-size="14" fill="#1f2a44" style="font-family:'Times New Roman',Times,serif; font-style:italic;">V<tspan baseline-shift="sub">s</tspan></text>
-
-            <!-- line A and B (same slope, different x-intercepts) -->
-            <path id="lineA" d="M260,210 L650,70" fill="none" stroke="url(#g2)" stroke-width="4" />
-            <path id="extA" d="M260,210 L148.6,250" fill="none" stroke="url(#g2)" stroke-width="3" stroke-dasharray="7 7" opacity="1" />
-
-            <path id="lineB" d="M210,210 L600,70" fill="none" stroke="url(#g3)" stroke-width="4" opacity="0.25" />
-            <path id="extB" d="M210,210 L98.6,250" fill="none" stroke="url(#g3)" stroke-width="3" stroke-dasharray="7 7" opacity="0.25" />
-
-            <!-- intercept markers -->
-            <circle id="f0A" cx="260" cy="210" r="5" fill="#f59e0b" />
-            <circle id="f0B" cx="210" cy="210" r="5" fill="#f59e0b" opacity="0.35" />
-
-            <text id="labA" x="260" y="234" font-size="12" fill="#5b6b86" text-anchor="middle">f<tspan baseline-shift="sub">0</tspan> (A)</text>
-            <text id="labB" x="210" y="234" font-size="12" fill="#5b6b86" text-anchor="middle" opacity="0.35">f<tspan baseline-shift="sub">0</tspan> (B)</text>
-
-            <!-- slope triangle (decorative) -->
-            <path d="M520,120 L580,120 L580,98" fill="none" stroke="#f59e0b" stroke-width="3" />
-            <text x="585" y="96" font-size="12" fill="#5b6b86">same slope</text>
-            <text x="585" y="112" font-size="12" fill="#5b6b86" style="font-family:'Times New Roman',Times,serif; font-style:italic;">h/e</text>
-
-            <!-- note -->
-            <text x="100" y="58" font-size="12" fill="#5b6b86">Graph is drawn only for f ≥ f<tspan baseline-shift="sub">0</tspan>.</text>
-          </svg>
-        </div>
-
-        <div class="card-note">
-          <strong>From the slope:</strong> if the slope is measured in V Hz<sup>&minus;1</sup>, then
-          <span class="eq"><span class="m">h</span> = (slope) &times; <span class="m">e</span></span>
-          (so slope is a convenient way to estimate <span class="m">h</span>).
-        </div>
-
-        <h3>(B) Graph of <span class="m">K</span><sub>max</sub> against <span class="frac"><span class="top">1</span><span class="bottom"><span class="m">&lambda;</span></span></span></h3>
-        <p class="tiny">Useful when the question gives wavelength instead of frequency.</p>
-        <div class="eq"><span class="m">K</span><sub>max</sub> = <span class="m">h c</span> &times; <span class="frac"><span class="top">1</span><span class="bottom"><span class="m">&lambda;</span></span></span> &minus; <span class="m">&phi;</span></div>
-        <ul class="key-list">
-          <li>If you plot <span class="m">K</span><sub>max</sub> (in J) against <span class="frac"><span class="top">1</span><span class="bottom"><span class="m">&lambda;</span></span></span>, the slope is <span class="m">h c</span>.</li>
-          <li>The x-intercept gives <span class="frac"><span class="top">1</span><span class="bottom"><span class="m">&lambda;</span><sub>0</sub></span></span>. Then <span class="m">f</span><sub>0</sub> = <span class="m">c</span>/<span class="m">&lambda;</span><sub>0</sub>.</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h2 id="sec04">4. Worked examples (marking-scheme style)</h2>
-
-        <h3>Example 1: Use a <span class="m">V</span><sub>s</sub>&ndash;<em>f</em> graph to estimate <span class="m">h</span> and <span class="m">&phi;</span></h3>
-        <ul class="key-list">
-          <li>Two points on the best-fit line are ( <em>f</em> = 5 &times; 10<sup>14</sup> Hz, <span class="m">V</span><sub>s</sub> = 0 V ) and ( <em>f</em> = 8 &times; 10<sup>14</sup> Hz, <span class="m">V</span><sub>s</sub> = 1.2 V ).</li>
-        </ul>
-
-        <div class="eq">slope = <span class="frac"><span class="top">1.2 &minus; 0</span><span class="bottom">(8 &minus; 5) &times; 10<sup>14</sup></span></span> = 4.0 &times; 10<sup>&minus;15</sup> V Hz<sup>&minus;1</sup></div>
-        <div class="eq"><span class="m">h</span> = (slope) &times; <span class="m">e</span> = (4.0 &times; 10<sup>&minus;15</sup>)(1.60 &times; 10<sup>&minus;19</sup>) = 6.4 &times; 10<sup>&minus;34</sup> J s</div>
-        <div class="eq"><span class="m">f</span><sub>0</sub> = 5 &times; 10<sup>14</sup> Hz</div>
-        <div class="eq"><span class="m">&phi;</span> = <span class="m">h f</span><sub>0</sub> = (6.4 &times; 10<sup>&minus;34</sup>)(5 &times; 10<sup>14</sup>) = 3.2 &times; 10<sup>&minus;19</sup> J = 2.0 eV</div>
-
-        <div class="card-traps">
+      <!-- Section 1 -->
+      <section>
+        <div class="card">
+          <h2 id="sec01">1. Basic arrangement</h2>
           <ul class="key-list">
-            <li><strong>Caution:</strong> the straight line does <strong>not</strong> pass through the origin. Do not use (0, 0) to find the slope.</li>
-            <li><strong>Caution:</strong> pay attention to the scale factor (e.g. <em>f</em> / 10<sup>14</sup> Hz) when reading the graph.</li>
+            <li>Monochromatic light of frequency \( f \) shines on a metal cathode in vacuum.</li>
+            <li>The cathode and anode form a photocell connected to a microammeter and a variable d.c. power supply to measure the photocurrent for different applied potentials.</li>
           </ul>
-        </div>
-
-        <h3>Example 2: Find stopping potential from frequency and work function</h3>
-        <p class="tiny">Given <em>f</em> and <span class="m">&phi;</span>, first find <span class="m">K</span><sub>max</sub>, then use <span class="m">K</span><sub>max</sub> = <span class="m">eV</span><sub>s</sub>.</p>
-        <div class="eq"><span class="m">eV</span><sub>s</sub> = <span class="m">h f</span> &minus; <span class="m">&phi;</span></div>
-        <ul class="key-list">
-          <li>If <span class="m">h f</span> &le; <span class="m">&phi;</span>, then no photoelectrons are emitted, so there is no stopping potential to measure.</li>
-          <li>If <span class="m">h f</span> &gt; <span class="m">&phi;</span>, then <span class="m">V</span><sub>s</sub> = <span class="frac"><span class="top"><span class="m">h f</span> &minus; <span class="m">&phi;</span></span><span class="bottom"><span class="m">e</span></span></span>.</li>
-        </ul>
-
-        <div class="card-note">
-          <strong>Constants often provided:</strong>
-          <span class="m">c</span> = 3.00 &times; 10<sup>8</sup> m s<sup>&minus;1</sup>,
-          <span class="m">e</span> = 1.60 &times; 10<sup>&minus;19</sup> C,
-          <span class="m">h</span> = 6.63 &times; 10<sup>&minus;34</sup> J s.
-        </div>
-      </div>
-
-      <div class="card">
-        <h2 id="sec05">5. Key terms</h2>
-
-        <div class="term-tabs">
-          <input class="term-radio" type="radio" name="term" id="term-eq" checked>
-          <input class="term-radio" type="radio" name="term" id="term-kmax">
-          <input class="term-radio" type="radio" name="term" id="term-vs">
-          <input class="term-radio" type="radio" name="term" id="term-sat">
-          <input class="term-radio" type="radio" name="term" id="term-work">
-          <input class="term-radio" type="radio" name="term" id="term-f0">
-          <input class="term-radio" type="radio" name="term" id="term-h">
-          <input class="term-radio" type="radio" name="term" id="term-ret">
-
-          <div class="term-tab-bar" aria-label="Key terms">
-            <label class="term-tab-btn" for="term-eq">Einstein equation</label>
-            <label class="term-tab-btn" for="term-kmax"><span class="m">K</span><sub>max</sub></label>
-            <label class="term-tab-btn" for="term-vs">Stopping <span class="m">V</span><sub>s</sub></label>
-            <label class="term-tab-btn" for="term-sat">Saturation current</label>
-            <label class="term-tab-btn" for="term-work">Work function <span class="m">&phi;</span></label>
-            <label class="term-tab-btn" for="term-f0">Threshold <span class="m">f</span><sub>0</sub></label>
-            <label class="term-tab-btn" for="term-h">Planck constant <span class="m">h</span></label>
-            <label class="term-tab-btn" for="term-ret">Retarding potential</label>
-          </div>
-
-          <div class="term-panel" id="panel-term-eq">
-            <p><strong>Einstein&rsquo;s photoelectric equation:</strong>
-              <span class="m">K</span><sub>max</sub> = <span class="m">h f</span> &minus; <span class="m">&phi;</span>.
-              Using stopping potential, <span class="m">eV</span><sub>s</sub> = <span class="m">h f</span> &minus; <span class="m">&phi;</span>.</p>
-          </div>
-          <div class="term-panel" id="panel-term-kmax">
-            <p><strong><span class="m">K</span><sub>max</sub>:</strong> maximum kinetic energy among all emitted photoelectrons.
-              It relates to stopping potential by <span class="m">K</span><sub>max</sub> = <span class="m">eV</span><sub>s</sub>.</p>
-          </div>
-          <div class="term-panel" id="panel-term-vs">
-            <p><strong>Stopping potential <span class="m">V</span><sub>s</sub>:</strong> the smallest <em>retarding</em> potential magnitude that just stops the most energetic photoelectrons so the photocurrent falls to zero.</p>
-          </div>
-          <div class="term-panel" id="panel-term-sat">
-            <p><strong>Saturation current:</strong> when the anode is sufficiently positive, (almost) all emitted photoelectrons are collected, so the photocurrent reaches a maximum (constant) value.</p>
-          </div>
-          <div class="term-panel" id="panel-term-work">
-            <p><strong>Work function <span class="m">&phi;</span>:</strong> minimum energy needed for an electron to escape from a metal surface. It is a property of the material.</p>
-          </div>
-          <div class="term-panel" id="panel-term-f0">
-            <p><strong>Threshold frequency <span class="m">f</span><sub>0</sub>:</strong> minimum frequency required to produce photoelectrons.
-              At threshold, <span class="m">&phi;</span> = <span class="m">h f</span><sub>0</sub>.</p>
-          </div>
-          <div class="term-panel" id="panel-term-h">
-            <p><strong>Planck constant <span class="m">h</span>:</strong> relates photon energy and frequency: <span class="m">E</span> = <span class="m">h f</span>.
-              From a <span class="m">V</span><sub>s</sub>&ndash;<em>f</em> graph, slope = <span class="m">h</span>/<span class="m">e</span>.</p>
-          </div>
-          <div class="term-panel" id="panel-term-ret">
-            <p><strong>Retarding potential:</strong> an applied p.d. that opposes the motion of photoelectrons (anode negative), reducing the photocurrent.</p>
+          
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">HKDSE Reminder</span>
+              <div class="co-content">
+                The use of a gold-leaf electroscope in the photoelectric effect experiment is <strong>not required</strong>.
+                Applications of photocells are also <strong>not required</strong> (but using a photocell to study the effect is implied).
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="card">
-        <h2 id="sec06">6. Common traps (high-frequency DSE mistakes)</h2>
-        <div class="card-traps">
+        <!-- Section 2 -->
+        <div class="card">
+          <h2 id="sec02">2. Main observations</h2>
           <ul class="key-list">
-            <li><strong>Mixing up <span class="m">K</span><sub>max</sub>, <span class="m">V</span><sub>s</sub> and <span class="m">&phi;</span>:</strong>
-              correct links are <span class="m">K</span><sub>max</sub> = <span class="m">eV</span><sub>s</sub> and <span class="m">K</span><sub>max</sub> = <span class="m">h f</span> &minus; <span class="m">&phi;</span>.</li>
-            <li><strong>Sign mistake with voltage:</strong> stopping happens for a <em>retarding</em> p.d.; in many questions you may see stopping at <span class="m">V</span> = &minus;<span class="m">V</span><sub>s</sub>.</li>
-            <li><strong>Assuming the <span class="m">V</span><sub>s</sub>&ndash;<em>f</em> line passes the origin:</strong> it does not. The y-intercept is negative (about &minus;<span class="m">&phi;</span>/<span class="m">e</span>).</li>
-            <li><strong>Using the wrong slope:</strong> for <span class="m">V</span><sub>s</sub> against <em>f</em>, slope = <span class="m">h</span>/<span class="m">e</span> (not <span class="m">h</span>, not <span class="m">&phi;</span>/<span class="m">e</span>).</li>
-            <li><strong>Unit mistakes:</strong> forgetting factors like 10<sup>14</sup> on the frequency axis, and mixing eV with J without conversion.</li>
-            <li><strong>Intensity confusion:</strong> changing intensity mainly changes the photocurrent (and saturation current), not <span class="m">V</span><sub>s</sub> (at fixed <em>f</em>).</li>
+            <li><strong>Threshold frequency</strong> \( f_0 \): for \( f < f_0 \), no photoelectrons are emitted, regardless of light intensity.</li>
+            <li>For \( f > f_0 \), emission of photoelectrons is <strong>almost instantaneous</strong>, even for very weak light.</li>
+            <li>At fixed \( f > f_0 \), increasing light intensity increases the <strong>photocurrent</strong> (number of electrons emitted per second).</li>
+            <li>For a given metal, the <strong>maximum kinetic energy</strong> (or stopping potential \( V_s \)) depends on \( f \), not on light intensity.</li>
           </ul>
+
+          <h3>Comparison: wave model vs photon model</h3>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th width="30%">Experimental observation</th>
+                  <th width="35%">Prediction by classical wave model</th>
+                  <th width="35%">Explanation by photon model (Einstein)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>No photoelectrons are emitted when \( f < f_0 \), no matter how intense the light is.</td>
+                  <td>Electrons should eventually gain enough energy to escape even at low frequency if the light is intense enough or shines for a long time.</td>
+                  <td>Each photon has energy \( hf \). If \( hf < \phi \), no electron can escape. Increasing intensity increases the number of photons, not the energy of each photon.</td>
+                </tr>
+                <tr>
+                  <td>For \( f > f_0 \), emission is almost instantaneous, even for very weak light.</td>
+                  <td>At very low intensity, electrons should need time to accumulate enough energy before leaving the metal.</td>
+                  <td>A single photon can transfer its energy to one electron in one interaction, so emission occurs without time lag if \( hf \) is large enough.</td>
+                </tr>
+                <tr>
+                  <td>For a given metal, the maximum kinetic energy (or \( V_s \)) depends on \( f \), not on intensity.</td>
+                  <td>Higher intensity should give more energy to each electron &rarr; larger maximum kinetic energy is expected.</td>
+                  <td>At fixed \( f \), photon energy \( hf \) is fixed. Intensity affects how many photons arrive each second, not the energy per photon.</td>
+                </tr>
+                <tr>
+                  <td>At fixed \( f > f_0 \), photocurrent increases with light intensity.</td>
+                  <td>Higher intensity can drive more electrons away per second.</td>
+                  <td>Higher intensity means more photons per second striking the surface &rarr; more electrons emitted per second, so photocurrent increases.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
 
-      <!-- Required bottom navigation (Back / Previous / Next) -->
-      <div class="section-nav" style="margin-top:18px;">
-        <a class="nav-btn" href="../index.html">&larr; Back to index</a>
-        <a class="nav-btn" href="photoelectric.html">&larr; Previous</a>
-        <a class="nav-btn" href="rutherford.html">Next &rarr;</a>
-      </div>
-    </section>
+        <!-- Section 3 -->
+        <div class="card">
+          <h2 id="sec03">3. Photon model of light</h2>
+          <ul class="key-list">
+            <li>Light consists of particles called <strong>photons</strong>.</li>
+            <li>Energy of each photon: $$ E = hf $$</li>
+            <li>At a given \( f \), intensity is proportional to the number of photons incident per second per unit area.
+              Higher intensity &rarr; more photons per second &rarr; larger photocurrent.</li>
+            <li>For a monochromatic beam of power \( P \) and frequency \( f \), number of photons per second is:
+              $$ \frac{P}{hf} $$
+            </li>
+          </ul>
 
-    <p style="font-size:0.85rem; color:var(--text-muted); margin-top:10px;">
-      End of note &bull; E2 &mdash; Photoelectric Effect: Equation &amp; Graphs.
-    </p>
-  </main>
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">HKDSE Reminder</span>
+              <div class="co-content">
+                You must be able to relate intensity (fixed \( f \)) to the number of photons.
+                Millikan&rsquo;s photoelectric experiment is <strong>not required</strong>.
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <script>
-    (function(){
-      const btnA = document.getElementById('btnA');
-      const btnB = document.getElementById('btnB');
-      const lineA = document.getElementById('lineA');
-      const lineB = document.getElementById('lineB');
-      const f0A = document.getElementById('f0A');
-      const f0B = document.getElementById('f0B');
-      const extA = document.getElementById('extA');
-      const extB = document.getElementById('extB');
-      const labA = document.getElementById('labA');
-      const labB = document.getElementById('labB');
+        <!-- Section 4 -->
+        <div class="card">
+          <h2 id="sec04">4. Intensity of a torch (photon view)</h2>
+          
+          <div class="callout note">
+             <div class="co-icon">
+               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+             </div>
+             <div class="co-body">
+                <span class="co-title">Definition & Link</span>
+                <div class="co-content">
+                  <div><strong>Definition:</strong> $$ \text{Intensity} = \frac{P}{A} $$</div>
+                  <div style="margin-top:10px;"><strong>Photon link:</strong> energy delivered in time \( t \) is \( E = Nhf \), so:</div>
+                  $$ P = \frac{E}{t} = \frac{Nhf}{t} \quad \rightarrow \quad \text{Intensity} = \frac{P}{A} = \frac{Nhf}{At} $$
+                  <div style="margin-top:6px; color:var(--text-muted);">
+                    At fixed \( f \), higher intensity means larger \( \frac{N}{t} \) (more photons per second per unit area), not larger energy per photon.
+                  </div>
+                </div>
+             </div>
+          </div>
+        </div>
 
-      function show(which){
-        const isA = which === 'A';
-        btnA.setAttribute('aria-pressed', String(isA));
-        btnB.setAttribute('aria-pressed', String(!isA));
+        <!-- Section 5 -->
+        <div class="card">
+          <h2 id="sec05">5. Key terms</h2>
 
-        lineA.style.opacity = isA ? '1' : '0.25';
-        f0A.style.opacity = isA ? '1' : '0.35';
-        labA.style.opacity = isA ? '1' : '0.35';
-        if(extA) extA.style.opacity = isA ? '1' : '0.25';
+          <div class="term-tabs">
+            <input class="term-radio" type="radio" name="term" id="term-pe" checked>
+            <input class="term-radio" type="radio" name="term" id="term-photon">
+            <input class="term-radio" type="radio" name="term" id="term-photoelectron">
+            <input class="term-radio" type="radio" name="term" id="term-work">
+            <input class="term-radio" type="radio" name="term" id="term-f0">
+            <input class="term-radio" type="radio" name="term" id="term-vs">
+            <input class="term-radio" type="radio" name="term" id="term-current">
+            <input class="term-radio" type="radio" name="term" id="term-int">
 
-        lineB.style.opacity = isA ? '0.25' : '1';
-        f0B.style.opacity = isA ? '0.35' : '1';
-        labB.style.opacity = isA ? '0.35' : '1';
-        if(extB) extB.style.opacity = isA ? '0.25' : '1';
-      }
+            <div class="term-tab-bar" aria-label="Key terms">
+              <label class="term-tab-btn" for="term-pe">Photoelectric effect</label>
+              <label class="term-tab-btn" for="term-photon">Photon</label>
+              <label class="term-tab-btn" for="term-photoelectron">Photoelectron</label>
+              <label class="term-tab-btn" for="term-work">Work function \( \phi \)</label>
+              <label class="term-tab-btn" for="term-f0">Threshold \( f_0 \)</label>
+              <label class="term-tab-btn" for="term-vs">Stopping \( V_s \)</label>
+              <label class="term-tab-btn" for="term-current">Photocurrent</label>
+              <label class="term-tab-btn" for="term-int">Intensity</label>
+            </div>
 
-      if(btnA && btnB){
-        btnA.addEventListener('click', () => show('A'));
-        btnB.addEventListener('click', () => show('B'));
-      }
-    })();
-  </script>
+            <div class="term-panel" id="panel-term-pe">
+              <p><strong>Photoelectric effect:</strong> emission of electrons from a metal surface when electromagnetic radiation shines on it.</p>
+            </div>
+            <div class="term-panel" id="panel-term-photon">
+              <p><strong>Photon:</strong> a particle of light. Energy of each photon is \( E = hf \).</p>
+            </div>
+            <div class="term-panel" id="panel-term-photoelectron">
+              <p><strong>Photoelectron:</strong> an electron emitted from the metal surface due to the photoelectric effect.</p>
+            </div>
+            <div class="term-panel" id="panel-term-work">
+              <p><strong>Work function \( \phi \):</strong> minimum energy needed for an electron to escape from a metal surface.</p>
+            </div>
+            <div class="term-panel" id="panel-term-f0">
+              <p><strong>Threshold frequency \( f_0 \):</strong> the minimum frequency needed to produce photoelectrons.</p>
+            </div>
+            <div class="term-panel" id="panel-term-vs">
+              <p><strong>Stopping potential \( V_s \):</strong> the minimum <em>retarding</em> potential magnitude that just stops the most energetic photoelectrons so the photocurrent falls to zero.</p>
+            </div>
+            <div class="term-panel" id="panel-term-current">
+              <p><strong>Photocurrent:</strong> current in the external circuit due to the flow of photoelectrons.</p>
+            </div>
+            <div class="term-panel" id="panel-term-int">
+              <p><strong>Intensity:</strong> power per unit area, \( \text{Intensity} = P/A \). At fixed \( f \), higher intensity means more photons per second per unit area, not more energy per photon.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 6 -->
+        <div class="card">
+          <h2 id="sec06">6. Common traps</h2>
+          
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Warning / Trap</span>
+              <div class="co-content">
+                <ul class="key-list">
+                  <li><strong>Trap:</strong> “Higher intensity means each photon has higher energy.”
+                    <br><strong>Fix:</strong> photon energy depends on \( f \) only: \( E = hf \). Intensity changes the number of photons per second.</li>
+                  <li><strong>Trap:</strong> “At low intensity, there must be a time delay.”
+                    <br><strong>Fix:</strong> emission is (almost) instantaneous when \( f > f_0 \).</li>
+                  <li><strong>Trap:</strong> “If \( f < f_0 \), increasing intensity will eventually cause emission.”
+                    <br><strong>Fix:</strong> no emission occurs because \( hf \) is too small.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <div class="section-nav" style="margin-top:18px; justify-content: space-between;">
+          <a class="nav-btn" href="../index.html">&larr; Back to Index</a>
+        </div>
+      </section>
+
+      <p style="text-align:center; font-size:0.85rem; color:var(--text-muted); margin-top:40px;">
+        End of note &bull; E2 &mdash; Photoelectric Effect: Evidence &amp; Photon Model.
+      </p>
+    </main>
+  </div>
 </body>
 </html>
