@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>E3 — Electricity at Home: Efficiency & Cost | DSE Physics Notes</title>
+
+  <!-- MathJax for equation rendering -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['$$','$$']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    /* =============================
+       Design System: Modern DSE
+       ============================= */
+    :root {
+      --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+      /* Palette: Slate & Blue */
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-dim: rgba(59, 130, 246, 0.08);
+
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-header: #ffffff;
+
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+
+      --border: #e2e8f0;
+      --radius: 16px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 4px 14px -4px rgba(15, 23, 42, 0.14), 0 2px 6px -2px rgba(15, 23, 42, 0.10);
+
+      /* Semantic Colors */
+      --accent-amber: #f59e0b;
+      --accent-amber-bg: #fffbeb;
+      --accent-amber-border: rgba(245, 158, 11, 0.35);
+
+      --accent-info: #3b82f6;
+      --accent-info-bg: rgba(59, 130, 246, 0.08);
+      --accent-info-border: rgba(59, 130, 246, 0.28);
+
+      --accent-green: #10b981;
+      --accent-green-bg: rgba(16, 185, 129, 0.10);
+      --accent-green-border: rgba(16, 185, 129, 0.22);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --bg-header: #1e293b;
+
+        --text-main: #f1f5f9;
+        --text-muted: #94a3b8;
+
+        --border: #334155;
+
+        --primary: #60a5fa;
+        --primary-dark: #3b82f6;
+        --primary-dim: rgba(96, 165, 250, 0.10);
+
+        --accent-amber-bg: rgba(245, 158, 11, 0.10);
+        --accent-amber-border: rgba(245, 158, 11, 0.30);
+
+        --accent-info-bg: rgba(59, 130, 246, 0.10);
+        --accent-info-border: rgba(59, 130, 246, 0.30);
+
+        --accent-green-bg: rgba(16, 185, 129, 0.10);
+        --accent-green-border: rgba(16, 185, 129, 0.24);
+      }
+    }
+
+    /* --- Base --- */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* --- Layout --- */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* --- Hero Header --- */
+    .hero-header {
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 20px 30px;
+      text-align: center;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.90rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      background: var(--bg-body);
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    h1 {
+      margin: 8px 0 8px;
+      font-size: 2.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .meta-subtitle {
+      font-size: 1.0rem;
+      color: var(--text-muted);
+      max-width: 760px;
+      margin: 0 auto 18px;
+    }
+
+    /* --- Navigation Buttons --- */
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 0;
+      padding: 0;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .nav-btn span {
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      margin-right: 4px;
+    }
+
+    /* --- Intro & Badges --- */
+    .section-intro {
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      margin: 0 0 14px;
+    }
+
+    .badge-strip {
+      margin: 14px 0 0;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid;
+      font-size: 0.90rem;
+      font-weight: 600;
+    }
+
+    .badge.exam {
+      background: var(--accent-info-bg);
+      color: var(--primary);
+      border-color: var(--accent-info-border);
+    }
+
+    .badge.skills {
+      background: var(--accent-green-bg);
+      color: var(--accent-green);
+      border-color: var(--accent-green-border);
+    }
+
+    /* --- Cards --- */
+    section { margin-top: 14px; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin: 22px 0;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card h2 {
+      margin: 0 0 18px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      padding-left: 14px;
+      position: relative;
+      scroll-margin-top: 120px;
+      color: var(--text-main);
+    }
+
+    .card h2::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.2em;
+      width: 6px;
+      height: 1.1em;
+      border-radius: 99px;
+      background: var(--primary);
+    }
+
+    .card h3 {
+      margin: 22px 0 10px;
+      font-size: 1.08rem;
+      font-weight: 650;
+      color: var(--text-main);
+    }
+
+    ul.key-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text-muted);
+    }
+
+    .key-list li { margin: 8px 0; }
+    .key-list li::marker { color: var(--primary); }
+    strong { color: var(--text-main); font-weight: 650; }
+
+    /* --- Semantic Callouts --- */
+    .callout {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin: 18px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      font-size: 0.95rem;
+      border: 1px solid;
+    }
+
+    .co-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      margin-top: 2px;
+    }
+
+    .co-icon svg { width: 100%; height: 100%; }
+
+    .co-title {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 4px;
+      font-size: 0.80rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .co-content { color: var(--text-main); }
+
+    .callout.note {
+      background: var(--accent-info-bg);
+      border-color: var(--accent-info-border);
+    }
+    .callout.note .co-icon, .callout.note .co-title { color: var(--primary); }
+
+    .callout.trap {
+      background: var(--accent-amber-bg);
+      border-color: var(--accent-amber-border);
+    }
+    .callout.trap .co-icon, .callout.trap .co-title { color: var(--accent-amber); }
+
+    /* --- Tables --- */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-card);
+      margin-top: 12px;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 640px;
+      font-size: 0.95rem;
+    }
+
+    .data-table th {
+      background: var(--bg-body);
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+
+    /* --- Diagrams (SVGs) --- */
+    .viz {
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-card);
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    .viz svg { width: 100%; height: auto; display: block; }
+    .viz-title {
+      margin: 0 0 10px;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* --- Tabbed Interface for Terms --- */
+    .term-tabs { position: relative; margin-top: 10px; }
+    .term-radio { position: absolute; left: -9999px; }
+
+    .term-tab-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      background: var(--bg-body);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .term-tab-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .term-tab-btn:hover { color: var(--text-main); }
+
+    /* Active State Logic for Tabs */
+    input:checked + label {
+      background: var(--bg-card);
+      color: var(--primary);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .term-panel {
+      display: none;
+      padding: 20px;
+      border-radius: 12px;
+      background: var(--accent-info-bg);
+      border: 1px dashed var(--accent-info-border);
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Panel Visibility Logic */
+    #term-conv:checked ~ #panel-term-conv,
+    #term-useful:checked ~ #panel-term-useful,
+    #term-input:checked ~ #panel-term-input,
+    #term-eff:checked ~ #panel-term-eff,
+    #term-power:checked ~ #panel-term-power,
+    #term-kwh:checked ~ #panel-term-kwh { display: block; }
+
+
+    /* Footer */
+    .footer {
+      margin-top: 28px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 16px 60px; }
+      h1 { font-size: 1.75rem; }
+      .card { padding: 20px; }
+      table.data-table { min-width: 520px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Header -->
+  <header class="hero-header">
+    <div class="nav-breadcrumb">
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--primary)">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+      </svg>
+      Index / E3
+    </div>
+
+    <h1>E3 — Electricity at Home: Efficiency &amp; Cost</h1>
+    <p class="meta-subtitle">
+      HKDSE Physics &mdash; Elective E3: Energy &amp; Use of Energy &middot; Energy conversions, end-use energy efficiency, and electricity cost (kW h).
+    </p>
+
+    <!-- Navigation HTML template (required) -->
+    <div class="section-nav" style="justify-content:center;">
+      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <main>
+
+      <p class="section-intro" style="text-align:center;">
+        Focus here: identify <strong>energy input</strong> and <strong>useful energy output</strong>, then apply
+        \( \eta_{\text{end}} = \dfrac{E_{\text{out}}}{E_{\text{in}}} \times 100\% \) to solve questions.
+        You will also meet \(\text{kW h}\) when calculating electricity cost.
+      </p>
+
+      <div class="badge-strip">
+        <span class="badge exam">Exam focus: \(\eta_{\text{end}}\), \(E_{\text{in}}\), \(E_{\text{out}}\), \(E = Pt\), \(1\,\text{kW h} = 3.6\times10^6\,\text{J}\)</span>
+        <span class="badge skills">Skills: choose useful output; unit conversion (min &rarr; s, J &harr; kW h)</span>
+      </div>
+
+      <!-- Jump Bar -->
+      <div class="section-nav" aria-label="Jump to section" style="margin-top:20px; justify-content:center;">
+        <a href="#sec01" class="nav-btn"><span>1</span> Syllabus focus</a>
+        <a href="#sec02" class="nav-btn"><span>2</span> Electricity at home</a>
+        <a href="#sec03" class="nav-btn"><span>3</span> Energy conversions</a>
+        <a href="#sec04" class="nav-btn"><span>4</span> End-use efficiency</a>
+        <a href="#sec05" class="nav-btn"><span>5</span> Worked example</a>
+        <a href="#sec06" class="nav-btn"><span>6</span> Electricity cost</a>
+        <a href="#sec07" class="nav-btn"><span>7</span> Reminders</a>
+        <a href="#sec08" class="nav-btn"><span>8</span> Key terms</a>
+      </div>
+
+      <!-- Section 1 -->
+      <section>
+        <div class="card">
+          <h2 id="sec01">1. Syllabus focus (what you must be able to do)</h2>
+          <ul class="key-list">
+            <li>State that <strong>electricity is the main source of domestic energy</strong>.</li>
+            <li>Describe the <strong>energy conversion</strong> involved in electrical appliances.</li>
+            <li>Define <strong>end-use energy efficiency</strong> as the ratio of <strong>useful energy output</strong> to <strong>energy input</strong>.</li>
+            <li>Identify \(E_{\text{in}}\) and \(E_{\text{out}}\) correctly for different appliances.</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Note</span>
+              <div class="co-content">
+                In HKDSE questions, you are usually <strong>given</strong> data like power rating, time, and heating information.
+                Use the standard formulas \(E = Pt\) and \(E = mc\Delta T\) where appropriate.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2 -->
+      <section>
+        <div class="card">
+          <h2 id="sec02">2. Electricity as the main source of domestic energy</h2>
+          <ul class="key-list">
+            <li>Most household appliances use <strong>electricity</strong>, so electricity is the main source of domestic energy.</li>
+            <li>When an appliance operates, <strong>electrical energy</strong> is converted into other forms of energy (useful and not useful).</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Section 3 -->
+      <section>
+        <div class="card">
+          <h2 id="sec03">3. Energy conversions in common appliances</h2>
+
+          <div class="table-container" role="region" aria-label="Energy conversions table">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Appliance</th>
+                  <th>Energy input</th>
+                  <th>Useful energy output</th>
+                  <th>Other energy (not useful)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Filament lamp</strong></td>
+                  <td>Electrical energy</td>
+                  <td>Electromagnetic energy (visible light)</td>
+                  <td>Electromagnetic energy (infra-red), internal energy of lamp</td>
+                </tr>
+                <tr>
+                  <td><strong>Electric kettle</strong></td>
+                  <td>Electrical energy</td>
+                  <td>Internal energy gained by water</td>
+                  <td>Internal energy gained by kettle and surroundings</td>
+                </tr>
+                <tr>
+                  <td><strong>Electric space heater</strong></td>
+                  <td>Electrical energy</td>
+                  <td>Internal energy (heating the room)</td>
+                  <td>Very small (often taken as nearly all useful)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Common trap</span>
+              <div class="co-content">
+                <strong>Useful energy output depends on the purpose</strong> of the appliance.
+                For a lamp, heat is usually not useful; for a heater, heating is the useful output.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4 -->
+      <section>
+        <div class="card">
+          <h2 id="sec04">4. End-use energy efficiency \(\eta_{\text{end}}\)</h2>
+
+          <h3>Definition</h3>
+          <ul class="key-list">
+            <li>End-use energy efficiency tells the <strong>proportion of energy input</strong> converted into <strong>useful energy output</strong>.</li>
+          </ul>
+
+          <div class="viz">
+             <p class="viz-title">Energy Flow Diagram</p>
+             <svg viewBox="0 0 600 220" style="width:100%; height:auto;">
+                <defs>
+                   <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L9,3 z" fill="var(--text-muted)" />
+                   </marker>
+                   <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L9,3 z" fill="var(--accent-green)" />
+                   </marker>
+                   <marker id="arrow-amber" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L9,3 z" fill="var(--accent-amber)" />
+                   </marker>
+                </defs>
+
+                <!-- Input Section -->
+                <line x1="40" y1="110" x2="160" y2="110" stroke="var(--text-muted)" stroke-width="2" marker-end="url(#arrow)"/>
+                <text x="100" y="100" text-anchor="middle" font-size="12" fill="var(--text-muted)">Energy Input</text>
+                <text x="100" y="130" text-anchor="middle" font-size="12" fill="var(--text-main)" font-weight="bold">Electrical</text>
+
+                <!-- Appliance Box (Centered) -->
+                <rect x="170" y="80" width="140" height="60" rx="8" fill="var(--primary)" fill-opacity="0.1" stroke="var(--primary)" stroke-width="2"/>
+                <text x="240" y="115" text-anchor="middle" font-size="14" fill="var(--text-main)" font-weight="bold">Appliance</text>
+
+                <!-- Useful Output (Curved Up) -->
+                <path d="M310,110 C380,110 380,60 440,60" fill="none" stroke="var(--accent-green)" stroke-width="3" marker-end="url(#arrow-green)" />
+                <text x="455" y="60" font-size="12" fill="var(--accent-green)" font-weight="bold">Useful Output</text>
+                <text x="455" y="75" font-size="11" fill="var(--text-muted)">(e.g. Light)</text>
+
+                <!-- Waste Output (Curved Down) -->
+                <path d="M310,110 C380,110 380,160 440,160" fill="none" stroke="var(--accent-amber)" stroke-width="2" stroke-dasharray="4" marker-end="url(#arrow-amber)" />
+                <text x="455" y="160" font-size="12" fill="var(--accent-amber)" font-weight="bold">Waste Output</text>
+                <text x="455" y="175" font-size="11" fill="var(--text-muted)">(e.g. Heat)</text>
+             </svg>
+          </div>
+
+          <h3>HKDSE formulas</h3>
+          <ul class="key-list">
+            <li>\(\displaystyle \text{End-use energy efficiency} = \frac{\text{useful energy output}}{\text{energy input}} \times 100\%\)</li>
+            <li>\(\displaystyle \eta_{\text{end}} = \frac{E_{\text{out}}}{E_{\text{in}}} \times 100\%\)</li>
+            <li>Since \(P = \dfrac{E}{t}\), you may also use: \(\displaystyle \eta_{\text{end}} = \frac{P_{\text{out}}}{P_{\text{in}}} \times 100\%\)</li>
+          </ul>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Caution</span>
+              <div class="co-content">
+                \(E_{\text{in}}\) is the energy input <strong>to the appliance</strong>.
+                Do <strong>not</strong> include losses in electricity generation or transmission.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5 -->
+      <section>
+        <div class="card">
+          <h2 id="sec05">5. Worked example (HKDSE style): electric kettle</h2>
+
+          <ul class="key-list">
+            <li>A \(2200\,\text{W}\) electric kettle heats \(1.5\,\text{kg}\) of water from \(25^\circ\text{C}\) to \(100^\circ\text{C}\) in \(4\,\text{min}\).</li>
+            <li>Given: \(c_{\text{water}} = 4200\,\text{J kg}^{-1}\,^\circ\text{C}^{-1}\).</li>
+          </ul>
+
+          <h3>(a) Energy input \(E_{\text{in}}\)</h3>
+          <ul class="key-list">
+            <li>\(E_{\text{in}} = Pt = 2200 \times (4\times 60) = 5.28\times 10^5\,\text{J}\)</li>
+          </ul>
+
+          <h3>(b) Useful energy output \(E_{\text{out}}\)</h3>
+          <ul class="key-list">
+            <li>Useful output = internal energy gained by water</li>
+            <li>\(E_{\text{out}} = mc\Delta T = 1.5 \times 4200 \times (100-25) = 4.725\times 10^5\,\text{J}\)</li>
+          </ul>
+
+          <h3>(c) End-use energy efficiency</h3>
+          <ul class="key-list">
+            <li>\(\displaystyle \eta_{\text{end}} = \frac{E_{\text{out}}}{E_{\text{in}}}\times 100\% = \frac{4.725\times 10^5}{5.28\times 10^5}\times 100\% \approx 89.5\%\)</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Reminder</span>
+              <div class="co-content">
+                For a kettle, the useful energy is the energy absorbed by the <strong>water</strong>.
+                Energy gained by the kettle body and surroundings is not useful.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6 -->
+      <section>
+        <div class="card">
+          <h2 id="sec06">6. Electricity consumption &amp; cost (kW h)</h2>
+
+          <h3>Energy used by an appliance</h3>
+          <ul class="key-list">
+            <li>\(E = Pt\)</li>
+            <li>If \(P\) is in kW and \(t\) is in hours, then \(E\) is in \(\text{kW h}\).</li>
+          </ul>
+
+          <h3>Unit conversion</h3>
+          <ul class="key-list">
+            <li>\(1\,\text{kW h} = 1000\,\text{W} \times 3600\,\text{s} = 3.6\times 10^6\,\text{J}\)</li>
+            <li>So \(\displaystyle E(\text{kW h}) = \frac{E(\text{J})}{3.6\times 10^6}\).</li>
+          </ul>
+
+          <h3>Cost of electricity</h3>
+          <ul class="key-list">
+            <li>\(\text{Cost} = (\text{electricity price per kW h}) \times E(\text{kW h})\)</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Worked mini-example</span>
+              <div class="co-content">
+                From the kettle example, \(E_{\text{in}} = 5.28\times10^5\,\text{J}\).
+                \(\displaystyle E = \frac{5.28\times10^5}{3.6\times10^6} \approx 0.147\,\text{kW h}\).
+                If electricity costs \($1.1\) per kW h (given), then cost \(\approx 1.1\times 0.147 \approx \$0.16\).
+              </div>
+            </div>
+          </div>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Common trap</span>
+              <div class="co-content">
+                Don&rsquo;t mix units. If you use \(E\) in joule, you must convert it to \(\text{kW h}\) before multiplying by the price per kW h.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 7 -->
+      <section>
+        <div class="card">
+          <h2 id="sec07">7. Reminders &amp; common exam traps</h2>
+          <ul class="key-list">
+            <li><strong>State the purpose first</strong> (what is useful output?): e.g. lamp &rarr; visible light; heater &rarr; heating (internal energy).</li>
+            <li>Use \(E = Pt\) for <strong>energy input</strong>, with \(t\) in seconds if \(P\) is in watt.</li>
+            <li>For heating questions, useful energy is often \(mc\Delta T\) (and you must use the correct \(c\)).</li>
+            <li>End-use energy efficiency is about the <strong>appliance</strong> only: do not include power station / transmission losses.</li>
+            <li>When calculating cost, work in \(\text{kW h}\) (or convert from joule using \(1\,\text{kW h} = 3.6\times10^6\,\text{J}\)).</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Section 8 -->
+      <section>
+        <div class="card">
+          <h2 id="sec08">8. Key terms</h2>
+          
+          <div class="term-tabs">
+            <input type="radio" name="term" id="term-conv" class="term-radio" checked>
+            <input type="radio" name="term" id="term-useful" class="term-radio">
+            <input type="radio" name="term" id="term-input" class="term-radio">
+            <input type="radio" name="term" id="term-eff" class="term-radio">
+            <input type="radio" name="term" id="term-power" class="term-radio">
+            <input type="radio" name="term" id="term-kwh" class="term-radio">
+
+            <div class="term-tab-bar">
+              <label for="term-conv" class="term-tab-btn">Energy conversion</label>
+              <label for="term-useful" class="term-tab-btn">Useful Output \(E_{\text{out}}\)</label>
+              <label for="term-input" class="term-tab-btn">Input \(E_{\text{in}}\)</label>
+              <label for="term-eff" class="term-tab-btn">Efficiency \(\eta_{\text{end}}\)</label>
+              <label for="term-power" class="term-tab-btn">Power \(P\)</label>
+              <label for="term-kwh" class="term-tab-btn">kilowatt-hour</label>
+            </div>
+
+            <div class="term-panel" id="panel-term-conv">
+              <p><strong>Energy conversion</strong>: change of energy from one form to another during appliance operation (e.g., electrical &rarr; light + heat).</p>
+            </div>
+            <div class="term-panel" id="panel-term-useful">
+              <p><strong>Useful energy output \(E_{\text{out}}\)</strong>: the energy in the form we want from the appliance (e.g. light from a lamp).</p>
+            </div>
+            <div class="term-panel" id="panel-term-input">
+              <p><strong>Energy input \(E_{\text{in}}\)</strong>: electrical energy supplied to the appliance.</p>
+            </div>
+            <div class="term-panel" id="panel-term-eff">
+              <p><strong>End-use energy efficiency \(\eta_{\text{end}}\)</strong>: \(\dfrac{E_{\text{out}}}{E_{\text{in}}}\times 100\%\).</p>
+            </div>
+            <div class="term-panel" id="panel-term-power">
+              <p><strong>Power rating \(P\)</strong>: rate of energy transfer, \(P = \dfrac{E}{t}\) (unit: W).</p>
+            </div>
+            <div class="term-panel" id="panel-term-kwh">
+              <p><strong>kilowatt-hour (kW h)</strong>: a unit of energy used for electricity billing; \(1\,\text{kW h} = 3.6\times10^6\,\text{J}\).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bottom navigation (required) -->
+      <div class="section-nav" style="justify-content:center; margin-top: 18px;">
+        <a class="nav-btn" href="../index.html">&larr; Back to index</a>
+      </div>
+
+      <p class="footer">HKDSE Physics &bull; E3 Energy &amp; Use of Energy</p>
+
+    </main>
+  </div>
+</body>
+</html>
