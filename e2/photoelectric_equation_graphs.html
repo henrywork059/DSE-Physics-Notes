@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light dark" />
-  <title>E2 — Photoelectric Effect | DSE Physics Notes</title>
+  <title>E2 — Photoelectric Effect: Equation & Graphs | DSE Physics Notes</title>
 
   <!-- MathJax for professional equation rendering -->
   <script>
@@ -95,7 +95,7 @@
       padding: 0 20px 60px;
     }
 
-    /* --- Hero Header (Radial Gradient) --- */
+    /* --- Hero Header --- */
     .hero-header {
       background: var(--bg-header);
       border-bottom: 1px solid var(--border);
@@ -145,6 +145,7 @@
       gap: 10px;
       margin: 16px 0 0;
       padding: 0;
+      justify-content: center;
     }
 
     .nav-btn {
@@ -160,6 +161,7 @@
       font-size: 0.95rem;
       box-shadow: var(--shadow-sm);
       transition: transform 0.15s ease, box-shadow 0.15s ease;
+      cursor: pointer;
     }
 
     .nav-btn:hover {
@@ -396,14 +398,64 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
     /* Panel Visibility Logic */
-    #term-pe:checked ~ #panel-term-pe,
-    #term-photon:checked ~ #panel-term-photon,
-    #term-photoelectron:checked ~ #panel-term-photoelectron,
+    #term-eq:checked ~ #panel-term-eq,
+    #term-kmax:checked ~ #panel-term-kmax,
+    #term-vs:checked ~ #panel-term-vs,
+    #term-sat:checked ~ #panel-term-sat,
     #term-work:checked ~ #panel-term-work,
     #term-f0:checked ~ #panel-term-f0,
-    #term-vs:checked ~ #panel-term-vs,
-    #term-current:checked ~ #panel-term-current,
-    #term-int:checked ~ #panel-term-int { display: block; }
+    #term-h:checked ~ #panel-term-h,
+    #term-ret:checked ~ #panel-term-ret { display: block; }
+    
+    /* --- SVGs & Visualizations --- */
+    .viz {
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-card);
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .viz-title {
+      margin: 0 0 10px;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .viz svg { width: 100%; height: auto; display: block; }
+    
+    /* Interactive Graph Controls */
+    .viz-controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    
+    .viz-btn {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    
+    .viz-btn:hover { background: var(--bg-card); color: var(--text-main); }
+    
+    .viz-btn[aria-pressed="true"] {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
 
     /* Responsive */
     @media (max-width: 768px) {
@@ -420,15 +472,15 @@
     <div class="nav-breadcrumb">
       <!-- Icon -->
       <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--primary)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-      Index / E2
+      Index / E2 / Equation
     </div>
 
-    <h1>E2 — Photoelectric Effect</h1>
+    <h1>E2 — Photoelectric Effect:<br>Equation &amp; Graphs</h1>
     <p class="meta-subtitle">
-      HKDSE Physics &mdash; Elective E2: Atomic World &middot; Evidence from the photoelectric effect and the photon model.
+      HKDSE Physics &mdash; Elective E2: Atomic World &middot; Einstein&rsquo;s equation, stopping potential, and how to read / sketch the exam graphs.
     </p>
 
-    <div class="section-nav" style="justify-content:center;">
+    <div class="section-nav">
       <a class="nav-btn" href="../index.html">Back to Index</a>
     </div>
   </header>
@@ -437,21 +489,20 @@
     <main>
 
       <p class="section-intro" style="text-align:center;">
-        Focus here: the <strong>experiment</strong>, the <strong>main observations</strong>, and how the <strong>photon model</strong> explains them.
-        (Einstein&rsquo;s photoelectric equation, stopping potential and graphs are in the next note.)
+        Focus here: how to measure \( K_{\max} \) using stopping potential, use Einstein&rsquo;s photoelectric equation, and interpret straight-line graphs (especially \( V_s \) against \( f \)).
       </p>
 
       <div class="badge-strip">
-        <span class="badge exam">Exam focus: \( f_0 \), \( \phi \), \( V_s \)</span>
-        <span class="badge skills">Skills: explain observations using photon model; relate Intensity to photon rate</span>
+        <span class="badge exam">Exam focus: \( eV_s = hf - \phi \), \( f_0 \), \( V_s \)&ndash;\( f \) graph</span>
+        <span class="badge skills">Skills: measure \( V_s \), find slope/intercepts, eV &harr; J, use \( c = f\lambda \)</span>
       </div>
 
       <!-- Jump Bar -->
       <div class="section-nav" aria-label="Jump to section" style="margin-top:20px; justify-content:center;">
-        <a href="#sec01" class="nav-btn"><span>1</span> Arrangement</a>
-        <a href="#sec02" class="nav-btn"><span>2</span> Observations</a>
-        <a href="#sec03" class="nav-btn"><span>3</span> Photon model</a>
-        <a href="#sec04" class="nav-btn"><span>4</span> Intensity</a>
+        <a href="#sec01" class="nav-btn"><span>1</span> \( I \)&ndash;\( V \) curve &amp; \( V_s \)</a>
+        <a href="#sec02" class="nav-btn"><span>2</span> Einstein eq.</a>
+        <a href="#sec03" class="nav-btn"><span>3</span> Straight-line graphs</a>
+        <a href="#sec04" class="nav-btn"><span>4</span> Examples</a>
         <a href="#sec05" class="nav-btn"><span>5</span> Terms</a>
         <a href="#sec06" class="nav-btn"><span>6</span> Traps</a>
       </div>
@@ -459,83 +510,293 @@
       <!-- Section 1 -->
       <section>
         <div class="card">
-          <h2 id="sec01">1. Basic arrangement</h2>
+          <h2 id="sec01">1. \( I \)&ndash;\( V \) curve and stopping potential</h2>
+
+          <h3>What is stopping potential?</h3>
           <ul class="key-list">
-            <li>Monochromatic light of frequency \( f \) shines on a metal cathode in vacuum.</li>
-            <li>The cathode and anode form a photocell connected to a microammeter and a variable d.c. power supply to measure the photocurrent for different applied potentials.</li>
+            <li>Apply a <strong>retarding</strong> potential (anode negative) to oppose photoelectrons.</li>
+            <li>The stopping potential \( V_s \) is the <strong>magnitude</strong> of the retarding potential that just stops the most energetic photoelectrons so the photocurrent becomes zero.</li>
           </ul>
-          
+
           <div class="callout note">
             <div class="co-icon">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
             <div class="co-body">
-              <span class="co-title">HKDSE Reminder</span>
+              <span class="co-title">HKDSE Lab Method</span>
               <div class="co-content">
-                The use of a gold-leaf electroscope in the photoelectric effect experiment is <strong>not required</strong>.
-                Applications of photocells are also <strong>not required</strong> (but using a photocell to study the effect is implied).
+                How to measure in the lab: adjust the output voltage until the ammeter reading just drops to zero. The voltmeter reading gives the stopping potential \( V_s \).
               </div>
             </div>
+          </div>
+
+          <h3>Link to maximum kinetic energy</h3>
+          <div style="font-size:1.2rem; text-align:center; padding:10px; background:var(--bg-body); border-radius:12px; margin:14px 0;">
+            $$ K_{\max} = eV_s $$
+          </div>
+
+          <div class="viz" aria-label="I-V curve">
+            <p class="viz-title">Typical photocurrent (\( I \)) vs applied p.d. (\( V \))</p>
+            <svg viewBox="0 0 700 250" role="img" aria-label="Photocurrent-voltage graph with stopping potential">
+              <defs>
+                <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="#3b82f6" stop-opacity="0.95" />
+                  <stop offset="1" stop-color="#2563eb" stop-opacity="0.95" />
+                </linearGradient>
+
+                <marker id="arrowIV" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+                  <path d="M0,0 L6,3 L0,6 Z" fill="currentColor" style="color:var(--text-main)" />
+                </marker>
+              </defs>
+
+              <!-- frame -->
+              <rect x="10" y="10" width="680" height="230" rx="14" ry="14" fill="var(--bg-card)" stroke="var(--border)" />
+
+              <!-- axes -->
+              <line x1="90" y1="200" x2="650" y2="200" stroke="currentColor" stroke-width="2" marker-end="url(#arrowIV)" style="color:var(--text-main)" />
+              <line x1="390" y1="200" x2="390" y2="40" stroke="currentColor" stroke-width="2" marker-end="url(#arrowIV)" style="color:var(--text-main)" />
+
+              <!-- guide lines (aligned with key ticks) -->
+              <line x1="260" y1="200" x2="260" y2="40" stroke="var(--border)" stroke-width="1" stroke-dasharray="6 6" />
+
+              <!-- labels -->
+              <text x="655" y="205" font-size="14" fill="currentColor" style="font-family:serif; font-style:italic; color:var(--text-main)">V</text>
+              <text x="368" y="42" font-size="14" fill="currentColor" style="font-family:serif; font-style:italic; color:var(--text-main)">I</text>
+
+              <!-- V = 0 (axis crossing) -->
+              <text x="390" y="226" font-size="12" fill="var(--text-muted)" text-anchor="middle">0</text>
+
+              <!-- -Vs tick -->
+              <line x1="260" y1="200" x2="260" y2="206" stroke="currentColor" stroke-width="2" style="color:var(--text-main)" />
+              <text x="260" y="226" font-size="12" fill="var(--text-muted)" text-anchor="middle" style="font-family:serif; font-style:italic;">&minus;V<tspan baseline-shift="sub">s</tspan></text>
+
+              <!-- curve -->
+              <path d="M260,200 C285,150 320,115 390,105 C470,95 540,95 610,95" fill="none" stroke="url(#g1)" stroke-width="4" />
+
+              <!-- saturation label -->
+              <line x1="610" y1="95" x2="648" y2="95" stroke="var(--accent-amber)" stroke-width="3" />
+              <text x="510" y="82" font-size="12" fill="var(--text-muted)">saturation current</text>
+
+              <!-- stopping point -->
+              <circle cx="260" cy="200" r="5" fill="var(--accent-amber)" />
+              <line x1="230" y1="150" x2="258" y2="198" stroke="var(--accent-amber)" stroke-width="2" opacity="0.55" />
+              <text x="120" y="146" font-size="12" fill="var(--text-muted)">
+                <tspan x="120" dy="0">stopping point (I = 0)</tspan>
+                <tspan x="120" dy="16">at V = &minus;V<tspan baseline-shift="sub">s</tspan></tspan>
+              </text>
+            </svg>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-top:10px;">
+              Reading tip: \( V_s \) is the <strong>magnitude</strong> of the x-value where the current first becomes zero on the retarding side.
+            </p>
           </div>
         </div>
 
         <!-- Section 2 -->
         <div class="card">
-          <h2 id="sec02">2. Main observations</h2>
+          <h2 id="sec02">2. Einstein&rsquo;s photoelectric equation</h2>
+
+          <h3>Main equation</h3>
+          <div style="font-size:1.2rem; text-align:center; padding:10px; background:var(--bg-body); border-radius:12px; margin:14px 0;">
+            $$ K_{\max} = hf - \phi $$
+            $$ eV_s = hf - \phi $$
+          </div>
+
           <ul class="key-list">
-            <li><strong>Threshold frequency</strong> \( f_0 \): for \( f < f_0 \), no photoelectrons are emitted, regardless of light intensity.</li>
-            <li>For \( f > f_0 \), emission of photoelectrons is <strong>almost instantaneous</strong>, even for very weak light.</li>
-            <li>At fixed \( f > f_0 \), increasing light intensity increases the <strong>photocurrent</strong> (number of electrons emitted per second).</li>
-            <li>For a given metal, the <strong>maximum kinetic energy</strong> (or stopping potential \( V_s \)) depends on \( f \), not on light intensity.</li>
+            <li>\( hf \) is the energy of one photon.</li>
+            <li>\( \phi \) (work function) is the minimum energy needed for an electron to escape from the metal surface.</li>
+            <li>Any remaining energy becomes the maximum kinetic energy of the emitted photoelectrons.</li>
           </ul>
 
-          <h3>Comparison: wave model vs photon model</h3>
-          <div class="table-container">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th width="30%">Experimental observation</th>
-                  <th width="35%">Prediction by classical wave model</th>
-                  <th width="35%">Explanation by photon model (Einstein)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>No photoelectrons are emitted when \( f < f_0 \), no matter how intense the light is.</td>
-                  <td>Electrons should eventually gain enough energy to escape even at low frequency if the light is intense enough or shines for a long time.</td>
-                  <td>Each photon has energy \( hf \). If \( hf < \phi \), no electron can escape. Increasing intensity increases the number of photons, not the energy of each photon.</td>
-                </tr>
-                <tr>
-                  <td>For \( f > f_0 \), emission is almost instantaneous, even for very weak light.</td>
-                  <td>At very low intensity, electrons should need time to accumulate enough energy before leaving the metal.</td>
-                  <td>A single photon can transfer its energy to one electron in one interaction, so emission occurs without time lag if \( hf \) is large enough.</td>
-                </tr>
-                <tr>
-                  <td>For a given metal, the maximum kinetic energy (or \( V_s \)) depends on \( f \), not on intensity.</td>
-                  <td>Higher intensity should give more energy to each electron &rarr; larger maximum kinetic energy is expected.</td>
-                  <td>At fixed \( f \), photon energy \( hf \) is fixed. Intensity affects how many photons arrive each second, not the energy per photon.</td>
-                </tr>
-                <tr>
-                  <td>At fixed \( f > f_0 \), photocurrent increases with light intensity.</td>
-                  <td>Higher intensity can drive more electrons away per second.</td>
-                  <td>Higher intensity means more photons per second striking the surface &rarr; more electrons emitted per second, so photocurrent increases.</td>
-                </tr>
-              </tbody>
-            </table>
+          <h3>Threshold condition</h3>
+          <p>At threshold, photoelectrons just escape with \( K_{\max} = 0 \):</p>
+          <div style="text-align:center;">$$ \phi = hf_0 $$</div>
+          <p style="font-size:0.9rem; color:var(--text-muted);">
+            So \( f_0 \) depends on the metal only. Larger \( \phi \) &rarr; larger \( f_0 \).
+          </p>
+
+          <h3>Using wavelength</h3>
+          <p>Since \( c = f\lambda \):</p>
+          <div style="text-align:center;">
+            $$ K_{\max} = hf - \phi = \frac{hc}{\lambda} - \phi $$
+          </div>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">HKDSE Note</span>
+              <div class="co-content">
+                You are not required to learn the detailed design/history of Millikan&rsquo;s photoelectric experiment. However, using \( eV_s = hf - \phi \) to find \( h \), \( f_0 \), or \( \phi \) from graphs/data is examinable.
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- Section 3 -->
         <div class="card">
-          <h2 id="sec03">3. Photon model of light</h2>
+          <h2 id="sec03">3. Straight-line graphs you must recognise</h2>
+
+          <h3>(A) Graph of \( V_s \) against \( f \)</h3>
+          <div style="font-size:1.15rem; text-align:center; margin-bottom:12px;">
+            $$ V_s = \left(\frac{h}{e}\right)f - \frac{\phi}{e} $$
+          </div>
+
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th width="30%">Feature</th>
+                  <th width="70%">Meaning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Slope</td>
+                  <td>\( h/e \) (constant, same for all metals)</td>
+                </tr>
+                <tr>
+                  <td>x-intercept</td>
+                  <td>Threshold frequency \( f_0 \)</td>
+                </tr>
+                <tr>
+                  <td>y-intercept</td>
+                  <td>\( -\phi/e \) (negative value)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="viz" aria-label="Vs-f straight line">
+            <p class="viz-title">\( V_s \)&ndash;\( f \) line: same slope, different intercepts</p>
+            
+            <div class="viz-controls">
+              <button class="viz-btn" id="btnA" type="button" aria-pressed="true">Metal A (larger \( \phi \))</button>
+              <button class="viz-btn" id="btnB" type="button" aria-pressed="false">Metal B (smaller \( \phi \))</button>
+            </div>
+            
+            <svg id="vsf" viewBox="0 0 740 260" role="img" aria-label="Stopping potential versus frequency straight line graph">
+              <defs>
+                <linearGradient id="g2" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="#3b82f6" stop-opacity="0.95" />
+                  <stop offset="1" stop-color="#2563eb" stop-opacity="0.95" />
+                </linearGradient>
+                <linearGradient id="g3" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="#64748b" stop-opacity="0.95" />
+                  <stop offset="1" stop-color="#94a3b8" stop-opacity="0.95" />
+                </linearGradient>
+
+                <marker id="arrowVF" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+                  <path d="M0,0 L6,3 L0,6 Z" fill="currentColor" style="color:var(--text-main)" />
+                </marker>
+              </defs>
+
+              <!-- frame -->
+              <rect x="10" y="10" width="720" height="240" rx="14" ry="14" fill="var(--bg-card)" stroke="var(--border)" />
+
+              <!-- axes -->
+              <line x1="90" y1="210" x2="700" y2="210" stroke="currentColor" stroke-width="2" marker-end="url(#arrowVF)" style="color:var(--text-main)" />
+              <line x1="90" y1="210" x2="90" y2="40" stroke="currentColor" stroke-width="2" marker-end="url(#arrowVF)" style="color:var(--text-main)" />
+
+              <!-- labels -->
+              <text x="705" y="215" font-size="14" fill="currentColor" style="font-family:serif; font-style:italic; color:var(--text-main)">f</text>
+              <text x="70" y="42" font-size="14" fill="currentColor" style="font-family:serif; font-style:italic; color:var(--text-main)">V<tspan baseline-shift="sub">s</tspan></text>
+              
+              <!-- y-axis zero tick -->
+              <line x1="90" y1="210" x2="84" y2="210" stroke="currentColor" stroke-width="2" style="color:var(--text-main)" />
+              <text x="78" y="214" font-size="12" fill="var(--text-muted)" text-anchor="end">0</text>
+
+              <!-- line A and B (same slope, different x-intercepts) -->
+              <path id="lineA" d="M260,210 L650,70" fill="none" stroke="url(#g2)" stroke-width="4" />
+              <path id="extA" d="M260,210 L148.6,250" fill="none" stroke="url(#g2)" stroke-width="3" stroke-dasharray="7 7" opacity="1" />
+
+              <path id="lineB" d="M210,210 L600,70" fill="none" stroke="url(#g3)" stroke-width="4" opacity="0.25" />
+              <path id="extB" d="M210,210 L98.6,250" fill="none" stroke="url(#g3)" stroke-width="3" stroke-dasharray="7 7" opacity="0.25" />
+
+              <!-- intercept markers -->
+              <circle id="f0A" cx="260" cy="210" r="5" fill="var(--accent-amber)" />
+              <circle id="f0B" cx="210" cy="210" r="5" fill="var(--accent-amber)" opacity="0.35" />
+
+              <text id="labA" x="260" y="234" font-size="12" fill="var(--text-muted)" text-anchor="middle" style="font-family:serif; font-style:italic;">f<tspan baseline-shift="sub">0</tspan> (A)</text>
+              <text id="labB" x="210" y="234" font-size="12" fill="var(--text-muted)" text-anchor="middle" opacity="0.35" style="font-family:serif; font-style:italic;">f<tspan baseline-shift="sub">0</tspan> (B)</text>
+
+              <!-- slope triangle (decorative) -->
+              <path d="M520,120 L580,120 L580,98" fill="none" stroke="var(--accent-amber)" stroke-width="3" />
+              <text x="585" y="96" font-size="12" fill="var(--text-muted)">same slope</text>
+              <text x="585" y="112" font-size="12" fill="var(--text-muted)" style="font-family:serif; font-style:italic;">h/e</text>
+
+              <!-- note -->
+              <text x="100" y="58" font-size="12" fill="var(--text-muted)">Graph is drawn only for f ≥ f<tspan baseline-shift="sub">0</tspan>.</text>
+            </svg>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-top:10px;">
+              Tip: larger \( \phi \) &rarr; larger \( f_0 \) (shifts right). Slope is always \( h/e \).
+            </p>
+          </div>
+
+          <div class="callout note">
+             <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Slope Calculation</span>
+              <div class="co-content">
+                From the slope: if the slope is measured in \( \text{V Hz}^{-1} \), then
+                $$ h = \text{slope} \times e $$
+                This is a convenient way to estimate the Planck constant \( h \).
+              </div>
+            </div>
+          </div>
+
+          <h3>(B) Graph of \( K_{\max} \) against \( 1/\lambda \)</h3>
+          <p style="font-size:0.9rem; color:var(--text-muted);">Useful when the question gives wavelength instead of frequency.</p>
+          <div style="text-align:center;">
+             $$ K_{\max} = hc \left(\frac{1}{\lambda}\right) - \phi $$
+          </div>
           <ul class="key-list">
-            <li>Light consists of particles called <strong>photons</strong>.</li>
-            <li>Energy of each photon: $$ E = hf $$</li>
-            <li>At a given \( f \), intensity is proportional to the number of photons incident per second per unit area.
-              Higher intensity &rarr; more photons per second &rarr; larger photocurrent.</li>
-            <li>For a monochromatic beam of power \( P \) and frequency \( f \), number of photons per second is:
-              $$ \frac{P}{hf} $$
-            </li>
+            <li>If you plot \( K_{\max} \) (in J) against \( 1/\lambda \), the slope is \( hc \).</li>
+            <li>The x-intercept gives \( 1/\lambda_0 \). Then \( f_0 = c/\lambda_0 \).</li>
+          </ul>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="card">
+          <h2 id="sec04">4. Worked examples (marking-scheme style)</h2>
+
+          <h3>Example 1: Use a \( V_s \)&ndash;\( f \) graph to estimate \( h \) and \( \phi \)</h3>
+          <ul class="key-list">
+            <li>Two points on the best-fit line: \( (f = 5 \times 10^{14}\,\text{Hz}, V_s = 0\,\text{V}) \) and \( (f = 8 \times 10^{14}\,\text{Hz}, V_s = 1.2\,\text{V}) \).</li>
+          </ul>
+
+          <div style="background:var(--bg-body); padding:16px; border-radius:12px;">
+            $$ \text{Slope} = \frac{1.2 - 0}{(8 - 5) \times 10^{14}} = 4.0 \times 10^{-15}\,\text{V Hz}^{-1} $$
+            $$ h = \text{Slope} \times e = (4.0 \times 10^{-15})(1.60 \times 10^{-19}) = 6.4 \times 10^{-34}\,\text{J s} $$
+            $$ f_0 = 5 \times 10^{14}\,\text{Hz} $$
+            $$ \phi = hf_0 = (6.4 \times 10^{-34})(5 \times 10^{14}) = 3.2 \times 10^{-19}\,\text{J} = 2.0\,\text{eV} $$
+          </div>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Caution</span>
+              <div class="co-content">
+                <ul class="key-list">
+                  <li>The straight line does <strong>not</strong> pass through the origin. Do not use (0, 0) to find the slope.</li>
+                  <li>Pay attention to the scale factor (e.g. \( f / 10^{14}\,\text{Hz} \)) when reading the graph.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <h3>Example 2: Find stopping potential from frequency and work function</h3>
+          <p style="font-size:0.9rem; color:var(--text-muted);">
+            Given \( f \) and \( \phi \), first find \( K_{\max} \), then use \( K_{\max} = eV_s \).
+          </p>
+          <div style="text-align:center;">$$ eV_s = hf - \phi $$</div>
+          <ul class="key-list">
+            <li>If \( hf \le \phi \), then no photoelectrons are emitted &rarr; no stopping potential.</li>
+            <li>If \( hf > \phi \), then \( V_s = \frac{hf - \phi}{e} \).</li>
           </ul>
 
           <div class="callout note">
@@ -543,34 +804,11 @@
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
             <div class="co-body">
-              <span class="co-title">HKDSE Reminder</span>
+              <span class="co-title">Constants</span>
               <div class="co-content">
-                You must be able to relate intensity (fixed \( f \)) to the number of photons.
-                Millikan&rsquo;s photoelectric experiment is <strong>not required</strong>.
+                Usually provided: \( c = 3.00 \times 10^8\,\text{m s}^{-1} \), \( e = 1.60 \times 10^{-19}\,\text{C} \), \( h = 6.63 \times 10^{-34}\,\text{J s} \).
               </div>
             </div>
-          </div>
-        </div>
-
-        <!-- Section 4 -->
-        <div class="card">
-          <h2 id="sec04">4. Intensity of a torch (photon view)</h2>
-          
-          <div class="callout note">
-             <div class="co-icon">
-               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-             </div>
-             <div class="co-body">
-                <span class="co-title">Definition & Link</span>
-                <div class="co-content">
-                  <div><strong>Definition:</strong> $$ \text{Intensity} = \frac{P}{A} $$</div>
-                  <div style="margin-top:10px;"><strong>Photon link:</strong> energy delivered in time \( t \) is \( E = Nhf \), so:</div>
-                  $$ P = \frac{E}{t} = \frac{Nhf}{t} \quad \rightarrow \quad \text{Intensity} = \frac{P}{A} = \frac{Nhf}{At} $$
-                  <div style="margin-top:6px; color:var(--text-muted);">
-                    At fixed \( f \), higher intensity means larger \( \frac{N}{t} \) (more photons per second per unit area), not larger energy per photon.
-                  </div>
-                </div>
-             </div>
           </div>
         </div>
 
@@ -579,56 +817,56 @@
           <h2 id="sec05">5. Key terms</h2>
 
           <div class="term-tabs">
-            <input class="term-radio" type="radio" name="term" id="term-pe" checked>
-            <input class="term-radio" type="radio" name="term" id="term-photon">
-            <input class="term-radio" type="radio" name="term" id="term-photoelectron">
+            <input class="term-radio" type="radio" name="term" id="term-eq" checked>
+            <input class="term-radio" type="radio" name="term" id="term-kmax">
+            <input class="term-radio" type="radio" name="term" id="term-vs">
+            <input class="term-radio" type="radio" name="term" id="term-sat">
             <input class="term-radio" type="radio" name="term" id="term-work">
             <input class="term-radio" type="radio" name="term" id="term-f0">
-            <input class="term-radio" type="radio" name="term" id="term-vs">
-            <input class="term-radio" type="radio" name="term" id="term-current">
-            <input class="term-radio" type="radio" name="term" id="term-int">
+            <input class="term-radio" type="radio" name="term" id="term-h">
+            <input class="term-radio" type="radio" name="term" id="term-ret">
 
             <div class="term-tab-bar" aria-label="Key terms">
-              <label class="term-tab-btn" for="term-pe">Photoelectric effect</label>
-              <label class="term-tab-btn" for="term-photon">Photon</label>
-              <label class="term-tab-btn" for="term-photoelectron">Photoelectron</label>
+              <label class="term-tab-btn" for="term-eq">Einstein eq.</label>
+              <label class="term-tab-btn" for="term-kmax">\( K_{\max} \)</label>
+              <label class="term-tab-btn" for="term-vs">Stopping \( V_s \)</label>
+              <label class="term-tab-btn" for="term-sat">Saturation current</label>
               <label class="term-tab-btn" for="term-work">Work function \( \phi \)</label>
               <label class="term-tab-btn" for="term-f0">Threshold \( f_0 \)</label>
-              <label class="term-tab-btn" for="term-vs">Stopping \( V_s \)</label>
-              <label class="term-tab-btn" for="term-current">Photocurrent</label>
-              <label class="term-tab-btn" for="term-int">Intensity</label>
+              <label class="term-tab-btn" for="term-h">Planck constant \( h \)</label>
+              <label class="term-tab-btn" for="term-ret">Retarding potential</label>
             </div>
 
-            <div class="term-panel" id="panel-term-pe">
-              <p><strong>Photoelectric effect:</strong> emission of electrons from a metal surface when electromagnetic radiation shines on it.</p>
+            <div class="term-panel" id="panel-term-eq">
+              <p><strong>Einstein&rsquo;s photoelectric equation:</strong> \( K_{\max} = hf - \phi \). Using stopping potential, \( eV_s = hf - \phi \).</p>
             </div>
-            <div class="term-panel" id="panel-term-photon">
-              <p><strong>Photon:</strong> a particle of light. Energy of each photon is \( E = hf \).</p>
-            </div>
-            <div class="term-panel" id="panel-term-photoelectron">
-              <p><strong>Photoelectron:</strong> an electron emitted from the metal surface due to the photoelectric effect.</p>
-            </div>
-            <div class="term-panel" id="panel-term-work">
-              <p><strong>Work function \( \phi \):</strong> minimum energy needed for an electron to escape from a metal surface.</p>
-            </div>
-            <div class="term-panel" id="panel-term-f0">
-              <p><strong>Threshold frequency \( f_0 \):</strong> the minimum frequency needed to produce photoelectrons.</p>
+            <div class="term-panel" id="panel-term-kmax">
+              <p><strong>\( K_{\max} \):</strong> maximum kinetic energy among all emitted photoelectrons. It relates to stopping potential by \( K_{\max} = eV_s \).</p>
             </div>
             <div class="term-panel" id="panel-term-vs">
-              <p><strong>Stopping potential \( V_s \):</strong> the minimum <em>retarding</em> potential magnitude that just stops the most energetic photoelectrons so the photocurrent falls to zero.</p>
+              <p><strong>Stopping potential \( V_s \):</strong> the smallest <em>retarding</em> potential magnitude that just stops the most energetic photoelectrons so the photocurrent falls to zero.</p>
             </div>
-            <div class="term-panel" id="panel-term-current">
-              <p><strong>Photocurrent:</strong> current in the external circuit due to the flow of photoelectrons.</p>
+            <div class="term-panel" id="panel-term-sat">
+              <p><strong>Saturation current:</strong> when the anode is sufficiently positive, (almost) all emitted photoelectrons are collected, so the photocurrent reaches a maximum (constant) value.</p>
             </div>
-            <div class="term-panel" id="panel-term-int">
-              <p><strong>Intensity:</strong> power per unit area, \( \text{Intensity} = P/A \). At fixed \( f \), higher intensity means more photons per second per unit area, not more energy per photon.</p>
+            <div class="term-panel" id="panel-term-work">
+              <p><strong>Work function \( \phi \):</strong> minimum energy needed for an electron to escape from a metal surface. It is a property of the material.</p>
+            </div>
+            <div class="term-panel" id="panel-term-f0">
+              <p><strong>Threshold frequency \( f_0 \):</strong> minimum frequency required to produce photoelectrons. At threshold, \( \phi = hf_0 \).</p>
+            </div>
+            <div class="term-panel" id="panel-term-h">
+              <p><strong>Planck constant \( h \):</strong> relates photon energy and frequency: \( E = hf \). From a \( V_s \)&ndash;\( f \) graph, slope = \( h/e \).</p>
+            </div>
+            <div class="term-panel" id="panel-term-ret">
+              <p><strong>Retarding potential:</strong> an applied p.d. that opposes the motion of photoelectrons (anode negative), reducing the photocurrent.</p>
             </div>
           </div>
         </div>
 
         <!-- Section 6 -->
         <div class="card">
-          <h2 id="sec06">6. Common traps</h2>
+          <h2 id="sec06">6. Common traps (high-frequency DSE mistakes)</h2>
           
           <div class="callout trap">
             <div class="co-icon">
@@ -638,12 +876,12 @@
               <span class="co-title">Warning / Trap</span>
               <div class="co-content">
                 <ul class="key-list">
-                  <li><strong>Trap:</strong> “Higher intensity means each photon has higher energy.”
-                    <br><strong>Fix:</strong> photon energy depends on \( f \) only: \( E = hf \). Intensity changes the number of photons per second.</li>
-                  <li><strong>Trap:</strong> “At low intensity, there must be a time delay.”
-                    <br><strong>Fix:</strong> emission is (almost) instantaneous when \( f > f_0 \).</li>
-                  <li><strong>Trap:</strong> “If \( f < f_0 \), increasing intensity will eventually cause emission.”
-                    <br><strong>Fix:</strong> no emission occurs because \( hf \) is too small.</li>
+                  <li><strong>Mixing up \( K_{\max} \), \( V_s \) and \( \phi \):</strong> correct links are \( K_{\max} = eV_s \) and \( K_{\max} = hf - \phi \).</li>
+                  <li><strong>Sign mistake with voltage:</strong> stopping happens for a <em>retarding</em> p.d.; in many questions you may see stopping at \( V = -V_s \).</li>
+                  <li><strong>Assuming the \( V_s \)&ndash;\( f \) line passes the origin:</strong> it does not. The y-intercept is negative (about \( -\phi/e \)).</li>
+                  <li><strong>Using the wrong slope:</strong> for \( V_s \) against \( f \), slope = \( h/e \) (not \( h \), not \( \phi/e \)).</li>
+                  <li><strong>Unit mistakes:</strong> forgetting factors like \( 10^{14} \) on the frequency axis, and mixing eV with J without conversion.</li>
+                  <li><strong>Intensity confusion:</strong> changing intensity mainly changes the photocurrent (and saturation current), not \( V_s \) (at fixed \( f \)).</li>
                 </ul>
               </div>
             </div>
@@ -652,14 +890,50 @@
 
         <!-- Bottom Nav -->
         <div class="section-nav" style="margin-top:18px; justify-content: space-between;">
-          <a class="nav-btn" href="../index.html">&larr; Back to Index</a>
+           <a class="nav-btn" href="../index.html">&larr; Back to Index</a>
         </div>
       </section>
 
       <p style="text-align:center; font-size:0.85rem; color:var(--text-muted); margin-top:40px;">
-        End of note &bull; E2 &mdash; Photoelectric Effect: Evidence &amp; Photon Model.
+        End of note &bull; E2 &mdash; Photoelectric Effect: Equation &amp; Graphs.
       </p>
     </main>
   </div>
+
+  <script>
+    (function(){
+      const btnA = document.getElementById('btnA');
+      const btnB = document.getElementById('btnB');
+      const lineA = document.getElementById('lineA');
+      const lineB = document.getElementById('lineB');
+      const f0A = document.getElementById('f0A');
+      const f0B = document.getElementById('f0B');
+      const extA = document.getElementById('extA');
+      const extB = document.getElementById('extB');
+      const labA = document.getElementById('labA');
+      const labB = document.getElementById('labB');
+
+      function show(which){
+        const isA = which === 'A';
+        btnA.setAttribute('aria-pressed', String(isA));
+        btnB.setAttribute('aria-pressed', String(!isA));
+
+        lineA.style.opacity = isA ? '1' : '0.25';
+        f0A.style.opacity = isA ? '1' : '0.35';
+        labA.style.opacity = isA ? '1' : '0.35';
+        if(extA) extA.style.opacity = isA ? '1' : '0.25';
+
+        lineB.style.opacity = isA ? '0.25' : '1';
+        f0B.style.opacity = isA ? '0.35' : '1';
+        labB.style.opacity = isA ? '0.35' : '1';
+        if(extB) extB.style.opacity = isA ? '0.25' : '1';
+      }
+
+      if(btnA && btnB){
+        btnA.addEventListener('click', () => show('A'));
+        btnB.addEventListener('click', () => show('B'));
+      }
+    })();
+  </script>
 </body>
 </html>
