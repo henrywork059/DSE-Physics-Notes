@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E3 — Solar Cell</title>
+  <!--
+    This page explains the basic working principle of photovoltaic solar cells.
+    It touches on the structure of a p–n junction, generation of electron‑hole
+    pairs and the I–V characteristics of a cell.  These concepts are part of
+    the HKDSE Energy module, which requires students to describe how a
+    solar cell works【912087049771804†L5253-L5255】.
+  -->
+  <style>
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --primary: #3b82f6;
+      --primary-dim: rgba(59, 130, 246, 0.1);
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
+    }
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin: 16px 0;
+    }
+    .nav-buttons a {
+      background: var(--primary);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .nav-buttons a:hover {
+      background: #2563eb;
+    }
+    .jump-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .jump-bar a {
+      background: var(--primary-dim);
+      color: var(--primary);
+      padding: 6px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+    .jump-bar a:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    .card h2 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+    .callout {
+      margin: 16px 0;
+      padding: 12px;
+      border-left: 4px solid;
+      border-radius: 6px;
+    }
+    .callout.note { background: #eff6ff; border-color: #3b82f6; }
+    .callout.trap { background: #fef2f2; border-color: #ef4444; }
+    .callout.rem { background: #f0fdf4; border-color: #10b981; }
+    .key-terms {
+      background: #f9fafb;
+      border: 1px dashed var(--border);
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+    .key-terms ul {
+      list-style: disc inside;
+      margin-left: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1>Solar Cell</h1>
+      <p>How photovoltaic cells convert light into electricity</p>
+      <div class="nav-buttons">
+        <a href="../index.html">Back to Index</a>
+        <a href="renewable_energy.html">&lt; Prev</a>
+        <a href="nuclear_energy.html">Next &gt;</a>
+      </div>
+    </header>
+
+    <nav class="jump-bar">
+      <a href="#structure">Structure &amp; working principle</a>
+      <a href="#iv">I–V characteristics</a>
+      <a href="#efficiency">Efficiency &amp; applications</a>
+      <a href="#reminders">Reminders</a>
+    </nav>
+
+    <section id="structure" class="card">
+      <h2>Structure &amp; working principle</h2>
+      <p>
+        A photovoltaic (PV) solar cell is essentially a <strong>p–n junction
+        diode</strong>.  The junction is formed by placing p‑type (excess holes)
+        and n‑type (excess electrons) semiconductor materials in contact.
+      </p>
+      <p>
+        When sunlight is absorbed, photons with energy greater than the band
+        gap excite electrons from the valence band to the conduction band,
+        creating <em>electron–hole pairs</em>.  The built‑in electric field at the
+        p–n junction separates these charges: electrons are driven into the
+        n‑region and holes into the p‑region.  By connecting an external circuit,
+        electrons flow through the load and recombine with holes on the other
+        side, producing electrical power.  The HKDSE curriculum asks students
+        to describe how a solar cell works【912087049771804†L5252-L5255】.
+      </p>
+      <div class="callout note">
+        <strong>Note:</strong> The p–n junction acts like a diode in the dark.
+        Under illumination, it acts as a current source in parallel with a
+        diode.
+      </div>
+    </section>
+
+    <section id="iv" class="card">
+      <h2>I–V characteristics</h2>
+      <p>
+        The current–voltage (I–V) curve of a solar cell shows how current
+        varies with the voltage across the cell.  Key points include:
+      </p>
+      <ul>
+        <li><strong>Short‑circuit current \(I_{\text{SC}}\):</strong> the maximum
+          current when the cell is short‑circuited (V&nbsp;=&nbsp;0).</li>
+        <li><strong>Open‑circuit voltage \(V_{\text{OC}}\):</strong> the voltage
+          across the cell when no current flows (I&nbsp;=&nbsp;0).</li>
+        <li><strong>Maximum power point (MPP):</strong> the point on the I–V curve
+          where the product \(I \times V\) is maximum.  The fill factor (FF) is
+          defined as \(\text{FF} = \frac{I_{\text{MP}} V_{\text{MP}}}{I_{\text{SC}} V_{\text{OC}}}\), a
+          measure of how “square” the I–V curve is.</li>
+      </ul>
+      <p>
+        Practical cells include series and shunt resistances which reduce
+        FF.  The I–V curve shifts with illumination intensity and cell
+        temperature.
+      </p>
+    </section>
+
+    <section id="efficiency" class="card">
+      <h2>Efficiency &amp; applications</h2>
+      <p>
+        The <strong>energy conversion efficiency</strong> of a solar cell is the ratio of
+        electrical power output at the MPP to the incident light power.
+        Laboratory cells have achieved efficiencies over 25&nbsp;%; commercial
+        silicon modules typically range from 15&nbsp;% to 22&nbsp;%.  Factors
+        affecting efficiency include material quality, surface reflection,
+        recombination losses and series resistance.
+      </p>
+      <p>
+        Applications of solar cells range from small calculators and road signs
+        to large‑scale photovoltaic farms.  Integrating solar panels on
+        rooftops and facades contributes to a diversified and sustainable
+        energy mix.
+      </p>
+    </section>
+
+    <section id="reminders" class="card">
+      <h2>Reminders</h2>
+      <div class="callout rem">
+        <strong>Remember:</strong> Solar cells have no moving parts and require
+        little maintenance but produce DC.  In grid‑connected systems, an
+        inverter converts the DC to AC.  Matching the load to the maximum power
+        point maximises efficiency.
+      </div>
+      <div class="key-terms">
+        <strong>Key terms:</strong>
+        <ul>
+          <li>p–n junction</li>
+          <li>Electron–hole pair</li>
+          <li>I–V characteristic</li>
+          <li>Maximum power point</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

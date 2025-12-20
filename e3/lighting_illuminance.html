@@ -1,782 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="light dark" />
-  <title>E3 — Illuminance (lux) | DSE Physics Notes</title>
-
-  <!-- MathJax for equation rendering -->
-  <script>
-    window.MathJax = {
-      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['$$','$$']] },
-      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
+  <title>E3 — Lighting: Illuminance</title>
+  <!-- Page defining illuminance and related laws. -->
   <style>
-    /* =============================
-       Design System: Modern DSE
-       (kept consistent with E2 pages)
-       ============================= */
     :root {
-      --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-
-      /* Palette: Slate & Blue */
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       --primary: #3b82f6;
-      --primary-dark: #2563eb;
-      --primary-dim: rgba(59, 130, 246, 0.08);
-
+      --primary-dim: rgba(59, 130, 246, 0.1);
       --bg-body: #f8fafc;
       --bg-card: #ffffff;
-      --bg-header: #ffffff;
-
-      --text-main: #1e293b;
+      --text-main: #0f172a;
       --text-muted: #64748b;
-
       --border: #e2e8f0;
-      --radius: 16px;
-
-      /* Shadows */
-      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.08);
-      --shadow-md: 0 4px 14px -4px rgba(15, 23, 42, 0.14), 0 2px 6px -2px rgba(15, 23, 42, 0.10);
-
-      /* Semantic Colors */
-      --accent-amber: #f59e0b;
-      --accent-amber-bg: #fffbeb;
-      --accent-amber-border: rgba(245, 158, 11, 0.35);
-
-      --accent-info: #3b82f6;
-      --accent-info-bg: rgba(59, 130, 246, 0.08);
-      --accent-info-border: rgba(59, 130, 246, 0.28);
-
-      --accent-green: #10b981;
-      --accent-green-bg: rgba(16, 185, 129, 0.10);
-      --accent-green-border: rgba(16, 185, 129, 0.20);
+      --radius: 12px;
     }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-body: #0f172a;
-        --bg-card: #1e293b;
-        --bg-header: #1e293b;
-
-        --text-main: #f1f5f9;
-        --text-muted: #94a3b8;
-
-        --border: #334155;
-
-        --primary: #60a5fa;
-        --primary-dark: #3b82f6;
-        --primary-dim: rgba(96, 165, 250, 0.10);
-
-        --accent-amber-bg: rgba(245, 158, 11, 0.10);
-        --accent-amber-border: rgba(245, 158, 11, 0.30);
-
-        --accent-info-bg: rgba(59, 130, 246, 0.10);
-        --accent-info-border: rgba(59, 130, 246, 0.30);
-
-        --accent-green-bg: rgba(16, 185, 129, 0.10);
-        --accent-green-border: rgba(16, 185, 129, 0.25);
-      }
-    }
-
-    /* --- Base --- */
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: var(--font-sans);
-      background: var(--bg-body);
-      color: var(--text-main);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    /* --- Layout --- */
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 20px 60px;
-    }
-
-    /* --- Hero Header --- */
-    .hero-header {
-      background: var(--bg-header);
-      border-bottom: 1px solid var(--border);
-      padding: 40px 20px 30px;
-      text-align: center;
-      margin-bottom: 22px;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .nav-breadcrumb {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.90rem;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      background: var(--bg-body);
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      background: linear-gradient(135deg, var(--primary), #8b5cf6);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .meta-subtitle {
-      font-size: 1.0rem;
-      color: var(--text-muted);
-      max-width: 760px;
-      margin: 0 auto 18px;
-    }
-
-    /* --- Navigation Buttons --- */
-    .section-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 16px 0 0;
-      padding: 0;
-    }
-
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      color: var(--primary);
-      font-weight: 700;
-      font-size: 0.95rem;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .nav-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .nav-btn span {
-      background: var(--primary);
-      color: white;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      margin-right: 4px;
-    }
-
-    /* --- Badges --- */
-    .badge-strip {
-      margin: 14px 0 0;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      border-radius: 8px;
-      border: 1px solid;
-      font-size: 0.90rem;
-      font-weight: 600;
-    }
-
-    .badge.exam {
-      background: var(--accent-info-bg);
-      color: var(--primary);
-      border-color: var(--accent-info-border);
-    }
-
-    .badge.skills {
-      background: var(--accent-green-bg);
-      color: var(--accent-green);
-      border-color: var(--accent-green-border);
-    }
-
-    /* --- Content Cards --- */
-    section { margin-top: 14px; }
-
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-      margin: 22px 0;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .card h2 {
-      margin: 0 0 18px;
-      font-size: 1.4rem;
-      font-weight: 700;
-      padding-left: 14px;
-      position: relative;
-      scroll-margin-top: 120px;
-      color: var(--text-main);
-    }
-
-    .card h2::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0.2em;
-      width: 6px;
-      height: 1.1em;
-      border-radius: 99px;
-      background: var(--primary);
-    }
-
-    .card h3 {
-      margin: 24px 0 12px;
-      font-size: 1.1rem;
-      font-weight: 650;
-      color: var(--text-main);
-    }
-
-    ul.key-list {
-      margin: 0;
-      padding-left: 20px;
-      color: var(--text-muted);
-    }
-
-    .key-list li { margin: 8px 0; }
-    .key-list li::marker { color: var(--primary); }
-    strong { color: var(--text-main); font-weight: 650; }
-
-    .section-intro {
-      margin: 0 auto;
-      max-width: 820px;
-      color: var(--text-muted);
-      font-size: 1.02rem;
-      padding: 14px 16px;
-      border-radius: 12px;
-      background: var(--primary-dim);
-      border: 1px solid var(--accent-info-border);
-      box-shadow: var(--shadow-sm);
-    }
-
-    /* --- Semantic Callouts --- */
-    .callout {
-      padding: 16px 20px;
-      border-radius: 12px;
-      margin: 18px 0;
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      font-size: 0.95rem;
-      border: 1px solid;
-    }
-
-    .co-icon {
-      flex-shrink: 0;
-      width: 24px;
-      height: 24px;
-      margin-top: 2px;
-    }
-    .co-icon svg { width: 100%; height: 100%; }
-
-    .co-title {
-      display: block;
-      font-weight: 800;
-      margin-bottom: 4px;
-      font-size: 0.80rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .co-content { color: var(--text-main); }
-
-    .callout.note {
-      background: var(--accent-info-bg);
-      border-color: var(--accent-info-border);
-    }
-    .callout.note .co-icon, .callout.note .co-title { color: var(--primary); }
-
-    .callout.trap {
-      background: var(--accent-amber-bg);
-      border-color: var(--accent-amber-border);
-    }
-    .callout.trap .co-icon, .callout.trap .co-title { color: var(--accent-amber); }
-
-    /* --- Mini Figures / Tables --- */
-    .figure {
-      margin: 16px 0;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: rgba(255,255,255,0.6);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .figure { background: rgba(15,23,42,0.35); }
-    }
-
-    .figure .fig-hd {
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
-      font-weight: 800;
-      color: var(--text-main);
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .figure .fig-bd { padding: 14px; }
-
-    .kv {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-    }
-
-    @media (max-width: 560px) {
-      .kv { grid-template-columns: 1fr; }
-    }
-
-    .kv .k {
-      color: var(--text-muted);
-      font-weight: 800;
-    }
-
-    .kv .v {
-      color: var(--text-main);
-      font-weight: 750;
-    }
-
-    .svg-wrap {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--bg-card);
-      padding: 12px;
-      overflow: hidden;
-    }
-
-    .svg-wrap svg {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .footer {
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-top: 22px;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .container { padding: 0 16px 60px; }
-      h1 { font-size: 1.8rem; }
-      .card { padding: 20px; }
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--bg-body); color: var(--text-main); line-height: 1.6; padding: 20px; }
+    .container { max-width: 850px; margin: 0 auto; }
+    .hero { text-align: center; margin-bottom: 20px; }
+    .hero h1 { font-size: 2rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 4px; }
+    .hero p { color: var(--text-muted); font-size: 1rem; }
+    .nav-buttons { display: flex; justify-content: space-between; margin: 16px 0; }
+    .nav-buttons a { background: var(--primary); color: #fff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: background 0.2s; }
+    .nav-buttons a:hover { background: #2563eb; }
+    .jump-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .jump-bar a { background: var(--primary-dim); color: var(--primary); padding: 6px 10px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; white-space: nowrap; }
+    .jump-bar a:hover { background: var(--primary); color: #fff; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
+    .card h2 { font-size: 1.3rem; margin-bottom: 8px; }
+    .callout { margin: 16px 0; padding: 12px; border-left: 4px solid; border-radius: 6px; }
+    .callout.note { background: #eff6ff; border-color: #3b82f6; }
+    .callout.trap { background: #fef2f2; border-color: #ef4444; }
+    .callout.rem { background: #f0fdf4; border-color: #10b981; }
+    .key-terms { background: #f9fafb; border: 1px dashed var(--border); padding: 12px; border-radius: 6px; margin-bottom: 20px; }
+    .key-terms ul { list-style: disc inside; margin-left: 16px; }
   </style>
 </head>
 <body>
-
-  <!-- Hero Header -->
-  <header class="hero-header">
-    <div class="nav-breadcrumb">
-      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--primary)">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-      </svg>
-      Index / E3
-    </div>
-
-    <h1>E3 — Illuminance (lux)</h1>
-    <p class="meta-subtitle">
-      HKDSE Physics — Elective E3: Lighting · Define illuminance, use lux, and apply inverse-square law and Lambert’s cosine law in calculations.
-    </p>
-
-    <!-- Navigation HTML template (required) -->
-    <div class="section-nav" style="justify-content:center;">
-      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
-      <a class="nav-btn" href="lighting_luminous_flux.html">&larr; Previous</a>
-      <a class="nav-btn" href="lighting_efficacy.html">Next &rarr;</a>
-    </div>
-  </header>
-
   <div class="container">
-    <main>
+    <header class="hero">
+      <h1>Lighting: Illuminance</h1>
+      <p>How light falls on a surface and the laws governing it</p>
+      <div class="nav-buttons">
+        <a href="../index.html">Back to Index</a>
+        <a href="lighting_luminous_flux.html">&lt; Prev</a>
+        <a href="lighting_efficacy.html">Next &gt;</a>
+      </div>
+    </header>
 
-      <p class="section-intro" style="text-align:center;">
-        Illuminance questions are mainly about <strong>how much light is received by a surface</strong>.
-        Start from the definition \(E=\dfrac{\Phi}{A}\), then choose the correct case:
-        <strong>parallel beam</strong> (area) or <strong>point source</strong> (distance \(r\)).
+    <nav class="jump-bar">
+      <a href="#definition">Definition</a>
+      <a href="#laws">Inverse square &amp; cosine laws</a>
+      <a href="#example">Worked example</a>
+      <a href="#reminders">Reminders</a>
+    </nav>
+
+    <section id="definition" class="card">
+      <h2>Definition</h2>
+      <p>
+        <strong>Illuminance</strong> \(E\) is the luminous flux falling on a unit area of
+        a surface【912087049771804†L5097-L5104】.  It measures how well a surface is
+        illuminated.  The SI unit of illuminance is the <em>lux</em> (lx), where
+        \(1\,\text{lx} = 1\,\text{lm}/\text{m}^2\).
       </p>
+      <p>
+        If a luminous flux \(\Phi\) uniformly illuminates an area \(A\), then
+        \[E = \frac{\Phi}{A}\, .\]
+        For example, a 200 lumen lamp evenly lighting a 2 m<sup>2</sup> desk produces
+        an illuminance of 100 lux.
+      </p>
+    </section>
 
-      <div class="badge-strip">
-        <span class="badge exam">Exam focus: \(E=\Phi/A\), \(1\,\text{lx}=1\,\text{lm m}^{-2}\), inverse-square law, Lambert’s cosine law</span>
-        <span class="badge skills">Skills: convert cm\(^2\) to m\(^2\), identify angle to the <em>normal</em>, choose correct distance \(r\)</span>
+    <section id="laws" class="card">
+      <h2>Inverse square and cosine laws</h2>
+      <p>
+        When a point source of luminous intensity \(I\) (in candela) is at a distance
+        \(r\) from a small surface, the illuminance is given by the
+        <strong>inverse square law</strong>:
+        \[E = \frac{I}{r^2}\, .\]
+        This law states that illuminance decreases in proportion to the square of the
+        distance from the source【912087049771804†L5097-L5104】.
+      </p>
+      <p>
+        If the surface is tilted relative to the incoming light, the effective area
+        increases by a factor \(1/\cos\theta\), where \(\theta\) is the angle between
+        the normal to the surface and the direction to the source.  Combining this
+        with the inverse square law yields <strong>Lambert’s cosine law</strong>:
+        \[E = \frac{I \cos\theta}{r^2}\, .\]
+      </p>
+      <div class="callout note">
+        <strong>Note:</strong> The cosine law accounts for the fact that a slanted
+        surface intercepts less flux per unit area.  When \(\theta = 0\) the surface
+        faces the source directly and the illuminance is maximum.
       </div>
+    </section>
 
-      <!-- Jump Bar -->
-      <div class="section-nav" aria-label="Jump to section" style="margin-top:20px; justify-content:center;">
-        <a href="#sec01" class="nav-btn"><span>1</span> Syllabus focus</a>
-        <a href="#sec02" class="nav-btn"><span>2</span> Definition & unit</a>
-        <a href="#sec03" class="nav-btn"><span>3</span> Parallel beam</a>
-        <a href="#sec04" class="nav-btn"><span>4</span> Cosine law</a>
-        <a href="#sec05" class="nav-btn"><span>5</span> Point source</a>
-        <a href="#sec06" class="nav-btn"><span>6</span> Worked example</a>
-        <a href="#sec07" class="nav-btn"><span>7</span> Reminders</a>
-        <a href="#sec08" class="nav-btn"><span>8</span> Key terms</a>
+    <section id="example" class="card">
+      <h2>Worked example</h2>
+      <p>
+        A reading lamp has a luminous intensity of 60 cd.  It is placed 0.8 m above a
+        horizontal desk.  Find the illuminance on the desk (a) directly under the
+        lamp and (b) at a point 0.6 m horizontally away from the point under the lamp.
+      </p>
+      <p><strong>Solution:</strong></p>
+      <ol>
+        <li>(a) At the point directly under the lamp, \(r = 0.8\) m and \(\theta = 0\).
+            Thus \(E = I/r^2 = 60/(0.8^2) \approx 93.8\) lx.</li>
+        <li>(b) At the off‑axis point, the line from the lamp to the point has length
+            \(r = \sqrt{0.8^2 + 0.6^2} \approx 1.0\) m.  The angle \(\theta\) between
+            the normal to the desk and the light ray is given by
+            \(\cos\theta = 0.8/1.0 = 0.8\).  Thus
+            \(E = (60 \times 0.8)/(1.0^2) = 48\) lx.</li>
+      </ol>
+      <p>
+        Notice how the illuminance drops off when the point is both farther from the
+        source and at an angle to it.  These calculations are typical of those
+        required in examination questions【912087049771804†L5097-L5104】.
+      </p>
+    </section>
+
+    <section id="reminders" class="card">
+      <h2>Reminders &amp; Key terms</h2>
+      <div class="callout rem">
+        <strong>Reminders:</strong>
+        <ul>
+          <li>Illuminance (lux) is flux per unit area【912087049771804†L5097-L5104】.</li>
+          <li>Use the inverse square law for point sources; include \(\cos\theta\) for
+              tilted surfaces.</li>
+          <li>Don’t confuse illuminance (lux) with luminous flux (lumens).</li>
+        </ul>
       </div>
-
-      <!-- Section 1 -->
-      <section>
-        <div class="card">
-          <h2 id="sec01">1. Syllabus focus (what you must be able to do)</h2>
-          <ul class="key-list">
-            <li>Define <strong>illuminance</strong> as luminous flux falling on unit area of a surface.</li>
-            <li>Use <strong>lux (lx)</strong> as the unit of illuminance.</li>
-            <li>Use <strong>inverse-square law</strong> and <strong>Lambert’s cosine law</strong> to solve illuminance problems.</li>
-          </ul>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Meaning</span>
-              <div class="co-content">
-                Illuminance describes how brightly a <strong>surface</strong> is illuminated (received light per unit area).
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 2 -->
-      <section>
-        <div class="card">
-          <h2 id="sec02">2. Definition & unit</h2>
-
-          <h3>Definition</h3>
-          <ul class="key-list">
-            <li>Illuminance \(E\) is the luminous flux \(\Phi\) falling on a surface per unit area \(A\):</li>
-            <li>\(\displaystyle E = \frac{\Phi}{A}\)</li>
-          </ul>
-
-          <h3>Unit</h3>
-          <ul class="key-list">
-            <li>Unit of illuminance: <strong>lux</strong> (lx)</li>
-            <li>\(\displaystyle 1\,\text{lx} = 1\,\text{lm m}^{-2}\)</li>
-          </ul>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.1 0-2 .9-2 2v8h4v-8c0-1.1-.9-2-2-2zm0-6a3 3 0 00-3 3v1h6V5a3 3 0 00-3-3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Measurement</span>
-              <div class="co-content">
-                Illuminance can be measured using a <strong>light meter</strong> (unit: lx).
-              </div>
-            </div>
-          </div>
-
-          <div class="figure">
-            <div class="fig-hd">
-              <span>Quick unit check</span>
-              <span style="color:var(--text-muted); font-weight:700;">remember: lm over area</span>
-            </div>
-            <div class="fig-bd">
-              <div class="kv">
-                <div class="k">Formula</div>
-                <div class="v">\(E=\Phi/A\)</div>
-              </div>
-              <div class="kv" style="margin-top:10px;">
-                <div class="k">So unit of \(E\)</div>
-                <div class="v">\(\text{lx} = \text{lm m}^{-2}\)</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 3 -->
-      <section>
-        <div class="card">
-          <h2 id="sec03">3. Parallel light beam (area method)</h2>
-
-          <h3>Light falls perpendicularly</h3>
-          <ul class="key-list">
-            <li>If a parallel beam with luminous flux \(\Phi\) illuminates area \(A_{\perp}\) (area normal to the beam), then</li>
-            <li>\(\displaystyle E_{\perp} = \frac{\Phi}{A_{\perp}}\)</li>
-          </ul>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Common trap</span>
-              <div class="co-content">
-                For a <strong>parallel</strong> light beam, illuminance does <strong>not</strong> depend on distance from the source (ignore inverse-square law).
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 4 -->
-      <section>
-        <div class="card">
-          <h2 id="sec04">4. Lambert’s cosine law (light at an angle)</h2>
-
-          <h3>Key idea</h3>
-          <ul class="key-list">
-            <li>When light strikes a surface at an angle \(\theta\) to the <strong>normal</strong>, it spreads over a larger area, so illuminance decreases.</li>
-          </ul>
-
-          <h3>Formula</h3>
-          <ul class="key-list">
-            <li>\(\displaystyle E = E_{\perp}\cos\theta\)</li>
-          </ul>
-
-          <div class="figure">
-            <div class="fig-hd">
-              <span>Angle definition (always to the normal)</span>
-              <span style="color:var(--text-muted); font-weight:700;">use \(\cos\theta\)</span>
-            </div>
-            <div class="fig-bd">
-              <div class="svg-wrap" aria-label="Diagram for cosine law">
-                <svg viewBox="0 0 780 340" role="img">
-                  <defs>
-                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
-                      <path d="M0,0 L6,3 L0,6 Z" fill="currentColor"></path>
-                    </marker>
-                  </defs>
-
-                  <!-- Surface -->
-                  <line x1="70" y1="260" x2="710" y2="260" stroke="currentColor" stroke-width="3" opacity="0.55" />
-                  <text x="78" y="290" fill="currentColor" opacity="0.75" font-size="14">surface</text>
-
-                  <!-- Normal -->
-                  <line x1="420" y1="260" x2="420" y2="80" stroke="currentColor" stroke-width="3" opacity="0.75" stroke-dasharray="6 6" />
-                  <text x="432" y="95" fill="currentColor" opacity="0.75" font-size="14">normal</text>
-
-                  <!-- Ray -->
-                  <line x1="190" y1="70" x2="420" y2="260" stroke="currentColor" stroke-width="4" marker-end="url(#arrow)" />
-                  <text x="170" y="60" fill="currentColor" opacity="0.85" font-size="14">incident light</text>
-
-                  <!-- Angle arc (approx) -->
-                  <path d="M420 220 A40 40 0 0 0 394 190" fill="none" stroke="currentColor" stroke-width="3" opacity="0.75" />
-                  <text x="365" y="205" fill="currentColor" opacity="0.85" font-size="16">\(\theta\)</text>
-
-                  <!-- Point X -->
-                  <circle cx="420" cy="260" r="6" fill="currentColor" opacity="0.9" />
-                  <text x="432" y="262" fill="currentColor" opacity="0.85" font-size="14">X</text>
-                </svg>
-              </div>
-
-              <p style="margin:10px 0 0; color:var(--text-muted); font-size:0.95rem;">
-                \(\theta\) is the angle between the incident light and the <strong>normal</strong> at the point.
-              </p>
-            </div>
-          </div>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Angle trap</span>
-              <div class="co-content">
-                Be careful: \(\theta\) is to the <strong>normal</strong>, not to the surface. If the question gives an angle to the surface, convert it first.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 5 -->
-      <section>
-        <div class="card">
-          <h2 id="sec05">5. Point source: inverse-square law</h2>
-
-          <h3>Light falls perpendicularly on a spherical surface</h3>
-          <ul class="key-list">
-            <li>A point source emits uniformly in all directions.</li>
-            <li>At distance \(r\), light spreads over spherical area \(4\pi r^2\).</li>
-            <li>So the illuminance on a surface <em>perpendicular</em> to the light is:</li>
-            <li>\(\displaystyle E_{\perp} = \frac{\Phi}{4\pi r^2}\)</li>
-          </ul>
-
-          <h3>Inverse-square law</h3>
-          <ul class="key-list">
-            <li>For a point source: \(E_{\perp} \propto \dfrac{1}{r^2}\)</li>
-          </ul>
-
-          <h3>Point source + angle (combine with cosine law)</h3>
-          <ul class="key-list">
-            <li>\(\displaystyle E = E_{\perp}\cos\theta = \frac{\Phi\cos\theta}{4\pi r^2}\)</li>
-          </ul>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Shortcut</span>
-              <div class="co-content">
-                If light is perpendicular at the point, then \(\theta=0\) and \(\cos\theta=1\). Use \(E=\Phi/(4\pi r^2)\).
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 6 -->
-      <section>
-        <div class="card">
-          <h2 id="sec06">6. Worked example (point source → illuminance)</h2>
-
-          <div class="figure">
-            <div class="fig-hd">
-              <span>Example A (perpendicular)</span>
-              <span style="color:var(--text-muted); font-weight:700;">use \(\Phi/(4\pi r^2)\)</span>
-            </div>
-            <div class="fig-bd">
-              <div class="kv">
-                <div class="k">Given</div>
-                <div class="v">\(\Phi=7500\,\text{lm}\), \(r=2.0\,\text{m}\) (perpendicular)</div>
-              </div>
-              <div class="kv" style="margin-top:10px;">
-                <div class="k">Calculation</div>
-                <div class="v">\(\displaystyle E=\frac{7500}{4\pi(2.0)^2}=\frac{7500}{16\pi}\approx 149\,\text{lx}\)</div>
-              </div>
-              <p style="margin:10px 0 0; color:var(--text-muted); font-size:0.95rem;">
-                Final: \(\boxed{149\,\text{lx}}\) (3 s.f.)
-              </p>
-            </div>
-          </div>
-
-          <div class="figure">
-            <div class="fig-hd">
-              <span>Example B (at an angle)</span>
-              <span style="color:var(--text-muted); font-weight:700;">add \(\cos\theta\)</span>
-            </div>
-            <div class="fig-bd">
-              <div class="kv">
-                <div class="k">Given</div>
-                <div class="v">\(\Phi=7500\,\text{lm}\), \(r=2.5\,\text{m}\), \(\cos\theta=\frac{2.0}{2.5}=0.80\)</div>
-              </div>
-              <div class="kv" style="margin-top:10px;">
-                <div class="k">Calculation</div>
-                <div class="v">\(\displaystyle E=\frac{\Phi\cos\theta}{4\pi r^2}=\frac{7500\times 0.80}{4\pi(2.5)^2}\approx 76.4\,\text{lx}\)</div>
-              </div>
-              <p style="margin:10px 0 0; color:var(--text-muted); font-size:0.95rem;">
-                Final: \(\boxed{76.4\,\text{lx}}\) (3 s.f.)
-              </p>
-            </div>
-          </div>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Geometry trap</span>
-              <div class="co-content">
-                In point-source questions, \(r\) is the <strong>straight-line distance</strong> from the source to the point (use Pythagoras if needed), and \(\cos\theta\) comes from the same triangle.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 7 -->
-      <section>
-        <div class="card">
-          <h2 id="sec07">7. Reminders &amp; common exam traps</h2>
-          <ul class="key-list">
-            <li><strong>Definition first</strong>: \(E=\Phi/A\). Lux is \(\text{lm m}^{-2}\).</li>
-            <li><strong>Point source</strong>: use \(E_{\perp}=\Phi/(4\pi r^2)\) and inverse-square law.</li>
-            <li><strong>Parallel beam</strong>: use area method \(E_{\perp}=\Phi/A_{\perp}\) (no inverse-square).</li>
-            <li><strong>Angle</strong>: use Lambert’s cosine law \(E=E_{\perp}\cos\theta\), where \(\theta\) is to the <strong>normal</strong>.</li>
-            <li><strong>Area units</strong>: \(1\,\text{cm}^2 = 10^{-4}\,\text{m}^2\). Convert before using \(E=\Phi/A\).</li>
-          </ul>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Real-life context</span>
-              <div class="co-content">
-                Typical places need different illuminance (e.g. reading/work area needs higher lux than a corridor). In exams, you mainly do calculations and comparisons.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 8 -->
-      <section>
-        <div class="card">
-          <h2 id="sec08">8. Key terms</h2>
-          <ul class="key-list">
-            <li><strong>Illuminance</strong> \(E\): luminous flux received per unit area, \(E=\Phi/A\) (unit: lx).</li>
-            <li><strong>Lux</strong> (lx): unit of illuminance, \(1\,\text{lx}=1\,\text{lm m}^{-2}\).</li>
-            <li><strong>Luminous flux</strong> \(\Phi\): total light output (unit: lm).</li>
-            <li><strong>Inverse-square law</strong>: for a point source, \(E_{\perp}\propto 1/r^2\).</li>
-            <li><strong>Lambert’s cosine law</strong>: \(E=E_{\perp}\cos\theta\), \(\theta\) to the normal.</li>
-            <li><strong>Normal</strong>: line perpendicular to a surface at a point.</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- Bottom navigation (required) -->
-      <div class="section-nav" style="justify-content:center; margin-top: 18px;">
-        <a class="nav-btn" href="../index.html">&larr; Back to index</a>
-        <a class="nav-btn" href="lighting_luminous_flux.html">&larr; Previous</a>
-        <a class="nav-btn" href="lighting_efficacy.html">Next &rarr;</a>
+      <div class="key-terms">
+        <strong>Key terms</strong>
+        <ul>
+          <li><strong>Illuminance \(E\)</strong> – luminous flux per unit area (lux).</li>
+          <li><strong>Inverse square law</strong> – \(E \propto 1/r^2\).</li>
+          <li><strong>Lambert’s cosine law</strong> – \(E = I \cos\theta / r^2\).</li>
+          <li><strong>Luminous intensity \(I\)</strong> – luminous flux per unit solid angle (cd).</li>
+        </ul>
       </div>
+    </section>
 
-      <p class="footer">HKDSE Physics • E3 Energy &amp; Use of Energy (Lighting)</p>
-
-    </main>
+    <footer class="hero">
+      <div class="nav-buttons">
+        <a href="../index.html">Back to Index</a>
+        <a href="lighting_luminous_flux.html">&lt; Prev</a>
+        <a href="lighting_efficacy.html">Next &gt;</a>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 8px;">
+        References: HKDSE Physics C&amp;A Guide【912087049771804†L5097-L5104】
+      </p>
+    </footer>
   </div>
 </body>
 </html>

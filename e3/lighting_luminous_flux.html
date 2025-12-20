@@ -1,741 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="light dark" />
-  <title>E3 — Lighting: Luminous Flux (lm) | DSE Physics Notes</title>
-
-  <!-- MathJax for equation rendering -->
-  <script>
-    window.MathJax = {
-      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['$$','$$']] },
-      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
+  <title>E3 — Lighting: Luminous Flux</title>
+  <!-- Page defining luminous flux in the context of lighting. -->
   <style>
-    /* =============================
-       Design System: Modern DSE
-       (kept consistent with E2/E3 pages)
-       ============================= */
     :root {
-      --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-
-      /* Palette: Slate & Blue */
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       --primary: #3b82f6;
-      --primary-dark: #2563eb;
-      --primary-dim: rgba(59, 130, 246, 0.08);
-
+      --primary-dim: rgba(59, 130, 246, 0.1);
       --bg-body: #f8fafc;
       --bg-card: #ffffff;
-      --bg-header: #ffffff;
-
-      --text-main: #1e293b;
+      --text-main: #0f172a;
       --text-muted: #64748b;
-
       --border: #e2e8f0;
-      --radius: 16px;
-
-      /* Shadows */
-      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.08);
-      --shadow-md: 0 4px 14px -4px rgba(15, 23, 42, 0.14), 0 2px 6px -2px rgba(15, 23, 42, 0.10);
-
-      /* Semantic Colors */
-      --accent-amber: #f59e0b;
-      --accent-amber-bg: #fffbeb;
-      --accent-amber-border: rgba(245, 158, 11, 0.35);
-
-      --accent-info: #3b82f6;
-      --accent-info-bg: rgba(59, 130, 246, 0.08);
-      --accent-info-border: rgba(59, 130, 246, 0.28);
-
-      --accent-green: #10b981;
-      --accent-green-bg: rgba(16, 185, 129, 0.10);
-      --accent-green-border: rgba(16, 185, 129, 0.20);
-
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --radius: 12px;
     }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-body: #0f172a;
-        --bg-card: #1e293b;
-        --bg-header: #1e293b;
-
-        --text-main: #f1f5f9;
-        --text-muted: #94a3b8;
-
-        --border: #334155;
-
-        --primary: #60a5fa;
-        --primary-dark: #3b82f6;
-        --primary-dim: rgba(96, 165, 250, 0.10);
-
-        --accent-amber-bg: rgba(245, 158, 11, 0.10);
-        --accent-amber-border: rgba(245, 158, 11, 0.30);
-
-        --accent-info-bg: rgba(59, 130, 246, 0.10);
-        --accent-info-border: rgba(59, 130, 246, 0.30);
-
-        --accent-green-bg: rgba(16, 185, 129, 0.10);
-        --accent-green-border: rgba(16, 185, 129, 0.25);
-      }
-    }
-
-    /* --- Base --- */
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: var(--font-sans);
-      background: var(--bg-body);
-      color: var(--text-main);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    /* --- Layout --- */
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 20px 60px;
-    }
-
-    /* --- Hero Header --- */
-    .hero-header {
-      background: var(--bg-header);
-      border-bottom: 1px solid var(--border);
-      padding: 40px 20px 30px;
-      text-align: center;
-      margin-bottom: 22px;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .nav-breadcrumb {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.90rem;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      background: var(--bg-body);
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      background: linear-gradient(135deg, var(--primary), #8b5cf6);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .meta-subtitle {
-      font-size: 1.0rem;
-      color: var(--text-muted);
-      max-width: 760px;
-      margin: 0 auto 18px;
-    }
-
-    /* --- Navigation Buttons --- */
-    .section-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 16px 0 0;
-      padding: 0;
-    }
-
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      color: var(--primary);
-      font-weight: 700;
-      font-size: 0.95rem;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .nav-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .nav-btn span {
-      background: var(--primary);
-      color: white;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      margin-right: 4px;
-    }
-
-    /* --- Badges --- */
-    .badge-strip {
-      margin: 14px 0 0;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      border-radius: 8px;
-      border: 1px solid;
-      font-size: 0.90rem;
-      font-weight: 600;
-    }
-
-    .badge.exam {
-      background: var(--accent-info-bg);
-      color: var(--primary);
-      border-color: var(--accent-info-border);
-    }
-
-    .badge.skills {
-      background: var(--accent-green-bg);
-      color: var(--accent-green);
-      border-color: var(--accent-green-border);
-    }
-
-    /* --- Content Cards --- */
-    section { margin-top: 14px; }
-
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-      margin: 22px 0;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .card h2 {
-      margin: 0 0 18px;
-      font-size: 1.4rem;
-      font-weight: 700;
-      padding-left: 14px;
-      position: relative;
-      scroll-margin-top: 120px;
-      color: var(--text-main);
-    }
-
-    .card h2::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0.2em;
-      width: 6px;
-      height: 1.1em;
-      border-radius: 99px;
-      background: var(--primary);
-    }
-
-    .card h3 {
-      margin: 24px 0 12px;
-      font-size: 1.1rem;
-      font-weight: 650;
-      color: var(--text-main);
-    }
-
-    ul.key-list {
-      margin: 0;
-      padding-left: 20px;
-      color: var(--text-muted);
-    }
-
-    .key-list li { margin: 8px 0; }
-    .key-list li::marker { color: var(--primary); }
-    strong { color: var(--text-main); font-weight: 650; }
-
-    .section-intro {
-      margin: 0 auto;
-      max-width: 820px;
-      color: var(--text-muted);
-      font-size: 1.02rem;
-      padding: 14px 16px;
-      border-radius: 12px;
-      background: var(--primary-dim);
-      border: 1px solid var(--accent-info-border);
-      box-shadow: var(--shadow-sm);
-    }
-
-    /* --- Semantic Callouts --- */
-    .callout {
-      padding: 16px 20px;
-      border-radius: 12px;
-      margin: 18px 0;
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      font-size: 0.95rem;
-      border: 1px solid;
-    }
-
-    .co-icon {
-      flex-shrink: 0;
-      width: 24px;
-      height: 24px;
-      margin-top: 2px;
-    }
-    .co-icon svg { width: 100%; height: 100%; }
-
-    .co-title {
-      display: block;
-      font-weight: 800;
-      margin-bottom: 4px;
-      font-size: 0.80rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .co-content { color: var(--text-main); }
-
-    .callout.note {
-      background: var(--accent-info-bg);
-      border-color: var(--accent-info-border);
-    }
-    .callout.note .co-icon, .callout.note .co-title { color: var(--primary); }
-
-    .callout.trap {
-      background: var(--accent-amber-bg);
-      border-color: var(--accent-amber-border);
-    }
-    .callout.trap .co-icon, .callout.trap .co-title { color: var(--accent-amber); }
-
-    /* --- Mini Figures / Tables --- */
-    .figure {
-      margin: 16px 0;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: rgba(255,255,255,0.6);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .figure { background: rgba(15,23,42,0.35); }
-    }
-
-    .figure .fig-hd {
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
-      font-weight: 800;
-      color: var(--text-main);
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .figure .fig-bd { padding: 14px; }
-
-    .table {
-      width: 100%;
-      border-collapse: collapse;
-      overflow: hidden;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-    }
-
-    .table th, .table td {
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-      vertical-align: top;
-    }
-
-    .table th {
-      background: rgba(59,130,246,0.08);
-      color: var(--text-main);
-      font-weight: 900;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .table th { background: rgba(96,165,250,0.10); }
-    }
-
-    .math-inline {
-      font-family: var(--mono);
-      font-size: 0.95em;
-      padding: 0 0.25em;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: rgba(59,130,246,0.06);
-    }
-
-    .footer {
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-top: 22px;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .container { padding: 0 16px 60px; }
-      h1 { font-size: 1.8rem; }
-      .card { padding: 20px; }
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--bg-body); color: var(--text-main); line-height: 1.6; padding: 20px; }
+    .container { max-width: 850px; margin: 0 auto; }
+    .hero { text-align: center; margin-bottom: 20px; }
+    .hero h1 { font-size: 2rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 4px; }
+    .hero p { color: var(--text-muted); font-size: 1rem; }
+    .nav-buttons { display: flex; justify-content: space-between; margin: 16px 0; }
+    .nav-buttons a { background: var(--primary); color: #fff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: background 0.2s; }
+    .nav-buttons a:hover { background: #2563eb; }
+    .jump-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .jump-bar a { background: var(--primary-dim); color: var(--primary); padding: 6px 10px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; white-space: nowrap; }
+    .jump-bar a:hover { background: var(--primary); color: #fff; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
+    .card h2 { font-size: 1.3rem; margin-bottom: 8px; }
+    .callout { margin: 16px 0; padding: 12px; border-left: 4px solid; border-radius: 6px; }
+    .callout.note { background: #eff6ff; border-color: #3b82f6; }
+    .callout.trap { background: #fef2f2; border-color: #ef4444; }
+    .callout.rem { background: #f0fdf4; border-color: #10b981; }
+    .key-terms { background: #f9fafb; border: 1px dashed var(--border); padding: 12px; border-radius: 6px; margin-bottom: 20px; }
+    .key-terms ul { list-style: disc inside; margin-left: 16px; }
   </style>
 </head>
 <body>
-
-  <!-- Hero Header -->
-  <header class="hero-header">
-    <div class="nav-breadcrumb">
-      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--primary)" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-      </svg>
-      Index / E3
-    </div>
-
-    <h1>E3 — Lighting: Luminous Flux (lm)</h1>
-    <p class="meta-subtitle">
-      HKDSE Physics — Elective E3 (Lighting) · Luminous flux \(\Phi\) measures how bright a light source appears to the human eye.
-    </p>
-
-    <!-- Navigation HTML template (required) -->
-    <div class="section-nav" style="justify-content:center;">
-      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
-      <a class="nav-btn" href="lamps_incandescent_discharge_led.html">&larr; Previous</a>
-      <a class="nav-btn" href="lighting_illuminance.html">Next &rarr;</a>
-    </div>
-  </header>
-
   <div class="container">
-    <main>
+    <header class="hero">
+      <h1>Lighting: Luminous Flux</h1>
+      <p>Quantifying the total light output of a source</p>
+      <div class="nav-buttons">
+        <a href="../index.html">Back to Index</a>
+        <a href="lamps_incandescent_discharge_led.html">&lt; Prev</a>
+        <a href="lighting_illuminance.html">Next &gt;</a>
+      </div>
+    </header>
 
-      <p class="section-intro" style="text-align:center;">
-        In DSE lighting questions, don’t use watt to judge “brightness”. Use <strong>luminous flux</strong> (unit: <strong>lumen, lm</strong>). A source with a larger \(\Phi\) usually looks brighter.
+    <nav class="jump-bar">
+      <a href="#definition">Definition</a>
+      <a href="#measurement">Measurement</a>
+      <a href="#example">Worked example</a>
+      <a href="#reminders">Reminders</a>
+    </nav>
+
+    <section id="definition" class="card">
+      <h2>Definition</h2>
+      <p>
+        <strong>Luminous flux</strong> \(\Phi\) is defined as the total energy of light
+        emitted per unit time by a source【912087049771804†L5092-L5096】.  It
+        represents the power of visible light adjusted to the sensitivity of the human
+        eye.  The SI unit of luminous flux is the <em>lumen</em> (lm).
       </p>
-
-      <div class="badge-strip">
-        <span class="badge exam">Exam focus: definition of luminous flux \(\Phi\), unit lm, compare brightness using \(\Phi\), eye response peak at 555 nm</span>
-        <span class="badge skills">Skills: distinguish “power (W)” vs “luminous flux (lm)”; interpret package/label data</span>
+      <p>
+        A lamp producing 800 lumens emits twice as much visible light as a 400‑lumen
+        lamp, irrespective of their electrical power.  When evaluating lamps, luminous
+        flux tells you how much light you get, while the power rating tells you how
+        much electricity is consumed.
+      </p>
+      <div class="callout note">
+        <strong>Note:</strong> Luminous flux differs from <em>luminous intensity</em>, which
+        is the flux emitted per unit solid angle and measured in candela (cd).
       </div>
+    </section>
 
-      <!-- Jump Bar -->
-      <div class="section-nav" aria-label="Jump to section" style="margin-top:20px; justify-content:center;">
-        <a href="#sec01" class="nav-btn"><span>1</span> Syllabus focus</a>
-        <a href="#sec02" class="nav-btn"><span>2</span> Definition</a>
-        <a href="#sec03" class="nav-btn"><span>3</span> Eye response</a>
-        <a href="#sec04" class="nav-btn"><span>4</span> How to use \(\Phi\)</a>
-        <a href="#sec05" class="nav-btn"><span>5</span> Worked examples</a>
-        <a href="#sec06" class="nav-btn"><span>6</span> Reminders</a>
-        <a href="#sec07" class="nav-btn"><span>7</span> Key terms</a>
+    <section id="measurement" class="card">
+      <h2>Measurement and units</h2>
+      <p>
+        The lumen is defined such that a monochromatic source emitting 1&nbsp;watt of
+        light at a wavelength of 555&nbsp;nm (where the eye is most sensitive) has a
+        luminous flux of 683&nbsp;lumens.  Manufacturers measure luminous flux using
+        integrating spheres that collect all light emitted in every direction.
+      </p>
+      <p>
+        For a light source with luminous efficacy \(\eta\) (lm W<sup>−1</sup>) and
+        electrical power \(P\) (W), the luminous flux is \(\Phi = \eta P\).  For
+        example, a 10 W LED bulb with an efficacy of 100 lm W<sup>−1</sup> produces
+        1 000 lumens.
+      </p>
+    </section>
+
+    <section id="example" class="card">
+      <h2>Worked example</h2>
+      <p>
+        An LED desk lamp consumes 6 W and has a luminous efficacy of 90 lm W<sup>−1</sup>.
+        Find its luminous flux.  How does it compare with a 40 W incandescent bulb of
+        efficacy 12 lm W<sup>−1</sup>?
+      </p>
+      <p><strong>Solution:</strong></p>
+      <ol>
+        <li>LED luminous flux: \(\Phi_{\text{LED}} = 90 \times 6 = 540\) lm.</li>
+        <li>Incandescent luminous flux: \(\Phi_{\text{inc}} = 12 \times 40 = 480\) lm.</li>
+        <li>Despite using much less power, the LED lamp produces more light than the
+            incandescent bulb.  It is both brighter and more energy‑efficient.</li>
+      </ol>
+    </section>
+
+    <section id="reminders" class="card">
+      <h2>Reminders &amp; Key terms</h2>
+      <div class="callout rem">
+        <strong>Reminders:</strong>
+        <ul>
+          <li>Luminous flux measures total visible light output adjusted for human eye
+              sensitivity【912087049771804†L5092-L5096】.</li>
+          <li>Compare luminous flux to judge brightness; compare efficacy to judge
+              efficiency.</li>
+          <li>Luminous intensity (candela) is flux per solid angle, not total light.</li>
+        </ul>
       </div>
-
-      <!-- Section 1 -->
-      <section>
-        <div class="card">
-          <h2 id="sec01">1. Syllabus focus (what you must be able to do)</h2>
-          <ul class="key-list">
-            <li>Define <strong>luminous flux</strong> \(\Phi\) as the power output of a light source <strong>corrected for human vision</strong>.</li>
-            <li>Use <strong>lumen (lm)</strong> as the unit of luminous flux.</li>
-            <li>State that <strong>eye response depends on wavelength</strong> (most sensitive near 555 nm).</li>
-            <li>Compare the brightness of light sources using \(\Phi\) (not just power rating in W).</li>
-          </ul>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Note</span>
-              <div class="co-content">
-                Two light sources with the <strong>same luminous flux</strong> look equally bright to us, even if their colours are different.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 2 -->
-      <section>
-        <div class="card">
-          <h2 id="sec02">2. What is luminous flux \(\Phi\)?</h2>
-
-          <ul class="key-list">
-            <li><strong>Luminous flux</strong> describes how bright a light source appears to the human eye.</li>
-            <li>It is the <strong>power emitted</strong> by a light source <strong>with correction for the sensitivity of the human eye</strong>.</li>
-            <li>Symbol: \(\Phi\)</li>
-            <li>Unit: <strong>lumen (lm)</strong></li>
-          </ul>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Common trap</span>
-              <div class="co-content">
-                <strong>Watt (W)</strong> is the rate of energy transfer (power). <strong>Lumen (lm)</strong> is not the same as W.
-                A lamp with larger power is <em>not necessarily</em> brighter.
-              </div>
-            </div>
-          </div>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.1 0-2 .9-2 2v8h4v-8c0-1.1-.9-2-2-2zm0-6a3 3 0 00-3 3v1h6V5a3 3 0 00-3-3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Exam wording</span>
-              <div class="co-content">
-                You can write: “Luminous flux is the power output of a light source corrected for the dependence on wavelength of the sensitivity of the human eye. Unit: lm.”
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- Section 3 -->
-      <section>
-        <div class="card">
-          <h2 id="sec03">3. Eye response depends on wavelength (peak at 555 nm)</h2>
-
-          <ul class="key-list">
-            <li>The human eye is <strong>most sensitive</strong> to green-yellow light of wavelength about <strong>555 nm</strong>.</li>
-            <li>For the same physical power of visible light, green-yellow light usually looks brighter than blue or red.</li>
-          </ul>
-
-          <div class="figure">
-            <div class="fig-hd">
-              <span>Qualitative eye sensitivity curve</span>
-              <span style="color:var(--text-muted); font-weight:700;">Peak ≈ 555 nm</span>
-            </div>
-            <div class="fig-bd">
-              <svg viewBox="0 0 640 240" width="100%" height="240" role="img" aria-label="Relative sensitivity vs wavelength">
-                <!-- Plot area -->
-                <rect x="58" y="18" width="560" height="172" rx="12" fill="none" stroke="currentColor" opacity="0.22"></rect>
-
-                <!-- Axes -->
-                <line x1="58" y1="190" x2="618" y2="190" stroke="currentColor" opacity="0.55" />
-                <line x1="58" y1="190" x2="58" y2="18" stroke="currentColor" opacity="0.55" />
-
-                <!-- Ticks (x) at 400, 500, 600, 700 nm -->
-                <g fill="currentColor" opacity="0.75" font-size="12" font-family="var(--mono)">
-                  <line x1="58" y1="190" x2="58" y2="196" stroke="currentColor" opacity="0.55" />
-                  <text x="58" y="214" text-anchor="middle">400</text>
-
-                  <line x1="198" y1="190" x2="198" y2="196" stroke="currentColor" opacity="0.55" />
-                  <text x="198" y="214" text-anchor="middle">500</text>
-
-                  <line x1="338" y1="190" x2="338" y2="196" stroke="currentColor" opacity="0.55" />
-                  <text x="338" y="214" text-anchor="middle">600</text>
-
-                  <line x1="478" y1="190" x2="478" y2="196" stroke="currentColor" opacity="0.55" />
-                  <text x="478" y="214" text-anchor="middle">700</text>
-                </g>
-
-                <!-- y label -->
-                <g fill="currentColor" opacity="0.75" font-size="12" font-family="var(--mono)">
-                  <text x="18" y="32" text-anchor="start">relative</text>
-                  <text x="18" y="48" text-anchor="start">sensitivity</text>
-                </g>
-
-                <!-- x label -->
-                <g fill="currentColor" opacity="0.75" font-size="12" font-family="var(--mono)">
-                  <text x="618" y="232" text-anchor="end">λ / nm</text>
-                </g>
-
-                <!-- Curve: smooth peak around 555 nm -->
-                <!-- Mapping: 400→x=58, 700→x=478; extend to 700 tick; we draw to 618 for padding (not a tick) -->
-                <path d="M 58 186 C 120 182, 150 130, 198 86 C 245 44, 290 26, 318 34 C 360 46, 402 92, 442 128 C 498 178, 560 186, 618 188" fill="none" stroke="currentColor" stroke-width="3" opacity="0.85" />
-
-                <!-- Peak marker at 555 nm -->
-                <!-- 555 is 155/300 of the way from 400 to 700 -> x ≈ 58 + 560*(155/300)=58+289.3=347.3 -->
-                <line x1="347" y1="190" x2="347" y2="38" stroke="currentColor" opacity="0.25" />
-                <circle cx="347" cy="38" r="5" fill="currentColor" opacity="0.9" />
-                <g fill="currentColor" opacity="0.85" font-size="12" font-family="var(--mono)">
-                  <text x="347" y="28" text-anchor="middle">555</text>
-                </g>
-              </svg>
-
-              <div class="callout note" style="margin: 14px 0 0;">
-                <div class="co-icon">
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
-                <div>
-                  <span class="co-title">Key idea</span>
-                  <div class="co-content">
-                    Luminous flux includes a correction for eye response, so it matches how bright the light looks to us.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- Section 4 -->
-      <section>
-        <div class="card">
-          <h2 id="sec04">4. How to use \(\Phi\) in DSE questions</h2>
-
-          <h3>(A) Compare brightness</h3>
-          <ul class="key-list">
-            <li>If \(\Phi_1 > \(\Phi_2\), source 1 usually looks brighter.</li>
-            <li>If \(\Phi_1 = \(\Phi_2\), they look equally bright to our eyes (even if colours differ).</li>
-          </ul>
-
-          <h3>(B) Link with efficacy (connection to the next pages)</h3>
-          <ul class="key-list">
-            <li>For many lamps, packaging/labels give <strong>luminous efficacy</strong> (unit: lm W\(^{-1}\)).</li>
-            <li>Relationship: \(\text{efficacy} = \dfrac{\Phi}{P}\)  \(\Rightarrow\)  \(\Phi = (\text{efficacy})\times P\).</li>
-          </ul>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Be careful</span>
-              <div class="co-content">
-                Don’t say “higher wattage = brighter”. Always check \(\Phi\) (lm), or compare efficacy \(\Phi/P\) when \(\Phi\) is not directly given.
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- Section 5 -->
-      <section>
-        <div class="card">
-          <h2 id="sec05">5. Worked examples</h2>
-
-          <h3>Example 1 — Compare brightness using luminous flux</h3>
-          <ul class="key-list">
-            <li>Lamp A: \(\Phi = 800\,\text{lm}\)</li>
-            <li>Lamp B: \(\Phi = 1200\,\text{lm}\)</li>
-            <li><strong>Conclusion:</strong> Lamp B looks brighter (larger \(\Phi\)).</li>
-          </ul>
-
-          <h3>Example 2 — Same luminous flux, different colour</h3>
-          <ul class="key-list">
-            <li>Two lamps emit different colours but both have \(\Phi = 880\,\text{lm}\).</li>
-            <li><strong>Conclusion:</strong> They look equally bright to us (same \(\Phi\)).</li>
-          </ul>
-
-          <h3>Example 3 — Find luminous flux from efficacy and power</h3>
-          <ul class="key-list">
-            <li>Given: efficacy \(= 110\,\text{lm W}^{-1}\), input power \(P = 6.5\,\text{W}\)</li>
-            <li>\(\Phi = (\text{efficacy})\times P = 110\times 6.5 = 715\,\text{lm}\)</li>
-            <li><strong>Answer:</strong> \(\boxed{715\,\text{lm}}\)</li>
-          </ul>
-
-          <div class="figure">
-            <div class="fig-hd">
-              <span>Reference values (order of magnitude)</span>
-              <span style="color:var(--text-muted); font-weight:700;">For comparison only</span>
-            </div>
-            <div class="fig-bd">
-              <table class="table" aria-label="Typical luminous flux values">
-                <thead>
-                  <tr>
-                    <th>Light source</th>
-                    <th>Typical luminous flux \(\Phi\)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>10-W LED lamp</td><td>\(\sim 800\text{–}1200\,\text{lm}\)</td></tr>
-                  <tr><td>Computer projector</td><td>\(\sim 3000\,\text{lm}\)</td></tr>
-                  <tr><td>Street lamp (highway)</td><td>\(\sim 2.5\times10^4\text{–}1.0\times10^5\,\text{lm}\)</td></tr>
-                  <tr><td>The Sun</td><td>\(\sim 4\times10^{28}\,\text{lm}\)</td></tr>
-                </tbody>
-              </table>
-              <p style="margin:10px 0 0; color:var(--text-muted); font-size:0.95rem;">
-                In exam questions, you rarely need these numbers; you mainly use \(\Phi\) to compare brightness.
-              </p>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- Section 6 -->
-      <section>
-        <div class="card">
-          <h2 id="sec06">6. Reminders &amp; common exam traps</h2>
-          <ul class="key-list">
-            <li><strong>Unit check:</strong> luminous flux is in <strong>lm</strong>, not W.</li>
-            <li><strong>Eye response:</strong> for the same physical power, different colours can look different in brightness.</li>
-            <li><strong>Brightness comparison:</strong> if \(\Phi\) is given, compare \(\Phi\) directly.</li>
-            <li><strong>Connection:</strong> if \(\Phi\) is not given, the question may give efficacy (lm W\(^{-1}\)) and power to find \(\Phi\).</li>
-          </ul>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Exam sentence</span>
-              <div class="co-content">
-                “A light source consuming a large amount of energy is not necessarily bright. Luminous flux is more useful than power rating when choosing a lamp for illumination.”
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- Section 7 -->
-      <section>
-        <div class="card">
-          <h2 id="sec07">7. Key terms</h2>
-          <ul class="key-list">
-            <li><strong>Luminous flux \(\Phi\)</strong>: power emitted by a light source, corrected for the sensitivity of the human eye (unit: lm).</li>
-            <li><strong>Lumen (lm)</strong>: unit of luminous flux.</li>
-            <li><strong>Eye response</strong>: the sensitivity of the human eye depends on wavelength; maximum near 555 nm.</li>
-            <li><strong>(Link) Efficacy</strong>: \(\dfrac{\Phi}{P}\), measured in lm W\(^{-1}\) (details in the efficacy page).</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- Bottom navigation (required) -->
-      <div class="section-nav" style="justify-content:center; margin-top: 18px;">
-        <a class="nav-btn" href="../index.html">&larr; Back to index</a>
-        <a class="nav-btn" href="lamps_incandescent_discharge_led.html">&larr; Previous</a>
-        <a class="nav-btn" href="lighting_illuminance.html">Next &rarr;</a>
+      <div class="key-terms">
+        <strong>Key terms</strong>
+        <ul>
+          <li><strong>Luminous flux \(\Phi\)</strong> – total light output (lm).</li>
+          <li><strong>Lumen (lm)</strong> – unit of luminous flux.</li>
+          <li><strong>Luminous efficacy</strong> – lumens per watt.</li>
+          <li><strong>Luminous intensity</strong> – flux per unit solid angle (cd).</li>
+        </ul>
       </div>
+    </section>
 
-      <p class="footer">HKDSE Physics • E3 Energy &amp; Use of Energy</p>
-
-    </main>
+    <footer class="hero">
+      <div class="nav-buttons">
+        <a href="../index.html">Back to Index</a>
+        <a href="lamps_incandescent_discharge_led.html">&lt; Prev</a>
+        <a href="lighting_illuminance.html">Next &gt;</a>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 8px;">
+        References: HKDSE Physics C&amp;A Guide【912087049771804†L5092-L5096】
+      </p>
+    </footer>
   </div>
 </body>
 </html>

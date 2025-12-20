@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E3 — Environmental Impact of Energy Use</title>
+  <!--
+    This page summarises the environmental and societal impacts associated
+    with the extraction, conversion, distribution and use of energy.  It
+    highlights the role of greenhouse gases in global warming and encourages
+    analysis of fuel consumption data as outlined in the HKDSE curriculum【912087049771804†L5256-L5265】.
+  -->
+  <style>
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --primary: #3b82f6;
+      --primary-dim: rgba(59, 130, 246, 0.1);
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
+    }
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin: 16px 0;
+    }
+    .nav-buttons a {
+      background: var(--primary);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .nav-buttons a:hover {
+      background: #2563eb;
+    }
+    .jump-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .jump-bar a {
+      background: var(--primary-dim);
+      color: var(--primary);
+      padding: 6px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+    .jump-bar a:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    .card h2 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+    .callout {
+      margin: 16px 0;
+      padding: 12px;
+      border-left: 4px solid;
+      border-radius: 6px;
+    }
+    .callout.note { background: #eff6ff; border-color: #3b82f6; }
+    .callout.trap { background: #fef2f2; border-color: #ef4444; }
+    .callout.rem { background: #f0fdf4; border-color: #10b981; }
+    .key-terms {
+      background: #f9fafb;
+      border: 1px dashed var(--border);
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+    .key-terms ul {
+      list-style: disc inside;
+      margin-left: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1>Environmental Impact of Energy Use</h1>
+      <p>Assessing the costs of extraction, conversion and consumption</p>
+      <div class="nav-buttons">
+        <a href="../index.html">Back to Index</a>
+        <a href="transport_public_transport.html">&lt; Prev</a>
+        <a href="renewable_energy.html">Next &gt;</a>
+      </div>
+    </header>
+
+    <nav class="jump-bar">
+      <a href="#extraction">Extraction and conversion</a>
+      <a href="#consumption">Consumption and society</a>
+      <a href="#greenhouse">Greenhouse gases &amp; global warming</a>
+      <a href="#data">Analysing fuel consumption data</a>
+      <a href="#reminders">Reminders</a>
+    </nav>
+
+    <section id="extraction" class="card">
+      <h2>Extraction and conversion</h2>
+      <p>
+        Obtaining energy resources and converting them into useful forms have
+        environmental consequences.  Mining fossil fuels and uranium can
+        disturb ecosystems, contaminate water and produce toxic waste.  Drilling
+        and fracking may cause habitat loss and pollution.  Refining and
+        combusting fuels emit particulates, sulphur dioxide and nitrogen
+        oxides, leading to air quality issues and acid rain.
+      </p>
+      <p>
+        On the other hand, renewable energy sources such as wind, solar and
+        hydro generally have smaller life‑cycle impacts, though manufacturing
+        solar panels and batteries still requires materials extraction and
+        energy.
+      </p>
+    </section>
+
+    <section id="consumption" class="card">
+      <h2>Consumption and society</h2>
+      <p>
+        Energy use affects society beyond the environment.  Dependence on
+        imported fuels influences energy security and geopolitics.  High
+        electricity prices can widen social inequalities.  Land occupied by
+        power plants, transmission lines and fuel transport infrastructure
+        competes with other uses and may displace communities.
+      </p>
+      <p>
+        The HKDSE syllabus asks students to discuss the impact of extraction,
+        conversion, distribution and use of energy on the environment and
+        society【912087049771804†L5258-L5260】.
+      </p>
+    </section>
+
+    <section id="greenhouse" class="card">
+      <h2>Greenhouse gases &amp; global warming</h2>
+      <p>
+        Carbon dioxide (CO<sub>2</sub>), methane (CH<sub>4</sub>) and nitrous
+        oxide (N<sub>2</sub>O) trap heat in the Earth’s atmosphere by absorbing
+        infrared radiation.  These <em>greenhouse gases</em> are released
+        primarily through the burning of fossil fuels, agriculture and
+        industrial processes.  The resulting enhanced greenhouse effect leads
+        to global warming, sea‑level rise and extreme weather patterns.
+      </p>
+      <p>
+        The syllabus emphasises discussing the effect of greenhouse gases on
+        global warming【912087049771804†L5261-L5262】 and encourages students to
+        think critically about mitigation strategies such as energy efficiency,
+        renewable energy and carbon capture.
+      </p>
+    </section>
+
+    <section id="data" class="card">
+      <h2>Analysing fuel consumption data</h2>
+      <p>
+        Analysing consumption data helps identify which fuels are used most
+        and for what purposes.  In Hong Kong, for example, electricity is
+        generated mainly from natural gas and imported nuclear power, while
+        transport relies heavily on petroleum products.  The curriculum
+        encourages students to analyse consumption data for different fuel
+        types and their specific purposes【912087049771804†L5264-L5265】.
+      </p>
+      <p>
+        Such analysis supports policy decisions, such as switching from coal
+        to gas for electricity generation, promoting public transport and
+        incentivising renewable energy adoption.
+      </p>
+    </section>
+
+    <section id="reminders" class="card">
+      <h2>Reminders</h2>
+      <div class="callout rem">
+        <strong>Remember:</strong> Energy choices have far‑reaching consequences.
+        Consider environmental impact alongside cost, reliability and social
+        equity when evaluating different options.
+      </div>
+      <div class="key-terms">
+        <strong>Key terms:</strong>
+        <ul>
+          <li>Greenhouse gas</li>
+          <li>Life‑cycle impact</li>
+          <li>Energy security</li>
+          <li>Fuel consumption data</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

@@ -1,914 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="light dark" />
-  <title>E3 — Energy Efficiency Labelling Scheme (EELS) | DSE Physics Notes</title>
-
-  <!-- MathJax for equation rendering -->
-  <script>
-    window.MathJax = {
-      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['$$','$$']] },
-      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
+  <title>E3 — Energy Efficiency Labelling Scheme (EELS)</title>
+  <!-- Page describing the Hong Kong Energy Efficiency Labelling Scheme. -->
   <style>
-    /* =============================
-       Design System: Modern DSE
-       ============================= */
     :root {
-      --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-
-      /* Palette: Slate & Blue */
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       --primary: #3b82f6;
-      --primary-dark: #2563eb;
-      --primary-dim: rgba(59, 130, 246, 0.08);
-
+      --primary-dim: rgba(59, 130, 246, 0.1);
       --bg-body: #f8fafc;
       --bg-card: #ffffff;
-      --bg-header: #ffffff;
-
-      --text-main: #1e293b;
+      --text-main: #0f172a;
       --text-muted: #64748b;
-
       --border: #e2e8f0;
-      --radius: 16px;
-
-      /* Shadows */
-      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.08);
-      --shadow-md: 0 4px 14px -4px rgba(15, 23, 42, 0.14), 0 2px 6px -2px rgba(15, 23, 42, 0.10);
-
-      /* Semantic Colors */
-      --accent-amber: #f59e0b;
-      --accent-amber-bg: #fffbeb;
-      --accent-amber-border: rgba(245, 158, 11, 0.35);
-
-      --accent-info: #3b82f6;
-      --accent-info-bg: rgba(59, 130, 246, 0.08);
-      --accent-info-border: rgba(59, 130, 246, 0.28);
-
-      --accent-green: #10b981;
-      --accent-green-bg: rgba(16, 185, 129, 0.10);
-      --accent-green-border: rgba(16, 185, 129, 0.22);
+      --radius: 12px;
     }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-body: #0f172a;
-        --bg-card: #1e293b;
-        --bg-header: #1e293b;
-
-        --text-main: #f1f5f9;
-        --text-muted: #94a3b8;
-
-        --border: #334155;
-
-        --primary: #60a5fa;
-        --primary-dark: #3b82f6;
-        --primary-dim: rgba(96, 165, 250, 0.10);
-
-        --accent-amber-bg: rgba(245, 158, 11, 0.10);
-        --accent-amber-border: rgba(245, 158, 11, 0.30);
-
-        --accent-info-bg: rgba(59, 130, 246, 0.10);
-        --accent-info-border: rgba(59, 130, 246, 0.30);
-
-        --accent-green-bg: rgba(16, 185, 129, 0.10);
-        --accent-green-border: rgba(16, 185, 129, 0.24);
-      }
-    }
-
-    /* --- Base --- */
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: var(--font-sans);
-      background: var(--bg-body);
-      color: var(--text-main);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    /* --- Layout --- */
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 20px 60px;
-    }
-
-    /* --- Hero Header --- */
-    .hero-header {
-      background: var(--bg-header);
-      border-bottom: 1px solid var(--border);
-      padding: 40px 20px 30px;
-      text-align: center;
-      margin-bottom: 22px;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .nav-breadcrumb {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.90rem;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      background: var(--bg-body);
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-    }
-
-    h1 {
-      margin: 8px 0 8px;
-      font-size: 2.05rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, var(--primary), #8b5cf6);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .meta-subtitle {
-      font-size: 1.0rem;
-      color: var(--text-muted);
-      max-width: 760px;
-      margin: 0 auto 18px;
-    }
-
-    /* --- Navigation Buttons --- */
-    .section-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 16px 0 0;
-      padding: 0;
-    }
-
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      color: var(--primary);
-      font-weight: 700;
-      font-size: 0.95rem;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .nav-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .nav-btn span {
-      background: var(--primary);
-      color: white;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      margin-right: 4px;
-    }
-
-    /* --- Intro & Badges --- */
-    .section-intro {
-      color: var(--text-muted);
-      font-size: 1.02rem;
-      margin: 0 0 14px;
-    }
-
-    .badge-strip {
-      margin: 14px 0 0;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      border-radius: 8px;
-      border: 1px solid;
-      font-size: 0.90rem;
-      font-weight: 600;
-    }
-
-    .badge.exam {
-      background: var(--accent-info-bg);
-      color: var(--primary);
-      border-color: var(--accent-info-border);
-    }
-
-    .badge.skills {
-      background: var(--accent-green-bg);
-      color: var(--accent-green);
-      border-color: var(--accent-green-border);
-    }
-
-    /* --- Cards --- */
-    section { margin-top: 14px; }
-
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-      margin: 22px 0;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .card h2 {
-      margin: 0 0 18px;
-      font-size: 1.4rem;
-      font-weight: 700;
-      padding-left: 14px;
-      position: relative;
-      scroll-margin-top: 120px;
-      color: var(--text-main);
-    }
-
-    .card h2::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0.2em;
-      width: 6px;
-      height: 1.1em;
-      border-radius: 99px;
-      background: var(--primary);
-    }
-
-    .card h3 {
-      margin: 22px 0 10px;
-      font-size: 1.08rem;
-      font-weight: 650;
-      color: var(--text-main);
-    }
-
-    ul.key-list {
-      margin: 0;
-      padding-left: 20px;
-      color: var(--text-muted);
-    }
-
-    .key-list li { margin: 8px 0; }
-    .key-list li::marker { color: var(--primary); }
-    strong { color: var(--text-main); font-weight: 650; }
-
-    /* --- Semantic Callouts --- */
-    .callout {
-      padding: 16px 20px;
-      border-radius: 12px;
-      margin: 18px 0;
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      font-size: 0.95rem;
-      border: 1px solid;
-    }
-
-    .co-icon {
-      flex-shrink: 0;
-      width: 24px;
-      height: 24px;
-      margin-top: 2px;
-    }
-
-    .co-icon svg { width: 100%; height: 100%; }
-
-    .co-title {
-      display: block;
-      font-weight: 800;
-      margin-bottom: 4px;
-      font-size: 0.80rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .co-content { color: var(--text-main); }
-
-    .callout.note {
-      background: var(--accent-info-bg);
-      border-color: var(--accent-info-border);
-    }
-    .callout.note .co-icon, .callout.note .co-title { color: var(--primary); }
-
-    .callout.trap {
-      background: var(--accent-amber-bg);
-      border-color: var(--accent-amber-border);
-    }
-    .callout.trap .co-icon, .callout.trap .co-title { color: var(--accent-amber); }
-
-    /* --- Mini Figures / Tables --- */
-    .figure {
-      margin: 16px 0;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--bg-body);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .figure .fig-hd {
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
-      font-weight: 800;
-      color: var(--text-main);
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-      background: var(--bg-card);
-    }
-
-    .figure .fig-bd { padding: 14px; }
-
-    .label-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-
-    .kv {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-    }
-
-    @media (max-width: 560px) {
-      .kv { grid-template-columns: 1fr; }
-    }
-
-    .kv .k {
-      color: var(--text-muted);
-      font-weight: 700;
-    }
-    .kv .v {
-      color: var(--text-main);
-      font-weight: 700;
-    }
-
-    .grade-bar {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .grade {
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 0;
-      text-align: center;
-      font-weight: 900;
-      background: var(--bg-card);
-      color: var(--text-muted);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .grade.on {
-      border-color: var(--accent-green-border);
-      background: var(--accent-green-bg);
-      color: var(--accent-green);
-    }
-
-    /* --- Data Tables --- */
-    .table-container {
-      overflow-x: auto;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--bg-card);
-      margin-top: 12px;
-    }
-
-    table.data-table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 600px;
-      font-size: 0.95rem;
-    }
-
-    .data-table th {
-      background: var(--bg-body);
-      color: var(--text-muted);
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 0.8rem;
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .data-table td {
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      color: var(--text-muted);
-      vertical-align: top;
-    }
-
-    .data-table tr:last-child td { border-bottom: none; }
-
-    /* --- Tabbed Interface for Terms --- */
-    .term-tabs { position: relative; margin-top: 10px; }
-    .term-radio { position: absolute; left: -9999px; }
-
-    .term-tab-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      background: var(--bg-body);
-      padding: 4px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      margin-bottom: 16px;
-    }
-
-    .term-tab-btn {
-      padding: 8px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
-
-    .term-tab-btn:hover { color: var(--text-main); }
-
-    /* Active State Logic for Tabs */
-    input:checked + label {
-      background: var(--bg-card);
-      color: var(--primary);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    }
-
-    .term-panel {
-      display: none;
-      padding: 20px;
-      border-radius: 12px;
-      background: var(--accent-info-bg);
-      border: 1px dashed var(--accent-info-border);
-      animation: fadeIn 0.3s ease;
-    }
-    
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* Panel Visibility Logic */
-    #term-eels:checked ~ #panel-term-eels,
-    #term-grading:checked ~ #panel-term-grading,
-    #term-recognition:checked ~ #panel-term-recognition,
-    #term-consump:checked ~ #panel-term-consump,
-    #term-tariff:checked ~ #panel-term-tariff,
-    #term-eei:checked ~ #panel-term-eei { display: block; }
-
-    /* Footer */
-    .footer {
-      margin-top: 28px;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.92rem;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .container { padding: 0 16px 60px; }
-      h1 { font-size: 1.8rem; }
-      .card { padding: 20px; }
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--bg-body); color: var(--text-main); line-height: 1.6; padding: 20px; }
+    .container { max-width: 850px; margin: 0 auto; }
+    .hero { text-align: center; margin-bottom: 20px; }
+    .hero h1 { font-size: 2rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 4px; }
+    .hero p { color: var(--text-muted); font-size: 1rem; }
+    .nav-buttons { display: flex; justify-content: space-between; margin: 16px 0; }
+    .nav-buttons a { background: var(--primary); color: #fff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: background 0.2s; }
+    .nav-buttons a:hover { background: #2563eb; }
+    .jump-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .jump-bar a { background: var(--primary-dim); color: var(--primary); padding: 6px 10px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; white-space: nowrap; }
+    .jump-bar a:hover { background: var(--primary); color: #fff; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
+    .card h2 { font-size: 1.3rem; margin-bottom: 8px; }
+    .callout { margin: 16px 0; padding: 12px; border-left: 4px solid; border-radius: 6px; }
+    .callout.note { background: #eff6ff; border-color: #3b82f6; }
+    .callout.trap { background: #fef2f2; border-color: #ef4444; }
+    .callout.rem { background: #f0fdf4; border-color: #10b981; }
+    .key-terms { background: #f9fafb; border: 1px dashed var(--border); padding: 12px; border-radius: 6px; margin-bottom: 20px; }
+    .key-terms ul { list-style: disc inside; margin-left: 16px; }
   </style>
 </head>
 <body>
-
-  <!-- Hero Header -->
-  <header class="hero-header">
-    <div class="nav-breadcrumb">
-      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--primary)">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-      </svg>
-      Index / E3
-    </div>
-
-    <h1>E3 — Energy Efficiency Labelling Scheme (EELS)</h1>
-    <p class="meta-subtitle">
-      HKDSE Physics — Elective E3: Energy &amp; Use of Energy · Read energy labels, compare grades (1–5), and solve running cost / power questions.
-    </p>
-
-    <!-- Navigation HTML template (required) -->
-    <div class="section-nav" style="justify-content:center;">
-      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
-    </div>
-  </header>
-
   <div class="container">
-    <main>
+    <header class="hero">
+      <h1>Energy Efficiency Labelling Scheme (EELS)</h1>
+      <p>Interpreting energy labels and choosing energy‑saving devices</p>
+      <div class="nav-buttons">
+        <a href="../index.html">Back to Index</a>
+        <a href="energy_efficiency_home.html">&lt; Prev</a>
+        <a href="lamps_incandescent_discharge_led.html">Next &gt;</a>
+      </div>
+    </header>
 
-      <p class="section-intro" style="text-align:center;">
-        In EELS questions, you mainly do two things: (1) <strong>interpret the label</strong> (grade 1–5, energy consumption, assumptions), and (2) <strong>calculate</strong> running cost / input power using \(E = Pt\).
+    <nav class="jump-bar">
+      <a href="#overview">Overview</a>
+      <a href="#label">The label</a>
+      <a href="#usage">Using the label</a>
+      <a href="#example">Worked example</a>
+      <a href="#reminders">Reminders</a>
+    </nav>
+
+    <section id="overview" class="card">
+      <h2>Overview</h2>
+      <p>
+        The <strong>Hong Kong Energy Efficiency Labelling Scheme</strong> (EELS) helps
+        consumers choose appliances that use less electricity.  Under the scheme,
+        products such as air‑conditioners, refrigerators, washing machines, dehumidifiers
+        and televisions must display a label indicating their energy consumption and
+        efficiency grade【912087049771804†L5146-L5153】.
       </p>
+      <p>
+        A higher grade means the product consumes less electricity for the same amount
+        of useful output.  Selecting high‑efficiency devices can significantly reduce
+        household energy bills and greenhouse gas emissions.
+      </p>
+    </section>
 
-      <div class="badge-strip">
-        <span class="badge exam">Exam focus: grade 1–5, energy consumption (kW h), \(E = Pt\), cost = tariff × kW h, (sometimes) Energy Efficiency Index</span>
-        <span class="badge skills">Skills: read assumptions (e.g. hours/year), convert units, compare within the same appliance category</span>
+    <section id="label" class="card">
+      <h2>The energy label</h2>
+      <p>
+        The EELS label uses a five‑grade scale:
+      </p>
+      <ul>
+        <li><strong>Grade 1</strong>: Most efficient – lowest energy consumption.</li>
+        <li><strong>Grade 2</strong>: High efficiency.</li>
+        <li><strong>Grade 3</strong>: Moderate efficiency.</li>
+        <li><strong>Grade 4</strong>: Low efficiency.</li>
+        <li><strong>Grade 5</strong>: Least efficient – highest energy consumption.</li>
+      </ul>
+      <p>
+        In addition to the grade, the label shows annual energy consumption (in kWh)
+        measured under standard test conditions.  Consumers can compare appliances of
+        similar capacity by looking at both the grade and the kWh figure.  A smaller
+        number indicates lower annual energy use.
+      </p>
+      <div class="callout note">
+        <strong>Note:</strong> Grade 1 indicates the highest efficiency; Grade 5 the lowest.
+        The labelling scale is <em>inverse</em> to the numeric value.  Don’t assume a
+        higher number means a better product.
       </div>
+    </section>
 
-      <!-- Jump Bar -->
-      <div class="section-nav" aria-label="Jump to section" style="margin-top:20px; justify-content:center;">
-        <a href="#sec01" class="nav-btn"><span>1</span> Syllabus focus</a>
-        <a href="#sec02" class="nav-btn"><span>2</span> What is EELS?</a>
-        <a href="#sec03" class="nav-btn"><span>3</span> Types of labels</a>
-        <a href="#sec04" class="nav-btn"><span>4</span> How to read a label</a>
-        <a href="#sec05" class="nav-btn"><span>5</span> Worked example</a>
-        <a href="#sec06" class="nav-btn"><span>6</span> EEI &amp; grading</a>
-        <a href="#sec07" class="nav-btn"><span>7</span> Energy-saving devices</a>
-        <a href="#sec08" class="nav-btn"><span>8</span> Reminders</a>
-        <a href="#sec09" class="nav-btn"><span>9</span> Key terms</a>
+    <section id="usage" class="card">
+      <h2>Using the label</h2>
+      <p>
+        To choose an energy‑efficient product:
+      </p>
+      <ol>
+        <li>Identify appliances with Grade 1 or Grade 2 labels.</li>
+        <li>Compare the annual energy consumption values; a lower kWh value means
+            lower running cost.</li>
+        <li>Consider the appliance’s capacity and features – very large units may use
+            more energy even if highly efficient.</li>
+        <li>Look for additional energy‑saving features, such as inverter drives,
+            smart sensors or standby power reduction.</li>
+      </ol>
+      <p>
+        The curriculum encourages solving problems involving the scheme and suggesting
+        examples of energy‑saving devices【912087049771804†L5146-L5153】.  Examples
+        include LED lighting, inverter air‑conditioners, and front‑loading washing
+        machines.
+      </p>
+      <div class="callout rem">
+        <strong>Reminder:</strong> Some appliances are not yet covered by the mandatory
+        labelling scheme.  Always check whether a label is required for the product
+        you’re buying.
       </div>
+    </section>
 
-      <!-- Section 1 -->
-      <section>
-        <div class="card">
-          <h2 id="sec01">1. Syllabus focus (what you must be able to do)</h2>
-          <ul class="key-list">
-            <li>Discuss the uses of the <strong>Hong Kong Energy Efficiency Labelling Scheme (EELS)</strong> for energy-saving.</li>
-            <li><strong>Interpret</strong> information shown on an energy label (e.g. grade, energy consumption, assumptions).</li>
-            <li>Solve problems involving EELS (e.g. <strong>electricity cost</strong>, <strong>input power</strong>, comparing grades).</li>
-            <li>Suggest examples of <strong>energy-saving devices</strong>.</li>
-          </ul>
+    <section id="example" class="card">
+      <h2>Worked example</h2>
+      <p>
+        Two refrigerators have similar storage capacities.  Fridge A has a Grade 1
+        label and an annual energy consumption of 320 kWh; Fridge B has a Grade 3 label
+        and consumes 480 kWh per year.  Electricity costs HK$1.3 per kWh.
+      </p>
+      <p><strong>Solution:</strong></p>
+      <ol>
+        <li>Annual running cost of Fridge A:
+          \(320\times 1.3 = \text{HK}\$416\).</li>
+        <li>Annual running cost of Fridge B:
+          \(480\times 1.3 = \text{HK}\$624\).</li>
+        <li>Difference in annual cost: HK$624 – HK$416 = HK$208.  Over a typical
+            10‑year lifespan the cost difference is about HK$2,080, illustrating
+            the long‑term savings of a more efficient appliance.</li>
+      </ol>
+    </section>
 
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Note</span>
-              <div class="co-content">
-                EELS classifies energy performance into <strong>five grades (1 to 5)</strong>. <strong>Grade 1</strong> is the most efficient and <strong>Grade 5</strong> is the least efficient <strong>in that category</strong>.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 2 -->
-      <section>
-        <div class="card">
-          <h2 id="sec02">2. What is EELS?</h2>
-          <ul class="key-list">
-            <li>Electrical appliances with high energy efficiencies <strong>save energy</strong>.</li>
-            <li>Appliances included in EELS are affixed with <strong>energy labels</strong> to show their energy performance, helping consumers choose more energy-efficient products.</li>
-          </ul>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.1 0-2 .9-2 2v8h4v-8c0-1.1-.9-2-2-2zm0-6a3 3 0 00-3 3v1h6V5a3 3 0 00-3-3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Why it helps</span>
-              <div class="co-content">
-                A more efficient appliance usually uses <strong>less electrical energy (kW h)</strong> for the same purpose, so it gives a <strong>lower running cost</strong>.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 3 -->
-      <section>
-        <div class="card">
-          <h2 id="sec03">3. Types of energy labels (overview)</h2>
-          <ul class="key-list">
-            <li>There are two labelling schemes: <strong>voluntary</strong> and <strong>mandatory</strong>.</li>
-            <li>The voluntary scheme includes <strong>Grading Type</strong> and <strong>Recognition Type</strong> energy labels.</li>
-            <li>The mandatory scheme includes only <strong>Grading Type</strong> energy labels.</li>
-          </ul>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v12a2 2 0 01-2 2z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Recognition type</span>
-              <div class="co-content">
-                A Recognition Type label indicates that the product has met the <strong>minimum energy efficiency</strong> specified in the scheme.
-              </div>
-            </div>
-          </div>
-
-          <div class="figure">
-            <div class="fig-hd">
-              <span>Grading Type idea (grade 1–5)</span>
-              <span style="color:var(--text-muted); font-weight:700;">Grade 1 = most efficient</span>
-            </div>
-            <div class="fig-bd">
-              <div class="grade-bar" aria-label="Example grading bar">
-                <div class="grade on">1</div>
-                <div class="grade">2</div>
-                <div class="grade">3</div>
-                <div class="grade">4</div>
-                <div class="grade">5</div>
-              </div>
-              <p style="margin:10px 0 0; color:var(--text-muted); font-size:0.95rem;">
-                In exam questions, you compare grades <strong>within the same appliance category</strong>.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 4 -->
-      <section>
-        <div class="card">
-          <h2 id="sec04">4. How to read an energy label (problem-solving steps)</h2>
-
-          <h3>Step 1: Identify what is given</h3>
-          <ul class="key-list">
-            <li>Grade (1–5), or an index/value related to energy performance.</li>
-            <li>Energy consumption over a stated period (often in <strong>kW h</strong>, e.g. per year under a stated usage assumption).</li>
-            <li>Any usage assumption (e.g. operating time per year).</li>
-          </ul>
-
-          <h3>Step 2: Decide what you need to find</h3>
-          <ul class="key-list">
-            <li><strong>Running cost</strong>: 
-              \(\text{Cost} = (\text{electricity tariff per kW h})\times E(\text{kW h})\).
-            </li>
-            <li><strong>Input power</strong> (if energy and time are given): 
-              \(P = \dfrac{E}{t}\).
-            </li>
-          </ul>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Common trap</span>
-              <div class="co-content">
-                Don’t forget the <strong>assumption</strong> written on the label. For example, if the label states “1460 hours per year”, then the listed kW h is under that assumption.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 5 -->
-      <section>
-        <div class="card">
-          <h2 id="sec05">5. Worked example (television label → cost &amp; input power)</h2>
-
-          <div class="figure">
-            <div class="fig-hd">
-              <span>Example: energy label information (television, partial)</span>
-              <span style="color:var(--text-muted); font-weight:700;">Given on label</span>
-            </div>
-            <div class="fig-bd">
-              <div class="label-grid">
-                <div class="kv">
-                  <div class="k">Assumed operating time</div>
-                  <div class="v">1460 h per year</div>
-                </div>
-                <div class="kv">
-                  <div class="k">Annual energy consumption</div>
-                  <div class="v">38 kW h</div>
-                </div>
-                <div class="kv">
-                  <div class="k">Energy Efficiency Index</div>
-                  <div class="v">0.19</div>
-                </div>
-                <div class="kv">
-                  <div class="k">Diagonal screen size</div>
-                  <div class="v">80 cm</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <h3>(a) Estimate the electricity cost for 1460 h</h3>
-          <ul class="key-list">
-            <li>Electricity tariff: \($1.1\) per kW h (given)</li>
-            <li>Energy used: \(E = 38\,\text{kW h}\) (from label)</li>
-            <li>\(\text{Cost} = 1.1 \times 38 = 41.8\)</li>
-            <li><strong>Answer:</strong> \(\boxed{\$41.8}\)</li>
-          </ul>
-
-          <h3>(b) Estimate the input power of the television</h3>
-          <ul class="key-list">
-            <li>\(P = \dfrac{E}{t} = \dfrac{38\,\text{kW h}}{1460\,\text{h}} = 0.0260\,\text{kW}\)</li>
-            <li>\(0.0260\,\text{kW} = 26\,\text{W}\)</li>
-            <li><strong>Answer:</strong> \(\boxed{26\,\text{W}}\)</li>
-          </ul>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Tip</span>
-              <div class="co-content">
-                If \(E\) is in kW h and \(t\) is in h, then \(P\) comes out in kW directly (no extra unit conversion needed).
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 6 -->
-      <section>
-        <div class="card">
-          <h2 id="sec06">6. Energy Efficiency Index (EEI) &amp; grading</h2>
-
-          <h3>Energy Efficiency Index (example definition)</h3>
-          <ul class="key-list">
-            <li>Appliances can be graded by an Energy Efficiency Index \(I_{\varepsilon}\):</li>
-            <li>\(\displaystyle I_{\varepsilon} = \frac{E_{ac}}{E_{av}}\times 100\%\)</li>
-            <li>\(E_{ac}\): actual energy consumption of the product</li>
-            <li>\(E_{av}\): average energy consumption of products in the same category</li>
-          </ul>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Meaning</span>
-              <div class="co-content">
-                Smaller \(I_{\varepsilon}\) means smaller \(E_{ac}\), so the product uses <strong>less energy</strong> than average in that category.
-              </div>
-            </div>
-          </div>
-
-          <h3>Example grading table (electric storage water heater)</h3>
-          <div class="table-container">
-            <table class="data-table" aria-label="Example grading scheme">
-              <thead>
-                <tr>
-                  <th>\(I_{\varepsilon}\) (%)</th>
-                  <th>Grade</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td>\(I_{\varepsilon} \le 75\)</td><td>1</td></tr>
-                <tr><td>\(75 &lt; I_{\varepsilon} \le 90\)</td><td>2</td></tr>
-                <tr><td>\(90 &lt; I_{\varepsilon} \le 105\)</td><td>3</td></tr>
-                <tr><td>\(105 &lt; I_{\varepsilon} \le 120\)</td><td>4</td></tr>
-                <tr><td>\(120 &lt; I_{\varepsilon}\)</td><td>5</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>Worked multiple-choice style idea</h3>
-          <ul class="key-list">
-            <li>Compare a grade 2 product with a grade 4 product.</li>
-            <li>For the <strong>minimum</strong> percentage difference (“at least”), take grade 2 at the <strong>highest</strong> value (90) and grade 4 at the <strong>lowest</strong> value (105).</li>
-            <li>\(\text{percent lower} = \dfrac{105 - 90}{105}\times 100\% = 14.3\%\)</li>
-            <li><strong>Answer:</strong> \(\boxed{14.3\%}\)</li>
-          </ul>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Exam note</span>
-              <div class="co-content">
-                The grading boundaries depend on the appliance category. In questions, the necessary table / criteria will be provided.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 7 -->
-      <section>
-        <div class="card">
-          <h2 id="sec07">7. Examples of energy-saving devices (E3 required)</h2>
-          <ul class="key-list">
-            <li><strong>Higher-grade appliances</strong> in EELS (e.g. grade 1 instead of grade 4–5) for the same category.</li>
-            <li><strong>LED lamps</strong> (high lighting efficacy) instead of incandescent lamps.</li>
-            <li>Devices that reduce unnecessary operation time (e.g. <strong>timer</strong> / <strong>automatic switch-off</strong>).</li>
-          </ul>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.1 0-2 .9-2 2v8h4v-8c0-1.1-.9-2-2-2zm0-6a3 3 0 00-3 3v1h6V5a3 3 0 00-3-3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">How to write in exam</span>
-              <div class="co-content">
-                Mention the device and the reason: “It uses less electrical energy (kW h) for the same purpose, so it reduces running cost.”
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 8 -->
-      <section>
-        <div class="card">
-          <h2 id="sec08">8. Reminders &amp; common exam traps</h2>
-          <ul class="key-list">
-            <li><strong>Compare within the same category</strong>: the grade meaning is “most/least efficient in that category”.</li>
-            <li>When asked for <strong>running cost</strong>, always use energy in <strong>kW h</strong>.</li>
-            <li>When asked for <strong>input power</strong>, use \(P=\dfrac{E}{t}\) and keep units consistent (kW h with h → kW).</li>
-            <li>Use the <strong>assumption</strong> shown on the label (e.g. operating hours per year).</li>
-          </ul>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Unit trap</span>
-              <div class="co-content">
-                Don’t multiply tariff (per kW h) by energy in joule. Convert to kW h first (or work in kW h directly from the label).
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 9 -->
-      <section>
-        <div class="card">
-          <h2 id="sec09">9. Key terms</h2>
-          
-          <div class="term-tabs">
-            <input type="radio" name="term" id="term-eels" class="term-radio" checked>
-            <input type="radio" name="term" id="term-grading" class="term-radio">
-            <input type="radio" name="term" id="term-recognition" class="term-radio">
-            <input type="radio" name="term" id="term-consump" class="term-radio">
-            <input type="radio" name="term" id="term-tariff" class="term-radio">
-            <input type="radio" name="term" id="term-eei" class="term-radio">
-
-            <div class="term-tab-bar">
-              <label for="term-eels" class="term-tab-btn">EELS</label>
-              <label for="term-grading" class="term-tab-btn">Grading Type</label>
-              <label for="term-recognition" class="term-tab-btn">Recognition Type</label>
-              <label for="term-consump" class="term-tab-btn">Energy Consumption</label>
-              <label for="term-tariff" class="term-tab-btn">Tariff</label>
-              <label for="term-eei" class="term-tab-btn">EEI \(I_{\varepsilon}\)</label>
-            </div>
-
-            <div class="term-panel" id="panel-term-eels">
-              <p><strong>EELS</strong>: Energy Efficiency Labelling Scheme (Hong Kong) — energy labels show energy performance of appliances.</p>
-            </div>
-            <div class="term-panel" id="panel-term-grading">
-              <p><strong>Grading Type label</strong>: classifies energy performance into <strong>grades 1 to 5</strong>.</p>
-            </div>
-            <div class="term-panel" id="panel-term-recognition">
-              <p><strong>Recognition Type label</strong>: indicates the product meets the <strong>minimum</strong> energy efficiency specified.</p>
-            </div>
-            <div class="term-panel" id="panel-term-consump">
-              <p><strong>Electricity consumption</strong>: energy used by an appliance, often in <strong>kW h</strong>.</p>
-            </div>
-            <div class="term-panel" id="panel-term-tariff">
-              <p><strong>Electricity tariff</strong>: price per kW h used for cost calculation.</p>
-            </div>
-            <div class="term-panel" id="panel-term-eei">
-              <p><strong>Energy Efficiency Index</strong> \(I_{\varepsilon}\): \(\dfrac{E_{ac}}{E_{av}}\times 100\%\) (in some categories/questions).</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Bottom navigation (required) -->
-      <div class="section-nav" style="justify-content:center; margin-top: 18px;">
-        <a class="nav-btn" href="../index.html">&larr; Back to index</a>
+    <section id="reminders" class="card">
+      <h2>Reminders &amp; Key terms</h2>
+      <div class="callout rem">
+        <strong>Reminders:</strong>
+        <ul>
+          <li>Grade 1 is the highest efficiency; Grade 5 is the lowest.</li>
+          <li>Always compare appliances of similar capacity or output when using the label.</li>
+          <li>Look beyond the grade – read the annual energy consumption figure.</li>
+        </ul>
       </div>
+      <div class="key-terms">
+        <strong>Key terms</strong>
+        <ul>
+          <li><strong>EELS</strong> – Hong Kong Energy Efficiency Labelling Scheme.</li>
+          <li><strong>Energy label</strong> – sticker showing efficiency grade and annual kWh use.</li>
+          <li><strong>Energy‑saving device</strong> – appliance designed to minimise energy consumption (e.g. LED lamps).</li>
+        </ul>
+      </div>
+    </section>
 
-      <p class="footer">HKDSE Physics • E3 Energy &amp; Use of Energy</p>
-
-    </main>
+    <footer class="hero">
+      <div class="nav-buttons">
+        <a href="../index.html">Back to Index</a>
+        <a href="energy_efficiency_home.html">&lt; Prev</a>
+        <a href="lamps_incandescent_discharge_led.html">Next &gt;</a>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 8px;">
+        References: HKDSE Physics C&amp;A Guide【912087049771804†L5146-L5153】
+      </p>
+    </footer>
   </div>
 </body>
 </html>

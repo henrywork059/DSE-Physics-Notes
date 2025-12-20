@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E3 — Heat Radiation</title>
+  <!--
+    This support page provides a brief review of thermal radiation — the emission
+    and absorption of electromagnetic waves by surfaces — to help students
+    understand how surface properties influence heat gain and loss in the
+    Energy module.  Although not explicitly listed as a separate bullet in
+    the syllabus, radiation principles underpin discussions of building
+    envelopes, solar control and energy efficiency.
+  -->
+  <style>
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --primary: #3b82f6;
+      --primary-dim: rgba(59, 130, 246, 0.1);
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
+    }
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin: 16px 0;
+    }
+    .nav-buttons a {
+      background: var(--primary);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .nav-buttons a:hover {
+      background: #2563eb;
+    }
+    .jump-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .jump-bar a {
+      background: var(--primary-dim);
+      color: var(--primary);
+      padding: 6px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+    .jump-bar a:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    .card h2 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+    .callout {
+      margin: 16px 0;
+      padding: 12px;
+      border-left: 4px solid;
+      border-radius: 6px;
+    }
+    .callout.note { background: #eff6ff; border-color: #3b82f6; }
+    .callout.trap { background: #fef2f2; border-color: #ef4444; }
+    .callout.rem { background: #f0fdf4; border-color: #10b981; }
+    .key-terms {
+      background: #f9fafb;
+      border: 1px dashed var(--border);
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+    .key-terms ul {
+      list-style: disc inside;
+      margin-left: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1>Heat Radiation</h1>
+      <p>Emission and absorption of thermal radiation</p>
+      <div class="nav-buttons">
+        <a href="../index.html">Back to Index</a>
+        <a href="buildings_ottv.html">&lt; Prev</a>
+        <a href="window_radiation_control.html">Next &gt;</a>
+      </div>
+    </header>
+
+    <nav class="jump-bar">
+      <a href="#emission">Emission of radiation</a>
+      <a href="#absorption">Absorption and surface properties</a>
+      <a href="#applications">Applications</a>
+      <a href="#reminders">Reminders</a>
+    </nav>
+
+    <section id="emission" class="card">
+      <h2>Emission of radiation</h2>
+      <p>
+        All objects at a temperature above absolute zero emit electromagnetic
+        radiation.  This energy is carried by photons and does not require a
+        medium to travel — hence radiation can occur through vacuum.  The
+        amount of energy radiated per unit area is described by the
+        Stefan–Boltzmann law:
+      </p>
+      <p>
+        \[P = \sigma \varepsilon A T^4\,,\]
+        where \(\sigma\) is the Stefan–Boltzmann constant, \(\varepsilon\) is the
+        emissivity (between 0 and 1) and \(T\) is the absolute temperature in
+        kelvin.  Surfaces with higher emissivity radiate more energy.
+      </p>
+      <div class="callout note">
+        <strong>Note:</strong> The radiation spectrum from a warm object peaks at
+        infrared wavelengths.  This is why thermal cameras detect IR.
+      </div>
+    </section>
+
+    <section id="absorption" class="card">
+      <h2>Absorption and surface properties</h2>
+      <p>
+        When radiation strikes a surface it may be absorbed, reflected or
+        transmitted.  The efficiency of absorption depends on the colour and
+        texture of the surface.  Dull black surfaces are excellent absorbers
+        and emitters; shiny, light‑coloured surfaces are poor absorbers and
+        reflect much of the incoming radiation.
+      </p>
+      <p>
+        In building physics this means that dark, matte roofs and walls
+        absorb more solar energy than light‑coloured, reflective finishes.
+        Choosing appropriate materials can therefore reduce unwanted heat gain.
+      </p>
+      <div class="callout trap">
+        <strong>Common trap:</strong> Students often confuse thermal radiation with
+        conduction or convection.  Remember that radiation does not require a
+        medium and travels at the speed of light.
+      </div>
+    </section>
+
+    <section id="applications" class="card">
+      <h2>Applications</h2>
+      <p>
+        Understanding heat radiation allows engineers to design more efficient
+        buildings and appliances.  Examples include:
+      </p>
+      <ul>
+        <li><strong>Solar control coatings:</strong> Window films that reflect
+          infrared radiation while transmitting visible light help reduce
+          cooling loads.</li>
+        <li><strong>Radiator fins:</strong> Painting fins matte black increases
+          emissivity, improving heat emission.</li>
+        <li><strong>Thermal insulation:</strong> Aluminium foil behind radiators
+          reflects radiation back into the room, reducing heat loss through
+          walls.</li>
+      </ul>
+      <p>
+        Although the HKDSE syllabus does not explicitly test Stefan–Boltzmann
+        calculations, a qualitative understanding of how surface colour and
+        finish affect radiation is useful when discussing building envelopes
+        and energy efficiency.
+      </p>
+    </section>
+
+    <section id="reminders" class="card">
+      <h2>Reminders</h2>
+      <div class="callout rem">
+        <strong>Remember:</strong> Heat radiation travels in straight lines and can be
+        reflected.  In the context of buildings, shading devices and low‑E
+        coatings help manage radiation without compromising daylight.
+      </div>
+      <div class="key-terms">
+        <strong>Key terms:</strong>
+        <ul>
+          <li>Thermal radiation</li>
+          <li>Emissivity</li>
+          <li>Absorptance</li>
+          <li>Stefan–Boltzmann law</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

@@ -1,679 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="light dark" />
-  <title>E3 — Lighting: Efficacy (lm W⁻¹) | DSE Physics Notes</title>
-
-  <!-- MathJax for equation rendering -->
-  <script>
-    window.MathJax = {
-      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['$$','$$']] },
-      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
+  <title>E3 — Lighting: Efficacy</title>
+  <!-- Page defining luminous efficacy (lm W^-1). -->
   <style>
-    /* =============================
-       Design System: Modern DSE
-       (kept consistent with E2 pages)
-       ============================= */
     :root {
-      --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-
-      /* Palette: Slate & Blue */
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       --primary: #3b82f6;
-      --primary-dark: #2563eb;
-      --primary-dim: rgba(59, 130, 246, 0.08);
-
+      --primary-dim: rgba(59, 130, 246, 0.1);
       --bg-body: #f8fafc;
       --bg-card: #ffffff;
-      --bg-header: #ffffff;
-
-      --text-main: #1e293b;
+      --text-main: #0f172a;
       --text-muted: #64748b;
-
       --border: #e2e8f0;
-      --radius: 16px;
-
-      /* Shadows */
-      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.08);
-      --shadow-md: 0 4px 14px -4px rgba(15, 23, 42, 0.14), 0 2px 6px -2px rgba(15, 23, 42, 0.10);
-
-      /* Semantic Colors */
-      --accent-amber: #f59e0b;
-      --accent-amber-bg: #fffbeb;
-      --accent-amber-border: rgba(245, 158, 11, 0.35);
-
-      --accent-info: #3b82f6;
-      --accent-info-bg: rgba(59, 130, 246, 0.08);
-      --accent-info-border: rgba(59, 130, 246, 0.28);
-
-      --accent-green: #10b981;
-      --accent-green-bg: rgba(16, 185, 129, 0.10);
-      --accent-green-border: rgba(16, 185, 129, 0.20);
+      --radius: 12px;
     }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-body: #0f172a;
-        --bg-card: #1e293b;
-        --bg-header: #1e293b;
-
-        --text-main: #f1f5f9;
-        --text-muted: #94a3b8;
-
-        --border: #334155;
-
-        --primary: #60a5fa;
-        --primary-dark: #3b82f6;
-        --primary-dim: rgba(96, 165, 250, 0.10);
-
-        --accent-amber-bg: rgba(245, 158, 11, 0.10);
-        --accent-amber-border: rgba(245, 158, 11, 0.30);
-
-        --accent-info-bg: rgba(59, 130, 246, 0.10);
-        --accent-info-border: rgba(59, 130, 246, 0.30);
-
-        --accent-green-bg: rgba(16, 185, 129, 0.10);
-        --accent-green-border: rgba(16, 185, 129, 0.25);
-      }
-    }
-
-    /* --- Base --- */
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: var(--font-sans);
-      background: var(--bg-body);
-      color: var(--text-main);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    /* --- Layout --- */
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 20px 60px;
-    }
-
-    /* --- Hero Header --- */
-    .hero-header {
-      background: var(--bg-header);
-      border-bottom: 1px solid var(--border);
-      padding: 40px 20px 30px;
-      text-align: center;
-      margin-bottom: 22px;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .nav-breadcrumb {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.90rem;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      background: var(--bg-body);
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
-      background: linear-gradient(135deg, var(--primary), #8b5cf6);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .meta-subtitle {
-      font-size: 1.0rem;
-      color: var(--text-muted);
-      max-width: 760px;
-      margin: 0 auto 18px;
-    }
-
-    /* --- Navigation Buttons --- */
-    .section-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 16px 0 0;
-      padding: 0;
-    }
-
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      color: var(--primary);
-      font-weight: 700;
-      font-size: 0.95rem;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .nav-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .nav-btn span {
-      background: var(--primary);
-      color: white;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      margin-right: 4px;
-    }
-
-    /* --- Badges --- */
-    .badge-strip {
-      margin: 14px 0 0;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      border-radius: 8px;
-      border: 1px solid;
-      font-size: 0.90rem;
-      font-weight: 600;
-    }
-
-    .badge.exam {
-      background: var(--accent-info-bg);
-      color: var(--primary);
-      border-color: var(--accent-info-border);
-    }
-
-    .badge.skills {
-      background: var(--accent-green-bg);
-      color: var(--accent-green);
-      border-color: var(--accent-green-border);
-    }
-
-    /* --- Content Cards --- */
-    section { margin-top: 14px; }
-
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-      margin: 22px 0;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .card h2 {
-      margin: 0 0 18px;
-      font-size: 1.4rem;
-      font-weight: 700;
-      padding-left: 14px;
-      position: relative;
-      scroll-margin-top: 120px;
-      color: var(--text-main);
-    }
-
-    .card h2::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0.2em;
-      width: 6px;
-      height: 1.1em;
-      border-radius: 99px;
-      background: var(--primary);
-    }
-
-    .card h3 {
-      margin: 24px 0 12px;
-      font-size: 1.1rem;
-      font-weight: 650;
-      color: var(--text-main);
-    }
-
-    ul.key-list {
-      margin: 0;
-      padding-left: 20px;
-      color: var(--text-muted);
-    }
-
-    .key-list li { margin: 8px 0; }
-    .key-list li::marker { color: var(--primary); }
-    strong { color: var(--text-main); font-weight: 650; }
-
-    .section-intro {
-      margin: 0 auto;
-      max-width: 840px;
-      color: var(--text-muted);
-      font-size: 1.02rem;
-      padding: 14px 16px;
-      border-radius: 12px;
-      background: var(--primary-dim);
-      border: 1px solid var(--accent-info-border);
-      box-shadow: var(--shadow-sm);
-    }
-
-    /* --- Semantic Callouts --- */
-    .callout {
-      padding: 16px 20px;
-      border-radius: 12px;
-      margin: 18px 0;
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      font-size: 0.95rem;
-      border: 1px solid;
-    }
-
-    .co-icon {
-      flex-shrink: 0;
-      width: 24px;
-      height: 24px;
-      margin-top: 2px;
-    }
-    .co-icon svg { width: 100%; height: 100%; }
-
-    .co-title {
-      display: block;
-      font-weight: 800;
-      margin-bottom: 4px;
-      font-size: 0.80rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .co-content { color: var(--text-main); }
-
-    .callout.note {
-      background: var(--accent-info-bg);
-      border-color: var(--accent-info-border);
-    }
-    .callout.note .co-icon, .callout.note .co-title { color: var(--primary); }
-
-    .callout.trap {
-      background: var(--accent-amber-bg);
-      border-color: var(--accent-amber-border);
-    }
-    .callout.trap .co-icon, .callout.trap .co-title { color: var(--accent-amber); }
-
-    .callout.good {
-      background: var(--accent-green-bg);
-      border-color: var(--accent-green-border);
-    }
-    .callout.good .co-icon, .callout.good .co-title { color: var(--accent-green); }
-
-    /* --- Tables --- */
-    .table {
-      width: 100%;
-      border-collapse: collapse;
-      overflow: hidden;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      margin-top: 10px;
-    }
-
-    .table th, .table td {
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-      vertical-align: top;
-    }
-
-    .table th {
-      background: rgba(59,130,246,0.08);
-      color: var(--text-main);
-      font-weight: 900;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .table th { background: rgba(96,165,250,0.10); }
-    }
-
-    .footer {
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-top: 22px;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .container { padding: 0 16px 60px; }
-      h1 { font-size: 1.8rem; }
-      .card { padding: 20px; }
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--bg-body); color: var(--text-main); line-height: 1.6; padding: 20px; }
+    .container { max-width: 850px; margin: 0 auto; }
+    .hero { text-align: center; margin-bottom: 20px; }
+    .hero h1 { font-size: 2rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 4px; }
+    .hero p { color: var(--text-muted); font-size: 1rem; }
+    .nav-buttons { display: flex; justify-content: space-between; margin: 16px 0; }
+    .nav-buttons a { background: var(--primary); color: #fff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: background 0.2s; }
+    .nav-buttons a:hover { background: #2563eb; }
+    .jump-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .jump-bar a { background: var(--primary-dim); color: var(--primary); padding: 6px 10px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; white-space: nowrap; }
+    .jump-bar a:hover { background: var(--primary); color: #fff; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
+    .card h2 { font-size: 1.3rem; margin-bottom: 8px; }
+    .callout { margin: 16px 0; padding: 12px; border-left: 4px solid; border-radius: 6px; }
+    .callout.note { background: #eff6ff; border-color: #3b82f6; }
+    .callout.trap { background: #fef2f2; border-color: #ef4444; }
+    .callout.rem { background: #f0fdf4; border-color: #10b981; }
+    .key-terms { background: #f9fafb; border: 1px dashed var(--border); padding: 12px; border-radius: 6px; margin-bottom: 20px; }
+    .key-terms ul { list-style: disc inside; margin-left: 16px; }
   </style>
 </head>
 <body>
-
-  <!-- Hero Header -->
-  <header class="hero-header">
-    <div class="nav-breadcrumb">
-      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--primary)">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-      </svg>
-      Index / E3
-    </div>
-
-    <h1>E3 — Lighting: Efficacy (lm W⁻¹)</h1>
-    <p class="meta-subtitle">
-      HKDSE Physics — Elective E3: Energy &amp; Use of Energy · Use <strong>luminous efficacy</strong> to compare lamps fairly: “How much visible light (lm) do I get per watt?”
-    </p>
-
-    <!-- Navigation HTML template (required) -->
-    <div class="section-nav" style="justify-content:center;">
-      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
-      <a class="nav-btn" href="lighting_illuminance.html">&larr; Previous</a>
-      <a class="nav-btn" href="cooking_without_fire.html">Next &rarr;</a>
-    </div>
-  </header>
-
   <div class="container">
-    <main>
+    <header class="hero">
+      <h1>Lighting: Efficacy</h1>
+      <p>Luminous flux per unit electrical power</p>
+      <div class="nav-buttons">
+        <a href="../index.html">Back to Index</a>
+        <a href="lighting_illuminance.html">&lt; Prev</a>
+        <a href="cooking_without_fire.html">Next &gt;</a>
+      </div>
+    </header>
 
-      <p class="section-intro" style="text-align:center;">
-        For lamp questions, <strong>brightness</strong> is linked to <strong>luminous flux</strong> \(\Phi\) (lm), but <strong>electricity use</strong> depends on input power \(P\) (W).
-        <br />
-        <strong>Efficacy</strong> connects them: \(\text{Efficacy} = \dfrac{\Phi}{P}\) (lm W\(^{-1}\)).
+    <nav class="jump-bar">
+      <a href="#definition">Definition</a>
+      <a href="#calculation">Calculation</a>
+      <a href="#example">Worked example</a>
+      <a href="#reminders">Reminders</a>
+    </nav>
+
+    <section id="definition" class="card">
+      <h2>Definition</h2>
+      <p>
+        <strong>Luminous efficacy</strong> \(\eta\) is defined as the ratio of
+        luminous flux to electrical power input【912087049771804†L5105-L5106】:
+        \[\eta = \frac{\Phi}{P}\, .\]
+        It measures how efficiently a light source converts electrical energy into
+        visible light.  The unit of efficacy is lumens per watt (lm W<sup>−1</sup>).
       </p>
+      <p>
+        The higher the efficacy, the more light you obtain for the same power.  For
+        example, an LED lamp with \(\eta = 100\,\text{lm W}^{-1}\) produces roughly
+        six times as much light as an incandescent bulb of \(\eta = 15\,\text{lm W}^{-1}\) for the same power input.
+      </p>
+    </section>
 
-      <div class="badge-strip">
-        <span class="badge exam">Exam focus: \(\text{Efficacy} = \Phi/P\), \(\Phi = (\text{efficacy})\times P\), compare energy-saving lamps</span>
-        <span class="badge skills">Skills: unit check (lm, W), interpret packaging / labels, compare “same brightness” cases</span>
+    <section id="calculation" class="card">
+      <h2>Calculation</h2>
+      <p>
+        Efficacy can be measured directly by dividing the measured luminous flux by the
+        electrical power consumed:
+      </p>
+      <p>
+        \[\eta = \frac{\Phi}{P}\, .\]
+      </p>
+      <p>
+        Manufacturers often provide nominal efficacy values.  When comparing
+        light sources, remember that the quoted luminous flux is adjusted to the
+        human eye’s sensitivity.  A source emitting mostly infrared may have low
+        luminous efficacy even if it radiates a lot of energy.
+      </p>
+    </section>
+
+    <section id="example" class="card">
+      <h2>Worked example</h2>
+      <p>
+        A 12 W compact fluorescent lamp (CFL) produces 800 lm of light.  A 60 W
+        incandescent bulb produces 720 lm.  Compare their efficacies and determine
+        how much power an LED lamp would need to produce 800 lm if its efficacy is
+        100 lm W<sup>−1</sup>.
+      </p>
+      <p><strong>Solution:</strong></p>
+      <ol>
+        <li>\(\eta_{\text{CFL}} = 800/12 \approx 66.7\) lm W<sup>−1</sup>.</li>
+        <li>\(\eta_{\text{inc}} = 720/60 = 12\) lm W<sup>−1</sup>.</li>
+        <li>An LED lamp producing 800 lm at 100 lm W<sup>−1</sup> requires \(P = 800/100 = 8\) W.</li>
+      </ol>
+      <p>
+        Thus the CFL is over five times as efficient as the incandescent bulb, and
+        the LED lamp is even more efficient.
+      </p>
+    </section>
+
+    <section id="reminders" class="card">
+      <h2>Reminders &amp; Key terms</h2>
+      <div class="callout rem">
+        <strong>Reminders:</strong>
+        <ul>
+          <li>Efficacy is the lumens per watt of input power【912087049771804†L5105-L5106】.</li>
+          <li>Compare lamps by both luminous flux and efficacy.</li>
+          <li>Be careful not to confuse efficacy (lm W<sup>−1</sup>) with efficiency (%).</li>
+        </ul>
       </div>
-
-      <!-- Jump Bar -->
-      <div class="section-nav" aria-label="Jump to section" style="margin-top:20px; justify-content:center;">
-        <a href="#sec01" class="nav-btn"><span>1</span> Syllabus focus</a>
-        <a href="#sec02" class="nav-btn"><span>2</span> Definition &amp; units</a>
-        <a href="#sec03" class="nav-btn"><span>3</span> How to compare lamps</a>
-        <a href="#sec04" class="nav-btn"><span>4</span> Worked examples</a>
-        <a href="#sec05" class="nav-btn"><span>5</span> Typical values</a>
-        <a href="#sec06" class="nav-btn"><span>6</span> Reminders</a>
-        <a href="#sec07" class="nav-btn"><span>7</span> Key terms</a>
+      <div class="key-terms">
+        <strong>Key terms</strong>
+        <ul>
+          <li><strong>Luminous efficacy \(\eta\)</strong> – lumens per watt of electrical input.</li>
+          <li><strong>Luminous flux \(\Phi\)</strong> – total visible light output (lm).</li>
+          <li><strong>Electrical power \(P\)</strong> – rate of energy consumption (W).</li>
+        </ul>
       </div>
+    </section>
 
-      <!-- Section 1 -->
-      <section>
-        <div class="card">
-          <h2 id="sec01">1. Syllabus focus (what you must be able to do)</h2>
-          <ul class="key-list">
-            <li>Define <strong>efficacy of electric lights</strong> as a ratio of <strong>luminous flux</strong> to <strong>electrical power input</strong>.</li>
-            <li>Use \(\text{Efficacy} = \Phi/P\) (and \(\Phi = (\text{efficacy})\times P\)) to solve numerical problems.</li>
-            <li>Compare lamps and justify which is more <strong>energy-saving</strong> for the same brightness requirement.</li>
-          </ul>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Idea</span>
-              <div class="co-content">
-                A lamp can have a high power rating but still look dim. In lighting, it is better to compare using \(\Phi\) (lm) and efficacy (lm W\(^{-1}\)).
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 2 -->
-      <section>
-        <div class="card">
-          <h2 id="sec02">2. Definition &amp; units</h2>
-
-          <h3>What efficacy means</h3>
-          <ul class="key-list">
-            <li><strong>Luminous efficacy</strong> (or simply <strong>efficacy</strong>) measures how efficiently a light uses electrical energy for illumination.</li>
-            <li>It links <strong>luminous flux</strong> \(\Phi\) (lm) and <strong>input power</strong> \(P\) (W).</li>
-          </ul>
-
-          <h3>Formula</h3>
-          <ul class="key-list">
-            <li>\(\displaystyle \text{Efficacy} = \frac{\Phi}{P}\)</li>
-            <li>Rearrange when needed: \(\displaystyle \Phi = (\text{efficacy})\times P\)</li>
-          </ul>
-
-          <h3>Unit</h3>
-          <ul class="key-list">
-            <li>\(\Phi\) in lumen (lm), \(P\) in watt (W) \(\Rightarrow\) efficacy in \(\text{lm W}^{-1}\).</li>
-          </ul>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Unit trap</span>
-              <div class="co-content">
-                Use <strong>watt</strong> (W), not kW, unless you convert correctly. Always state the unit \(\text{lm W}^{-1}\).
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 3 -->
-      <section>
-        <div class="card">
-          <h2 id="sec03">3. How to compare lamps (exam logic)</h2>
-
-          <h3>Case A: “Same brightness” (same luminous flux \(\Phi\))</h3>
-          <ul class="key-list">
-            <li>If two lamps have the same \(\Phi\), then the one with <strong>smaller input power</strong> uses <strong>less electricity</strong>.</li>
-            <li>Because \(\text{efficacy} = \Phi/P\), smaller \(P\) for the same \(\Phi\) means <strong>higher efficacy</strong>.</li>
-          </ul>
-
-          <h3>Case B: “Same power rating” (same \(P\))</h3>
-          <ul class="key-list">
-            <li>If two lamps have the same \(P\), the one with <strong>higher efficacy</strong> has <strong>larger luminous flux</strong>, so it appears brighter.</li>
-            <li>Reason: \(\Phi = (\text{efficacy})\times P\).</li>
-          </ul>
-
-          <div class="callout good">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Exam wording</span>
-              <div class="co-content">
-                “The LED lamp is more energy-saving because it consumes <strong>less power</strong> to give the <strong>same luminous flux</strong> (i.e. higher efficacy).”
-              </div>
-            </div>
-          </div>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Concept link</span>
-              <div class="co-content">
-                Luminous flux \(\Phi\) already includes correction for the <strong>human eye’s sensitivity</strong> to different wavelengths. So it is a good measure for “how bright it looks”.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 4 -->
-      <section>
-        <div class="card">
-          <h2 id="sec04">4. Worked examples (typical DSE style)</h2>
-
-          <h3>Example 1: Find luminous flux from efficacy and power</h3>
-          <ul class="key-list">
-            <li>Given an LED lamp: efficacy = \(110\,\text{lm W}^{-1}\), input power = \(6.5\,\text{W}\)</li>
-            <li>\(\Phi = (\text{efficacy})\times P = 110\times 6.5 = 715\,\text{lm}\)</li>
-            <li><strong>Answer:</strong> \(\boxed{715\,\text{lm}}\)</li>
-          </ul>
-
-          <h3>Example 2: Find efficacy from luminous flux and power</h3>
-          <ul class="key-list">
-            <li>Suppose a 60-W GLS (incandescent) lamp gives \(\Phi = 715\,\text{lm}\).</li>
-            <li>\(\text{Efficacy} = \dfrac{\Phi}{P} = \dfrac{715}{60} = 11.9\,\text{lm W}^{-1}\)</li>
-            <li><strong>Answer:</strong> \(\boxed{11.9\,\text{lm W}^{-1}}\)</li>
-          </ul>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Common mistake</span>
-              <div class="co-content">
-                Don’t write “lm/W” for luminous flux. Luminous flux is just <strong>lm</strong>. Only efficacy is \(\text{lm W}^{-1}\).
-              </div>
-            </div>
-          </div>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Link to cost</span>
-              <div class="co-content">
-                If two lamps have the same brightness (same \(\Phi\)), the one with lower \(P\) uses less electrical energy \(E=Pt\), so the running cost is lower.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 5 -->
-      <section>
-        <div class="card">
-          <h2 id="sec05">5. Typical efficacy values (reference)</h2>
-          <ul class="key-list">
-            <li>Different lamp types have very different efficacies.</li>
-            <li>In general: <strong>LED</strong> and <strong>fluorescent</strong> lamps have much higher efficacy than <strong>incandescent</strong> lamps.</li>
-          </ul>
-
-          <table class="table" aria-label="Typical efficacy values">
-            <thead>
-              <tr>
-                <th>Lamp type</th>
-                <th>Typical efficacy</th>
-                <th>Comment</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Incandescent (GLS)</td>
-                <td>10–20 lm W\(^{-1}\)</td>
-                <td>Low efficacy because much energy becomes heat (infra-red).</td>
-              </tr>
-              <tr>
-                <td>CFL / fluorescent</td>
-                <td>30–100 lm W\(^{-1}\)</td>
-                <td>Higher efficacy than incandescent for similar brightness.</td>
-              </tr>
-              <tr>
-                <td>LED</td>
-                <td>30–100 lm W\(^{-1}\) (often high)</td>
-                <td>High efficacy, commonly used for energy-saving lighting.</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Know more (optional)</span>
-              <div class="co-content">
-                The maximum possible efficacy is \(683\,\text{lm W}^{-1}\) for an ideal light source emitting only 555 nm (green‑yellow) light and converting all electrical energy to light.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 6 -->
-      <section>
-        <div class="card">
-          <h2 id="sec06">6. Reminders &amp; common exam traps</h2>
-          <ul class="key-list">
-            <li><strong>Don’t confuse</strong> power rating with brightness. Brightness is linked to \(\Phi\) (lm).</li>
-            <li>When asked “most energy-saving for the same brightness”, choose the lamp with <strong>highest efficacy</strong> (or lowest \(P\) for the same \(\Phi\)).</li>
-            <li>State the unit clearly: efficacy in \(\text{lm W}^{-1}\).</li>
-            <li>If colours/wavelengths are involved, remember \(\Phi\) is corrected for the human eye’s sensitivity.</li>
-          </ul>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Quick check</span>
-              <div class="co-content">
-                If a lamp has \(\Phi = 2700\,\text{lm}\) and \(P = 45\,\text{W}\), then efficacy \(= 2700/45 = 60\,\text{lm W}^{-1}\).
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 7 -->
-      <section>
-        <div class="card">
-          <h2 id="sec07">7. Key terms</h2>
-          <ul class="key-list">
-            <li><strong>Luminous flux \(\Phi\)</strong>: total light output corrected for human vision (unit: lm).</li>
-            <li><strong>Input power \(P\)</strong>: electrical power consumed by the lamp (unit: W).</li>
-            <li><strong>(Luminous) efficacy</strong>: \(\Phi/P\) (unit: \(\text{lm W}^{-1}\)).</li>
-            <li><strong>Energy-saving lamp</strong>: a lamp with higher efficacy (needs less power for the same \(\Phi\)).</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- Bottom navigation (required) -->
-      <div class="section-nav" style="justify-content:center; margin-top: 18px;">
-        <a class="nav-btn" href="../index.html">&larr; Back to index</a>
-        <a class="nav-btn" href="lighting_illuminance.html">&larr; Previous</a>
-        <a class="nav-btn" href="cooking_without_fire.html">Next &rarr;</a>
+    <footer class="hero">
+      <div class="nav-buttons">
+        <a href="../index.html">Back to Index</a>
+        <a href="lighting_illuminance.html">&lt; Prev</a>
+        <a href="cooking_without_fire.html">Next &gt;</a>
       </div>
-
-      <p class="footer">HKDSE Physics • E3 Energy &amp; Use of Energy</p>
-
-    </main>
+      <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 8px;">
+        References: HKDSE Physics C&amp;A Guide【912087049771804†L5105-L5106】
+      </p>
+    </footer>
   </div>
 </body>
 </html>

@@ -1,782 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="light dark" />
-  <title>E3 — Buildings: Conduction & U-value | DSE Physics Notes</title>
-
-  <!-- MathJax for equation rendering -->
-  <script>
-    window.MathJax = {
-      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['$$','$$']] },
-      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
+  <title>E3 — Buildings: Conduction &amp; U‑value</title>
+  <!--
+    This page covers the physics of heat transfer through building materials as
+    required by the HKDSE Energy module.  It explains the conduction law,
+    defines the thermal transmittance (U‑value) and illustrates how to apply
+    these concepts in simple calculations.  Citations refer to the official
+    Curriculum and Assessment Guide lines on heat conduction and U‑value【912087049771804†L5174-L5183】.
+  -->
   <style>
-    /* =============================
-       Design System: Modern DSE
-       (kept consistent with E2/E3 pages)
-       ============================= */
     :root {
-      --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-
-      /* Palette: Slate & Blue */
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       --primary: #3b82f6;
-      --primary-dark: #2563eb;
-      --primary-dim: rgba(59, 130, 246, 0.08);
-
+      --primary-dim: rgba(59, 130, 246, 0.1);
       --bg-body: #f8fafc;
       --bg-card: #ffffff;
-      --bg-header: #ffffff;
-
-      --text-main: #1e293b;
+      --text-main: #0f172a;
       --text-muted: #64748b;
-
       --border: #e2e8f0;
-      --radius: 16px;
-
-      /* Shadows */
-      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.08);
-      --shadow-md: 0 4px 14px -4px rgba(15, 23, 42, 0.14), 0 2px 6px -2px rgba(15, 23, 42, 0.10);
-
-      /* Semantic Colors */
-      --accent-amber: #f59e0b;
-      --accent-amber-bg: #fffbeb;
-      --accent-amber-border: rgba(245, 158, 11, 0.35);
-
-      --accent-info: #3b82f6;
-      --accent-info-bg: rgba(59, 130, 246, 0.08);
-      --accent-info-border: rgba(59, 130, 246, 0.28);
-
-      --accent-green: #10b981;
-      --accent-green-bg: rgba(16, 185, 129, 0.10);
-      --accent-green-border: rgba(16, 185, 129, 0.20);
+      --radius: 12px;
     }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-body: #0f172a;
-        --bg-card: #1e293b;
-        --bg-header: #1e293b;
-
-        --text-main: #f1f5f9;
-        --text-muted: #94a3b8;
-
-        --border: #334155;
-
-        --primary: #60a5fa;
-        --primary-dark: #3b82f6;
-        --primary-dim: rgba(96, 165, 250, 0.10);
-
-        --accent-amber-bg: rgba(245, 158, 11, 0.10);
-        --accent-amber-border: rgba(245, 158, 11, 0.30);
-
-        --accent-info-bg: rgba(59, 130, 246, 0.10);
-        --accent-info-border: rgba(59, 130, 246, 0.30);
-
-        --accent-green-bg: rgba(16, 185, 129, 0.10);
-        --accent-green-border: rgba(16, 185, 129, 0.25);
-      }
-    }
-
-    /* --- Base --- */
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
       font-family: var(--font-sans);
       background: var(--bg-body);
       color: var(--text-main);
       line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
+      padding: 20px;
     }
-
-    a { color: inherit; text-decoration: none; }
-
-    /* --- Layout --- */
     .container {
-      max-width: 900px;
+      max-width: 850px;
       margin: 0 auto;
-      padding: 0 20px 60px;
     }
-
-    /* --- Hero Header --- */
-    .hero-header {
-      background: var(--bg-header);
-      border-bottom: 1px solid var(--border);
-      padding: 40px 20px 30px;
+    .hero {
       text-align: center;
-      margin-bottom: 22px;
-      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
     }
-
-    .nav-breadcrumb {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.90rem;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      background: var(--bg-body);
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.15;
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 700;
       background: linear-gradient(135deg, var(--primary), #8b5cf6);
       -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
     }
-
-    .meta-subtitle {
-      font-size: 1.0rem;
+    .hero p {
       color: var(--text-muted);
-      max-width: 760px;
-      margin: 0 auto 18px;
+      font-size: 1rem;
     }
-
-    /* --- Navigation Buttons --- */
-    .section-nav {
+    .nav-buttons {
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 16px 0 0;
-      padding: 0;
+      justify-content: space-between;
+      margin: 16px 0;
     }
-
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      color: var(--primary);
-      font-weight: 700;
-      font-size: 0.95rem;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .nav-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .nav-btn span {
+    .nav-buttons a {
       background: var(--primary);
-      color: white;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      margin-right: 4px;
-    }
-
-    /* --- Badges --- */
-    .badge-strip {
-      margin: 14px 0 0;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
+      color: #fff;
+      padding: 6px 14px;
       border-radius: 8px;
-      border: 1px solid;
-      font-size: 0.90rem;
+      text-decoration: none;
+      font-size: 0.9rem;
       font-weight: 600;
+      transition: background 0.2s;
     }
-
-    .badge.exam {
-      background: var(--accent-info-bg);
+    .nav-buttons a:hover {
+      background: #2563eb;
+    }
+    .jump-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .jump-bar a {
+      background: var(--primary-dim);
       color: var(--primary);
-      border-color: var(--accent-info-border);
+      padding: 6px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      white-space: nowrap;
     }
-
-    .badge.skills {
-      background: var(--accent-green-bg);
-      color: var(--accent-green);
-      border-color: var(--accent-green-border);
+    .jump-bar a:hover {
+      background: var(--primary);
+      color: #fff;
     }
-
-    /* --- Content Cards --- */
-    section { margin-top: 14px; }
-
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 28px;
-      margin: 22px 0;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
-
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
     .card h2 {
-      margin: 0 0 18px;
-      font-size: 1.4rem;
-      font-weight: 700;
-      padding-left: 14px;
-      position: relative;
-      scroll-margin-top: 120px;
-      color: var(--text-main);
+      font-size: 1.3rem;
+      margin-bottom: 8px;
     }
-
-    .card h2::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0.2em;
-      width: 6px;
-      height: 1.1em;
-      border-radius: 99px;
-      background: var(--primary);
-    }
-
-    .card h3 {
-      margin: 24px 0 12px;
-      font-size: 1.1rem;
-      font-weight: 650;
-      color: var(--text-main);
-    }
-
-    ul.key-list {
-      margin: 0;
-      padding-left: 20px;
-      color: var(--text-muted);
-    }
-
-    .key-list li { margin: 8px 0; }
-    .key-list li::marker { color: var(--primary); }
-    strong { color: var(--text-main); font-weight: 650; }
-
-    .section-intro {
-      margin: 0 auto;
-      max-width: 820px;
-      color: var(--text-muted);
-      font-size: 1.02rem;
-      padding: 14px 16px;
-      border-radius: 12px;
-      background: var(--primary-dim);
-      border: 1px solid var(--accent-info-border);
-      box-shadow: var(--shadow-sm);
-    }
-
-    /* --- Semantic Callouts --- */
     .callout {
-      padding: 16px 20px;
-      border-radius: 12px;
-      margin: 18px 0;
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      font-size: 0.95rem;
-      border: 1px solid;
-    }
-
-    .co-icon {
-      flex-shrink: 0;
-      width: 24px;
-      height: 24px;
-      margin-top: 2px;
-    }
-    .co-icon svg { width: 100%; height: 100%; }
-
-    .co-title {
-      display: block;
-      font-weight: 800;
-      margin-bottom: 4px;
-      font-size: 0.80rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .co-content { color: var(--text-main); }
-
-    .callout.note {
-      background: var(--accent-info-bg);
-      border-color: var(--accent-info-border);
-    }
-    .callout.note .co-icon, .callout.note .co-title { color: var(--primary); }
-
-    .callout.trap {
-      background: var(--accent-amber-bg);
-      border-color: var(--accent-amber-border);
-    }
-    .callout.trap .co-icon, .callout.trap .co-title { color: var(--accent-amber); }
-
-    /* --- Figures / Tables --- */
-    .figure {
       margin: 16px 0;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: rgba(255,255,255,0.6);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
+      padding: 12px;
+      border-left: 4px solid;
+      border-radius: 6px;
     }
-
-    @media (prefers-color-scheme: dark) {
-      .figure { background: rgba(15,23,42,0.35); }
+    .callout.note { background: #eff6ff; border-color: #3b82f6; }
+    .callout.trap { background: #fef2f2; border-color: #ef4444; }
+    .callout.rem { background: #f0fdf4; border-color: #10b981; }
+    .key-terms {
+      background: #f9fafb;
+      border: 1px dashed var(--border);
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
     }
-
-    .figure .fig-hd {
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
-      font-weight: 800;
-      color: var(--text-main);
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .figure .fig-bd { padding: 14px; }
-
-    .kv-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-
-    .kv {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-    }
-
-    @media (max-width: 560px) {
-      .kv { grid-template-columns: 1fr; }
-    }
-
-    .kv .k { color: var(--text-muted); font-weight: 800; }
-    .kv .v { color: var(--text-main); font-weight: 750; }
-
-    .table {
-      width: 100%;
-      border-collapse: collapse;
-      overflow: hidden;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      margin-top: 10px;
-    }
-
-    .table th, .table td {
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-      vertical-align: top;
-    }
-
-    .table th {
-      background: rgba(59,130,246,0.08);
-      color: var(--text-main);
-      font-weight: 900;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .table th { background: rgba(96,165,250,0.10); }
-    }
-
-    .footer {
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-top: 22px;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .container { padding: 0 16px 60px; }
-      h1 { font-size: 1.8rem; }
-      .card { padding: 20px; }
+    .key-terms ul {
+      list-style: disc inside;
+      margin-left: 16px;
     }
   </style>
 </head>
 <body>
-
-  <!-- Hero Header -->
-  <header class="hero-header">
-    <div class="nav-breadcrumb">
-      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--primary)">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-      </svg>
-      Index / E3
-    </div>
-
-    <h1>E3 — Buildings: Conduction &amp; U-value</h1>
-    <p class="meta-subtitle">
-      HKDSE Physics — Elective E3: Energy &amp; Use of Energy · Use
-      \(\dfrac{Q}{t}=\kappa A\dfrac{(T_{\text{hot}}-T_{\text{cold}})}{d}\) and \(U=\dfrac{\kappa}{d}\) to analyse heat transfer through building envelopes.
-    </p>
-
-    <!-- Navigation HTML template (required) -->
-    <div class="section-nav" style="justify-content:center;">
-      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
-      <a class="nav-btn" href="heat_pump_aircon_COP.html">&larr; Previous</a>
-      <a class="nav-btn" href="buildings_ottv.html">Next &rarr;</a>
-    </div>
-  </header>
-
   <div class="container">
-    <main>
+    <header class="hero">
+      <h1>Buildings: Conduction &amp; U‑value</h1>
+      <p>Heat transfer through walls and the meaning of thermal transmittance</p>
+      <div class="nav-buttons">
+        <a href="../index.html">Back to Index</a>
+        <a href="heat_pump_aircon_COP.html">&lt; Prev</a>
+        <a href="buildings_ottv.html">Next &gt;</a>
+      </div>
+    </header>
 
-      <p class="section-intro" style="text-align:center;">
-        Two key tools in building questions:
-        (1) conduction through a wall: \(\dfrac{Q}{t}=\kappa A\dfrac{\Delta T}{d}\),
-        and (2) thermal transmittance (U-value): \(U=\dfrac{\kappa}{d}\) and \(\dfrac{Q}{t}=UA\Delta T\).
-        <strong>Lower U</strong> means <strong>less heat transfer</strong> by conduction.
+    <nav class="jump-bar">
+      <a href="#conduction">Conduction basics</a>
+      <a href="#uvalue">Thermal transmittance (U‑value)</a>
+      <a href="#example">Worked example</a>
+      <a href="#reminders">Reminders</a>
+    </nav>
+
+    <section id="conduction" class="card">
+      <h2>Conduction basics</h2>
+      <p>
+        Heat flows through a solid wall by <strong>conduction</strong>.  When one side of a
+        wall is at temperature \(T_{\text{hot}}\) and the other at \(T_{\text{cold}}\) with
+        \(T_{\text{hot}} &gt; T_{\text{cold}}\), energy flows from the hot side to the cold
+        side.  The rate of energy transfer by conduction depends on the wall’s
+        thermal conductivity \(\kappa\), its cross‑sectional area \(A\), its thickness
+        \(d\) and the temperature difference:
       </p>
-
-      <div class="badge-strip">
-        <span class="badge exam">Exam focus: \(\dfrac{Q}{t}=\kappa A\dfrac{\Delta T}{d}\), \(U=\dfrac{\kappa}{d}\), \(\dfrac{Q}{t}=UA\Delta T\), unit: W and W m\(^{-2}\) K\(^{-1}\)</span>
-        <span class="badge skills">Skills: pick \(A, d, \Delta T\); convert cm→m; interpret “lower U = better insulator”</span>
+      <p>
+        \[\frac{dQ}{dt} = \kappa A \frac{T_{\text{hot}} - T_{\text{cold}}}{d}\,.
+        \]
+      </p>
+      <p>
+        This equation shows that a wall with a larger area or higher thermal
+        conductivity transfers heat faster, while a thicker wall reduces heat
+        transfer.  The HKDSE curriculum expresses this relation and asks
+        students to discuss heat loss in conduction【912087049771804†L5174-L5178】.
+      </p>
+      <div class="callout note">
+        <strong>Note:</strong> The factor \(\kappa\) (kappa) is a property of the
+        material.  Good conductors (like metals) have high \(\kappa\); insulating
+        materials (such as foam or fiberglass) have low \(\kappa\).
       </div>
+    </section>
 
-      <!-- Jump Bar -->
-      <div class="section-nav" aria-label="Jump to section" style="margin-top:20px; justify-content:center;">
-        <a href="#sec01" class="nav-btn"><span>1</span> Syllabus focus</a>
-        <a href="#sec02" class="nav-btn"><span>2</span> Conduction model</a>
-        <a href="#sec03" class="nav-btn"><span>3</span> U-value</a>
-        <a href="#sec04" class="nav-btn"><span>4</span> Typical values</a>
-        <a href="#sec05" class="nav-btn"><span>5</span> Worked examples</a>
-        <a href="#sec06" class="nav-btn"><span>6</span> Improving efficiency</a>
-        <a href="#sec07" class="nav-btn"><span>7</span> Reminders</a>
-        <a href="#sec08" class="nav-btn"><span>8</span> Key terms</a>
+    <section id="uvalue" class="card">
+      <h2>Thermal transmittance (U‑value)</h2>
+      <p>
+        The <strong>U‑value</strong> of a building material is defined as the rate of heat
+        flow through 1&nbsp;m<sup>2</sup> of the material per degree of temperature difference between its two sides.
+        Mathematically it is the thermal conductivity divided by the thickness:
+        \[U = \frac{\kappa}{d}\,.
+        \]
+        The unit of U‑value is W&nbsp;m<sup>−2</sup> K<sup>−1</sup>.  A smaller U‑value
+        means better insulation.  Students should be able to define the
+        U‑value and solve related problems【912087049771804†L5178-L5184】.
+      </p>
+      <p>
+        For example, if a brick wall has \(\kappa = 0.80\;\text{W m}^{-1}\text{K}^{-1}\)
+        and thickness \(d=0.20\;\text{m}\), its U‑value is
+        \(U = 0.80/0.20 = 4.0\;\text{W m}^{-2}\text{K}^{-1}\).  This means that for
+        every 1&nbsp;°C temperature difference across 1&nbsp;m<sup>2</sup>, 4&nbsp;W of heat
+        will pass through the wall.
+      </p>
+      <div class="callout trap">
+        <strong>Common trap:</strong> Don’t confuse thermal conductivity
+        \(\kappa\) with U‑value.  \(\kappa\) is an intrinsic property of the
+        material, while the U‑value also depends on the wall thickness.
       </div>
+    </section>
 
-      <!-- Section 1 -->
-      <section>
-        <div class="card">
-          <h2 id="sec01">1. Syllabus focus (what you must be able to do)</h2>
-          <ul class="key-list">
-            <li>Interpret \(\dfrac{Q}{t}=\kappa A\dfrac{(T_{\text{hot}}-T_{\text{cold}})}{d}\) as the <strong>rate of energy transfer by conduction</strong> through a wall/roof/window.</li>
-            <li>Define <strong>thermal transmittance (U-value)</strong> of building materials as \(U=\dfrac{\kappa}{d}\) and solve related problems.</li>
-            <li>Use \(\dfrac{Q}{t}=UA(T_{\text{hot}}-T_{\text{cold}})\) to calculate heat transfer rate.</li>
-            <li>Explain qualitatively: <strong>lower U-value → better thermal insulator</strong> (less heat transfer by conduction).</li>
-          </ul>
+    <section id="example" class="card">
+      <h2>Worked example</h2>
+      <p>
+        A house wall has an area of 10&nbsp;m<sup>2</sup> and is built from a material with
+        \(\kappa = 0.50\;\text{W m}^{-1}\text{K}^{-1}\).  The wall is 0.15&nbsp;m thick.
+        If the inside temperature is 24&nbsp;°C and the outside temperature is
+        10&nbsp;°C, estimate the rate of heat loss by conduction through the wall.
+      </p>
+      <p>
+        First compute the temperature difference \(\Delta T = 24 - 10 = 14\;°C\).
+        The cross‑sectional area is \(A = 10\;\text{m}^2\).  Applying the
+        conduction formula gives
+      </p>
+      <p>
+        \[\frac{dQ}{dt} = \kappa A \frac{\Delta T}{d} = 0.50 \times 10 \times
+        \frac{14}{0.15} \approx 466.7\;\text{W}\,.
+        \]
+      </p>
+      <p>
+        The heat loss is therefore about 0.47&nbsp;kW.  Reducing the U‑value
+        (e.g. by adding insulation or increasing wall thickness) will lower this
+        loss.
+      </p>
+    </section>
 
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Context</span>
-              <div class="co-content">
-                In building questions, heat flows through the <strong>building envelope</strong> (walls/roof/windows).
-                For conduction calculations, the temperatures used are often the temperatures of the <strong>two surfaces</strong> of the envelope.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 2 -->
-      <section>
-        <div class="card">
-          <h2 id="sec02">2. Rate of heat transfer by conduction (single layer)</h2>
-
-          <h3>Formula (plane wall)</h3>
-          <ul class="key-list">
-            <li>\(\displaystyle \frac{Q}{t}=\kappa A\frac{(T_{\text{hot}}-T_{\text{cold}})}{d}\)</li>
-            <li>\(\kappa\): thermal conductivity (unit: W m\(^{-1}\) K\(^{-1}\))</li>
-            <li>\(A\): area of the wall/roof/window (m\(^2\))</li>
-            <li>\(d\): thickness (m)</li>
-            <li>\(\Delta T = T_{\text{hot}}-T_{\text{cold}}\): temperature difference across the material (K or °C)</li>
-          </ul>
-
-          <div class="figure" aria-label="Wall conduction diagram">
-            <div class="fig-hd">
-              <span>Model: conduction through a wall</span>
-              <span style="color:var(--text-muted); font-weight:700;">Heat flows from hot to cold</span>
-            </div>
-            <div class="fig-bd">
-              <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
-                <svg width="360" height="120" viewBox="0 0 360 120" role="img" aria-label="Wall with thickness d and temperatures Thot and Tcold">
-                  <defs>
-                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
-                      <path d="M0,0 L10,5 L0,10 z" fill="currentColor"></path>
-                    </marker>
-                  </defs>
-                  <!-- wall block -->
-                  <rect x="120" y="25" width="120" height="70" rx="10" fill="rgba(59,130,246,0.10)" stroke="currentColor" opacity="0.9" />
-                  <!-- hot/cold sides -->
-                  <line x1="120" y1="25" x2="120" y2="95" stroke="currentColor" stroke-width="2" />
-                  <line x1="240" y1="25" x2="240" y2="95" stroke="currentColor" stroke-width="2" />
-                  <!-- arrow -->
-                  <line x1="90" y1="60" x2="270" y2="60" stroke="currentColor" stroke-width="2.5" marker-end="url(#arrow)" />
-                  <text x="20" y="55" fill="currentColor" font-size="14" font-weight="700">hot side</text>
-                  <text x="20" y="78" fill="currentColor" font-size="14">\(T_{\text{hot}}\)</text>
-                  <text x="285" y="55" fill="currentColor" font-size="14" font-weight="700">cold side</text>
-                  <text x="285" y="78" fill="currentColor" font-size="14">\(T_{\text{cold}}\)</text>
-                  <text x="158" y="115" fill="currentColor" font-size="14">thickness \(d\)</text>
-                </svg>
-
-                <div style="flex:1; min-width:240px;">
-                  <div class="kv-grid">
-                    <div class="kv"><div class="k">What increases \(\dfrac{Q}{t}\)?</div><div class="v">larger \(A\), larger \(\Delta T\), larger \(\kappa\)</div></div>
-                    <div class="kv"><div class="k">What decreases \(\dfrac{Q}{t}\)?</div><div class="v">larger thickness \(d\) (more insulation)</div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Common trap</span>
-              <div class="co-content">
-                Thickness is often given in <strong>cm</strong>. Convert to <strong>m</strong> before using the formula.
-                (e.g. 10 cm = 0.10 m)
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 3 -->
-      <section>
-        <div class="card">
-          <h2 id="sec03">3. Thermal transmittance (U-value)</h2>
-
-          <h3>Definition (single material)</h3>
-          <ul class="key-list">
-            <li>For a building envelope made of a <strong>single material</strong> with thickness \(d\) and thermal conductivity \(\kappa\):</li>
-            <li>\(\displaystyle U=\frac{\kappa}{d}\)</li>
-            <li>Unit of U-value: \(\text{W m}^{-2}\,\text{K}^{-1}\)</li>
-          </ul>
-
-          <h3>Using U-value to find heat transfer rate</h3>
-          <ul class="key-list">
-            <li>\(\displaystyle \frac{Q}{t}=UA(T_{\text{hot}}-T_{\text{cold}}) = UA\Delta T\)</li>
-            <li>This is the same conduction model, but written using \(U\) instead of \(\kappa\) and \(d\).</li>
-          </ul>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Meaning</span>
-              <div class="co-content">
-                U-value can be interpreted as the <strong>overall rate of heat transfer through a unit area</strong>,
-                divided by the <strong>temperature difference</strong> across the envelope.
-              </div>
-            </div>
-          </div>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Key idea</span>
-              <div class="co-content">
-                <strong>Lower U</strong> → <strong>lower</strong> \(\dfrac{Q}{t}\) for the same \(A\) and \(\Delta T\).
-                So a material/component with a lower U-value is a <strong>better thermal insulator</strong>.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 4 -->
-      <section>
-        <div class="card">
-          <h2 id="sec04">4. Typical U-values (for comparison)</h2>
-          <p style="margin:0 0 10px; color:var(--text-muted);">
-            U-values depend on both <strong>material</strong> and <strong>thickness</strong>. These values are used to compare insulation performance.
-          </p>
-
-          <table class="table" aria-label="Typical U-values table">
-            <thead>
-              <tr>
-                <th>Component of building envelope</th>
-                <th>U-value / W m\(^{-2}\) K\(^{-1}\)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td><strong>Wall</strong> — Concrete wall (20 cm thick)</td><td>5.5</td></tr>
-              <tr><td>Brick wall (20 cm thick)</td><td>2.6</td></tr>
-              <tr><td>Brick wall (30 cm thick)</td><td>2.0</td></tr>
-              <tr><td>Insulated wall (mineral wool between bricks)</td><td>0.3</td></tr>
-              <tr><td><strong>Window</strong> — Single-glazed window</td><td>5.6</td></tr>
-              <tr><td>Double-glazed window (12 mm gap with air)</td><td>2.8</td></tr>
-              <tr><td>Triple-glazed window (12 mm gap with air)</td><td>1.9</td></tr>
-            </tbody>
-          </table>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">How to use</span>
-              <div class="co-content">
-                If \(A\) and \(\Delta T\) are the same, then the component with the <strong>lower U-value</strong> has the <strong>lower heat gain/loss rate</strong> by conduction.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 5 -->
-      <section>
-        <div class="card">
-          <h2 id="sec05">5. Worked examples</h2>
-
-          <h3>Example A: use \(\kappa\), \(A\), \(d\)</h3>
-          <div class="figure">
-            <div class="fig-hd">
-              <span>Concrete wall (air-conditioned room)</span>
-              <span style="color:var(--text-muted); font-weight:700;">Find \(\dfrac{Q}{t}\)</span>
-            </div>
-            <div class="fig-bd">
-              <div class="kv-grid">
-                <div class="kv"><div class="k">Given</div><div class="v">\(\kappa=1.10\,\text{W m}^{-1}\,\text{K}^{-1}\), \(A=9\,\text{m}^2\), \(d=0.10\,\text{m}\), \(T_{\text{hot}}=33^\circ\text{C}\), \(T_{\text{cold}}=25^\circ\text{C}\)</div></div>
-                <div class="kv"><div class="k">Step</div><div class="v">\(\Delta T=33-25=8\,\text{K}\)</div></div>
-                <div class="kv"><div class="k">Compute</div><div class="v">\(\dfrac{Q}{t}=\kappa A\dfrac{\Delta T}{d}=1.10\times 9\times\dfrac{8}{0.10}=792\,\text{W}\)</div></div>
-                <div class="kv"><div class="k">Answer</div><div class="v">\(\boxed{\dfrac{Q}{t}=792\,\text{W}}\)</div></div>
-              </div>
-            </div>
-          </div>
-
-          <h3>Example B: use U-value</h3>
-          <div class="figure">
-            <div class="fig-hd">
-              <span>Insulating wall (U-value given)</span>
-              <span style="color:var(--text-muted); font-weight:700;">Find \(\dfrac{Q}{t}\)</span>
-            </div>
-            <div class="fig-bd">
-              <div class="kv-grid">
-                <div class="kv"><div class="k">Given</div><div class="v">Wall size \(6\,\text{m}\times 3\,\text{m}\Rightarrow A=18\,\text{m}^2\), \(U=0.61\,\text{W m}^{-2}\,\text{K}^{-1}\), temperatures: 31°C and 23°C</div></div>
-                <div class="kv"><div class="k">Step</div><div class="v">\(\Delta T=31-23=8\,\text{K}\)</div></div>
-                <div class="kv"><div class="k">Compute</div><div class="v">\(\dfrac{Q}{t}=UA\Delta T=0.61\times 18\times 8=87.8\,\text{W}\)</div></div>
-                <div class="kv"><div class="k">Answer</div><div class="v">\(\boxed{\dfrac{Q}{t}\approx 87.8\,\text{W}}\)</div></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Direction vs magnitude</span>
-              <div class="co-content">
-                The formula gives the <strong>magnitude</strong> of heat transfer rate. If \(T_{\text{hot}}&gt;T_{\text{cold}}\), heat flows from hot to cold.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 6 -->
-      <section>
-        <div class="card">
-          <h2 id="sec06">6. Improving energy efficiency (reduce conduction heat gain/loss)</h2>
-          <ul class="key-list">
-            <li>Use <strong>walls/roofs with thermal insulation</strong> (smaller \(\kappa\) or larger thickness \(d\) → smaller \(U\)).</li>
-            <li>Use <strong>double-glazed / triple-glazed windows</strong> to reduce U-value (smaller conduction heat transfer).</li>
-            <li>Reduce the exposed area \(A\) of high-U components (e.g. large single-glazed windows) if the question asks for a suggestion.</li>
-          </ul>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Exam phrasing</span>
-              <div class="co-content">
-                “Use a material/component with a <strong>lower U-value</strong> so the rate of heat transfer by conduction \(\left(\dfrac{Q}{t}=UA\Delta T\right)\) is smaller.”
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 7 -->
-      <section>
-        <div class="card">
-          <h2 id="sec07">7. Reminders &amp; common exam traps</h2>
-          <ul class="key-list">
-            <li><strong>Unit check</strong>: \(\kappa\) is W m\(^{-1}\) K\(^{-1}\), \(U\) is W m\(^{-2}\) K\(^{-1}\), \(\dfrac{Q}{t}\) is W.</li>
-            <li>Convert <strong>cm to m</strong> for thickness \(d\).</li>
-            <li>\(\Delta T\) can be in K or °C because temperature differences are the same in both units.</li>
-            <li><strong>U-value is about conduction</strong>. If heat transfer through glass is mainly by <strong>radiation</strong>, a lower U-value may not greatly reduce heating. (Radiation control is covered in later sections.)</li>
-          </ul>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Surface temperature</span>
-              <div class="co-content">
-                Many questions give the temperatures of the <strong>two surfaces</strong> of the wall/window.
-                Use these directly as \(T_{\text{hot}}\) and \(T_{\text{cold}}\) unless told otherwise.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 8 -->
-      <section>
-        <div class="card">
-          <h2 id="sec08">8. Key terms</h2>
-          <ul class="key-list">
-            <li><strong>Rate of heat transfer</strong> \(\dfrac{Q}{t}\): energy transferred per unit time (unit: W).</li>
-            <li><strong>Thermal conductivity</strong> \(\kappa\): a material property; larger \(\kappa\) means the material conducts heat more easily.</li>
-            <li><strong>Thermal transmittance (U-value)</strong> \(U\): for a single material, \(U=\dfrac{\kappa}{d}\) (unit: W m\(^{-2}\) K\(^{-1}\)).</li>
-            <li><strong>Building envelope</strong>: the outermost layer of a building (roof, walls and windows).</li>
-            <li><strong>Thermal insulator</strong>: material/component with a <strong>low U-value</strong> (low conduction heat transfer).</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- Bottom navigation (required) -->
-      <div class="section-nav" style="justify-content:center; margin-top: 18px;">
-        <a class="nav-btn" href="../index.html">&larr; Back to index</a>
-        <a class="nav-btn" href="heat_pump_aircon_COP.html">&larr; Previous</a>
-        <a class="nav-btn" href="buildings_ottv.html">Next &rarr;</a>
+    <section id="reminders" class="card">
+      <h2>Reminders</h2>
+      <div class="callout rem">
+        <strong>Remember:</strong> U‑values add like conductances.  When several
+        layers (e.g. brick + insulation + plaster) are in series, the overall
+        thermal resistance is the sum of individual resistances; the overall
+        U‑value is the reciprocal of the total resistance.
       </div>
+      <div class="key-terms">
+        <strong>Key terms:</strong>
+        <ul>
+          <li>Conduction</li>
+          <li>Thermal conductivity \(\kappa\)</li>
+          <li>U‑value</li>
+          <li>Heat transfer rate \(dQ/dt\)</li>
+        </ul>
+      </div>
+    </section>
 
-      <p class="footer">HKDSE Physics • E3 Energy &amp; Use of Energy</p>
-
-    </main>
   </div>
 </body>
 </html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E3 — Buildings: OTTV</title>
+  <!--
+    The Overall Thermal Transfer Value (OTTV) measures the average rate of heat
+    gain into a building through its envelope.  This page defines OTTV,
+    explains why it is important for energy efficiency and describes the
+    factors that influence it.  References are taken from the HKDSE
+    Curriculum and Assessment Guide【912087049771804†L5186-L5192】.
+  -->
+  <style>
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --primary: #3b82f6;
+      --primary-dim: rgba(59, 130, 246, 0.1);
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
+    }
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin: 16px 0;
+    }
+    .nav-buttons a {
+      background: var(--primary);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .nav-buttons a:hover {
+      background: #2563eb;
+    }
+    .jump-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .jump-bar a {
+      background: var(--primary-dim);
+      color: var(--primary);
+      padding: 6px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+    .jump-bar a:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    .card h2 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+    .callout {
+      margin: 16px 0;
+      padding: 12px;
+      border-left: 4px solid;
+      border-radius: 6px;
+    }
+    .callout.note { background: #eff6ff; border-color: #3b82f6; }
+    .callout.trap { background: #fef2f2; border-color: #ef4444; }
+    .callout.rem { background: #f0fdf4; border-color: #10b981; }
+    .key-terms {
+      background: #f9fafb;
+      border: 1px dashed var(--border);
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+    .key-terms ul {
+      list-style: disc inside;
+      margin-left: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1>Buildings: OTTV</h1>
+      <p>Overall Thermal Transfer Value and factors affecting it</p>
+      <div class="nav-buttons">
+        <a href="../index.html">Back to Index</a>
+        <a href="buildings_conduction_uvalue.html">&lt; Prev</a>
+        <a href="heat_radiation.html">Next &gt;</a>
+      </div>
+    </header>
+
+    <nav class="jump-bar">
+      <a href="#definition">Definition of OTTV</a>
+      <a href="#factors">Factors affecting OTTV</a>
+      <a href="#example">Worked example</a>
+      <a href="#reminders">Reminders</a>
+    </nav>
+
+    <section id="definition" class="card">
+      <h2>Definition of OTTV</h2>
+      <p>
+        The <strong>Overall Thermal Transfer Value</strong> (OTTV) is defined as the
+        <em>average rate of heat gain per unit area</em> into a building through
+        the building envelope under specified conditions.  It provides a single
+        number that reflects how much heat enters a building due to conduction
+        through walls and roofs, solar gains through windows and radiation.
+      </p>
+      <p>
+        According to the HKDSE syllabus, students should be able to define OTTV
+        and solve related problems【912087049771804†L5186-L5189】.  OTTV is often
+        expressed in units of W&nbsp;m<sup>−2</sup>.  A lower OTTV indicates a
+        better thermally insulated building.
+      </p>
+      <div class="callout note">
+        <strong>Note:</strong> OTTV consolidates various heat gain paths into one
+        metric.  It does not represent an instantaneous heat flow through a
+        specific component but an average over the whole envelope.
+      </div>
+    </section>
+
+    <section id="factors" class="card">
+      <h2>Factors affecting OTTV</h2>
+      <p>
+        Several factors contribute to the OTTV of a building【912087049771804†L5189-L5192】:
+      </p>
+      <ul>
+        <li><strong>U‑values of envelope components:</strong> Lower U‑values for walls,
+          roofs and glazed areas reduce conduction heat gain.</li>
+        <li><strong>Solar absorptance and reflectance:</strong> Darker surfaces absorb
+          more solar radiation; light‑coloured or reflective surfaces reduce
+          heat gain.</li>
+        <li><strong>Window‑to‑wall ratio:</strong> Larger windows increase solar
+          gain and therefore raise the OTTV.  Using double glazing or
+          low‑emissivity coatings helps.</li>
+        <li><strong>Orientation and shading:</strong> The amount of direct sunlight
+          striking a façade depends on its orientation.  Shading devices,
+          overhangs and vegetation can lower solar gains.</li>
+        <li><strong>Solar control window films:</strong> Special coatings on glass
+          selectively transmit visible light while rejecting infrared radiation,
+          reducing heat gain【912087049771804†L5190-L5192】.</li>
+      </ul>
+      <div class="callout trap">
+        <strong>Common trap:</strong> Students sometimes think that reducing
+        windows always lowers OTTV.  In practice, daylighting saves artificial
+        lighting energy; the optimal window size balances lighting and cooling
+        loads.
+      </div>
+    </section>
+
+    <section id="example" class="card">
+      <h2>Worked example</h2>
+      <p>
+        A commercial building has an envelope area of 2000&nbsp;m<sup>2</sup> with an
+        average U‑value of 1.5&nbsp;W&nbsp;m<sup>−2</sup> K<sup>−1</sup>.  Assume a
+        typical temperature difference of 8&nbsp;°C between indoors and outdoors,
+        and that solar and air‑infiltration gains contribute an additional
+        40&nbsp;% to the total heat gain.  Estimate the OTTV.
+      </p>
+      <p>
+        First compute the conduction heat gain:
+        \[Q_{\text{cond}} = U A \Delta T = 1.5 \times 2000 \times 8 = 24\,000\;\text{W}.\]
+        Including an additional 40&nbsp;% to account for solar and infiltration
+        gains yields a total heat gain of
+        \[Q_{\text{total}} = 1.40 \times 24\,000 = 33\,600\;\text{W}.\]
+        The OTTV is the heat gain per unit area:
+        \[\text{OTTV} = \frac{Q_{\text{total}}}{A} = \frac{33\,600}{2000} = 16.8\;\text{W m}^{-2}.\]
+      </p>
+      <p>
+        To reduce OTTV, one could decrease U‑values by adding insulation,
+        install solar control glass or shading devices, and optimise
+        window‑to‑wall ratio.
+      </p>
+    </section>
+
+    <section id="reminders" class="card">
+      <h2>Reminders</h2>
+      <div class="callout rem">
+        <strong>Remember:</strong> OTTV is a <em>design performance index</em> used in
+        building codes to limit heat gains.  It is not a substitute for
+        detailed heat load calculations but provides a quick way to assess
+        envelope quality.
+      </div>
+      <div class="key-terms">
+        <strong>Key terms:</strong>
+        <ul>
+          <li>OTTV (Overall Thermal Transfer Value)</li>
+          <li>Building envelope</li>
+          <li>Solar control film</li>
+          <li>U‑value</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E3 — Renewable &amp; Non‑renewable Energy</title>
+  <!--
+    This page distinguishes between renewable and non‑renewable energy
+    sources, defines the solar constant, derives the maximum power that can
+    be extracted by a wind turbine and outlines the energy conversion
+    process for hydroelectric power.  These topics follow the HKDSE
+    Curriculum and Assessment Guide【912087049771804†L5223-L5245】.
+  -->
+  <style>
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --primary: #3b82f6;
+      --primary-dim: rgba(59, 130, 246, 0.1);
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
+    }
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin: 16px 0;
+    }
+    .nav-buttons a {
+      background: var(--primary);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .nav-buttons a:hover {
+      background: #2563eb;
+    }
+    .jump-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .jump-bar a {
+      background: var(--primary-dim);
+      color: var(--primary);
+      padding: 6px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+    .jump-bar a:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    .card h2 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+    .callout {
+      margin: 16px 0;
+      padding: 12px;
+      border-left: 4px solid;
+      border-radius: 6px;
+    }
+    .callout.note { background: #eff6ff; border-color: #3b82f6; }
+    .callout.trap { background: #fef2f2; border-color: #ef4444; }
+    .callout.rem { background: #f0fdf4; border-color: #10b981; }
+    .key-terms {
+      background: #f9fafb;
+      border: 1px dashed var(--border);
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+    .key-terms ul {
+      list-style: disc inside;
+      margin-left: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1>Renewable &amp; Non‑renewable Energy</h1>
+      <p>Solar constant, wind turbines and hydroelectric power</p>
+      <div class="nav-buttons">
+        <a href="../index.html">Back to Index</a>
+        <a href="environmental_impact.html">&lt; Prev</a>
+        <a href="solar_cell.html">Next &gt;</a>
+      </div>
+    </header>
+
+    <nav class="jump-bar">
+      <a href="#definitions">Definitions &amp; examples</a>
+      <a href="#solar">Solar constant</a>
+      <a href="#wind">Wind turbine power</a>
+      <a href="#hydro">Hydroelectric power</a>
+      <a href="#reminders">Reminders</a>
+    </nav>
+
+    <section id="definitions" class="card">
+      <h2>Definitions &amp; examples</h2>
+      <p>
+        An energy source is called <strong>renewable</strong> if it is naturally
+        replenished on a human timescale; examples include sunlight, wind,
+        flowing water, biomass and geothermal heat.  <strong>Non‑renewable</strong>
+        sources, such as coal, oil, natural gas and uranium, exist in finite
+        quantities and take millions of years to form.  The HKDSE syllabus
+        requires students to describe the characteristics of renewable and
+        non‑renewable energy sources and give examples【912087049771804†L5223-L5225】.
+      </p>
+      <p>
+        Renewable energy reduces reliance on fossil fuels, diversifies supply
+        and lowers greenhouse gas emissions.  However, some forms (like
+        biomass) may compete with food production or have other environmental
+        impacts.  Non‑renewable sources are currently dominant in global
+        energy supply but are associated with pollution and finite reserves.
+      </p>
+    </section>
+
+    <section id="solar" class="card">
+      <h2>Solar constant</h2>
+      <p>
+        The <strong>solar constant</strong> is defined as the total electromagnetic
+        radiation energy from the Sun arriving per unit area per unit time
+        at the mean distance between Earth and Sun, measured outside the
+        atmosphere【912087049771804†L5226-L5229】.  Its value is approximately
+        1.36&nbsp;kW&nbsp;m<sup>−2</sup>.
+      </p>
+      <p>
+        In practice, solar irradiance at ground level is lower due to
+        atmospheric absorption and scattering.  Students should be able to
+        solve problems involving the solar constant【912087049771804†L5230-L5232】, for
+        instance estimating the power received by a panel of area \(A\)
+        inclined at an angle to the Sun.
+      </p>
+      <div class="callout note">
+        <strong>Example:</strong> A 2&nbsp;m<sup>2</sup> solar collector oriented
+        perpendicular to the Sun’s rays in space receives
+        \(P = 1.36\times 2 = 2.72\;\text{kW}\).  On Earth, atmospheric
+        effects reduce this to about 1.0&nbsp;kW.
+      </div>
+    </section>
+
+    <section id="wind" class="card">
+      <h2>Wind turbine power</h2>
+      <p>
+        The power available from a wind of speed \(v\) blowing through a
+        turbine rotor of area \(A\) and air density \(\rho\) is derived from
+        the kinetic energy of the air.  The maximum mechanical power that can be
+        extracted is given by
+      </p>
+      <p>
+        \[P_{\text{max}} = \tfrac{1}{2} \eta \rho A v^3\,,\]
+      </p>
+      <p>
+        where \(\eta\) is the efficiency of the turbine【912087049771804†L5233-L5243】.
+        Students should know this expression and be able to solve problems
+        involving wind speed, turbine size and efficiency.
+      </p>
+      <div class="callout note">
+        <strong>Note:</strong> The factor \(\tfrac{1}{2}\) comes from the kinetic
+        energy density of moving air.  No turbine can capture all of the wind’s
+        energy — the Betz limit restricts the maximum efficiency to about
+        59&nbsp;%.
+      </div>
+    </section>
+
+    <section id="hydro" class="card">
+      <h2>Hydroelectric power</h2>
+      <p>
+        Hydroelectric power stations convert gravitational potential energy of
+        water stored behind a dam into electrical energy.  Water released
+        through the dam flows down through turbines, driving generators.
+        The energy conversion chain is:
+      </p>
+      <ul>
+        <li><strong>Potential energy:</strong> water at height \(h\) has potential
+          energy \(E_p = m g h\).</li>
+        <li><strong>Kinetic energy:</strong> as water falls, potential energy
+          converts to kinetic energy.</li>
+        <li><strong>Mechanical work:</strong> flowing water turns the turbine
+          blades.</li>
+        <li><strong>Electrical energy:</strong> the generator converts mechanical
+          energy into electricity.</li>
+      </ul>
+      <p>
+        Students should be able to describe this energy conversion process and
+        solve related problems【912087049771804†L5243-L5245】.
+      </p>
+    </section>
+
+    <section id="reminders" class="card">
+      <h2>Reminders</h2>
+      <div class="callout rem">
+        <strong>Remember:</strong> Renewable energy resources are not uniformly
+        distributed and may be intermittent.  Diversifying energy supply and
+        integrating storage technologies can mitigate variability.
+      </div>
+      <div class="key-terms">
+        <strong>Key terms:</strong>
+        <ul>
+          <li>Renewable vs non‑renewable</li>
+          <li>Solar constant</li>
+          <li>Wind turbine power formula</li>
+          <li>Hydroelectric energy conversion</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

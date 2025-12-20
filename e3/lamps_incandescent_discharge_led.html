@@ -1,690 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="light dark" />
-  <title>E3 — Lamps: Incandescent, Gas Discharge & LED | DSE Physics Notes</title>
-
-  <!-- MathJax for equation rendering -->
-  <script>
-    window.MathJax = {
-      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['$$','$$']] },
-      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
+  <title>E3 — Lamps: Incandescent, Gas Discharge &amp; LED</title>
+  <!-- Page comparing common lamp types used in the Energy module. -->
   <style>
-    /* =============================
-       Design System: Modern DSE
-       ============================= */
     :root {
-      --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-
-      /* Palette: Slate & Blue */
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       --primary: #3b82f6;
-      --primary-dark: #2563eb;
-      --primary-dim: rgba(59, 130, 246, 0.08);
-
+      --primary-dim: rgba(59, 130, 246, 0.1);
       --bg-body: #f8fafc;
       --bg-card: #ffffff;
-      --bg-header: #ffffff;
-
-      --text-main: #1e293b;
+      --text-main: #0f172a;
       --text-muted: #64748b;
-
       --border: #e2e8f0;
-      --radius: 16px;
-
-      /* Shadows */
-      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.08);
-      --shadow-md: 0 4px 14px -4px rgba(15, 23, 42, 0.14), 0 2px 6px -2px rgba(15, 23, 42, 0.10);
-
-      /* Semantic Colors */
-      --accent-amber: #f59e0b;
-      --accent-amber-bg: #fffbeb;
-      --accent-amber-border: rgba(245, 158, 11, 0.35);
-
-      --accent-info: #3b82f6;
-      --accent-info-bg: rgba(59, 130, 246, 0.08);
-      --accent-info-border: rgba(59, 130, 246, 0.28);
-
-      --accent-green: #10b981;
-      --accent-green-bg: rgba(16, 185, 129, 0.10);
-      --accent-green-border: rgba(16, 185, 129, 0.22);
+      --radius: 12px;
     }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-body: #0f172a;
-        --bg-card: #1e293b;
-        --bg-header: #1e293b;
-
-        --text-main: #f1f5f9;
-        --text-muted: #94a3b8;
-
-        --border: #334155;
-
-        --primary: #60a5fa;
-        --primary-dark: #3b82f6;
-        --primary-dim: rgba(96, 165, 250, 0.10);
-
-        --accent-amber-bg: rgba(245, 158, 11, 0.10);
-        --accent-amber-border: rgba(245, 158, 11, 0.30);
-
-        --accent-info-bg: rgba(59, 130, 246, 0.10);
-        --accent-info-border: rgba(59, 130, 246, 0.30);
-
-        --accent-green-bg: rgba(16, 185, 129, 0.10);
-        --accent-green-border: rgba(16, 185, 129, 0.24);
-      }
-    }
-
-    /* --- Base --- */
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: var(--font-sans);
-      background: var(--bg-body);
-      color: var(--text-main);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    /* --- Layout --- */
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 20px 60px;
-    }
-
-    /* --- Hero Header --- */
-    .hero-header {
-      background: var(--bg-header);
-      border-bottom: 1px solid var(--border);
-      padding: 40px 20px 30px;
-      text-align: center;
-      margin-bottom: 22px;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .nav-breadcrumb {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.90rem;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      background: var(--bg-body);
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-    }
-
-    h1 {
-      margin: 8px 0 8px;
-      font-size: 2.05rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, var(--primary), #8b5cf6);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .meta-subtitle {
-      font-size: 1.0rem;
-      color: var(--text-muted);
-      max-width: 760px;
-      margin: 0 auto 18px;
-    }
-
-    /* --- Navigation Buttons --- */
-    .section-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 16px 0 0;
-      padding: 0;
-      justify-content: center;
-    }
-
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      color: var(--primary);
-      font-weight: 700;
-      font-size: 0.95rem;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .nav-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .nav-btn span {
-      background: var(--primary);
-      color: white;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      margin-right: 4px;
-    }
-
-    /* --- Intro & Badges --- */
-    .section-intro {
-      color: var(--text-muted);
-      font-size: 1.02rem;
-      margin: 0 0 14px;
-    }
-
-    .badge-strip {
-      margin: 14px 0 0;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      border-radius: 8px;
-      border: 1px solid;
-      font-size: 0.90rem;
-      font-weight: 600;
-    }
-
-    .badge.exam {
-      background: var(--accent-info-bg);
-      color: var(--primary);
-      border-color: var(--accent-info-border);
-    }
-
-    .badge.skills {
-      background: var(--accent-green-bg);
-      color: var(--accent-green);
-      border-color: var(--accent-green-border);
-    }
-
-    /* --- Cards --- */
-    section { margin-top: 14px; }
-
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-      margin: 22px 0;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .card h2 {
-      margin: 0 0 18px;
-      font-size: 1.4rem;
-      font-weight: 700;
-      padding-left: 14px;
-      position: relative;
-      scroll-margin-top: 120px;
-      color: var(--text-main);
-    }
-
-    .card h2::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0.2em;
-      width: 6px;
-      height: 1.1em;
-      border-radius: 99px;
-      background: var(--primary);
-    }
-
-    .card h3 {
-      margin: 22px 0 10px;
-      font-size: 1.08rem;
-      font-weight: 650;
-      color: var(--text-main);
-    }
-
-    .sec-pill {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--primary);
-      background: var(--primary-dim);
-      padding: 3px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--accent-info-border);
-      margin-left: 8px;
-      vertical-align: middle;
-    }
-
-    ul.key-list {
-      margin: 0;
-      padding-left: 20px;
-      color: var(--text-muted);
-    }
-
-    .key-list li { margin: 8px 0; }
-    .key-list li::marker { color: var(--primary); }
-    strong { color: var(--text-main); font-weight: 650; }
-
-    /* --- Semantic Callouts --- */
-    .callout {
-      padding: 16px 20px;
-      border-radius: 12px;
-      margin: 18px 0;
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      font-size: 0.95rem;
-      border: 1px solid;
-    }
-
-    .co-icon {
-      flex-shrink: 0;
-      width: 24px;
-      height: 24px;
-      margin-top: 2px;
-    }
-
-    .co-icon svg { width: 100%; height: 100%; }
-
-    .co-title {
-      display: block;
-      font-weight: 800;
-      margin-bottom: 4px;
-      font-size: 0.80rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .co-content { color: var(--text-main); }
-
-    .callout.note {
-      background: var(--accent-info-bg);
-      border-color: var(--accent-info-border);
-    }
-    .callout.note .co-icon, .callout.note .co-title { color: var(--primary); }
-
-    .callout.trap {
-      background: var(--accent-amber-bg);
-      border-color: var(--accent-amber-border);
-    }
-    .callout.trap .co-icon, .callout.trap .co-title { color: var(--accent-amber); }
-
-    .callout.good {
-      background: var(--accent-green-bg);
-      border-color: var(--accent-green-border);
-    }
-    .callout.good .co-icon, .callout.good .co-title { color: var(--accent-green); }
-
-    /* --- Tables --- */
-    .table-container {
-      overflow-x: auto;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--bg-card);
-      margin-top: 12px;
-    }
-
-    table.data-table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 600px;
-      font-size: 0.95rem;
-    }
-
-    .data-table th {
-      background: var(--bg-body);
-      color: var(--text-muted);
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 0.8rem;
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .data-table td {
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      color: var(--text-muted);
-      vertical-align: top;
-    }
-
-    .data-table tr:last-child td { border-bottom: none; }
-
-    /* Footer */
-    .footer {
-      margin-top: 28px;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.92rem;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .container { padding: 0 16px 60px; }
-      h1 { font-size: 1.8rem; }
-      .card { padding: 20px; }
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--bg-body); color: var(--text-main); line-height: 1.6; padding: 20px; }
+    .container { max-width: 850px; margin: 0 auto; }
+    .hero { text-align: center; margin-bottom: 20px; }
+    .hero h1 { font-size: 2rem; font-weight: 700; background: linear-gradient(135deg, var(--primary), #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 4px; }
+    .hero p { color: var(--text-muted); font-size: 1rem; }
+    .nav-buttons { display: flex; justify-content: space-between; margin: 16px 0; }
+    .nav-buttons a { background: var(--primary); color: #fff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: background 0.2s; }
+    .nav-buttons a:hover { background: #2563eb; }
+    .jump-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .jump-bar a { background: var(--primary-dim); color: var(--primary); padding: 6px 10px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; white-space: nowrap; }
+    .jump-bar a:hover { background: var(--primary); color: #fff; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
+    .card h2 { font-size: 1.3rem; margin-bottom: 8px; }
+    .callout { margin: 16px 0; padding: 12px; border-left: 4px solid; border-radius: 6px; }
+    .callout.note { background: #eff6ff; border-color: #3b82f6; }
+    .callout.trap { background: #fef2f2; border-color: #ef4444; }
+    .callout.rem { background: #f0fdf4; border-color: #10b981; }
+    .key-terms { background: #f9fafb; border: 1px dashed var(--border); padding: 12px; border-radius: 6px; margin-bottom: 20px; }
+    .key-terms ul { list-style: disc inside; margin-left: 16px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { padding: 6px; border: 1px solid var(--border); text-align: left; }
+    th { background: var(--primary-dim); }
   </style>
 </head>
 <body>
-
-  <!-- Hero Header -->
-  <header class="hero-header">
-    <div class="nav-breadcrumb">
-      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--primary)">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-      </svg>
-      Index / E3
-    </div>
-
-    <h1>E3 — Lamps: Incandescent, Gas Discharge &amp; LED</h1>
-    <p class="meta-subtitle">
-      HKDSE Physics — Elective E3: Energy &amp; Use of Energy · Compare lamps using <strong>luminous efficacy</strong>, understand how each lamp produces light, and explain energy-saving choices.
-    </p>
-
-    <!-- Navigation HTML template (required) -->
-    <div class="section-nav" style="justify-content:center;">
-      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
-    </div>
-  </header>
-
   <div class="container">
-    <main>
+    <header class="hero">
+      <h1>Lamps: Incandescent, Gas Discharge &amp; LED</h1>
+      <p>Comparing how different lamps produce light and their efficiencies</p>
+      <div class="nav-buttons">
+        <a href="../index.html">Back to Index</a>
+        <a href="eels.html">&lt; Prev</a>
+        <a href="lighting_luminous_flux.html">Next &gt;</a>
+      </div>
+    </header>
 
-      <p class="section-intro" style="text-align:center;">
-        In E3, you should be able to compare different lamps by their <strong>luminous efficacy (lm W\(^{-1}\))</strong> and explain why some lamps waste more energy as <strong>heat (infra-red)</strong>.
+    <nav class="jump-bar">
+      <a href="#overview">Overview</a>
+      <a href="#incandescent">Incandescent lamps</a>
+      <a href="#discharge">Gas discharge lamps</a>
+      <a href="#led">LEDs</a>
+      <a href="#comparison">Comparison</a>
+      <a href="#reminders">Reminders</a>
+    </nav>
+
+    <section id="overview" class="card">
+      <h2>Overview</h2>
+      <p>
+        Lighting technology has evolved from filament bulbs to fluorescent tubes and now
+        to solid‑state light emitting diodes (LEDs).  Each lamp type produces light in
+        a different way and has a different energy efficiency and lifespan.  The HKDSE
+        syllabus requires students to gather information on incandescent, gas discharge
+        and LED lamps【912087049771804†L5088-L5095】.
       </p>
+      <p>
+        It is also important to recognise that the eye’s response depends on
+        wavelength【912087049771804†L5088-L5095】.  Lamps that produce more light in the
+        visible spectrum appear brighter for the same radiant power.
+      </p>
+    </section>
 
-      <div class="badge-strip">
-        <span class="badge exam">Exam focus: luminous efficacy, energy conversion (light vs heat), basic working principles</span>
-        <span class="badge skills">Skills: compare by same brightness (luminous flux) or same power; relate low efficacy to heat loss</span>
+    <section id="incandescent" class="card">
+      <h2>Incandescent lamps</h2>
+      <p>
+        An incandescent lamp consists of a tungsten filament inside a glass bulb.  When
+        current passes through the filament it heats up to around 2&nbsp;700 °C and
+        emits thermal radiation; only about 5 % of the electrical energy is converted
+        to visible light, the rest is lost as heat.  Typical lifespans are 750–1&nbsp;000
+        hours.  Because of their low efficacy (≈&nbsp;15 lm W<sup>−1</sup>) these lamps
+        are being phased out in favour of more efficient technologies.
+      </p>
+      <div class="callout trap">
+        <strong>Trap:</strong> The brightness of an incandescent bulb depends on both
+        power and efficacy.  A higher‑wattage filament bulb is brighter but also wastes
+        more energy as heat.
       </div>
+    </section>
 
-      <!-- Jump Bar -->
-      <div class="section-nav" aria-label="Jump to section" style="margin-top:20px; justify-content:center;">
-        <a href="#sec01" class="nav-btn"><span>1</span> Syllabus focus</a>
-        <a href="#sec02" class="nav-btn"><span>2</span> Comparison</a>
-        <a href="#sec03" class="nav-btn"><span>3</span> Incandescent</a>
-        <a href="#sec04" class="nav-btn"><span>4</span> Gas discharge</a>
-        <a href="#sec05" class="nav-btn"><span>5</span> LED</a>
-        <a href="#sec06" class="nav-btn"><span>6</span> Summary table</a>
-        <a href="#sec07" class="nav-btn"><span>7</span> Reminders</a>
-        <a href="#sec08" class="nav-btn"><span>8</span> Key terms</a>
+    <section id="discharge" class="card">
+      <h2>Gas discharge lamps</h2>
+      <p>
+        Gas discharge lamps, such as fluorescent tubes and compact fluorescent lamps
+        (CFLs), produce light by passing a current through a gas or vapour.  The
+        excited atoms emit ultraviolet radiation, which is then converted to visible
+        light by a phosphor coating.  These lamps are much more efficient than
+        incandescent bulbs (≈ 60–80 lm W<sup>−1</sup>) and last 6&nbsp;000–10&nbsp;000
+        hours.  Their colour rendering and warm‑up time depend on the gas mixture and
+        phosphor.
+      </p>
+    </section>
+
+    <section id="led" class="card">
+      <h2>Light emitting diodes (LEDs)</h2>
+      <p>
+        LEDs are solid‑state devices.  When a forward bias is applied to a
+        semiconductor p‑n junction, electrons and holes recombine and release energy as
+        photons.  The wavelength (colour) depends on the band gap of the
+        semiconductor.  White LEDs use blue‑emitting chips with a phosphor layer to
+        convert part of the light to longer wavelengths.  LEDs have very high
+        efficacies (90–150 lm W<sup>−1</sup>), instant start‑up and lifespans over
+        25&nbsp;000 hours.
+      </p>
+      <div class="callout note">
+        <strong>Note:</strong> LEDs are directional sources.  A well‑designed luminaire
+        can take advantage of this to deliver light where it is needed without
+        reflectors.
       </div>
+    </section>
 
-      <!-- Section 1 -->
-      <section>
-        <div class="card">
-          <h2 id="sec01">1. Syllabus focus (what you must be able to do)</h2>
-          <ul class="key-list">
-            <li>Compare different lamps in terms of <strong>energy efficiency</strong> (using luminous efficacy).</li>
-            <li>Describe the main energy conversions in different lamps (light vs heat loss).</li>
-            <li>State basic working principles of <strong>incandescent</strong>, <strong>gas discharge</strong> and <strong>LED</strong> lamps (qualitative).</li>
-          </ul>
+    <section id="comparison" class="card">
+      <h2>Comparison table</h2>
+      <table>
+        <tr><th>Type</th><th>Light production mechanism</th><th>Typical efficacy</th><th>Lifespan</th></tr>
+        <tr><td>Incandescent</td><td>Hot filament radiates</td><td>≈ 15 lm W<sup>−1</sup></td><td>0.75–1 kh</td></tr>
+        <tr><td>Fluorescent (CFL)</td><td>Gas discharge &amp; phosphor</td><td>60–80 lm W<sup>−1</sup></td><td>6–10 kh</td></tr>
+        <tr><td>LED</td><td>Electroluminescence in semiconductor</td><td>90–150 lm W<sup>−1</sup></td><td>25+ kh</td></tr>
+      </table>
+      <p>
+        LEDs are the most energy‑efficient and durable option.  CFLs are a good
+        compromise but contain small amounts of mercury and require proper disposal.
+        Incandescent lamps are inefficient and generally unsuitable for long‑term use.
+      </p>
+    </section>
 
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Exam habit</span>
-              <div class="co-content">
-                Always link your choice to <strong>higher luminous efficacy</strong> (more light output per watt) and therefore <strong>lower electricity consumption</strong> for the same brightness.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 2 -->
-      <section>
-        <div class="card">
-          <h2 id="sec02">2. Key comparison idea (E3 core)</h2>
-
-          <h3>Energy conversion in lamps</h3>
-          <ul class="key-list">
-            <li>All lamps convert <strong>electrical energy</strong> into <strong>electromagnetic energy</strong> (light) and <strong>internal energy</strong> (heating).</li>
-            <li>Energy wasted mainly appears as <strong>infra-red radiation</strong> (heat) and heating of the lamp / surroundings.</li>
-          </ul>
-
-          <h3>How to compare fairly</h3>
-          <ul class="key-list">
-            <li>Compare lamps with the <strong>same light output</strong> (same <em>luminous flux</em>) — the one with <strong>smaller power</strong> uses less electricity.</li>
-            <li>Or compare lamps with the <strong>same power</strong> — the one with <strong>larger light output</strong> is more energy efficient.</li>
-          </ul>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Common trap</span>
-              <div class="co-content">
-                Do not compare brightness by “watt”. Watt is <strong>power input</strong>, not light output. Use <strong>luminous flux (lm)</strong> or <strong>illuminance (lux)</strong> if provided.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 3 -->
-      <section>
-        <div class="card">
-          <h2 id="sec03">3. Incandescent (filament) lamp</h2>
-
-          <h3>How it produces light</h3>
-          <ul class="key-list">
-            <li>A thin filament has a high resistance.</li>
-            <li>When current passes through it, the filament becomes very hot.</li>
-            <li>It emits electromagnetic radiation: <strong>visible light</strong> + a lot of <strong>infra-red</strong>.</li>
-          </ul>
-
-          <h3>Energy efficiency (qualitative)</h3>
-          <ul class="key-list">
-            <li>Large proportion of energy is emitted as <strong>infra-red</strong> (heat), so luminous efficacy is <strong>low</strong>.</li>
-            <li>The lamp becomes hot during operation.</li>
-          </ul>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Exam wording</span>
-              <div class="co-content">
-                “Low luminous efficacy because most electrical energy is converted into <strong>heat (infra-red)</strong> rather than visible light.”
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 4 -->
-      <section>
-        <div class="card">
-          <h2 id="sec04">4. Gas discharge lamp (e.g. fluorescent)</h2>
-
-          <h3>Main idea</h3>
-          <ul class="key-list">
-            <li>An electric discharge through a gas can excite atoms / molecules in the gas.</li>
-            <li>When they de-excite, they emit electromagnetic radiation.</li>
-          </ul>
-
-          <h3>Fluorescent lamp (typical example)</h3>
-          <ul class="key-list">
-            <li>Discharge in mercury vapour produces mainly <strong>ultraviolet (UV)</strong> radiation.</li>
-            <li>A phosphor coating on the tube absorbs UV and emits <strong>visible light</strong> (fluorescence).</li>
-          </ul>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Why more efficient than filament</span>
-              <div class="co-content">
-                More of the electrical energy can end up as <strong>visible light</strong> (after conversion from UV), so luminous efficacy is usually higher than an incandescent lamp.
-              </div>
-            </div>
-          </div>
-
-          <div class="callout trap">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Do not over-detail</span>
-              <div class="co-content">
-                HKDSE typically needs only a <strong>qualitative</strong> description (discharge excites gas, light emitted / phosphor converts UV to visible). No advanced electronics is required.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 5 -->
-      <section>
-        <div class="card">
-          <h2 id="sec05">5. LED lamp (light-emitting diode)</h2>
-
-          <h3>How it produces light (qualitative)</h3>
-          <ul class="key-list">
-            <li>An LED is a semiconductor device that emits light when current passes through it.</li>
-            <li>It can produce visible light efficiently with less energy wasted as heat compared with filament lamps.</li>
-          </ul>
-
-          <h3>Energy efficiency</h3>
-          <ul class="key-list">
-            <li>LED lamps generally have <strong>high luminous efficacy</strong>.</li>
-            <li>They usually stay much cooler than filament lamps for similar brightness.</li>
-          </ul>
-
-          <div class="callout good">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m7 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Energy-saving choice</span>
-              <div class="co-content">
-                For the same brightness, an LED typically needs <strong>smaller power</strong> \(\rightarrow\) less electrical energy used \(\rightarrow\) lower running cost.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 6 -->
-      <section>
-        <div class="card">
-          <h2 id="sec06">6. Summary table (HKDSE-style comparison)</h2>
-
-          <div class="table-container">
-            <table class="data-table" aria-label="Comparison of lamps">
-              <thead>
-                <tr>
-                  <th width="30%">Lamp type</th>
-                  <th width="45%">How light is produced (key idea)</th>
-                  <th width="25%">Energy efficiency (typical)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Incandescent (filament)</strong></td>
-                  <td>Filament heated by current \(\rightarrow\) emits visible + much infra-red</td>
-                  <td><strong>Low</strong> luminous efficacy (large heat loss)</td>
-                </tr>
-                <tr>
-                  <td><strong>Gas discharge (fluorescent)</strong></td>
-                  <td>Discharge excites gas \(\rightarrow\) UV; phosphor converts UV \(\rightarrow\) visible light</td>
-                  <td><strong>Medium to high</strong> (usually higher than filament)</td>
-                </tr>
-                <tr>
-                  <td><strong>LED</strong></td>
-                  <td>Semiconductor device emits light when current flows</td>
-                  <td><strong>High</strong> luminous efficacy (less heat loss)</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div>
-              <span class="co-title">Link to later pages</span>
-              <div class="co-content">
-                The next three pages define <strong>luminous flux (lm)</strong>, <strong>illuminance (lux)</strong> and <strong>luminous efficacy (lm W\(^{-1}\))</strong> quantitatively.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 7 -->
-      <section>
-        <div class="card">
-          <h2 id="sec07">7. Reminders &amp; common exam traps</h2>
-          <ul class="key-list">
-            <li><strong>Brightness</strong> is about light output, not power input. Use lm / lux if given.</li>
-            <li>When asked “which lamp saves energy?”, state: <strong>higher luminous efficacy</strong> \(\rightarrow\) smaller power for same light output \(\rightarrow\) less electrical energy used.</li>
-            <li>For filament lamps, mention that much energy becomes <strong>infra-red (heat)</strong>.</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- Section 8 -->
-      <section>
-        <div class="card">
-          <h2 id="sec08">8. Key terms</h2>
-          <ul class="key-list">
-            <li><strong>Incandescent lamp</strong>: produces light by heating a filament to a high temperature.</li>
-            <li><strong>Gas discharge lamp</strong>: produces light when an electric discharge excites a gas, which then emits radiation.</li>
-            <li><strong>Fluorescence</strong>: emission of visible light from a substance after absorbing higher-energy radiation (e.g. UV).</li>
-            <li><strong>LED</strong>: light-emitting diode; a semiconductor device that emits light when current passes through it.</li>
-            <li><strong>Infra-red radiation</strong>: electromagnetic radiation felt as heat; a major energy loss in filament lamps.</li>
-            <li><strong>Luminous efficacy</strong>: light output per unit power input, in \(\text{lm W}^{-1}\).</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- Bottom navigation (required) -->
-      <div class="section-nav" style="justify-content:center; margin-top: 18px;">
-        <a class="nav-btn" href="../index.html">&larr; Back to index</a>
+    <section id="reminders" class="card">
+      <h2>Reminders &amp; Key terms</h2>
+      <div class="callout rem">
+        <strong>Reminders:</strong>
+        <ul>
+          <li>The eye’s sensitivity peaks at green wavelengths (~550 nm).  A lamp’s
+              spectral output affects perceived brightness【912087049771804†L5088-L5095】.</li>
+          <li>Lamp efficacy is measured in lumens per watt (lm W<sup>−1</sup>).
+              A higher efficacy means more light for the same power.</li>
+          <li>Always recycle CFLs and LEDs according to local guidelines.</li>
+        </ul>
       </div>
+      <div class="key-terms">
+        <strong>Key terms</strong>
+        <ul>
+          <li><strong>Incandescent lamp</strong> – produces light by heating a filament.</li>
+          <li><strong>Gas discharge lamp</strong> – uses an electrical discharge through a gas to
+              generate light (e.g. fluorescent).</li>
+          <li><strong>LED</strong> – semiconductor device that emits light when current flows.</li>
+          <li><strong>Efficacy</strong> – luminous flux per unit electrical power.</li>
+        </ul>
+      </div>
+    </section>
 
-      <p class="footer">HKDSE Physics • E3 Energy &amp; Use of Energy</p>
-
-    </main>
+    <footer class="hero">
+      <div class="nav-buttons">
+        <a href="../index.html">Back to Index</a>
+        <a href="eels.html">&lt; Prev</a>
+        <a href="lighting_luminous_flux.html">Next &gt;</a>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 8px;">
+        References: HKDSE Physics C&amp;A Guide【912087049771804†L5088-L5095】
+      </p>
+    </footer>
   </div>
 </body>
 </html>
