@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>E3 — Heat Pumps & Air-conditioners: COP | DSE Physics Notes</title>
+
+  <!-- MathJax for equation rendering -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['$$','$$']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    /* =============================
+       Design System: Modern DSE
+       (kept consistent with E2 pages)
+       ============================= */
+    :root {
+      --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+      /* Palette: Slate & Blue */
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-dim: rgba(59, 130, 246, 0.08);
+
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-header: #ffffff;
+
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+
+      --border: #e2e8f0;
+      --radius: 16px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 4px 14px -4px rgba(15, 23, 42, 0.14), 0 2px 6px -2px rgba(15, 23, 42, 0.10);
+
+      /* Semantic Colors */
+      --accent-amber: #f59e0b;
+      --accent-amber-bg: #fffbeb;
+      --accent-amber-border: rgba(245, 158, 11, 0.35);
+
+      --accent-info: #3b82f6;
+      --accent-info-bg: rgba(59, 130, 246, 0.08);
+      --accent-info-border: rgba(59, 130, 246, 0.28);
+
+      --accent-green: #10b981;
+      --accent-green-bg: rgba(16, 185, 129, 0.10);
+      --accent-green-border: rgba(16, 185, 129, 0.20);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --bg-header: #1e293b;
+
+        --text-main: #f1f5f9;
+        --text-muted: #94a3b8;
+
+        --border: #334155;
+
+        --primary: #60a5fa;
+        --primary-dark: #3b82f6;
+        --primary-dim: rgba(96, 165, 250, 0.10);
+
+        --accent-amber-bg: rgba(245, 158, 11, 0.10);
+        --accent-amber-border: rgba(245, 158, 11, 0.30);
+
+        --accent-info-bg: rgba(59, 130, 246, 0.10);
+        --accent-info-border: rgba(59, 130, 246, 0.30);
+
+        --accent-green-bg: rgba(16, 185, 129, 0.10);
+        --accent-green-border: rgba(16, 185, 129, 0.25);
+      }
+    }
+
+    /* --- Base --- */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* --- Layout --- */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* --- Hero Header --- */
+    .hero-header {
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 20px 30px;
+      text-align: center;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.90rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      background: var(--bg-body);
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .meta-subtitle {
+      font-size: 1.0rem;
+      color: var(--text-muted);
+      max-width: 760px;
+      margin: 0 auto 18px;
+    }
+
+    /* --- Navigation Buttons --- */
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 0;
+      padding: 0;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .nav-btn span {
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      margin-right: 4px;
+    }
+
+    /* --- Badges --- */
+    .badge-strip {
+      margin: 14px 0 0;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid;
+      font-size: 0.90rem;
+      font-weight: 600;
+    }
+
+    .badge.exam {
+      background: var(--accent-info-bg);
+      color: var(--primary);
+      border-color: var(--accent-info-border);
+    }
+
+    .badge.skills {
+      background: var(--accent-green-bg);
+      color: var(--accent-green);
+      border-color: var(--accent-green-border);
+    }
+
+    /* --- Content Cards --- */
+    section { margin-top: 14px; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin: 22px 0;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card h2 {
+      margin: 0 0 18px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      padding-left: 14px;
+      position: relative;
+      scroll-margin-top: 120px;
+      color: var(--text-main);
+    }
+
+    .card h2::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.2em;
+      width: 6px;
+      height: 1.1em;
+      border-radius: 99px;
+      background: var(--primary);
+    }
+
+    .card h3 {
+      margin: 24px 0 12px;
+      font-size: 1.1rem;
+      font-weight: 650;
+      color: var(--text-main);
+    }
+
+    ul.key-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text-muted);
+    }
+
+    .key-list li { margin: 8px 0; }
+    .key-list li::marker { color: var(--primary); }
+    strong { color: var(--text-main); font-weight: 650; }
+
+    .section-intro {
+      margin: 0 auto;
+      max-width: 820px;
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: var(--primary-dim);
+      border: 1px solid var(--accent-info-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* --- Semantic Callouts --- */
+    .callout {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin: 18px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      font-size: 0.95rem;
+      border: 1px solid;
+    }
+
+    .co-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      margin-top: 2px;
+    }
+    .co-icon svg { width: 100%; height: 100%; }
+
+    .co-title {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 4px;
+      font-size: 0.80rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .co-content { color: var(--text-main); }
+
+    .callout.note {
+      background: var(--accent-info-bg);
+      border-color: var(--accent-info-border);
+    }
+    .callout.note .co-icon, .callout.note .co-title { color: var(--primary); }
+
+    .callout.trap {
+      background: var(--accent-amber-bg);
+      border-color: var(--accent-amber-border);
+    }
+    .callout.trap .co-icon, .callout.trap .co-title { color: var(--accent-amber); }
+
+    /* --- Mini Figures / Tables --- */
+    .figure {
+      margin: 16px 0;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.6);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .figure { background: rgba(15,23,42,0.35); }
+    }
+
+    .figure .fig-hd {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .figure .fig-bd { padding: 14px; }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .table th, .table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .table th {
+      background: rgba(59,130,246,0.08);
+      color: var(--text-main);
+      font-weight: 900;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .table th { background: rgba(96,165,250,0.10); }
+    }
+
+    /* --- Simple diagram blocks --- */
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    @media (max-width: 640px) {
+      .flow { grid-template-columns: 1fr; }
+    }
+
+    .box {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: var(--bg-card);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .box .t {
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .box .d {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .arrow {
+      display: grid;
+      place-items: center;
+      color: var(--text-muted);
+      font-weight: 900;
+      gap: 6px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      box-shadow: var(--shadow-sm);
+      font-weight: 800;
+      color: var(--text-main);
+      justify-content: center;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 22px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { padding: 0 16px 60px; }
+      h1 { font-size: 1.8rem; }
+      .card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Header -->
+  <header class="hero-header">
+    <div class="nav-breadcrumb">
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--primary)">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+      </svg>
+      Index / E3
+    </div>
+
+    <h1>E3 — Heat Pumps &amp; Air-conditioners: COP</h1>
+    <p class="meta-subtitle">
+      HKDSE Physics — Elective E3: Energy &amp; Use of Energy · Air-conditioner as a heat pump, cooling capacity, and coefficient of performance (COP).
+    </p>
+
+    <!-- Navigation HTML template (required) -->
+    <div class="section-nav" style="justify-content:center;">
+      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
+      <a class="nav-btn" href="cooking_without_fire.html">&larr; Previous</a>
+      <a class="nav-btn" href="buildings_conduction_uvalue.html">Next &rarr;</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <main>
+
+      <p class="section-intro" style="text-align:center;">
+        Key idea: an air-conditioner <strong>moves heat</strong> from a cooler room to a hotter outside by consuming electrical energy.
+        Use <strong>cooling capacity</strong> (rate of heat removed) and <strong>COP</strong> (how efficiently it uses energy).
+      </p>
+
+      <div class="badge-strip">
+        <span class="badge exam">Exam focus: cooling capacity \(=\dfrac{Q_C}{t}\), \(\text{COP}=\dfrac{\text{cooling capacity}}{P_{\text{in}}}\), \(\dot Q_{\text{out}} = \text{cooling capacity}+P_{\text{in}}\)</span>
+        <span class="badge skills">Skills: read energy label, use \(P=\dfrac{E}{t}\), explain why COP can be &gt; 1</span>
+      </div>
+
+      <!-- Jump Bar -->
+      <div class="section-nav" aria-label="Jump to section" style="margin-top:20px; justify-content:center;">
+        <a href="#sec01" class="nav-btn"><span>1</span> Syllabus focus</a>
+        <a href="#sec02" class="nav-btn"><span>2</span> Heat pump idea</a>
+        <a href="#sec03" class="nav-btn"><span>3</span> Cooling capacity</a>
+        <a href="#sec04" class="nav-btn"><span>4</span> COP</a>
+        <a href="#sec05" class="nav-btn"><span>5</span> Energy relation</a>
+        <a href="#sec06" class="nav-btn"><span>6</span> Worked examples</a>
+        <a href="#sec07" class="nav-btn"><span>7</span> Energy saving</a>
+        <a href="#sec08" class="nav-btn"><span>8</span> Reminders</a>
+        <a href="#sec09" class="nav-btn"><span>9</span> Key terms</a>
+      </div>
+
+      <!-- Section 1 -->
+      <section>
+        <div class="card">
+          <h2 id="sec01">1. Syllabus focus (what you must be able to do)</h2>
+          <ul class="key-list">
+            <li>Describe an <strong>air-conditioner as a heat pump</strong> that transfers heat from a cooler room to a hotter outside.</li>
+            <li>State the meaning of <strong>cooling capacity</strong> and use it in calculations.</li>
+            <li>Define and use the <strong>coefficient of performance (COP)</strong>.</li>
+            <li>Discuss possible ways of <strong>using heat generated</strong> by central air-conditioning systems (energy saving).</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Note</span>
+              <div class="co-content">
+                In DSE questions, you often read an <strong>energy label</strong> (cooling capacity in kW, annual energy consumption in kW h) and then find COP.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2 -->
+      <section>
+        <div class="card">
+          <h2 id="sec02">2. Heat pump idea: moving heat against its natural direction</h2>
+          <ul class="key-list">
+            <li>Heat naturally flows from <strong>hot</strong> to <strong>cold</strong>.</li>
+            <li>A <strong>heat pump</strong> transfers heat from a <strong>colder</strong> place to a <strong>hotter</strong> place by consuming electrical energy.</li>
+            <li>An air-conditioner is a heat pump: it removes heat from indoor air and releases it outdoors.</li>
+          </ul>
+
+          <div class="figure" aria-label="Energy flow in an air conditioner">
+            <div class="fig-hd">
+              <span>Energy flow view (what moves where)</span>
+              <span style="color:var(--text-muted); font-weight:700;">Indoor (cooler) → Outdoor (hotter)</span>
+            </div>
+            <div class="fig-bd">
+              <div class="flow">
+                <div class="box">
+                  <div class="t">Indoor (room)</div>
+                  <div class="d">Heat removed: \(Q_C\) (cooling)</div>
+                </div>
+                <div class="arrow">
+                  <div class="pill">\(Q_C\)</div>
+                  <div style="font-size:0.95rem;">removed</div>
+                </div>
+                <div class="box">
+                  <div class="t">Outdoor</div>
+                  <div class="d">Heat released: \(Q_{\text{out}}\)</div>
+                </div>
+              </div>
+
+              <div style="height:12px;"></div>
+
+              <div class="flow">
+                <div class="box">
+                  <div class="t">Electrical input</div>
+                  <div class="d">Work done by compressor: \(E_{\text{in}}\)</div>
+                </div>
+                <div class="arrow">
+                  <div class="pill">\(E_{\text{in}}\)</div>
+                  <div style="font-size:0.95rem;">consumed</div>
+                </div>
+                <div class="box">
+                  <div class="t">Outdoor</div>
+                  <div class="d">Extra heat released due to input energy</div>
+                </div>
+              </div>
+
+              <div class="callout note" style="margin-top:14px;">
+                <div class="co-icon">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.1 0-2 .9-2 2v8h4v-8c0-1.1-.9-2-2-2zm0-6a3 3 0 00-3 3v1h6V5a3 3 0 00-3-3z"></path></svg>
+                </div>
+                <div>
+                  <span class="co-title">How the room is cooled (exam-style)</span>
+                  <div class="co-content">
+                    In the <strong>evaporator coil</strong>, the refrigerant absorbs heat from indoor air and evaporates.
+                    The refrigerant is then compressed so its temperature becomes higher than the outside, and it releases heat in the <strong>condensing coil</strong> outdoors.
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3 -->
+      <section>
+        <div class="card">
+          <h2 id="sec03">3. Cooling capacity (rate of heat removed)</h2>
+          <ul class="key-list">
+            <li><strong>Meaning:</strong> the rate at which an air-conditioner removes heat from a room.</li>
+            <li><strong>Definition:</strong> \(\text{cooling capacity} = \dfrac{Q_C}{t}\).</li>
+            <li><strong>Unit:</strong> W or kW (since it is a rate of energy transfer).</li>
+          </ul>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Unit trap</span>
+              <div class="co-content">
+                Cooling capacity is in <strong>kW</strong> (a rate), while annual energy consumption on labels is in <strong>kW h</strong> (energy).
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4 -->
+      <section>
+        <div class="card">
+          <h2 id="sec04">4. Coefficient of performance (COP)</h2>
+
+          <h3>Meaning</h3>
+          <ul class="key-list">
+            <li>COP measures how efficiently an air-conditioner uses energy to remove heat from a room.</li>
+            <li>COP is a <strong>ratio</strong>, so it has <strong>no unit</strong>.</li>
+          </ul>
+
+          <h3>Definition (cooling mode)</h3>
+          <ul class="key-list">
+            <li>\(\displaystyle \text{COP} = \frac{\text{cooling capacity}}{P_{\text{in}}} = \frac{Q_C/t}{E_{\text{in}}/t} = \frac{Q_C}{E_{\text{in}}}\)</li>
+            <li>Typical air-conditioners may have COP around <strong>2.3 to 3.2</strong> (so each 1 kW h input can remove 2.3–3.2 kW h of heat from the room).</li>
+          </ul>
+
+          <div class="figure" aria-label="Cooling capacity vs COP">
+            <div class="fig-hd">
+              <span>Cooling capacity vs COP (don’t mix them up)</span>
+              <span style="color:var(--text-muted); font-weight:700;">Capacity = how much; COP = how efficient</span>
+            </div>
+            <div class="fig-bd">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Quantity</th>
+                    <th>What it tells you</th>
+                    <th>Equation</th>
+                    <th>Unit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Cooling capacity</strong></td>
+                    <td>maximum rate of heat removal</td>
+                    <td>\(\dfrac{Q_C}{t}\)</td>
+                    <td>W or kW</td>
+                  </tr>
+                  <tr>
+                    <td><strong>COP</strong></td>
+                    <td>how efficiently input power removes heat</td>
+                    <td>\(\dfrac{\text{cooling capacity}}{P_{\text{in}}}\)</td>
+                    <td>no unit</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5 -->
+      <section>
+        <div class="card">
+          <h2 id="sec05">5. Energy relation &amp; “COP &gt; 1” (does it break energy conservation?)</h2>
+
+          <h3>Rates form (most useful in questions)</h3>
+          <ul class="key-list">
+            <li>\(\displaystyle \dot Q_{\text{out}} = \text{cooling capacity} + P_{\text{in}}\)</li>
+            <li>Meaning: the rate of heat released to outside equals the rate of heat removed from the room plus the electrical power input.</li>
+          </ul>
+
+          <h3>Energy form (over a time \(t\))</h3>
+          <ul class="key-list">
+            <li>\(\displaystyle Q_{\text{out}} = Q_C + E_{\text{in}}\)</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Why COP can be &gt; 1</span>
+              <div class="co-content">
+                An air-conditioner does not “create” energy. It uses electrical energy mainly to operate the compressor, which allows it to <strong>move existing heat</strong> from the room to outside.
+                So \(Q_C\) can be larger than \(E_{\text{in}}\), and COP can be larger than 1.
+              </div>
+            </div>
+          </div>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Common mistake</span>
+              <div class="co-content">
+                If the question asks for the <strong>heat released to outside</strong>, you must add the input power:
+                \(\dot Q_{\text{out}} = \text{cooling capacity}+P_{\text{in}}\).
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section 6 -->
+      <section>
+        <div class="card">
+          <h2 id="sec06">6. Worked examples (DSE style)</h2>
+
+          <h3>Example A: COP → heat removed and heat released</h3>
+          <ul class="key-list">
+            <li>An air-conditioner has input power \(P_{\text{in}}=1500\,\text{W}\) and COP \(=2.3\).</li>
+            <li><strong>(a)</strong> Cooling capacity \(= P_{\text{in}}\times \text{COP} = 1500\times2.3 = 3450\,\text{W}\).</li>
+            <li>Heat removed in 1 minute: \(Q_C = (3450)\times 60 = 2.07\times 10^5\,\text{J}\).</li>
+            <li><strong>(b)</strong> Rate of heat released outside: \(\dot Q_{\text{out}} = 3450 + 1500 = 4950\,\text{W}\).</li>
+          </ul>
+
+          <h3>Example B: energy label → COP</h3>
+          <ul class="key-list">
+            <li>Cooling capacity on label: \(5.12\,\text{kW}\). Annual energy consumption: \(2074\,\text{kW h}\) based on \(1200\,\text{h}\) operation.</li>
+            <li>Average input power: \(P_{\text{in}} = \dfrac{E}{t} = \dfrac{2074}{1200} = 1.73\,\text{kW}\).</li>
+            <li>\(\text{COP} = \dfrac{5.12}{1.73} = 2.96\).</li>
+          </ul>
+
+          <h3>Example C: monthly electricity cost → total heat removed</h3>
+          <ul class="key-list">
+            <li>Electricity cost in a month: \(\$264\). Tariff: \(\$1.1\) per kW h. COP \(=2.5\).</li>
+            <li>Electrical energy input: \(E_{\text{in}} = \dfrac{264}{1.1} = 240\,\text{kW h}\).</li>
+            <li>Total heat removed from room: \(Q_C = \text{COP}\times E_{\text{in}} = 2.5\times240 = 600\,\text{kW h}\).</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Quick meaning check</span>
+              <div class="co-content">
+                If COP = 3 (cooling), it means: the air-conditioner consumes <strong>1 J</strong> of electrical energy to remove <strong>3 J</strong> of heat from the room.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section 7 -->
+      <section>
+        <div class="card">
+          <h2 id="sec07">7. Energy saving ideas (what to write in exams)</h2>
+
+          <h3>Choosing and using an air-conditioner</h3>
+          <ul class="key-list">
+            <li>Choose an air-conditioner with a <strong>suitable cooling capacity</strong> for the room (too small → runs longer; too large → unnecessary consumption).</li>
+            <li>For the same cooling capacity, choose a <strong>higher COP</strong> model → less electrical energy input for the same cooling effect.</li>
+            <li>Reduce heat gain into the room (e.g. close doors/windows; use curtains/solar-control film) → less heat to remove.</li>
+          </ul>
+
+          <h3>Using “waste heat” from central air-conditioning systems</h3>
+          <ul class="key-list">
+            <li>Central air-conditioning ejects a large amount of heat to the environment.</li>
+            <li>If that heat is used for another purpose (e.g. heating water), overall energy use can be reduced.</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.1 0-2 .9-2 2v8h4v-8c0-1.1-.9-2-2-2zm0-6a3 3 0 00-3 3v1h6V5a3 3 0 00-3-3z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Exam wording tip</span>
+              <div class="co-content">
+                Mention the <strong>reason</strong>: “Higher COP means less electrical energy input is needed to remove the same amount of heat.”
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section 8 -->
+      <section>
+        <div class="card">
+          <h2 id="sec08">8. Reminders &amp; common exam traps</h2>
+          <ul class="key-list">
+            <li><strong>COP has no unit</strong>. Don’t write “COP = 3 W”.</li>
+            <li>Don’t confuse <strong>cooling capacity (kW)</strong> with <strong>annual energy consumption (kW h)</strong>.</li>
+            <li>When finding COP from a label: compute \(P_{\text{in}}\) first using \(P=\dfrac{E}{t}\).</li>
+            <li><strong>Cooling capacity can be larger than input power</strong>, and COP can be &gt; 1 (it does not violate energy conservation).</li>
+            <li>If asked for heat released to outside, use \(\dot Q_{\text{out}}=\text{cooling capacity}+P_{\text{in}}\).</li>
+          </ul>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Horsepower ≠ cooling capacity</span>
+              <div class="co-content">
+                Some air-conditioners are sold by “horsepower”. This refers to the <strong>power input</strong>, not the cooling capacity.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 9 -->
+      <section>
+        <div class="card">
+          <h2 id="sec09">9. Key terms</h2>
+          <ul class="key-list">
+            <li><strong>Heat pump</strong>: device that transfers heat from cold to hot by consuming electrical energy.</li>
+            <li><strong>Air-conditioner</strong>: a heat pump that removes heat from a room and releases it outdoors.</li>
+            <li><strong>Cooling capacity</strong>: rate of heat removal from a room, \(\dfrac{Q_C}{t}\) (unit: kW).</li>
+            <li><strong>COP (cooling)</strong>: \(\dfrac{\text{cooling capacity}}{P_{\text{in}}}\), a measure of energy efficiency for removing heat (no unit).</li>
+            <li><strong>Evaporator coil</strong>: indoor coil where refrigerant absorbs heat and evaporates.</li>
+            <li><strong>Condensing coil</strong>: outdoor coil where refrigerant releases heat and condenses.</li>
+            <li><strong>Compressor</strong>: increases pressure of refrigerant; requires electrical power input.</li>
+            <li><strong>Expansion valve</strong>: lowers pressure; refrigerant cools down before entering the evaporator coil.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Bottom navigation (required) -->
+      <div class="section-nav" style="justify-content:center; margin-top: 18px;">
+        <a class="nav-btn" href="../index.html">&larr; Back to index</a>
+        <a class="nav-btn" href="cooking_without_fire.html">&larr; Previous</a>
+        <a class="nav-btn" href="buildings_conduction_uvalue.html">Next &rarr;</a>
+      </div>
+
+      <p class="footer">HKDSE Physics • E3 Energy &amp; Use of Energy</p>
+
+    </main>
+  </div>
+</body>
+</html>
