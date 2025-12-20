@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>E3 — Cooking without Fire | DSE Physics Notes</title>
+
+  <!-- MathJax for equation rendering -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['$$','$$']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    /* =============================
+       Design System: Modern DSE
+       (kept consistent with E2 pages)
+       ============================= */
+    :root {
+      --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+      /* Palette: Slate & Blue */
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-dim: rgba(59, 130, 246, 0.08);
+
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-header: #ffffff;
+
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+
+      --border: #e2e8f0;
+      --radius: 16px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 4px 14px -4px rgba(15, 23, 42, 0.14), 0 2px 6px -2px rgba(15, 23, 42, 0.10);
+
+      /* Semantic Colors */
+      --accent-amber: #f59e0b;
+      --accent-amber-bg: #fffbeb;
+      --accent-amber-border: rgba(245, 158, 11, 0.35);
+
+      --accent-info: #3b82f6;
+      --accent-info-bg: rgba(59, 130, 246, 0.08);
+      --accent-info-border: rgba(59, 130, 246, 0.28);
+
+      --accent-green: #10b981;
+      --accent-green-bg: rgba(16, 185, 129, 0.10);
+      --accent-green-border: rgba(16, 185, 129, 0.20);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --bg-header: #1e293b;
+
+        --text-main: #f1f5f9;
+        --text-muted: #94a3b8;
+
+        --border: #334155;
+
+        --primary: #60a5fa;
+        --primary-dark: #3b82f6;
+        --primary-dim: rgba(96, 165, 250, 0.10);
+
+        --accent-amber-bg: rgba(245, 158, 11, 0.10);
+        --accent-amber-border: rgba(245, 158, 11, 0.30);
+
+        --accent-info-bg: rgba(59, 130, 246, 0.10);
+        --accent-info-border: rgba(59, 130, 246, 0.30);
+
+        --accent-green-bg: rgba(16, 185, 129, 0.10);
+        --accent-green-border: rgba(16, 185, 129, 0.25);
+      }
+    }
+
+    /* --- Base --- */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* --- Layout --- */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* --- Hero Header --- */
+    .hero-header {
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 20px 30px;
+      text-align: center;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.90rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      background: var(--bg-body);
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .meta-subtitle {
+      font-size: 1.0rem;
+      color: var(--text-muted);
+      max-width: 760px;
+      margin: 0 auto 18px;
+    }
+
+    /* --- Navigation Buttons --- */
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 0;
+      padding: 0;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .nav-btn span {
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      margin-right: 4px;
+    }
+
+    /* --- Badges --- */
+    .badge-strip {
+      margin: 14px 0 0;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid;
+      font-size: 0.90rem;
+      font-weight: 600;
+    }
+
+    .badge.exam {
+      background: var(--accent-info-bg);
+      color: var(--primary);
+      border-color: var(--accent-info-border);
+    }
+
+    .badge.skills {
+      background: var(--accent-green-bg);
+      color: var(--accent-green);
+      border-color: var(--accent-green-border);
+    }
+
+    /* --- Content Cards --- */
+    section { margin-top: 14px; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin: 22px 0;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card h2 {
+      margin: 0 0 18px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      padding-left: 14px;
+      position: relative;
+      scroll-margin-top: 120px;
+      color: var(--text-main);
+    }
+
+    .card h2::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.2em;
+      width: 6px;
+      height: 1.1em;
+      border-radius: 99px;
+      background: var(--primary);
+    }
+
+    .card h3 {
+      margin: 24px 0 12px;
+      font-size: 1.1rem;
+      font-weight: 650;
+      color: var(--text-main);
+    }
+
+    ul.key-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text-muted);
+    }
+
+    .key-list li { margin: 8px 0; }
+    .key-list li::marker { color: var(--primary); }
+    strong { color: var(--text-main); font-weight: 650; }
+
+    .section-intro {
+      margin: 0 auto;
+      max-width: 820px;
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: var(--primary-dim);
+      border: 1px solid var(--accent-info-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* --- Semantic Callouts --- */
+    .callout {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin: 18px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      font-size: 0.95rem;
+      border: 1px solid;
+    }
+
+    .co-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      margin-top: 2px;
+    }
+    .co-icon svg { width: 100%; height: 100%; }
+
+    .co-title {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 4px;
+      font-size: 0.80rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .co-content { color: var(--text-main); }
+
+    .callout.note {
+      background: var(--accent-info-bg);
+      border-color: var(--accent-info-border);
+    }
+    .callout.note .co-icon, .callout.note .co-title { color: var(--primary); }
+
+    .callout.trap {
+      background: var(--accent-amber-bg);
+      border-color: var(--accent-amber-border);
+    }
+    .callout.trap .co-icon, .callout.trap .co-title { color: var(--accent-amber); }
+
+    /* --- Tables / Figures --- */
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .table th, .table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .table th {
+      background: rgba(59,130,246,0.08);
+      color: var(--text-main);
+      font-weight: 900;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .table th { background: rgba(96,165,250,0.10); }
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      font-weight: 750;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pill b { color: var(--text-main); }
+
+    .footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 22px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { padding: 0 16px 60px; }
+      h1 { font-size: 1.8rem; }
+      .card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Header -->
+  <header class="hero-header">
+    <div class="nav-breadcrumb">
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--primary)">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+      </svg>
+      Index / E3
+    </div>
+
+    <h1>E3 — Cooking without Fire</h1>
+    <p class="meta-subtitle">
+      HKDSE Physics — Elective E3: Energy &amp; Use of Energy · Compare <strong>electric hotplate</strong>, <strong>induction cooker</strong> and <strong>microwave oven</strong> using working principles, energy conversions and end-use energy efficiency.
+    </p>
+
+    <!-- Navigation (required) -->
+    <div class="section-nav" style="justify-content:center;">
+      <a class="nav-btn" href="../index.html">&larr; Back to index</a>
+      <a class="nav-btn" href="lighting_efficacy.html">&larr; Previous</a>
+      <a class="nav-btn" href="heat_pump_aircon_COP.html">Next &rarr;</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <main>
+
+      <p class="section-intro" style="text-align:center;">
+        Most cooker questions are about: (1) <strong>where heat is mainly generated</strong>, (2) the <strong>main process</strong> (heating effect / electromagnetic induction / microwaves), and (3) using
+        \(E = Pt\) and \(\eta_{\text{end}} = \dfrac{E_{\text{out}}}{E_{\text{in}}}\times 100\%\) for time and running-cost calculations.
+      </p>
+
+      <div class="badge-strip">
+        <span class="badge exam">Exam focus: energy conversions; where heat is generated; \(E=Pt\), \(E=mc\Delta T\), \(\eta_{\text{end}}\)</span>
+        <span class="badge skills">Skills: choose useful output correctly; compare advantages / disadvantages; keep units consistent (J, W, s; or kW h, kW, h)</span>
+      </div>
+
+      <!-- Jump Bar -->
+      <div class="section-nav" aria-label="Jump to section" style="margin-top:20px; justify-content:center;">
+        <a href="#sec01" class="nav-btn"><span>1</span> Syllabus focus</a>
+        <a href="#sec02" class="nav-btn"><span>2</span> Three cookers</a>
+        <a href="#sec03" class="nav-btn"><span>3</span> Working principles</a>
+        <a href="#sec04" class="nav-btn"><span>4</span> Where heat is generated</a>
+        <a href="#sec05" class="nav-btn"><span>5</span> Energy conversions</a>
+        <a href="#sec06" class="nav-btn"><span>6</span> Efficiency comparison</a>
+        <a href="#sec07" class="nav-btn"><span>7</span> Worked examples</a>
+        <a href="#sec08" class="nav-btn"><span>8</span> Reminders</a>
+        <a href="#sec09" class="nav-btn"><span>9</span> Key terms</a>
+      </div>
+
+      <!-- Section 1 -->
+      <section>
+        <div class="card">
+          <h2 id="sec01">1. Syllabus focus (what you must be able to do)</h2>
+          <ul class="key-list">
+            <li>Describe how <strong>electric hotplates</strong>, <strong>induction cookers</strong> and <strong>microwave ovens</strong> generate heat for cooking.</li>
+            <li>Discuss <strong>advantages and disadvantages</strong> of these cookers based on energy conversions and practical use.</li>
+            <li>Solve problems involving <strong>end-use energy efficiency</strong> of cookers.</li>
+            <li>Use the <strong>power rating</strong> to determine <strong>energy consumption</strong> and <strong>running cost</strong>.</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Note</span>
+              <div class="co-content">
+                End-use energy efficiency \(\eta_{\text{end}}\) only describes how much of the electrical energy input becomes available for <strong>heating</strong> in the cooking process.
+                The actual cooking time also depends on the cooking method, the food and the cookware.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2 -->
+      <section>
+        <div class="card">
+          <h2 id="sec02">2. Three common electric cookers (quick overview)</h2>
+
+          <div class="pill-row" aria-label="Cooker types">
+            <div class="pill"><b>Electric hotplate</b> — heating effect in resistance wire</div>
+            <div class="pill"><b>Induction cooker</b> — eddy currents in metal pot</div>
+            <div class="pill"><b>Microwave oven</b> — microwaves heat polar molecules</div>
+          </div>
+
+          <h3>What exam questions often ask</h3>
+          <ul class="key-list">
+            <li>“Where is heat mainly generated?” (in cooker / in pot base / inside food)</li>
+            <li>“What is the main process involved?” (heating effect / electromagnetic induction / microwaves)</li>
+            <li>Compare “which is more energy efficient?” and explain using energy losses.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Section 3 -->
+      <section>
+        <div class="card">
+          <h2 id="sec03">3. Working principles (what to write in words)</h2>
+
+          <h3>(a) Electric hotplate</h3>
+          <ul class="key-list">
+            <li>A current passes through a <strong>coil of resistance wire</strong>.</li>
+            <li>Electrical energy is converted into <strong>internal energy of the wire</strong> by the heating effect of current.</li>
+            <li>Heat is transferred to the pot mainly by <strong>conduction</strong> (and/or <strong>radiation</strong> depending on design).</li>
+          </ul>
+
+          <h3>(b) Induction cooker</h3>
+          <ul class="key-list">
+            <li>A high-frequency <strong>a.c.</strong> passes through a coil under a <strong>non-metallic top plate</strong>, producing a fast-changing magnetic field.</li>
+            <li>By <strong>electromagnetic induction</strong>, <strong>eddy currents</strong> are induced in the <strong>metal base of the pot</strong>.</li>
+            <li>The eddy currents produce heating in the pot base, and heat is then transferred to food by conduction.</li>
+          </ul>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Cookware requirement</span>
+              <div class="co-content">
+                Induction cookers usually require pots with a <strong>ferromagnetic</strong> base (e.g. iron or suitable stainless steel) so the induction effect is strong.
+              </div>
+            </div>
+          </div>
+
+          <h3>(c) Microwave oven</h3>
+          <ul class="key-list">
+            <li>A device (magnetron) produces microwaves (typically about <strong>2.45 GHz</strong>).</li>
+            <li>The microwaves penetrate a few cm into food. The oscillating electric field makes <strong>polar molecules</strong> (especially water) flip rapidly.</li>
+            <li>Collisions increase the average kinetic energy of molecules, so the <strong>temperature of the food increases</strong>.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Section 4 -->
+      <section>
+        <div class="card">
+          <h2 id="sec04">4. Where is heat mainly generated? (very common MCQ)</h2>
+
+          <table class="table" aria-label="Where heat is mainly generated">
+            <thead>
+              <tr>
+                <th>Cooker</th>
+                <th>Where heat is mainly generated</th>
+                <th>Key idea</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Electric hotplate</strong></td>
+                <td>In the <strong>cooker</strong> (resistance wire / heating element)</td>
+                <td>Heating effect occurs first in the wire, then heat is transferred to pot</td>
+              </tr>
+              <tr>
+                <td><strong>Induction cooker</strong></td>
+                <td>In the <strong>base of the pot</strong></td>
+                <td>Eddy currents are induced in pot base and heat it directly</td>
+              </tr>
+              <tr>
+                <td><strong>Microwave oven</strong></td>
+                <td><strong>Inside the food</strong> (mainly water-containing parts)</td>
+                <td>Microwaves heat polar molecules throughout a depth of a few cm</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Quick answer style</span>
+              <div class="co-content">
+                Use “mainly generated” + one sentence reason: e.g. “In the pot base because eddy currents are induced in the metal base and produce heating.”
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5 -->
+      <section>
+        <div class="card">
+          <h2 id="sec05">5. Energy conversions (compare the three cookers)</h2>
+
+          <h3>Summary table</h3>
+          <table class="table" aria-label="Energy conversions for cookers">
+            <thead>
+              <tr>
+                <th>Cooker</th>
+                <th>Main conversion (useful path)</th>
+                <th>Main losses (typical)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Electric hotplate</strong></td>
+                <td>Electrical energy \(\to\) internal energy of resistance wire \(\to\) internal energy of pot \(\to\) internal energy of food</td>
+                <td>Heat lost from hot wire / top plate to surroundings; other parts of cooker heated</td>
+              </tr>
+              <tr>
+                <td><strong>Induction cooker</strong></td>
+                <td>Electrical energy \(\to\) magnetic field energy \(\to\) electrical energy of eddy currents in pot \(\to\) internal energy of pot \(\to\) food</td>
+                <td>Some heat lost in coil; heat lost from pot to surroundings</td>
+              </tr>
+              <tr>
+                <td><strong>Microwave oven</strong></td>
+                <td>Electrical energy \(\to\) microwaves \(\to\) internal energy of food</td>
+                <td>Not all electrical energy becomes microwaves; not all microwaves absorbed; energy to operate lamp/turntable/fan</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Common trap</span>
+              <div class="co-content">
+                Don’t say “current flows from the cooker coil into the pot”.
+                For induction cooking, the changing magnetic field induces <strong>eddy currents within the pot base</strong>.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6 -->
+      <section>
+        <div class="card">
+          <h2 id="sec06">6. End-use energy efficiency (why induction is often higher)</h2>
+
+          <h3>Definition (same as other E3 pages)</h3>
+          <ul class="key-list">
+            <li>\(\displaystyle \eta_{\text{end}} = \frac{E_{\text{out}}}{E_{\text{in}}}\times 100\%\)</li>
+            <li>For cookers, \(E_{\text{out}}\) is usually the energy available to heat the food (often given or found using \(mc\Delta T\)).</li>
+            <li>\(E_{\text{in}}\) is the electrical energy supplied: \(E_{\text{in}} = Pt\).</li>
+          </ul>
+
+          <h3>Typical comparison (idea only)</h3>
+          <ul class="key-list">
+            <li>Electric hotplate: the heating element gets very hot, so more heat is lost to surroundings.</li>
+            <li>Induction cooker: the coil does not get very hot; heat is produced mainly in the pot base, so less direct heat loss from the cooker body.</li>
+            <li>Microwave oven: energy is lost in generating microwaves and not all microwaves are absorbed by food.</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Exam wording</span>
+              <div class="co-content">
+                When comparing efficiencies, refer to <strong>energy losses</strong> (what gets heated besides the food?) instead of just “it is more efficient”.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 7 -->
+      <section>
+        <div class="card">
+          <h2 id="sec07">7. Worked examples (HKDSE-style)</h2>
+
+          <h3>Example A — heating time using a microwave oven</h3>
+          <ul class="key-list">
+            <li>A microwave oven has input power \(P_{\text{in}} = 800\,\text{W}\).</li>
+            <li>It heats \(m=0.30\,\text{kg}\) of food from \(4^\circ\text{C}\) to \(50^\circ\text{C}\). Take \(c=3400\,\text{J kg}^{-1}\,{}^\circ\text{C}^{-1}\).</li>
+            <li>End-use energy efficiency is \(\eta_{\text{end}} = 55\%\) in this process. Find the time \(t\).</li>
+          </ul>
+
+          <h3>Solution</h3>
+          <ul class="key-list">
+            <li>Useful energy output: \(E_{\text{out}} = mc\Delta T = 0.30\times 3400\times(50-4)=4.692\times 10^4\,\text{J}\).</li>
+            <li>Useful power output: \(P_{\text{out}} = \eta_{\text{end}}\,P_{\text{in}} = 0.55\times 800 = 440\,\text{W}\).</li>
+            <li>Time: \(t = \dfrac{E_{\text{out}}}{P_{\text{out}}} = \dfrac{4.692\times 10^4}{440} \approx 1.07\times 10^2\,\text{s}\).</li>
+            <li><strong>Answer:</strong> \(\boxed{t \approx 107\,\text{s}}\)</li>
+          </ul>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">What \(P\) means here</span>
+              <div class="co-content">
+                In \(t = \dfrac{E}{P}\), the \(P\) should be the <strong>useful power output</strong> transferred to heating the food, not necessarily the input power.
+              </div>
+            </div>
+          </div>
+
+          <h3>Example B — running cost from energy needed for cooking</h3>
+          <ul class="key-list">
+            <li>Average useful energy needed for cooking per day: \(E_{\text{out}} = 5.4\,\text{MJ}\).</li>
+            <li>End-use energy efficiency of an electric hotplate: \(\eta_{\text{end}} = 72\%\).</li>
+            <li>Electricity price: \(\$1.1\) per kW h.</li>
+          </ul>
+
+          <h3>Solution</h3>
+          <ul class="key-list">
+            <li>Energy input: \(E_{\text{in}} = \dfrac{E_{\text{out}}}{\eta_{\text{end}}} = \dfrac{5.4\times 10^6}{0.72} = 7.5\times 10^6\,\text{J}\).</li>
+            <li>Convert to kW h: \(1\,\text{kW h} = 3.6\times 10^6\,\text{J}\), so \(E = \dfrac{7.5\times 10^6}{3.6\times 10^6} = 2.08\,\text{kW h}\).</li>
+            <li>Cost per day: \(\text{Cost} = 1.1\times 2.08 \approx \$2.29\).</li>
+            <li><strong>Answer:</strong> \(\boxed{\$2.29\text{ per day}}\)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Section 8 -->
+      <section>
+        <div class="card">
+          <h2 id="sec08">8. Reminders &amp; common exam traps</h2>
+          <ul class="key-list">
+            <li><strong>State where heat is generated</strong>: hotplate → cooker; induction → pot base; microwave → inside food.</li>
+            <li><strong>Induction cooker top plate</strong>: it is an insulator, so eddy currents do not form there; it may still become hot due to heat transferred from the pot.</li>
+            <li><strong>Microwave heating works well for water-containing food</strong> because water molecules are polar (they flip in an oscillating electric field).</li>
+            <li><strong>Efficiency is not the only factor</strong>: actual cooking time depends on food, cookware and cooking method.</li>
+            <li>Running cost uses kW h: \(\text{Cost} = (\$ / \text{kW h})\times E(\text{kW h})\).</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div>
+              <span class="co-title">Safety (typical)</span>
+              <div class="co-content">
+                For microwave ovens: avoid using metal containers; do not heat tightly closed containers. Follow the appliance manual.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 9 -->
+      <section>
+        <div class="card">
+          <h2 id="sec09">9. Key terms</h2>
+          <ul class="key-list">
+            <li><strong>Heating effect of current</strong>: electrical energy \(\to\) internal energy when current passes through resistance.</li>
+            <li><strong>Electromagnetic induction</strong>: a changing magnetic field induces an e.m.f. and current in a conductor.</li>
+            <li><strong>Eddy currents</strong>: circulating currents induced in a bulk conductor; they can produce heating.</li>
+            <li><strong>Polar molecule</strong>: has a positive end and a negative end due to non-uniform charge distribution (e.g. water).</li>
+            <li><strong>End-use energy efficiency</strong> \(\eta_{\text{end}}\): \(\dfrac{E_{\text{out}}}{E_{\text{in}}}\times 100\%\).</li>
+            <li><strong>kW h</strong>: unit of energy used for electricity billing; \(1\,\text{kW h} = 3.6\times 10^6\,\text{J}\).</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Bottom navigation (required) -->
+      <div class="section-nav" style="justify-content:center; margin-top: 18px;">
+        <a class="nav-btn" href="../index.html">&larr; Back to index</a>
+        <a class="nav-btn" href="lighting_efficacy.html">&larr; Previous</a>
+        <a class="nav-btn" href="heat_pump_aircon_COP.html">Next &rarr;</a>
+      </div>
+
+      <p class="footer">HKDSE Physics • E3 Energy &amp; Use of Energy</p>
+
+    </main>
+  </div>
+</body>
+</html>
