@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Simulation: Photoelectric Effect</title>
+  <style>
+    /* =============================
+       Design System: Modern DSE
+       ============================= */
+    :root {
+      --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 16px;
+      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 4px 14px -4px rgba(15, 23, 42, 0.14);
+      --accent-info-bg: rgba(59, 130, 246, 0.08);
+      --accent-info-border: rgba(59, 130, 246, 0.28);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --text-main: #f1f5f9;
+        --text-muted: #94a3b8;
+        --border: #334155;
+        --primary: #60a5fa;
+        --primary-dark: #3b82f6;
+        --accent-info-bg: rgba(59, 130, 246, 0.10);
+        --accent-info-border: rgba(59, 130, 246, 0.30);
+      }
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* --- Header --- */
+    header {
+      width: 100%;
+      padding: 1rem 20px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), rgba(59,130,246,0.55));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-body);
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    /* --- Layout --- */
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      padding: 0 20px 40px;
+      max-width: 1100px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* --- Canvas Card --- */
+    .canvas-card {
+      background: #000;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      border: 1px solid var(--border);
+    }
+    canvas { display: block; }
+
+    /* --- Controls Card --- */
+    .controls-card {
+      background: var(--bg-card);
+      padding: 28px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .control-group { display: flex; flex-direction: column; gap: 8px; }
+    
+    .control-header {
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      font-weight: 700; 
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+    
+    input[type=range] {
+      width: 100%;
+      cursor: pointer;
+      accent-color: var(--primary);
+      height: 6px;
+      border-radius: 4px;
+    }
+
+    .range-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: -4px;
+    }
+
+    /* Toggle Switch Style */
+    .mode-toggle {
+      display: flex;
+      background: var(--bg-body);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .mode-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .mode-btn.active {
+      background: var(--bg-card);
+      color: var(--primary);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      font-weight: 700;
+    }
+
+    /* Stats Grid */
+    .stats-panel {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    
+    .stats-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat-box {
+      background: var(--accent-info-bg);
+      border: 1px solid var(--accent-info-border);
+      padding: 10px 12px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .stat-val { 
+      font-weight: 800; 
+      font-size: 1.15rem; 
+      display: block; 
+      color: var(--primary); 
+    }
+    .stat-label { 
+      color: var(--text-muted); 
+      font-size: 0.7rem; 
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .info-box {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      background: var(--bg-body);
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      line-height: 1.5;
+    }
+
+    .legend {
+      position: absolute;
+      bottom: 12px;
+      left: 0; 
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      pointer-events: none;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+
+    /* Warnings */
+    .warning-text {
+      color: #f59e0b;
+      font-weight: 600;
+      font-size: 0.8rem;
+      margin-top: 6px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Simulation: Photoelectric Effect</h1>
+    <a href="photoelectric_effect.html" class="nav-btn">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+      Back to Notes
+    </a>
+  </header>
+
+  <main>
+    <div class="canvas-card">
+      <canvas id="simCanvas" width="600" height="420"></canvas>
+      <div class="legend">
+        <span id="legendLight"><span class="dot" style="background:yellow"></span>Photon</span>
+        <span><span class="dot" style="background:#00ffff; box-shadow:0 0 4px #00ffff;"></span>Electron</span>
+      </div>
+    </div>
+
+    <aside class="controls-card">
+      
+      <!-- Toggle -->
+      <div class="control-group">
+        <div class="control-header">Visualization Model</div>
+        <div class="mode-toggle">
+          <button class="mode-btn active" id="btnPhoton" onclick="setMode('PHOTON')">Photon (Reality)</button>
+          <button class="mode-btn" id="btnWave" onclick="setMode('WAVE')">Wave (Classical)</button>
+        </div>
+        <div id="waveWarning" class="warning-text">
+          ⚠️ Physics changed to Classical Prediction. <br>
+          (Energy depends on Intensity, Time Delays, etc.)
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-panel">
+        <div class="stats-row">
+          <div class="stat-box">
+            <span class="stat-val" id="currentVal">0.0</span>
+            <span class="stat-label">Current (μA)</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-val" id="keEmissionVal">0.00</span>
+            <span class="stat-label" title="Max KE leaving Cathode">Emission KE<sub>max</sub> (eV)</span>
+          </div>
+        </div>
+        <!-- Second Row for Impact Energy -->
+        <div class="stats-row" style="grid-template-columns: 1fr;">
+          <div class="stat-box" style="background:var(--bg-body); border-color:var(--border);">
+             <span class="stat-val" id="keImpactVal" style="color:var(--text-main)">0.00</span>
+             <span class="stat-label" title="Max KE arriving at Anode">Impact KE<sub>max</sub> (eV)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Work Function Control -->
+      <div class="control-group">
+        <div class="control-header">
+          <span>Work Function (\(\phi\))</span>
+          <span id="wfDisplay">2.30 eV (Na)</span>
+        </div>
+        <!-- Range 1.5 to 5.0 eV -->
+        <input type="range" id="wfSlider" min="150" max="500" value="230">
+        <div class="range-labels">
+          <span>1.5 eV</span>
+          <span>5.0 eV</span>
+        </div>
+      </div>
+
+      <!-- Frequency -->
+      <div class="control-group">
+        <div class="control-header">
+          <span>Frequency (Color)</span>
+          <span id="freqDisplay" style="transition: color 0.2s">Blue</span>
+        </div>
+        <!-- 400 THz (Red) to 1200 THz (UV) -->
+        <input type="range" id="freqSlider" min="400" max="1200" value="650">
+        <div class="range-labels">
+          <span>IR</span>
+          <span>Red</span>
+          <span>Green</span>
+          <span>Violet</span>
+          <span>UV</span>
+        </div>
+      </div>
+
+      <!-- Intensity -->
+      <div class="control-group">
+        <div class="control-header">
+          <span>Intensity</span>
+          <span id="intDisplay">50%</span>
+        </div>
+        <input type="range" id="intSlider" min="0" max="100" value="50">
+      </div>
+
+      <!-- Voltage -->
+      <div class="control-group">
+        <div class="control-header">
+          <span>Voltage (Anode potential)</span>
+          <span id="voltDisplay">0.00 V</span>
+        </div>
+        <input type="range" id="voltSlider" min="-300" max="300" value="0">
+        <div class="range-labels">
+          <span>-3.0V</span>
+          <span>0V</span>
+          <span>+3.0V</span>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <span id="physicsText">Photon Mode: \( KE_{max} = hf - \phi \)</span>
+      </div>
+
+    </aside>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <script>
+    /* --- Constants --- */
+    // E = hf (eV). f in THz (10^12). h = 4.136e-15 eVs.
+    // Factor = 0.004136
+    const H_FACTOR = 0.004136; 
+    const SPEED_SCALE = 3.5; // Visual speed multiplier for sqrt(KE)
+
+    /* --- Elements --- */
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // UI Elements
+    const wfSlider = document.getElementById('wfSlider');
+    const wfDisplay = document.getElementById('wfDisplay');
+    const freqSlider = document.getElementById('freqSlider');
+    const intSlider = document.getElementById('intSlider');
+    const voltSlider = document.getElementById('voltSlider');
+    const freqDisplay = document.getElementById('freqDisplay');
+    const intDisplay = document.getElementById('intDisplay');
+    const voltDisplay = document.getElementById('voltDisplay');
+    
+    const currentVal = document.getElementById('currentVal');
+    const keEmissionVal = document.getElementById('keEmissionVal');
+    const keImpactVal = document.getElementById('keImpactVal');
+    
+    const btnPhoton = document.getElementById('btnPhoton');
+    const btnWave = document.getElementById('btnWave');
+    const waveWarning = document.getElementById('waveWarning');
+    const physicsText = document.getElementById('physicsText');
+    const legendLight = document.getElementById('legendLight');
+
+    /* --- State --- */
+    let workFunction = 2.30;
+    let freqTHz = 650; 
+    let intensity = 50;
+    let voltage = 0; 
+    let mode = 'PHOTON'; 
+
+    let photons = [];
+    let electrons = [];
+    
+    let waveEnergyAccumulated = 0;
+    let wavePhase = 0;
+    
+    let displayCurrent = 0;
+
+    // Derived kinematic calibration
+    let accelFactor = 0;
+
+    /* --- Initialization --- */
+    function calibratePhysics() {
+        // We want a particle with KE = 1 eV to stop exactly at distance D when V = -1 V.
+        // v_init = SPEED_SCALE * sqrt(KE) = SPEED_SCALE * 1.
+        // v^2 = u^2 + 2as => 0 = (SPEED_SCALE)^2 + 2 * (accelFactor * -1) * D
+        // accelFactor * 2D = SPEED_SCALE^2
+        // accelFactor = SPEED_SCALE^2 / 2D
+        
+        const cathodeX = 50;
+        const anodeX = canvas.width - 50;
+        const dist = anodeX - cathodeX - 10; // Approx travel distance
+        
+        accelFactor = (SPEED_SCALE * SPEED_SCALE) / (2 * dist);
+        // console.log("Calibrated Accel Factor:", accelFactor);
+    }
+    calibratePhysics();
+
+    /* --- Color Helper --- */
+    function getWavelengthColor(f) {
+      if (f < 400) return '#800000'; // Dark Red
+      if (f > 780) return '#4B0082'; // Deep Purple
+      let norm = (f - 400) / (780 - 400);
+      let hue = 280 * norm; 
+      return `hsl(${hue}, 100%, 50%)`;
+    }
+
+    /* --- Toggle Logic --- */
+    window.setMode = function(newMode) {
+      mode = newMode;
+      photons = [];
+      electrons = [];
+      waveEnergyAccumulated = 0;
+
+      if (mode === 'PHOTON') {
+        btnPhoton.classList.add('active');
+        btnWave.classList.remove('active');
+        waveWarning.style.display = 'none';
+        physicsText.innerHTML = 'Photon Mode: \\( KE_{max} = hf - \\phi \\)';
+        legendLight.innerHTML = '<span class="dot" style="background:yellow"></span>Photon';
+      } else {
+        btnPhoton.classList.remove('active');
+        btnWave.classList.add('active');
+        waveWarning.style.display = 'block';
+        physicsText.innerHTML = 'Wave Mode: \\( KE \\propto \\text{Intensity} \\)';
+        legendLight.innerHTML = '<span class="dot" style="border-radius:0; height:2px; width:12px; background:yellow"></span>Wave';
+      }
+      if(window.MathJax) MathJax.typeset();
+    };
+
+    /* --- Update Loop --- */
+    function update() {
+      // 1. Inputs
+      workFunction = parseInt(wfSlider.value) / 100;
+      freqTHz = parseInt(freqSlider.value);
+      intensity = parseInt(intSlider.value);
+      voltage = parseInt(voltSlider.value) / 100;
+
+      // 2. Emission Logic
+      if (mode === 'PHOTON') {
+        handlePhotonEmission();
+      } else {
+        handleWaveEmission();
+      }
+
+      // 3. Move Particles
+      updatePhysics();
+
+      // 4. Draw
+      draw();
+
+      // 5. UI Updates
+      updateUI();
+
+      requestAnimationFrame(update);
+    }
+
+    /* --- Emission Mechanics --- */
+    let lastSpawnTime = 0;
+
+    function handlePhotonEmission() {
+      if (intensity <= 0) return;
+
+      const rate = intensity; 
+      const interval = Math.max(10, 2000 / (rate + 1));
+      
+      if (Date.now() - lastSpawnTime > interval) {
+        spawnPhoton();
+        lastSpawnTime = Date.now();
+      }
+    }
+
+    function handleWaveEmission() {
+      if (intensity <= 0) return;
+      wavePhase -= 0.15;
+      const accumulationRate = intensity * 0.05; 
+      waveEnergyAccumulated += accumulationRate;
+
+      if (waveEnergyAccumulated > 100) { 
+        // Classical KE depends on Intensity
+        // Let's say max intensity gives 2.0 eV
+        const classicalKE = intensity * 0.02; 
+        spawnElectron(100 + Math.random()*200, classicalKE);
+        waveEnergyAccumulated = 0;
+      }
+    }
+
+    function spawnPhoton() {
+      const sourceX = 280;
+      const sourceY = 40;
+      const targetY = 120 + Math.random() * 180;
+      const targetX = 60; 
+      
+      const angle = Math.atan2(targetY - sourceY, targetX - sourceX);
+      const speed = 6;
+
+      photons.push({
+        x: sourceX,
+        y: sourceY,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        targetY: targetY, 
+        color: getWavelengthColor(freqTHz)
+      });
+    }
+
+    function spawnElectron(y, ke) {
+      if (ke <= 0.01) return; // Ignore
+      
+      const speed = Math.sqrt(ke) * SPEED_SCALE; 
+      
+      // Angle spread
+      const spread = (Math.random() - 0.5) * 0.6; 
+
+      electrons.push({
+        x: 65, 
+        y: y,
+        vx: Math.cos(spread) * speed, 
+        vy: Math.sin(spread) * speed,
+        ke_initial: ke, 
+        stopped: false 
+      });
+    }
+
+    /* --- Physics Engine --- */
+    function updatePhysics() {
+      const width = canvas.width;
+      const height = canvas.height;
+      const cathodeX = 50;
+      const anodeX = width - 50;
+      
+      // Calculate acceleration for this frame based on voltage
+      // F = ma => a = F/m.
+      // We calibrated accelFactor such that 'accel' corresponds to change in velocity per frame
+      const accel = voltage * accelFactor;
+
+      // --- Photons ---
+      for (let i = photons.length - 1; i >= 0; i--) {
+        let p = photons[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x <= cathodeX + 15 && p.y > 100 && p.y < 320) {
+          const photonEnergy = freqTHz * H_FACTOR;
+          
+          if (mode === 'PHOTON' && photonEnergy > workFunction) {
+             const maxKE = photonEnergy - workFunction;
+             
+             // Randomized KE emission
+             // Bias towards higher energy so Vs check is visually clearer
+             const r = Math.random();
+             const actualKE = maxKE * (0.2 + 0.8 * r);
+             
+             spawnElectron(p.y, actualKE);
+          }
+          photons.splice(i, 1);
+        } else if (p.x < 0 || p.y < 0 || p.y > height) {
+          photons.splice(i, 1);
+        }
+      }
+
+      // --- Electrons ---
+      let electronsReachingAnode = 0;
+
+      for (let i = electrons.length - 1; i >= 0; i--) {
+        let e = electrons[i];
+        
+        e.vx += accel;
+        e.x += e.vx;
+        e.y += e.vy;
+
+        // Anode Hit
+        if (e.x >= anodeX) {
+          electronsReachingAnode++;
+          electrons.splice(i, 1);
+        } 
+        // Turned back
+        else if (e.x <= cathodeX && e.vx < 0) {
+          electrons.splice(i, 1);
+        }
+        else if (e.y < 0 || e.y > height) {
+          electrons.splice(i, 1);
+        }
+      }
+
+      // Ammeter
+      const instantaneous = electronsReachingAnode * 5.0; 
+      displayCurrent = displayCurrent * 0.95 + instantaneous * 0.05;
+      if (displayCurrent < 0.1) displayCurrent = 0;
+    }
+
+    /* --- Drawing --- */
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const cathodeX = 50;
+      const anodeX = canvas.width - 50;
+      const plateTop = 100;
+      const plateH = 220;
+
+      // Plates
+      ctx.fillStyle = '#64748b'; 
+      ctx.fillRect(cathodeX, plateTop, 12, plateH); 
+      ctx.fillStyle = '#94a3b8'; 
+      ctx.fillRect(anodeX, plateTop, 12, plateH); 
+
+      // Labels
+      ctx.fillStyle = '#fff';
+      ctx.font = '14px sans-serif';
+      ctx.fillText("Cathode", cathodeX, plateTop - 10);
+      ctx.fillText("Anode", anodeX - 20, plateTop - 10);
+
+      // Light Source
+      const sourceX = 280;
+      const sourceY = 40;
+      const lightColor = getWavelengthColor(freqTHz);
+
+      ctx.save();
+      ctx.translate(sourceX, sourceY);
+      const dx = (cathodeX + 6) - sourceX;
+      const dy = (plateTop + plateH/2) - sourceY;
+      const angle = Math.atan2(dy, dx);
+      ctx.rotate(angle);
+
+      // Bulb
+      ctx.fillStyle = lightColor;
+      ctx.beginPath();
+      ctx.arc(0, 0, 14, 0, Math.PI*2);
+      ctx.fill();
+
+      // Beam
+      if (intensity > 0) {
+        if (mode === 'WAVE') {
+           ctx.strokeStyle = lightColor;
+           ctx.lineWidth = 2 + (intensity / 30);
+           const dist = Math.sqrt(dx*dx + dy*dy);
+           
+           for (let l = -1; l <= 1; l++) {
+             ctx.beginPath();
+             const yOffsetBase = l * 20 * 0.5;
+             const lambda = 40000 / freqTHz; 
+             for (let i = 0; i < dist; i+=4) {
+               const yWave = Math.sin((i/lambda)*Math.PI*2 + wavePhase) * 4;
+               const ySpread = yOffsetBase * (i/dist); 
+               if (i===0) ctx.moveTo(i, yWave + ySpread);
+               else ctx.lineTo(i, yWave + ySpread);
+             }
+             ctx.stroke();
+           }
+        } else {
+           ctx.fillStyle = lightColor;
+           ctx.globalAlpha = 0.1 + (intensity/200);
+           ctx.beginPath();
+           ctx.moveTo(0, 0);
+           const dist = Math.sqrt(dx*dx + dy*dy);
+           ctx.lineTo(dist, -30);
+           ctx.lineTo(dist, 30);
+           ctx.fill();
+           ctx.globalAlpha = 1.0;
+        }
+      }
+      ctx.restore();
+
+      // Particles
+      if (mode === 'PHOTON') {
+        for (let p of photons) {
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 4, 0, Math.PI*2);
+          ctx.fill();
+        }
+      }
+
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = '#00ffff';
+      ctx.fillStyle = '#e0f2fe'; 
+      for (let e of electrons) {
+        ctx.beginPath();
+        // Visual size boost for visibility
+        ctx.arc(e.x, e.y, 3.5, 0, Math.PI*2);
+        ctx.fill();
+      }
+      ctx.shadowBlur = 0;
+    }
+
+    /* --- UI Updates --- */
+    function updateUI() {
+      // Work Function Label
+      let metalName = "";
+      if (Math.abs(workFunction - 2.30) < 0.1) metalName = "(Sodium)";
+      else if (Math.abs(workFunction - 4.50) < 0.1) metalName = "(Copper)";
+      else if (Math.abs(workFunction - 4.70) < 0.1) metalName = "(Silver)";
+      else if (Math.abs(workFunction - 1.90) < 0.1) metalName = "(Caesium)";
+      
+      wfDisplay.textContent = `${workFunction.toFixed(2)} eV ${metalName}`;
+
+      const col = getWavelengthColor(freqTHz);
+      freqDisplay.style.color = col;
+      freqDisplay.textContent = `${freqTHz} THz`;
+      
+      intDisplay.textContent = `${intensity}%`;
+      voltDisplay.textContent = `${voltage.toFixed(2)} V`;
+      currentVal.textContent = displayCurrent.toFixed(1);
+
+      // -- Emission KE Calculation --
+      let emissionKE = 0;
+      if (mode === 'PHOTON') {
+        const e = freqTHz * H_FACTOR;
+        emissionKE = Math.max(0, e - workFunction);
+      } else {
+        emissionKE = intensity * 0.02; 
+      }
+      keEmissionVal.textContent = emissionKE.toFixed(2);
+
+      // -- Impact KE Calculation --
+      let impactKE = emissionKE + voltage;
+      if (impactKE < 0) impactKE = 0; 
+      if (emissionKE === 0) impactKE = 0; 
+
+      keImpactVal.textContent = impactKE.toFixed(2);
+      
+      if (impactKE === 0 && emissionKE > 0) {
+        keImpactVal.style.color = '#ef4444'; 
+      } else {
+        keImpactVal.style.color = 'var(--text-main)';
+      }
+    }
+
+    update();
+
+  </script>
+</body>
+</html>
