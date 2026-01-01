@@ -3,25 +3,652 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>B1 — Internal Energy, Heat & Temperature | DSE Physics Notes</title>
-  <link rel="stylesheet" href="../style.css" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Compulsory — Internal Energy, Heat &amp; Temperature | DSE Physics Notes</title>
+
+  <!-- MathJax for professional equation rendering -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\(','\)'], ['$', '$']], displayMath: [['$$','$$']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    /* =============================
+       Design System: Modern DSE
+       ============================= */
+    :root {
+      --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+      /* Palette: Slate & Blue */
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-dim: rgba(59, 130, 246, 0.08);
+
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-header: #ffffff;
+
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+
+      --border: #e2e8f0;
+      --radius: 16px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 4px 14px -4px rgba(15, 23, 42, 0.14), 0 2px 6px -2px rgba(15, 23, 42, 0.10);
+
+      /* Semantic Colors */
+      --accent-amber: #f59e0b;
+      --accent-amber-bg: #fffbeb;
+      --accent-amber-border: rgba(245, 158, 11, 0.35);
+
+      --accent-info: #3b82f6;
+      --accent-info-bg: rgba(59, 130, 246, 0.08);
+      --accent-info-border: rgba(59, 130, 246, 0.28);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --bg-header: #1e293b;
+
+        --text-main: #f1f5f9;
+        --text-muted: #94a3b8;
+
+        --border: #334155;
+
+        --primary: #60a5fa;
+        --primary-dark: #3b82f6;
+        --primary-dim: rgba(96, 165, 250, 0.10);
+
+        --accent-amber-bg: rgba(245, 158, 11, 0.10);
+        --accent-amber-border: rgba(245, 158, 11, 0.30);
+
+        --accent-info-bg: rgba(59, 130, 246, 0.10);
+        --accent-info-border: rgba(59, 130, 246, 0.30);
+      }
+    }
+
+    /* --- Base --- */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* --- Layout --- */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* --- Hero Header (Radial Gradient) --- */
+    .hero-header {
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 20px 30px;
+      text-align: center;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.90rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      background: var(--bg-body);
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin: 0 0 10px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      background: linear-gradient(135deg, var(--primary), rgba(59,130,246,0.55));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .meta-subtitle {
+      font-size: 1.0rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 18px;
+    }
+
+    /* --- Navigation Buttons --- */
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 0;
+      padding: 0;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .nav-btn span {
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      margin-right: 4px;
+    }
+
+    /* --- Badges --- */
+    .badge-strip {
+      margin: 14px 0 0;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid;
+      font-size: 0.90rem;
+      font-weight: 600;
+    }
+
+    .badge.exam {
+      background: var(--accent-info-bg);
+      color: var(--primary);
+      border-color: var(--accent-info-border);
+    }
+
+    .badge.skills {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+      border-color: rgba(16, 185, 129, 0.2);
+    }
+
+    /* --- Content Cards --- */
+    section { margin-top: 14px; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin: 22px 0;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card h2 {
+      margin: 0 0 18px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      padding-left: 14px;
+      position: relative;
+      scroll-margin-top: 120px;
+      color: var(--text-main);
+    }
+
+    .card h2::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.2em;
+      width: 6px;
+      height: 1.1em;
+      border-radius: 99px;
+      background: var(--primary);
+    }
+
+    .card h3 {
+      margin: 24px 0 12px;
+      font-size: 1.1rem;
+      font-weight: 650;
+      color: var(--text-main);
+    }
+
+    ul.key-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text-muted);
+    }
+
+    .key-list li { margin: 8px 0; }
+    .key-list li::marker { color: var(--primary); }
+    strong { color: var(--text-main); font-weight: 650; }
+
+    /* --- Semantic Callouts --- */
+    .callout {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin: 18px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      font-size: 0.95rem;
+      border: 1px solid;
+    }
+
+    .co-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      margin-top: 2px;
+    }
+    .co-icon svg { width: 100%; height: 100%; }
+
+    .co-title {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 4px;
+      font-size: 0.80rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .co-content { color: var(--text-main); }
+
+    /* Note Style */
+    .callout.note {
+      background: var(--accent-info-bg);
+      border-color: var(--accent-info-border);
+    }
+    .callout.note .co-icon, .callout.note .co-title { color: var(--primary); }
+
+    /* Trap Style */
+    .callout.trap {
+      background: var(--accent-amber-bg);
+      border-color: var(--accent-amber-border);
+    }
+    .callout.trap .co-icon, .callout.trap .co-title { color: var(--accent-amber); }
+
+    /* --- Tables --- */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-card);
+      margin-top: 12px;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+      font-size: 0.95rem;
+    }
+
+    .data-table th {
+      background: var(--bg-body);
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+
+    /* --- Segmented Tabs --- */
+    .term-tabs { position: relative; margin-top: 10px; }
+    .term-radio { position: absolute; left: -9999px; }
+
+    .term-tab-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      background: var(--bg-body);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .term-tab-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .term-tab-btn:hover { color: var(--text-main); }
+
+    /* Active State Logic */
+    input:checked + label {
+      background: var(--bg-card);
+      color: var(--primary);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .term-panel {
+      display: none;
+      padding: 20px;
+      border-radius: 12px;
+      background: var(--accent-info-bg);
+      border: 1px dashed var(--accent-info-border);
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Panel Visibility Logic */
+    #term-u:checked ~ #panel-term-u,
+    #term-heat:checked ~ #panel-term-heat,
+    #term-temp:checked ~ #panel-term-temp,
+    #term-deltaU:checked ~ #panel-term-deltaU,
+    #term-evap:checked ~ #panel-term-evap,
+    #term-conduction:checked ~ #panel-term-conduction,
+    #term-thermalEq:checked ~ #panel-term-thermalEq { display: block; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { padding: 0 16px 60px; }
+      h1 { font-size: 1.8rem; }
+      .card { padding: 20px; }
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Hero Header -->
   <header class="hero-header">
-    <h1>B1 — Internal Energy, Heat & Temperature</h1>
-    <p class="meta-subtitle">Random motion and energy transfer</p>
-    <div class="section-nav" style="text-align:center;margin-top:10px;">
-      <a class="nav-btn" href="../../index.html">Back to Index</a>
+    <div class="nav-breadcrumb">
+      <!-- Icon -->
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--primary)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+      Index / Compulsory
+    </div>
+
+    <h1>Compulsory — Internal Energy, Heat &amp; Temperature</h1>
+    <p class="meta-subtitle">
+      HKDSE Physics — Compulsory Part &middot; Distinguish internal energy, heat and temperature, and explain energy transfer in heating/cooling processes.
+    </p>
+
+    <div class="section-nav" style="justify-content:center;">
+      <a class="nav-btn" href="../index.html">Back to Index</a>
     </div>
   </header>
+
   <div class="container">
-    <div class="card">
-      <h2>Overview</h2>
-      <p>This page will cover the key concepts, formulas, and exam tips for <strong>B1 — Internal Energy, Heat & Temperature</strong>. Content will be added soon.</p>
-    </div>
+    <main>
+
+      <p class="section-intro" style="text-align:center;">
+        Focus here: <strong>temperature is not heat</strong>, heat is <strong>energy in transfer</strong>, and heating changes <strong>internal energy</strong> (particle model explanation).
+      </p>
+
+      <div class="badge-strip">
+        <span class="badge exam">Exam focus: internal energy \(U\), heat \(Q\), temperature \(T\), thermal equilibrium, energy transfer mechanisms</span>
+        <span class="badge skills">Skills: explain phenomena with particle model; identify energy stores/transfer; avoid term confusion</span>
+      </div>
+
+      <!-- Jump Bar -->
+      <div class="section-nav" aria-label="Jump to section" style="margin-top:20px; justify-content:center;">
+        <a href="#sec01" class="nav-btn"><span>1</span> Temperature vs heat</a>
+        <a href="#sec02" class="nav-btn"><span>2</span> Internal energy</a>
+        <a href="#sec03" class="nav-btn"><span>3</span> Heating/cooling</a>
+        <a href="#sec04" class="nav-btn"><span>4</span> Thermal equilibrium</a>
+        <a href="#sec05" class="nav-btn"><span>5</span> Terms</a>
+        <a href="#sec06" class="nav-btn"><span>6</span> Traps</a>
+      </div>
+
+      <!-- Section 1 -->
+      <section>
+        <div class="card">
+          <h2 id="sec01">1. Temperature, heat and their difference</h2>
+          <ul class="key-list">
+            <li><strong>Temperature</strong> indicates the degree of hotness of a body (related to particle motion).</li>
+            <li><strong>Heat</strong> is <strong>energy transferred</strong> due to a temperature difference (from higher \(T\) to lower \(T\)).</li>
+            <li>Heat is <strong>not stored</strong> in a body. A body stores <strong>internal energy</strong>, not “heat”.</li>
+            <li>Unit: heat is energy, so unit is joule (J).</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">HKDSE Reminder</span>
+              <div class="co-content">
+                In explanations, use: “<strong>heat is transferred</strong> from … to …” and “<strong>internal energy increases/decreases</strong>”. Avoid “heat is contained”.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="card">
+          <h2 id="sec02">2. Internal energy \(U\) (particle model)</h2>
+          <ul class="key-list">
+            <li><strong>Internal energy \(U\)</strong> is the total microscopic energy of the particles in a body.</li>
+            <li>It consists of:
+              <ul class="key-list">
+                <li><strong>Kinetic energy</strong> of random motion of particles.</li>
+                <li><strong>Potential energy</strong> due to intermolecular forces (separation between particles).</li>
+              </ul>
+            </li>
+            <li>Raising temperature generally increases the <strong>average kinetic energy</strong> of particles, so \(U\) increases.</li>
+            <li>During a change of state, temperature may stay constant while \(U\) changes mainly because <strong>potential energy</strong> changes.</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Exam Link</span>
+              <div class="co-content">
+                Typical marking point: “When heated, particles move faster &rarr; average kinetic energy increases &rarr; internal energy increases.”
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="card">
+          <h2 id="sec03">3. Heating and cooling (what changes?)</h2>
+
+          <h3>Heating with temperature rise</h3>
+          <ul class="key-list">
+            <li>Heat transferred <strong>into</strong> the body increases internal energy.</li>
+            <li>Particles gain kinetic energy &rarr; temperature rises.</li>
+          </ul>
+
+          <h3>Heating during change of state</h3>
+          <ul class="key-list">
+            <li>Temperature can remain constant while heat is absorbed.</li>
+            <li>Energy is used to overcome intermolecular forces &rarr; <strong>potential energy increases</strong> &rarr; internal energy increases.</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Language Tip</span>
+              <div class="co-content">
+                Use “<strong>heat absorbed/released</strong>” for energy transfer, and “<strong>internal energy changes</strong>” for energy stored in the substance.
+              </div>
+            </div>
+          </div>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Common Misconception</span>
+              <div class="co-content">
+                “If temperature is constant, no heat is transferred” is wrong. During melting/boiling, heat is absorbed while temperature stays constant.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="card">
+          <h2 id="sec04">4. Thermal equilibrium and direction of heat transfer</h2>
+          <ul class="key-list">
+            <li>When two bodies at different temperatures are in contact, heat is transferred from the higher-temperature body to the lower-temperature body.</li>
+            <li><strong>Thermal equilibrium</strong> is reached when there is <strong>no net heat transfer</strong> between them.</li>
+            <li>At thermal equilibrium, the two bodies have the <strong>same temperature</strong>.</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">HKDSE Reminder</span>
+              <div class="co-content">
+                “No net heat transfer” does not mean “no microscopic exchange”; it means overall energy transfer balances, so temperatures stay constant.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5 -->
+        <div class="card">
+          <h2 id="sec05">5. Key terms</h2>
+
+          <div class="term-tabs">
+            <input class="term-radio" type="radio" name="term" id="term-u" checked>
+            <input class="term-radio" type="radio" name="term" id="term-heat">
+            <input class="term-radio" type="radio" name="term" id="term-temp">
+            <input class="term-radio" type="radio" name="term" id="term-deltaU">
+            <input class="term-radio" type="radio" name="term" id="term-evap">
+            <input class="term-radio" type="radio" name="term" id="term-conduction">
+            <input class="term-radio" type="radio" name="term" id="term-thermalEq">
+
+            <div class="term-tab-bar" aria-label="Key terms">
+              <label class="term-tab-btn" for="term-u">Internal energy \(U\)</label>
+              <label class="term-tab-btn" for="term-heat">Heat \(Q\)</label>
+              <label class="term-tab-btn" for="term-temp">Temperature \(T\)</label>
+              <label class="term-tab-btn" for="term-deltaU">Change in \(U\)</label>
+              <label class="term-tab-btn" for="term-evap">Change of state</label>
+              <label class="term-tab-btn" for="term-conduction">Heat transfer</label>
+              <label class="term-tab-btn" for="term-thermalEq">Thermal equilibrium</label>
+            </div>
+
+            <div class="term-panel" id="panel-term-u">
+              <p><strong>Internal energy \(U\):</strong> total microscopic kinetic energy + potential energy of the particles in a body.</p>
+            </div>
+            <div class="term-panel" id="panel-term-heat">
+              <p><strong>Heat \(Q\):</strong> energy transferred due to a temperature difference (from higher \(T\) to lower \(T\)); unit is joule (J).</p>
+            </div>
+            <div class="term-panel" id="panel-term-temp">
+              <p><strong>Temperature \(T\):</strong> a measure of the degree of hotness; related to the random motion of particles.</p>
+            </div>
+            <div class="term-panel" id="panel-term-deltaU">
+              <p><strong>Change in internal energy:</strong> internal energy increases when the body absorbs heat; it decreases when the body releases heat.</p>
+            </div>
+            <div class="term-panel" id="panel-term-evap">
+              <p><strong>Change of state:</strong> a process (e.g. melting/boiling) where temperature may remain constant while internal energy changes mainly due to change in potential energy.</p>
+            </div>
+            <div class="term-panel" id="panel-term-conduction">
+              <p><strong>Heat transfer mechanisms:</strong> conduction, convection and radiation are ways thermal energy can be transferred (details learned in separate notes).</p>
+            </div>
+            <div class="term-panel" id="panel-term-thermalEq">
+              <p><strong>Thermal equilibrium:</strong> a state where two bodies in contact have the same temperature so there is no net heat transfer.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 6 -->
+        <div class="card">
+          <h2 id="sec06">6. Common traps</h2>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Warning / Trap</span>
+              <div class="co-content">
+                <ul class="key-list">
+                  <li><strong>Heat vs temperature:</strong> temperature is a state; heat is energy <em>in transfer</em> due to temperature difference.</li>
+                  <li><strong>“Heat stored in an object”:</strong> wrong. The object stores <strong>internal energy</strong>.</li>
+                  <li><strong>Constant temperature means no heat transfer:</strong> wrong during change of state.</li>
+                  <li><strong>Internal energy depends only on temperature:</strong> not always; it also depends on particle separation (potential energy), especially in change of state.</li>
+                  <li><strong>Direction mistake:</strong> heat flows from higher \(T\) to lower \(T\) until thermal equilibrium.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <div class="section-nav" style="margin-top:18px; justify-content: space-between;">
+          <a class="nav-btn" href="../index.html">&larr; Back to Index</a>
+        </div>
+      </section>
+
+      <p style="text-align:center; font-size:0.85rem; color:var(--text-muted); margin-top:40px;">
+        End of note &bull; Compulsory &mdash; Internal Energy, Heat &amp; Temperature.
+      </p>
+    </main>
   </div>
-  <footer>
-    <p>HKDSE Physics &mdash; Compulsory Part</p>
-  </footer>
 </body>
 </html>
