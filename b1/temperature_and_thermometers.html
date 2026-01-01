@@ -3,25 +3,792 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>B1 — Temperature & Thermometers | DSE Physics Notes</title>
-  <link rel="stylesheet" href="../style.css" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Compulsory — Temperature and Thermometers | DSE Physics Notes</title>
+
+  <!-- MathJax for professional equation rendering -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['$$','$$']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    /* =============================
+       Design System: Modern DSE
+       ============================= */
+    :root {
+      --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+      /* Palette: Slate & Blue */
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-dim: rgba(59, 130, 246, 0.08);
+
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-header: #ffffff;
+
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+
+      --border: #e2e8f0;
+      --radius: 16px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 4px 14px -4px rgba(15, 23, 42, 0.14), 0 2px 6px -2px rgba(15, 23, 42, 0.10);
+
+      /* Semantic Colors */
+      --accent-amber: #f59e0b;
+      --accent-amber-bg: #fffbeb;
+      --accent-amber-border: rgba(245, 158, 11, 0.35);
+
+      --accent-info: #3b82f6;
+      --accent-info-bg: rgba(59, 130, 246, 0.08);
+      --accent-info-border: rgba(59, 130, 246, 0.28);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --bg-header: #1e293b;
+
+        --text-main: #f1f5f9;
+        --text-muted: #94a3b8;
+
+        --border: #334155;
+
+        --primary: #60a5fa;
+        --primary-dark: #3b82f6;
+        --primary-dim: rgba(96, 165, 250, 0.10);
+
+        --accent-amber-bg: rgba(245, 158, 11, 0.10);
+        --accent-amber-border: rgba(245, 158, 11, 0.30);
+
+        --accent-info-bg: rgba(59, 130, 246, 0.10);
+        --accent-info-border: rgba(59, 130, 246, 0.30);
+      }
+    }
+
+    /* --- Base --- */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    
+    /* --- Layout --- */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* --- Hero Header --- */
+    .hero-header {
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 20px 30px;
+      text-align: center;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.90rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      background: var(--bg-body);
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin: 0 0 10px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      background: linear-gradient(135deg, var(--primary), rgba(59,130,246,0.55));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .meta-subtitle {
+      font-size: 1.0rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 18px;
+    }
+
+    /* --- Navigation Buttons --- */
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 0;
+      padding: 0;
+      justify-content: center;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .nav-btn span {
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      margin-right: 4px;
+    }
+
+    /* --- Badges --- */
+    .badge-strip {
+      margin: 14px 0 0;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid;
+      font-size: 0.90rem;
+      font-weight: 600;
+    }
+    
+    .badge.exam {
+      background: var(--accent-info-bg);
+      color: var(--primary);
+      border-color: var(--accent-info-border);
+    }
+    
+    .badge.skills {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+      border-color: rgba(16, 185, 129, 0.2);
+    }
+
+    /* --- Content Cards --- */
+    section { margin-top: 14px; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin: 22px 0;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card h2 {
+      margin: 0 0 18px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      padding-left: 14px;
+      position: relative;
+      scroll-margin-top: 120px;
+      color: var(--text-main);
+    }
+
+    .card h2::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.2em;
+      width: 6px;
+      height: 1.1em;
+      border-radius: 99px;
+      background: var(--primary);
+    }
+
+    .card h3 {
+      margin: 24px 0 12px;
+      font-size: 1.1rem;
+      font-weight: 650;
+      color: var(--text-main);
+    }
+
+    ul.key-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text-muted);
+    }
+
+    .key-list li { margin: 8px 0; }
+    .key-list li::marker { color: var(--primary); }
+    strong { color: var(--text-main); font-weight: 650; }
+
+    /* --- Semantic Callouts --- */
+    .callout {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin: 18px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      font-size: 0.95rem;
+      border: 1px solid;
+    }
+
+    .co-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      margin-top: 2px;
+    }
+    .co-icon svg { width: 100%; height: 100%; }
+
+    .co-title {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 4px;
+      font-size: 0.80rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .co-content { color: var(--text-main); }
+
+    /* Note Style */
+    .callout.note {
+      background: var(--accent-info-bg);
+      border-color: var(--accent-info-border);
+    }
+    .callout.note .co-icon, .callout.note .co-title { color: var(--primary); }
+
+    /* Trap Style */
+    .callout.trap {
+      background: var(--accent-amber-bg);
+      border-color: var(--accent-amber-border);
+    }
+    .callout.trap .co-icon, .callout.trap .co-title { color: var(--accent-amber); }
+
+    /* --- Tables --- */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-card);
+      margin-top: 12px;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+      font-size: 0.95rem;
+    }
+
+    .data-table th {
+      background: var(--bg-body);
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+
+    /* --- Segmented Tabs --- */
+    .term-tabs { position: relative; margin-top: 10px; }
+    .term-radio { position: absolute; left: -9999px; }
+
+    .term-tab-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      background: var(--bg-body);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .term-tab-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .term-tab-btn:hover { color: var(--text-main); }
+
+    /* Active State Logic */
+    input:checked + label {
+      background: var(--bg-card);
+      color: var(--primary);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .term-panel {
+      display: none;
+      padding: 20px;
+      border-radius: 12px;
+      background: var(--accent-info-bg);
+      border: 1px dashed var(--accent-info-border);
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Panel Visibility Logic */
+    #term-temperature:checked ~ #panel-term-temperature,
+    #term-thermometer:checked ~ #panel-term-thermometer,
+    #term-tdp:checked ~ #panel-term-tdp,
+    #term-fixed:checked ~ #panel-term-fixed,
+    #term-ice:checked ~ #panel-term-ice,
+    #term-steam:checked ~ #panel-term-steam,
+    #term-calibration:checked ~ #panel-term-calibration,
+    #term-sensitivity:checked ~ #panel-term-sensitivity { display: block; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { padding: 0 16px 60px; }
+      h1 { font-size: 1.8rem; }
+      .card { padding: 20px; }
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Hero Header -->
   <header class="hero-header">
-    <h1>B1 — Temperature & Thermometers</h1>
-    <p class="meta-subtitle">Thermometric properties and measurement</p>
-    <div class="section-nav" style="text-align:center;margin-top:10px;">
-      <a class="nav-btn" href="../../index.html">Back to Index</a>
+    <div class="nav-breadcrumb">
+      <!-- Icon -->
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--primary)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+      Index / Compulsory
+    </div>
+
+    <h1>Compulsory — Temperature and Thermometers</h1>
+    <p class="meta-subtitle">
+      HKDSE Physics &mdash; Compulsory: Thermal Physics &middot; temperature scales, fixed points, and calibrating thermometers using temperature-dependent properties.
+    </p>
+
+    <div class="section-nav">
+      <a class="nav-btn" href="../index.html">Back to Index</a>
     </div>
   </header>
+
   <div class="container">
-    <div class="card">
-      <h2>Overview</h2>
-      <p>This page will cover the key concepts, formulas, and exam tips for <strong>B1 — Temperature & Thermometers</strong>. Content will be added soon.</p>
-    </div>
+    <main>
+
+      <p class="section-intro" style="text-align:center;">
+        Define temperature, explain how thermometers work, calibrate an unmarked thermometer using fixed points, and use a calibration graph / proportion to find unknown temperatures.
+      </p>
+
+      <div class="badge-strip">
+        <span class="badge exam">Exam focus: ice/steam points, calibration, \( \\dfrac{x_T-x_0}{x_{100}-x_0}=\\dfrac{T}{100} \), \( T(\\text{K})=\\theta(^\\circ\\text{C})+273 \)</span>
+        <span class="badge skills">Skills: read calibration graphs, do linear interpolation, choose suitable thermometer (range/sensitivity), explain precautions</span>
+      </div>
+
+      <!-- Jump Bar -->
+      <div class="section-nav" aria-label="Jump to section" style="margin-top:20px; justify-content:center;">
+        <a href="#sec01" class="nav-btn"><span>1</span> Temperature &amp; thermometers</a>
+        <a href="#sec02" class="nav-btn"><span>2</span> Thermometric property</a>
+        <a href="#sec03" class="nav-btn"><span>3</span> Celsius scale fixed points</a>
+        <a href="#sec04" class="nav-btn"><span>4</span> Calibration &amp; graphs</a>
+        <a href="#sec05" class="nav-btn"><span>5</span> Types &amp; selection</a>
+        <a href="#sec06" class="nav-btn"><span>6</span> Terms</a>
+        <a href="#sec07" class="nav-btn"><span>7</span> Traps</a>
+      </div>
+
+      <!-- Section 1 -->
+      <section>
+        <div class="card">
+          <h2 id="sec01">1. Temperature and what a thermometer measures</h2>
+
+          <h3>Core ideas</h3>
+          <ul class="key-list">
+            <li><strong>Temperature</strong>: a measure of the degree of hotness of an object.</li>
+            <li>A <strong>thermometer</strong> measures temperature using a property that changes with temperature.</li>
+            <li>For a correct reading, the thermometer must reach <strong>thermal equilibrium</strong> with the object.</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Reminder</span>
+              <div class="co-content">
+                Do not confuse <strong>temperature</strong> with <strong>heat energy</strong>. Heat is energy transferred due to a temperature difference; temperature is a state of hotness.
+              </div>
+            </div>
+          </div>
+
+          <h3>Practical reading rule</h3>
+          <ul class="key-list">
+            <li>Wait until the reading becomes <strong>steady</strong> (no longer changing) before recording the temperature.</li>
+            <li>Ensure good thermal contact between the thermometer and the object (e.g. immerse the bulb fully in liquid, without touching the container).</li>
+          </ul>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="card">
+          <h2 id="sec02">2. Thermometric (temperature-dependent) property</h2>
+
+          <h3>What makes a good thermometric property?</h3>
+          <ul class="key-list">
+            <li>Changes noticeably with temperature (good <strong>sensitivity</strong>).</li>
+            <li>Gives <strong>one unique value</strong> for each temperature (no ambiguity).</li>
+            <li>Preferably varies <strong>linearly</strong> with temperature within the working range.</li>
+          </ul>
+
+          <h3>Common examples (HKDSE)</h3>
+          <ul class="key-list">
+            <li>Liquid-in-glass thermometer: <strong>volume</strong> of liquid (thermal expansion).</li>
+            <li>Resistance thermometer / thermistor thermometer: <strong>electrical resistance</strong>.</li>
+            <li>Thermocouple: <strong>e.m.f.</strong> produced at a junction.</li>
+            <li>Infra-red thermometer: <strong>intensity of infra-red radiation</strong> emitted by the object.</li>
+          </ul>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Warning / Trap</span>
+              <div class="co-content">
+                A property is <strong>not suitable</strong> if the same reading can occur at two different temperatures (ambiguous), even if it changes with temperature.
+              </div>
+            </div>
+          </div>
+
+          <h3>Improving sensitivity (typical 1–2 marks)</h3>
+          <ul class="key-list">
+            <li>Liquid-in-glass: <strong>narrower capillary tube</strong> and/or <strong>larger bulb</strong> &rarr; larger length change per \(1^\circ\text{C}\).</li>
+            <li>But higher sensitivity may reduce the <strong>measurable range</strong> and increase fragility.</li>
+          </ul>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="card">
+          <h2 id="sec03">3. Celsius temperature scale and fixed points</h2>
+
+          <h3>Two fixed points</h3>
+          <ul class="key-list">
+            <li><strong>Ice point (lower fixed point):</strong> temperature of <strong>pure melting ice</strong> at <strong>normal atmospheric pressure</strong>.</li>
+            <li><strong>Steam point (upper fixed point):</strong> temperature of <strong>steam over pure boiling water</strong> at <strong>normal atmospheric pressure</strong>.</li>
+          </ul>
+
+          <h3>How the scale is defined</h3>
+          <ul class="key-list">
+            <li>Assign ice point as \(0^\circ\text{C}\) and steam point as \(100^\circ\text{C}\).</li>
+            <li>Divide the interval between them into <strong>100 equal divisions</strong>; each division is \(1^\circ\text{C}\).</li>
+            <li>Temperatures can be below \(0^\circ\text{C}\) or above \(100^\circ\text{C}\).</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">HKDSE Note</span>
+              <div class="co-content">
+                Fixed points depend on <strong>pressure</strong>. Always state “at normal atmospheric pressure” when defining the ice point and steam point.
+              </div>
+            </div>
+          </div>
+
+          <h3>Kelvin (absolute) temperature</h3>
+          <div style="text-align:center;">
+            $$ T(\text{K}) = \theta(^\circ\text{C}) + 273 $$
+          </div>
+          <ul class="key-list">
+            <li>Kelvin is used in many thermal physics equations (absolute scale).</li>
+            <li>\(0\,\text{K}\) corresponds to absolute zero (about \(-273^\circ\text{C}\)).</li>
+          </ul>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="card">
+          <h2 id="sec04">4. Calibrating a thermometer and using calibration graphs</h2>
+
+          <h3>Calibrating an unmarked liquid-in-glass thermometer</h3>
+          <ul class="key-list">
+            <li>Place the thermometer in <strong>pure melting ice</strong>; mark the liquid level (ice point).</li>
+            <li>Place it in <strong>steam over pure boiling water</strong>; mark the liquid level (steam point).</li>
+            <li>Divide the distance between the two marks into <strong>100 equal divisions</strong> &rarr; \(1^\circ\text{C}\) per division.</li>
+          </ul>
+
+          <h3>Calibration graph &amp; proportional method</h3>
+          <p style="font-size:0.9rem; color:var(--text-muted);">
+            If the thermometric property varies linearly with temperature, you can use a straight-line calibration graph or proportion.
+          </p>
+
+          <div style="font-size:1.2rem; text-align:center; padding:10px; background:var(--bg-body); border-radius:12px; margin:14px 0;">
+            $$ \frac{x_T - x_0}{x_{100} - x_0} = \frac{T - 0}{100 - 0} = \frac{T}{100} $$
+          </div>
+
+          <ul class="key-list">
+            <li>\(x\) can be length of liquid column \(L\), resistance \(R\), e.m.f., etc.</li>
+            <li>From the graph: read the corresponding temperature for a measured \(x_T\).</li>
+            <li>From proportion: rearrange to find \(T\) directly.</li>
+          </ul>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Common mistake</span>
+              <div class="co-content">
+                Using the linear formula beyond the calibrated range or when the \(x\)&ndash;\(T\) relation is <strong>not</strong> linear will give a wrong temperature.
+              </div>
+            </div>
+          </div>
+
+          <h3>Exam-style add-on: “thermometer calibrated incorrectly”</h3>
+          <ul class="key-list">
+            <li>If a thermometer gives wrong readings at the fixed points, treat those readings as \(x_0\) and \(x_{100}\) and use <strong>linear interpolation</strong> to find the true temperature.</li>
+            <li>Always state the key assumption: <strong>the thermometric property varies linearly with temperature</strong>.</li>
+          </ul>
+        </div>
+
+        <!-- Section 5 -->
+        <div class="card">
+          <h2 id="sec05">5. Types of thermometers and how to choose</h2>
+
+          <h3>Match thermometer to purpose</h3>
+          <ul class="key-list">
+            <li>Consider <strong>range</strong> (low/high temperatures), <strong>sensitivity</strong>, <strong>response time</strong>, and practicality.</li>
+            <li>Different thermometers use different thermometric properties.</li>
+          </ul>
+
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th width="34%">Thermometer</th>
+                  <th width="66%">Key point (HKDSE wording)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Liquid-in-glass</td>
+                  <td>Uses thermal expansion (volume of liquid). Simple and direct, but limited range and slower response.</td>
+                </tr>
+                <tr>
+                  <td>Resistance thermometer</td>
+                  <td>Uses resistance of a metal wire (e.g. platinum). Can be sensitive and suitable for precise measurement if \(R\) varies steadily with \(T\).</td>
+                </tr>
+                <tr>
+                  <td>Thermistor thermometer</td>
+                  <td>Uses resistance of a thermistor. Often very sensitive over a limited range; may be non-linear.</td>
+                </tr>
+                <tr>
+                  <td>Thermocouple</td>
+                  <td>Uses e.m.f. at junctions of two metals. Suitable for a wide range including high temperatures; fast response.</td>
+                </tr>
+                <tr>
+                  <td>Infra-red thermometer</td>
+                  <td>Uses intensity of infra-red radiation emitted; no contact needed (useful for screening and moving objects).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Selection tip</span>
+              <div class="co-content">
+                For <strong>high temperatures</strong>, a liquid-in-glass thermometer may fail; choose a thermometer designed for high-temperature measurement (e.g. thermocouple).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 6 -->
+        <div class="card">
+          <h2 id="sec06">6. Key terms</h2>
+
+          <div class="term-tabs">
+            <input class="term-radio" type="radio" name="term" id="term-temperature" checked>
+            <input class="term-radio" type="radio" name="term" id="term-thermometer">
+            <input class="term-radio" type="radio" name="term" id="term-tdp">
+            <input class="term-radio" type="radio" name="term" id="term-fixed">
+            <input class="term-radio" type="radio" name="term" id="term-ice">
+            <input class="term-radio" type="radio" name="term" id="term-steam">
+            <input class="term-radio" type="radio" name="term" id="term-calibration">
+            <input class="term-radio" type="radio" name="term" id="term-sensitivity">
+
+            <div class="term-tab-bar" aria-label="Key terms">
+              <label class="term-tab-btn" for="term-temperature">Temperature</label>
+              <label class="term-tab-btn" for="term-thermometer">Thermometer</label>
+              <label class="term-tab-btn" for="term-tdp">Thermometric property</label>
+              <label class="term-tab-btn" for="term-fixed">Fixed points</label>
+              <label class="term-tab-btn" for="term-ice">Ice point</label>
+              <label class="term-tab-btn" for="term-steam">Steam point</label>
+              <label class="term-tab-btn" for="term-calibration">Calibration</label>
+              <label class="term-tab-btn" for="term-sensitivity">Sensitivity</label>
+            </div>
+
+            <div class="term-panel" id="panel-term-temperature">
+              <p><strong>Temperature:</strong> a measure of the degree of hotness of an object.</p>
+            </div>
+            <div class="term-panel" id="panel-term-thermometer">
+              <p><strong>Thermometer:</strong> an instrument that measures temperature by using a temperature-dependent property.</p>
+            </div>
+            <div class="term-panel" id="panel-term-tdp">
+              <p><strong>Thermometric (temperature-dependent) property:</strong> a physical property that changes with temperature and can be used to indicate temperature (e.g. length of liquid column, resistance, e.m.f.).</p>
+            </div>
+            <div class="term-panel" id="panel-term-fixed">
+              <p><strong>Fixed points (Celsius scale):</strong> two reference temperatures used to define the scale; the interval is divided into 100 equal divisions.</p>
+            </div>
+            <div class="term-panel" id="panel-term-ice">
+              <p><strong>Ice point:</strong> temperature of pure melting ice at normal atmospheric pressure (lower fixed point, \(0^\circ\text{C}\)).</p>
+            </div>
+            <div class="term-panel" id="panel-term-steam">
+              <p><strong>Steam point:</strong> temperature of steam over pure boiling water at normal atmospheric pressure (upper fixed point, \(100^\circ\text{C}\)).</p>
+            </div>
+            <div class="term-panel" id="panel-term-calibration">
+              <p><strong>Calibration:</strong> marking a thermometer scale (or drawing a calibration graph) using known reference temperatures, so unknown temperatures can be determined from the measured thermometric property.</p>
+            </div>
+            <div class="term-panel" id="panel-term-sensitivity">
+              <p><strong>Sensitivity:</strong> the change in thermometer reading per unit temperature change (e.g. length change per \(1^\circ\text{C}\)); higher sensitivity helps detect small temperature changes.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 7 -->
+        <div class="card">
+          <h2 id="sec07">7. Common traps (high-frequency DSE mistakes)</h2>
+          
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Warning / Trap</span>
+              <div class="co-content">
+                <ul class="key-list">
+                  <li><strong>Wrong fixed points:</strong> using ice from a freezer (not pure melting ice) or using boiling water itself (instead of <em>steam over</em> pure boiling water).</li>
+                  <li><strong>Missing conditions:</strong> not stating “at <strong>normal atmospheric pressure</strong>” for ice point and steam point.</li>
+                  <li><strong>Not waiting for equilibrium:</strong> reading before the thermometer becomes steady.</li>
+                  <li><strong>Linear assumption abuse:</strong> applying \( \frac{x_T-x_0}{x_{100}-x_0}=\frac{T}{100} \) when the \(x\)&ndash;\(T\) relation is non-linear or outside the calibrated range.</li>
+                  <li><strong>Mixing scales:</strong> using Celsius values directly in Kelvin-only equations; remember \(T(\text{K})=\theta(^\circ\text{C})+273\).</li>
+                  <li><strong>Poor calibration practice:</strong> impurities in ice/water or touching the beaker wall causes a wrong fixed-point reading.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <div class="section-nav" style="margin-top:18px; justify-content: space-between;">
+           <a class="nav-btn" href="../index.html">&larr; Back to Index</a>
+        </div>
+      </section>
+
+      <p style="text-align:center; font-size:0.85rem; color:var(--text-muted); margin-top:40px;">
+        End of note &bull; Compulsory &mdash; Temperature and Thermometers.
+      </p>
+    </main>
   </div>
-  <footer>
-    <p>HKDSE Physics &mdash; Compulsory Part</p>
-  </footer>
+
+  <script>
+    (function(){
+      const btnA = document.getElementById('btnA');
+      const btnB = document.getElementById('btnB');
+      const lineA = document.getElementById('lineA');
+      const lineB = document.getElementById('lineB');
+      const f0A = document.getElementById('f0A');
+      const f0B = document.getElementById('f0B');
+      const extA = document.getElementById('extA');
+      const extB = document.getElementById('extB');
+      const labA = document.getElementById('labA');
+      const labB = document.getElementById('labB');
+
+      function show(which){
+        const isA = which === 'A';
+        btnA.setAttribute('aria-pressed', String(isA));
+        btnB.setAttribute('aria-pressed', String(!isA));
+
+        lineA.style.opacity = isA ? '1' : '0.25';
+        f0A.style.opacity = isA ? '1' : '0.35';
+        labA.style.opacity = isA ? '1' : '0.35';
+        if(extA) extA.style.opacity = isA ? '1' : '0.25';
+
+        lineB.style.opacity = isA ? '0.25' : '1';
+        f0B.style.opacity = isA ? '0.35' : '1';
+        labB.style.opacity = isA ? '0.35' : '1';
+        if(extB) extB.style.opacity = isA ? '0.25' : '1';
+      }
+
+      if(btnA && btnB){
+        btnA.addEventListener('click', () => show('A'));
+        btnB.addEventListener('click', () => show('B'));
+      }
+    })();
+  </script>
 </body>
 </html>
