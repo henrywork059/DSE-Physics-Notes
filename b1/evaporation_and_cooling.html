@@ -3,25 +3,670 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>B1 — Evaporation & Cooling Effect | DSE Physics Notes</title>
-  <link rel="stylesheet" href="../style.css" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Compulsory — Evaporation and Cooling | DSE Physics Notes</title>
+
+  <!-- MathJax for professional equation rendering -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['$$','$$']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    /* =============================
+       Design System: Modern DSE
+       ============================= */
+    :root {
+      --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+      /* Palette: Slate & Blue */
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-dim: rgba(59, 130, 246, 0.08);
+
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-header: #ffffff;
+
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+
+      --border: #e2e8f0;
+      --radius: 16px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 4px 14px -4px rgba(15, 23, 42, 0.14), 0 2px 6px -2px rgba(15, 23, 42, 0.10);
+
+      /* Semantic Colors */
+      --accent-amber: #f59e0b;
+      --accent-amber-bg: #fffbeb;
+      --accent-amber-border: rgba(245, 158, 11, 0.35);
+
+      --accent-info: #3b82f6;
+      --accent-info-bg: rgba(59, 130, 246, 0.08);
+      --accent-info-border: rgba(59, 130, 246, 0.28);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --bg-header: #1e293b;
+
+        --text-main: #f1f5f9;
+        --text-muted: #94a3b8;
+
+        --border: #334155;
+
+        --primary: #60a5fa;
+        --primary-dark: #3b82f6;
+        --primary-dim: rgba(96, 165, 250, 0.10);
+
+        --accent-amber-bg: rgba(245, 158, 11, 0.10);
+        --accent-amber-border: rgba(245, 158, 11, 0.30);
+
+        --accent-info-bg: rgba(59, 130, 246, 0.10);
+        --accent-info-border: rgba(59, 130, 246, 0.30);
+      }
+    }
+
+    /* --- Base --- */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    
+    /* --- Layout --- */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* --- Hero Header (Radial Gradient) --- */
+    .hero-header {
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 20px 30px;
+      text-align: center;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.90rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      background: var(--bg-body);
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin: 0 0 10px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      background: linear-gradient(135deg, var(--primary), rgba(59,130,246,0.55));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .meta-subtitle {
+      font-size: 1.0rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 18px;
+    }
+
+    /* --- Navigation Buttons --- */
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 0;
+      padding: 0;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .nav-btn span {
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      margin-right: 4px;
+    }
+
+    /* --- Badges --- */
+    .badge-strip {
+      margin: 14px 0 0;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid;
+      font-size: 0.90rem;
+      font-weight: 600;
+    }
+    
+    .badge.exam {
+      background: var(--accent-info-bg);
+      color: var(--primary);
+      border-color: var(--accent-info-border);
+    }
+    
+    .badge.skills {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+      border-color: rgba(16, 185, 129, 0.2);
+    }
+
+    /* --- Content Cards --- */
+    section { margin-top: 14px; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin: 22px 0;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card h2 {
+      margin: 0 0 18px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      padding-left: 14px;
+      position: relative;
+      scroll-margin-top: 120px;
+      color: var(--text-main);
+    }
+
+    .card h2::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.2em;
+      width: 6px;
+      height: 1.1em;
+      border-radius: 99px;
+      background: var(--primary);
+    }
+
+    .card h3 {
+      margin: 24px 0 12px;
+      font-size: 1.1rem;
+      font-weight: 650;
+      color: var(--text-main);
+    }
+
+    ul.key-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text-muted);
+    }
+
+    .key-list li { margin: 8px 0; }
+    .key-list li::marker { color: var(--primary); }
+    strong { color: var(--text-main); font-weight: 650; }
+
+    /* --- Semantic Callouts --- */
+    .callout {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin: 18px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      font-size: 0.95rem;
+      border: 1px solid;
+    }
+
+    .co-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      margin-top: 2px;
+    }
+    .co-icon svg { width: 100%; height: 100%; }
+
+    .co-title {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 4px;
+      font-size: 0.80rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .co-content { color: var(--text-main); }
+
+    /* Note Style */
+    .callout.note {
+      background: var(--accent-info-bg);
+      border-color: var(--accent-info-border);
+    }
+    .callout.note .co-icon, .callout.note .co-title { color: var(--primary); }
+
+    /* Trap Style */
+    .callout.trap {
+      background: var(--accent-amber-bg);
+      border-color: var(--accent-amber-border);
+    }
+    .callout.trap .co-icon, .callout.trap .co-title { color: var(--accent-amber); }
+
+    /* --- Tables --- */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-card);
+      margin-top: 12px;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+      font-size: 0.95rem;
+    }
+
+    .data-table th {
+      background: var(--bg-body);
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+
+    /* --- Segmented Tabs --- */
+    .term-tabs { position: relative; margin-top: 10px; }
+    .term-radio { position: absolute; left: -9999px; }
+
+    .term-tab-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      background: var(--bg-body);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .term-tab-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .term-tab-btn:hover { color: var(--text-main); }
+
+    /* Active State Logic */
+    input:checked + label {
+      background: var(--bg-card);
+      color: var(--primary);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .term-panel {
+      display: none;
+      padding: 20px;
+      border-radius: 12px;
+      background: var(--accent-info-bg);
+      border: 1px dashed var(--accent-info-border);
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Panel Visibility Logic */
+    #term-evap:checked ~ #panel-term-evap,
+    #term-boil:checked ~ #panel-term-boil,
+    #term-cool:checked ~ #panel-term-cool,
+    #term-lv:checked ~ #panel-term-lv,
+    #term-rate:checked ~ #panel-term-rate,
+    #term-vap:checked ~ #panel-term-vap,
+    #term-wind:checked ~ #panel-term-wind { display: block; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { padding: 0 16px 60px; }
+      h1 { font-size: 1.8rem; }
+      .card { padding: 20px; }
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Hero Header -->
   <header class="hero-header">
-    <h1>B1 — Evaporation & Cooling Effect</h1>
-    <p class="meta-subtitle">Cooling by evaporation</p>
-    <div class="section-nav" style="text-align:center;margin-top:10px;">
-      <a class="nav-btn" href="../../index.html">Back to Index</a>
+    <div class="nav-breadcrumb">
+      <!-- Icon -->
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--primary)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+      Index / Compulsory
+    </div>
+
+    <h1>Compulsory — Evaporation and Cooling</h1>
+    <p class="meta-subtitle">
+      HKDSE Physics &mdash; Compulsory: evaporation below boiling point, cooling by evaporation, and latent heat of vaporisation.
+    </p>
+
+    <div class="section-nav" style="justify-content:center;">
+      <a class="nav-btn" href="../index.html">Back to Index</a>
     </div>
   </header>
+
   <div class="container">
-    <div class="card">
-      <h2>Overview</h2>
-      <p>This page will cover the key concepts, formulas, and exam tips for <strong>B1 — Evaporation & Cooling Effect</strong>. Content will be added soon.</p>
-    </div>
+    <main>
+
+      <p class="section-intro" style="text-align:center;">
+        Focus here: define <strong>evaporation</strong> clearly, explain <strong>cooling by evaporation</strong>, and state the <strong>factors affecting the rate of evaporation</strong>.
+      </p>
+
+      <div class="badge-strip">
+        <span class="badge exam">Exam focus: evaporation vs boiling; cooling effect; \( Q = mL_v \)</span>
+        <span class="badge skills">Skills: explain using molecular motion; apply \( Q = mL_v \); suggest ways to change evaporation rate</span>
+      </div>
+
+      <!-- Jump Bar -->
+      <div class="section-nav" aria-label="Jump to section" style="margin-top:20px; justify-content:center;">
+        <a href="#sec01" class="nav-btn"><span>1</span> Evaporation vs boiling</a>
+        <a href="#sec02" class="nav-btn"><span>2</span> Cooling effect</a>
+        <a href="#sec03" class="nav-btn"><span>3</span> Factors</a>
+        <a href="#sec04" class="nav-btn"><span>4</span> Latent heat</a>
+        <a href="#sec05" class="nav-btn"><span>5</span> Terms</a>
+        <a href="#sec06" class="nav-btn"><span>6</span> Traps</a>
+      </div>
+
+      <!-- Section 1 -->
+      <section>
+        <div class="card">
+          <h2 id="sec01">1. Evaporation and boiling (compare)</h2>
+          <ul class="key-list">
+            <li><strong>Evaporation:</strong> escape of molecules from the <strong>surface</strong> of a liquid at <strong>any temperature</strong>.</li>
+            <li><strong>Boiling:</strong> rapid vaporisation occurring <strong>throughout</strong> the liquid at a fixed temperature (the <strong>boiling point</strong>) when vapour pressure equals external pressure.</li>
+          </ul>
+
+          <h3>Key differences you should state in exams</h3>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th width="40%">Evaporation</th>
+                  <th width="60%">Boiling</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Occurs at any temperature.</td>
+                  <td>Occurs only at the boiling point (for a given pressure).</td>
+                </tr>
+                <tr>
+                  <td>Occurs only at the surface.</td>
+                  <td>Occurs throughout the liquid (bubbles form inside).</td>
+                </tr>
+                <tr>
+                  <td>Usually slow and no large bubbles.</td>
+                  <td>Rapid and bubbles of vapour form and rise.</td>
+                </tr>
+                <tr>
+                  <td>Often causes cooling of the remaining liquid.</td>
+                  <td>Temperature of the liquid remains constant during boiling (if pressure is constant).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">HKDSE Reminder</span>
+              <div class="co-content">
+                In explanations, emphasise <strong>surface molecules</strong> for evaporation. For boiling, mention <strong>bubble formation</strong> and <strong>constant temperature</strong> (at constant pressure).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="card">
+          <h2 id="sec02">2. Cooling effect of evaporation</h2>
+          <ul class="key-list">
+            <li>In a liquid, molecules have a range of kinetic energies.</li>
+            <li>During evaporation, the <strong>more energetic molecules</strong> escape from the surface.</li>
+            <li>The average kinetic energy of the remaining molecules decreases &rarr; the liquid&rsquo;s <strong>temperature falls</strong>.</li>
+            <li>Energy needed for evaporation is the <strong>latent heat of vaporisation</strong>. It is taken from the liquid (and/or surroundings).</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Everyday examples</span>
+              <div class="co-content">
+                Sweating cools the body because sweat <strong>evaporates</strong> and takes energy from the skin. Alcohol/hand-sanitiser evaporates quickly and feels cold.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="card">
+          <h2 id="sec03">3. Factors affecting the rate of evaporation</h2>
+          <ul class="key-list">
+            <li><strong>Temperature:</strong> higher temperature &rarr; more molecules have enough energy to escape &rarr; faster evaporation.</li>
+            <li><strong>Surface area:</strong> larger surface area &rarr; more surface molecules &rarr; faster evaporation.</li>
+            <li><strong>Vapour density / humidity:</strong> lower vapour density above the liquid (drier air) &rarr; faster evaporation.</li>
+            <li><strong>Wind / air movement:</strong> stronger wind removes vapour near the surface &rarr; lowers vapour density near the surface &rarr; faster evaporation.</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">HKDSE Reminder</span>
+              <div class="co-content">
+                Evaporation can occur in a vacuum. Air is not required, but the <strong>vapour density</strong> near the surface matters.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="card">
+          <h2 id="sec04">4. Latent heat of vaporisation (calculation)</h2>
+          <ul class="key-list">
+            <li><strong>Specific latent heat of vaporisation \( L_v \):</strong> heat needed to change 1 kg of a liquid into vapour at constant temperature.</li>
+            <li>Heat for evaporation / boiling: $$ Q = mL_v $$</li>
+            <li>For condensation, the same amount of heat is <strong>released</strong>: $$ Q = mL_v $$ (energy leaves the vapour).</li>
+          </ul>
+
+          <h3>Exam steps (marking-scheme style)</h3>
+          <ul class="key-list">
+            <li>Convert mass to kg if needed.</li>
+            <li>Use \( Q = mL_v \) with correct units: \( Q \) in J, \( m \) in kg, \( L_v \) in J kg\(^{-1}\).</li>
+            <li>If a question involves a temperature change as well, combine with \( Q = mc\Delta T \) (do not mix the two formulas).</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2v2c0 1.105 1.343 2 3 2s3-.895 3-2v-2c0-1.105-1.343-2-3-2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 10v4c0 2.761-3.134 5-7 5s-7-2.239-7-5v-4"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Units check</span>
+              <div class="co-content">
+                A common exam error is using grams directly in \( Q = mL_v \). Always use \( m \) in kg.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5 -->
+        <div class="card">
+          <h2 id="sec05">5. Key terms</h2>
+
+          <div class="term-tabs">
+            <input class="term-radio" type="radio" name="term" id="term-evap" checked>
+            <input class="term-radio" type="radio" name="term" id="term-boil">
+            <input class="term-radio" type="radio" name="term" id="term-cool">
+            <input class="term-radio" type="radio" name="term" id="term-lv">
+            <input class="term-radio" type="radio" name="term" id="term-rate">
+            <input class="term-radio" type="radio" name="term" id="term-vap">
+            <input class="term-radio" type="radio" name="term" id="term-wind">
+
+            <div class="term-tab-bar" aria-label="Key terms">
+              <label class="term-tab-btn" for="term-evap">Evaporation</label>
+              <label class="term-tab-btn" for="term-boil">Boiling</label>
+              <label class="term-tab-btn" for="term-cool">Cooling effect</label>
+              <label class="term-tab-btn" for="term-lv">\( L_v \)</label>
+              <label class="term-tab-btn" for="term-rate">Rate of evaporation</label>
+              <label class="term-tab-btn" for="term-vap">Vapour density</label>
+              <label class="term-tab-btn" for="term-wind">Wind effect</label>
+            </div>
+
+            <div class="term-panel" id="panel-term-evap">
+              <p><strong>Evaporation:</strong> escape of molecules from the surface of a liquid. It can occur at any temperature.</p>
+            </div>
+            <div class="term-panel" id="panel-term-boil">
+              <p><strong>Boiling:</strong> rapid vaporisation throughout a liquid at its boiling point (at a given pressure), with bubble formation.</p>
+            </div>
+            <div class="term-panel" id="panel-term-cool">
+              <p><strong>Cooling effect of evaporation:</strong> during evaporation, more energetic molecules escape, reducing the average kinetic energy of the remaining liquid so its temperature falls.</p>
+            </div>
+            <div class="term-panel" id="panel-term-lv">
+              <p><strong>Specific latent heat of vaporisation \( L_v \):</strong> heat needed to change 1 kg of a liquid into vapour at constant temperature. \( Q = mL_v \).</p>
+            </div>
+            <div class="term-panel" id="panel-term-rate">
+              <p><strong>Rate of evaporation:</strong> how fast a liquid turns into vapour (e.g. mass evaporated per unit time). It increases with temperature and surface area.</p>
+            </div>
+            <div class="term-panel" id="panel-term-vap">
+              <p><strong>Vapour density (humidity):</strong> amount of vapour present in the air above the liquid. Lower vapour density near the surface gives faster evaporation.</p>
+            </div>
+            <div class="term-panel" id="panel-term-wind">
+              <p><strong>Wind / air movement:</strong> wind removes vapour near the liquid surface, keeping vapour density low and increasing evaporation rate.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 6 -->
+        <div class="card">
+          <h2 id="sec06">6. Common traps</h2>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Warning / Trap</span>
+              <div class="co-content">
+                <ul class="key-list">
+                  <li><strong>Trap:</strong> “Evaporation happens only at the boiling point.”
+                    <br><strong>Fix:</strong> evaporation can occur at <strong>any</strong> temperature; boiling occurs at the boiling point.</li>
+                  <li><strong>Trap:</strong> “Evaporation needs air.”
+                    <br><strong>Fix:</strong> evaporation can occur in a vacuum; air mainly affects evaporation by changing vapour density near the surface.</li>
+                  <li><strong>Trap:</strong> “Boiling is faster evaporation at the surface.”
+                    <br><strong>Fix:</strong> boiling occurs <strong>throughout</strong> the liquid with bubbles; evaporation occurs at the <strong>surface</strong>.</li>
+                  <li><strong>Trap:</strong> “Wind cools because it adds cold air.”
+                    <br><strong>Fix:</strong> wind increases evaporation by removing vapour near the surface; faster evaporation causes more cooling.</li>
+                  <li><strong>Trap:</strong> Mixing up formulas \( Q = mc\Delta T \) and \( Q = mL_v \).
+                    <br><strong>Fix:</strong> use \( mc\Delta T \) for temperature change in one phase; use \( mL_v \) for change of state at constant temperature.</li>
+                  <li><strong>Trap:</strong> Sign confusion for condensation.
+                    <br><strong>Fix:</strong> evaporation/boiling <strong>absorbs</strong> heat; condensation <strong>releases</strong> heat (same magnitude \( mL_v \)).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <div class="section-nav" style="margin-top:18px; justify-content: space-between;">
+          <a class="nav-btn" href="../index.html">&larr; Back to Index</a>
+        </div>
+      </section>
+<p style="text-align:center; font-size:0.85rem; color:var(--text-muted); margin-top:40px;">
+        End of note &bull; Compulsory &mdash; Evaporation and Cooling.
+      </p>
+    </main>
   </div>
-  <footer>
-    <p>HKDSE Physics &mdash; Compulsory Part</p>
-  </footer>
 </body>
 </html>
