@@ -3,25 +3,706 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>B1 — Gas Laws (Boyle’s, Charles’ & Pressure Law) | DSE Physics Notes</title>
-  <link rel="stylesheet" href="../style.css" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Compulsory — Gas Laws: Boyle, Charles &amp; Pressure | DSE Physics Notes</title>
+
+  <!-- MathJax for professional equation rendering -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['$$','$$']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    /* =============================
+       Design System: Modern DSE
+       ============================= */
+    :root {
+      --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+      /* Palette: Slate & Blue */
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-dim: rgba(59, 130, 246, 0.08);
+
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-header: #ffffff;
+
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+
+      --border: #e2e8f0;
+      --radius: 16px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 4px 14px -4px rgba(15, 23, 42, 0.14), 0 2px 6px -2px rgba(15, 23, 42, 0.10);
+
+      /* Semantic Colors */
+      --accent-amber: #f59e0b;
+      --accent-amber-bg: #fffbeb;
+      --accent-amber-border: rgba(245, 158, 11, 0.35);
+
+      --accent-info: #3b82f6;
+      --accent-info-bg: rgba(59, 130, 246, 0.08);
+      --accent-info-border: rgba(59, 130, 246, 0.28);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --bg-header: #1e293b;
+
+        --text-main: #f1f5f9;
+        --text-muted: #94a3b8;
+
+        --border: #334155;
+
+        --primary: #60a5fa;
+        --primary-dark: #3b82f6;
+        --primary-dim: rgba(96, 165, 250, 0.10);
+
+        --accent-amber-bg: rgba(245, 158, 11, 0.10);
+        --accent-amber-border: rgba(245, 158, 11, 0.30);
+
+        --accent-info-bg: rgba(59, 130, 246, 0.10);
+        --accent-info-border: rgba(59, 130, 246, 0.30);
+      }
+    }
+
+    /* --- Base --- */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* --- Layout --- */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* --- Hero Header (Radial Gradient) --- */
+    .hero-header {
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 20px 30px;
+      text-align: center;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.90rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      background: var(--bg-body);
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin: 0 0 10px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      background: linear-gradient(135deg, var(--primary), rgba(59,130,246,0.55));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .meta-subtitle {
+      font-size: 1.0rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 18px;
+    }
+
+    /* --- Navigation Buttons --- */
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 0;
+      padding: 0;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .nav-btn span {
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      margin-right: 4px;
+    }
+
+    /* --- Badges --- */
+    .badge-strip {
+      margin: 14px 0 0;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid;
+      font-size: 0.90rem;
+      font-weight: 600;
+    }
+
+    .badge.exam {
+      background: var(--accent-info-bg);
+      color: var(--primary);
+      border-color: var(--accent-info-border);
+    }
+
+    .badge.skills {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+      border-color: rgba(16, 185, 129, 0.2);
+    }
+
+    /* --- Content Cards --- */
+    section { margin-top: 14px; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin: 22px 0;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card h2 {
+      margin: 0 0 18px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      padding-left: 14px;
+      position: relative;
+      scroll-margin-top: 120px;
+      color: var(--text-main);
+    }
+
+    .card h2::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.2em;
+      width: 6px;
+      height: 1.1em;
+      border-radius: 99px;
+      background: var(--primary);
+    }
+
+    .card h3 {
+      margin: 24px 0 12px;
+      font-size: 1.1rem;
+      font-weight: 650;
+      color: var(--text-main);
+    }
+
+    ul.key-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text-muted);
+    }
+
+    .key-list li { margin: 8px 0; }
+    .key-list li::marker { color: var(--primary); }
+    strong { color: var(--text-main); font-weight: 650; }
+
+    /* --- Semantic Callouts --- */
+    .callout {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin: 18px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      font-size: 0.95rem;
+      border: 1px solid;
+    }
+
+    .co-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      margin-top: 2px;
+    }
+    .co-icon svg { width: 100%; height: 100%; }
+
+    .co-title {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 4px;
+      font-size: 0.80rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .co-content { color: var(--text-main); }
+
+    /* Note Style */
+    .callout.note {
+      background: var(--accent-info-bg);
+      border-color: var(--accent-info-border);
+    }
+    .callout.note .co-icon, .callout.note .co-title { color: var(--primary); }
+
+    /* Trap Style */
+    .callout.trap {
+      background: var(--accent-amber-bg);
+      border-color: var(--accent-amber-border);
+    }
+    .callout.trap .co-icon, .callout.trap .co-title { color: var(--accent-amber); }
+
+    /* --- Tables --- */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-card);
+      margin-top: 12px;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+      font-size: 0.95rem;
+    }
+
+    .data-table th {
+      background: var(--bg-body);
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+
+    /* --- Segmented Tabs --- */
+    .term-tabs { position: relative; margin-top: 10px; }
+    .term-radio { position: absolute; left: -9999px; }
+
+    .term-tab-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      background: var(--bg-body);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .term-tab-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .term-tab-btn:hover { color: var(--text-main); }
+
+    /* Active State Logic */
+    input:checked + label {
+      background: var(--bg-card);
+      color: var(--primary);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .term-panel {
+      display: none;
+      padding: 20px;
+      border-radius: 12px;
+      background: var(--accent-info-bg);
+      border: 1px dashed var(--accent-info-border);
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Panel Visibility Logic */
+    #term-pressure:checked ~ #panel-term-pressure,
+    #term-volume:checked ~ #panel-term-volume,
+    #term-temp:checked ~ #panel-term-temp,
+    #term-boyle:checked ~ #panel-term-boyle,
+    #term-charles:checked ~ #panel-term-charles,
+    #term-plaw:checked ~ #panel-term-plaw,
+    #term-combined:checked ~ #panel-term-combined,
+    #term-ideal:checked ~ #panel-term-ideal { display: block; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { padding: 0 16px 60px; }
+      h1 { font-size: 1.8rem; }
+      .card { padding: 20px; }
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Hero Header -->
   <header class="hero-header">
-    <h1>B1 — Gas Laws (Boyle’s, Charles’ & Pressure Law)</h1>
-    <p class="meta-subtitle">Relationships among p, V and T</p>
-    <div class="section-nav" style="text-align:center;margin-top:10px;">
-      <a class="nav-btn" href="../../index.html">Back to Index</a>
+    <div class="nav-breadcrumb">
+      <!-- Icon -->
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--primary)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+      Index / Compulsory
+    </div>
+
+    <h1>Compulsory — Gas Laws: Boyle, Charles &amp; Pressure</h1>
+    <p class="meta-subtitle">
+      HKDSE Physics &mdash; Compulsory Thermal Physics &middot; Describe and use Boyle&rsquo;s law, Charles&rsquo; law and the pressure law for an ideal gas.
+    </p>
+
+    <div class="section-nav" style="justify-content:center;">
+      <a class="nav-btn" href="../index.html">Back to Index</a>
     </div>
   </header>
+
   <div class="container">
-    <div class="card">
-      <h2>Overview</h2>
-      <p>This page will cover the key concepts, formulas, and exam tips for <strong>B1 — Gas Laws (Boyle’s, Charles’ & Pressure Law)</strong>. Content will be added soon.</p>
-    </div>
+    <main>
+
+      <p class="section-intro" style="text-align:center;">
+        Focus here: use the three gas laws with <strong>absolute temperature (K)</strong>, recognise the graphs, and solve problems using \( \frac{pV}{T} = \text{constant} \).
+      </p>
+
+      <div class="badge-strip">
+        <span class="badge exam">Exam focus: \( pV = \text{constant} \), \( \frac{V}{T} = \text{constant} \), \( \frac{p}{T} = \text{constant} \), \( \frac{pV}{T} = \text{constant} \), \( pV=nRT \)</span>
+        <span class="badge skills">Skills: convert \( ^\circ\text{C} \to \text{K} \); identify law from graphs; apply proportional reasoning and calculations</span>
+      </div>
+
+      <!-- Jump Bar -->
+      <div class="section-nav" aria-label="Jump to section" style="margin-top:20px; justify-content:center;">
+        <a href="#sec01" class="nav-btn"><span>1</span> Variables &amp; Kelvin</a>
+        <a href="#sec02" class="nav-btn"><span>2</span> Boyle&rsquo;s law</a>
+        <a href="#sec03" class="nav-btn"><span>3</span> Charles&rsquo; law</a>
+        <a href="#sec04" class="nav-btn"><span>4</span> Pressure law</a>
+        <a href="#sec05" class="nav-btn"><span>5</span> Combined / ideal gas</a>
+        <a href="#sec06" class="nav-btn"><span>6</span> Terms</a>
+        <a href="#sec07" class="nav-btn"><span>7</span> Traps</a>
+      </div>
+
+      <!-- Section 1 -->
+      <section>
+        <div class="card">
+          <h2 id="sec01">1. State variables and absolute temperature</h2>
+
+          <ul class="key-list">
+            <li><strong>Pressure \( p \):</strong> force per unit area on the container wall due to gas molecule collisions (unit: Pa).</li>
+            <li><strong>Volume \( V \):</strong> volume of the gas (unit: \( \text{m}^3 \)).</li>
+            <li><strong>Temperature \( T \):</strong> use <strong>Kelvin</strong> in gas-law calculations (unit: K).</li>
+          </ul>
+
+          <h3>Kelvin scale (must know)</h3>
+          <ul class="key-list">
+            <li>Conversion: $$ T(\text{K}) = t(^\circ\text{C}) + 273 $$</li>
+            <li><strong>Absolute zero</strong> is approximately \( -273^\circ\text{C} \) (where \( T = 0\,\text{K} \)).</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">HKDSE Reminder</span>
+              <div class="co-content">
+                Gas laws use <strong>absolute temperature</strong>. If you keep \( ^\circ\text{C} \), the proportionality graphs will not pass through the origin.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="card">
+          <h2 id="sec02">2. Boyle&rsquo;s law (constant temperature)</h2>
+
+          <ul class="key-list">
+            <li>For a fixed mass of gas at constant temperature: $$ pV = \text{constant} $$</li>
+            <li>So \( p \propto \frac{1}{V} \).</li>
+          </ul>
+
+          <h3>Graphs you should recognise</h3>
+          <ul class="key-list">
+            <li>\( p \) vs \( V \): a decreasing curve (hyperbola).</li>
+            <li>\( p \) vs \( 1/V \): a straight line through the origin.</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Typical exam step</span>
+              <div class="co-content">
+                If \( V \) decreases to half at constant \( T \), then \( p \) doubles.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="card">
+          <h2 id="sec03">3. Charles&rsquo; law (constant pressure)</h2>
+
+          <ul class="key-list">
+            <li>For a fixed mass of gas at constant pressure: $$ \frac{V}{T} = \text{constant} $$</li>
+            <li>So \( V \propto T \) (with \( T \) in K).</li>
+          </ul>
+
+          <h3>Graph features</h3>
+          <ul class="key-list">
+            <li>\( V \) vs \( T(\text{K}) \): straight line through the origin.</li>
+            <li>\( V \) vs \( t(^\circ\text{C}) \): straight line that extrapolates to \( V = 0 \) at about \( -273^\circ\text{C} \).</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Meaning of the intercept</span>
+              <div class="co-content">
+                The \( -273^\circ\text{C} \) intercept is evidence for the <strong>absolute zero</strong> concept.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="card">
+          <h2 id="sec04">4. Pressure law (constant volume)</h2>
+
+          <ul class="key-list">
+            <li>For a fixed mass of gas at constant volume: $$ \frac{p}{T} = \text{constant} $$</li>
+            <li>So \( p \propto T \) (with \( T \) in K).</li>
+          </ul>
+
+          <h3>Graph features</h3>
+          <ul class="key-list">
+            <li>\( p \) vs \( T(\text{K}) \): straight line through the origin.</li>
+            <li>\( p \) vs \( t(^\circ\text{C}) \): straight line that extrapolates to \( p = 0 \) at about \( -273^\circ\text{C} \).</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Particle explanation (short)</span>
+              <div class="co-content">
+                Higher \( T \) &rarr; molecules move faster &rarr; more frequent / harder collisions with the wall &rarr; larger \( p \).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5 -->
+        <div class="card">
+          <h2 id="sec05">5. Combined gas law and ideal gas equation</h2>
+
+          <h3>Combined gas law (fixed mass)</h3>
+          <ul class="key-list">
+            <li>For a fixed mass of gas: $$ \frac{pV}{T} = \text{constant} $$</li>
+            <li>So: $$ \frac{p_1V_1}{T_1} = \frac{p_2V_2}{T_2} $$</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">HKDSE Method</span>
+              <div class="co-content">
+                Write down \( \frac{p_1V_1}{T_1} = \frac{p_2V_2}{T_2} \) first, then substitute numbers after converting temperature to K.
+              </div>
+            </div>
+          </div>
+
+          <h3>Ideal gas equation</h3>
+          <ul class="key-list">
+            <li>Ideal gas equation: $$ pV = nRT $$</li>
+            <li>\( n \): amount of gas (mol), \( R \): molar gas constant (given when needed).</li>
+            <li>If \( n \) is constant, \( \frac{pV}{T} \) is constant &rarr; consistent with the combined gas law.</li>
+          </ul>
+
+          <h3>Quick example (marking-scheme style)</h3>
+          <ul class="key-list">
+            <li>A gas changes from \( p_1=1.2\times 10^5\,\text{Pa} \), \( V_1=2.0\times 10^{-3}\,\text{m}^3 \), \( t_1=27^\circ\text{C} \) to \( p_2=1.0\times 10^5\,\text{Pa} \), \( t_2=57^\circ\text{C} \). Find \( V_2 \).</li>
+            <li>Convert: \( T_1 = 300\,\text{K} \), \( T_2 = 330\,\text{K} \).</li>
+            <li>
+              $$ \frac{p_1V_1}{T_1} = \frac{p_2V_2}{T_2} \Rightarrow V_2 = \frac{p_1V_1T_2}{p_2T_1}
+              = \frac{(1.2\times 10^5)(2.0\times 10^{-3})(330)}{(1.0\times 10^5)(300)}
+              = 2.64\times 10^{-3}\,\text{m}^3 $$
+            </li>
+          </ul>
+        </div>
+
+        <!-- Section 6 -->
+        <div class="card">
+          <h2 id="sec06">6. Key terms</h2>
+
+          <div class="term-tabs">
+            <input class="term-radio" type="radio" name="term" id="term-pressure" checked>
+            <input class="term-radio" type="radio" name="term" id="term-volume">
+            <input class="term-radio" type="radio" name="term" id="term-temp">
+            <input class="term-radio" type="radio" name="term" id="term-boyle">
+            <input class="term-radio" type="radio" name="term" id="term-charles">
+            <input class="term-radio" type="radio" name="term" id="term-plaw">
+            <input class="term-radio" type="radio" name="term" id="term-combined">
+            <input class="term-radio" type="radio" name="term" id="term-ideal">
+
+            <div class="term-tab-bar" aria-label="Key terms">
+              <label class="term-tab-btn" for="term-pressure">Pressure \( p \)</label>
+              <label class="term-tab-btn" for="term-volume">Volume \( V \)</label>
+              <label class="term-tab-btn" for="term-temp">Temperature \( T \)</label>
+              <label class="term-tab-btn" for="term-boyle">Boyle&rsquo;s law</label>
+              <label class="term-tab-btn" for="term-charles">Charles&rsquo; law</label>
+              <label class="term-tab-btn" for="term-plaw">Pressure law</label>
+              <label class="term-tab-btn" for="term-combined">Combined law</label>
+              <label class="term-tab-btn" for="term-ideal">Ideal gas eq.</label>
+            </div>
+
+            <div class="term-panel" id="panel-term-pressure">
+              <p><strong>Pressure \( p \):</strong> force per unit area; in gases it is due to molecule collisions with the container wall (unit: Pa).</p>
+            </div>
+            <div class="term-panel" id="panel-term-volume">
+              <p><strong>Volume \( V \):</strong> space occupied by the gas (unit: \( \text{m}^3 \)).</p>
+            </div>
+            <div class="term-panel" id="panel-term-temp">
+              <p><strong>Absolute temperature \( T \):</strong> temperature in kelvin. \( T(\text{K}) = t(^\circ\text{C}) + 273 \).</p>
+            </div>
+            <div class="term-panel" id="panel-term-boyle">
+              <p><strong>Boyle&rsquo;s law:</strong> for a fixed mass of gas at constant temperature, \( pV = \text{constant} \) (so \( p \propto 1/V \)).</p>
+            </div>
+            <div class="term-panel" id="panel-term-charles">
+              <p><strong>Charles&rsquo; law:</strong> for a fixed mass of gas at constant pressure, \( V/T = \text{constant} \) (so \( V \propto T \)).</p>
+            </div>
+            <div class="term-panel" id="panel-term-plaw">
+              <p><strong>Pressure law:</strong> for a fixed mass of gas at constant volume, \( p/T = \text{constant} \) (so \( p \propto T \)).</p>
+            </div>
+            <div class="term-panel" id="panel-term-combined">
+              <p><strong>Combined gas law:</strong> for a fixed mass of gas, \( \frac{pV}{T} = \text{constant} \), i.e. \( \frac{p_1V_1}{T_1} = \frac{p_2V_2}{T_2} \).</p>
+            </div>
+            <div class="term-panel" id="panel-term-ideal">
+              <p><strong>Ideal gas equation:</strong> \( pV = nRT \), where \( n \) is amount in mol and \( R \) is the molar gas constant.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 7 -->
+        <div class="card">
+          <h2 id="sec07">7. Common traps (high-frequency DSE mistakes)</h2>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Warning / Trap</span>
+              <div class="co-content">
+                <ul class="key-list">
+                  <li><strong>Using \( ^\circ\text{C} \) in ratios:</strong> 
+                    <br><strong>Fix:</strong> always convert to kelvin: \( T = t + 273 \).</li>
+                  <li><strong>Mixing up the constant condition:</strong>
+                    <br><strong>Fix:</strong> Boyle (constant \( T \)), Charles (constant \( p \)), Pressure law (constant \( V \)).</li>
+                  <li><strong>Wrong graph conclusion:</strong>
+                    <br><strong>Fix:</strong> \( p \) vs \( V \) is not a straight line; use \( p \) vs \( 1/V \) for a straight line.</li>
+                  <li><strong>Forgetting units:</strong>
+                    <br><strong>Fix:</strong> use Pa for pressure and \( \text{m}^3 \) for volume unless the question keeps consistent units.</li>
+                  <li><strong>Thinking \( pV/T \) changes for the same mass:</strong>
+                    <br><strong>Fix:</strong> for a fixed mass (fixed \( n \)), \( pV/T \) is constant (ideal-gas behaviour).</li>
+                  <li><strong>Sign error for temperature change:</strong>
+                    <br><strong>Fix:</strong> “increase by \( 10^\circ\text{C} \)” means \( T \) increases by 10 K (same increment), but ratios must still use kelvin.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <div class="section-nav" style="margin-top:18px; justify-content: space-between;">
+          <a class="nav-btn" href="../index.html">&larr; Back to Index</a>
+        </div>
+      </section>
+
+      <p style="text-align:center; font-size:0.85rem; color:var(--text-muted); margin-top:40px;">
+        End of note &bull; Compulsory &mdash; Gas Laws: Boyle, Charles &amp; Pressure.
+      </p>
+    </main>
   </div>
-  <footer>
-    <p>HKDSE Physics &mdash; Compulsory Part</p>
-  </footer>
 </body>
 </html>
