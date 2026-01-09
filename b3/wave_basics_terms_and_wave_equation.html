@@ -3,25 +3,705 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>B3 — Wave Basics & Wave Equation | DSE Physics Notes</title>
-  <link rel="stylesheet" href="../style.css" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Compulsory — Wave Basics: Terms &amp; Wave Equation | DSE Physics Notes</title>
+
+  <!-- MathJax for professional equation rendering -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['$$','$$']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    /* =============================
+       Design System: Modern DSE
+       ============================= */
+    :root {
+      --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+      /* Palette: Slate & Blue */
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-dim: rgba(59, 130, 246, 0.08);
+
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-header: #ffffff;
+
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+
+      --border: #e2e8f0;
+      --radius: 16px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 4px 14px -4px rgba(15, 23, 42, 0.14), 0 2px 6px -2px rgba(15, 23, 42, 0.10);
+
+      /* Semantic Colors */
+      --accent-amber: #f59e0b;
+      --accent-amber-bg: #fffbeb;
+      --accent-amber-border: rgba(245, 158, 11, 0.35);
+
+      --accent-info: #3b82f6;
+      --accent-info-bg: rgba(59, 130, 246, 0.08);
+      --accent-info-border: rgba(59, 130, 246, 0.28);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --bg-header: #1e293b;
+
+        --text-main: #f1f5f9;
+        --text-muted: #94a3b8;
+
+        --border: #334155;
+
+        --primary: #60a5fa;
+        --primary-dark: #3b82f6;
+        --primary-dim: rgba(96, 165, 250, 0.10);
+
+        --accent-amber-bg: rgba(245, 158, 11, 0.10);
+        --accent-amber-border: rgba(245, 158, 11, 0.30);
+
+        --accent-info-bg: rgba(59, 130, 246, 0.10);
+        --accent-info-border: rgba(59, 130, 246, 0.30);
+      }
+    }
+
+    /* --- Base --- */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* --- Layout --- */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* --- Hero Header (Radial Gradient) --- */
+    .hero-header {
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 20px 30px;
+      text-align: center;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.90rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      background: var(--bg-body);
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin: 0 0 10px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      background: linear-gradient(135deg, var(--primary), rgba(59,130,246,0.55));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .meta-subtitle {
+      font-size: 1.0rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 18px;
+    }
+
+    /* --- Navigation Buttons --- */
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 0;
+      padding: 0;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .nav-btn span {
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      margin-right: 4px;
+    }
+
+    /* --- Badges --- */
+    .badge-strip {
+      margin: 14px 0 0;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid;
+      font-size: 0.90rem;
+      font-weight: 600;
+    }
+
+    .badge.exam {
+      background: var(--accent-info-bg);
+      color: var(--primary);
+      border-color: var(--accent-info-border);
+    }
+
+    .badge.skills {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+      border-color: rgba(16, 185, 129, 0.2);
+    }
+
+    /* --- Content Cards --- */
+    section { margin-top: 14px; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin: 22px 0;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .card h2 {
+      margin: 0 0 18px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      padding-left: 14px;
+      position: relative;
+      scroll-margin-top: 120px;
+      color: var(--text-main);
+    }
+
+    .card h2::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.2em;
+      width: 6px;
+      height: 1.1em;
+      border-radius: 99px;
+      background: var(--primary);
+    }
+
+    .card h3 {
+      margin: 24px 0 12px;
+      font-size: 1.1rem;
+      font-weight: 650;
+      color: var(--text-main);
+    }
+
+    ul.key-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text-muted);
+    }
+
+    .key-list li { margin: 8px 0; }
+    .key-list li::marker { color: var(--primary); }
+    strong { color: var(--text-main); font-weight: 650; }
+
+    /* --- Semantic Callouts --- */
+    .callout {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin: 18px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      font-size: 0.95rem;
+      border: 1px solid;
+    }
+
+    .co-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      margin-top: 2px;
+    }
+    .co-icon svg { width: 100%; height: 100%; }
+
+    .co-title {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 4px;
+      font-size: 0.80rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .co-content { color: var(--text-main); }
+
+    /* Note Style */
+    .callout.note {
+      background: var(--accent-info-bg);
+      border-color: var(--accent-info-border);
+    }
+    .callout.note .co-icon, .callout.note .co-title { color: var(--primary); }
+
+    /* Trap Style */
+    .callout.trap {
+      background: var(--accent-amber-bg);
+      border-color: var(--accent-amber-border);
+    }
+    .callout.trap .co-icon, .callout.trap .co-title { color: var(--accent-amber); }
+
+    /* --- Tables --- */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-card);
+      margin-top: 12px;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+      font-size: 0.95rem;
+    }
+
+    .data-table th {
+      background: var(--bg-body);
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+
+    /* --- Segmented Tabs --- */
+    .term-tabs { position: relative; margin-top: 10px; }
+    .term-radio { position: absolute; left: -9999px; }
+
+    .term-tab-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      background: var(--bg-body);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .term-tab-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .term-tab-btn:hover { color: var(--text-main); }
+
+    /* Active State Logic */
+    input:checked + label {
+      background: var(--bg-card);
+      color: var(--primary);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .term-panel {
+      display: none;
+      padding: 20px;
+      border-radius: 12px;
+      background: var(--accent-info-bg);
+      border: 1px dashed var(--accent-info-border);
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Panel Visibility Logic */
+    #term-wave:checked ~ #panel-term-wave,
+    #term-prog:checked ~ #panel-term-prog,
+    #term-amp:checked ~ #panel-term-amp,
+    #term-lam:checked ~ #panel-term-lam,
+    #term-per:checked ~ #panel-term-per,
+    #term-freq:checked ~ #panel-term-freq,
+    #term-speed:checked ~ #panel-term-speed,
+    #term-phase:checked ~ #panel-term-phase { display: block; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { padding: 0 16px 60px; }
+      h1 { font-size: 1.8rem; }
+      .card { padding: 20px; }
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Hero Header -->
   <header class="hero-header">
-    <h1>B3 — Wave Basics & Wave Equation</h1>
-    <p class="meta-subtitle">Wave terms and v=fλ relation</p>
-    <div class="section-nav" style="text-align:center;margin-top:10px;">
-      <a class="nav-btn" href="../../index.html">Back to Index</a>
+    <div class="nav-breadcrumb">
+      <!-- Icon -->
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--primary)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+      Index / Compulsory
+    </div>
+
+    <h1>Compulsory — Wave Basics: Terms &amp; Wave Equation</h1>
+    <p class="meta-subtitle">
+      HKDSE Physics &mdash; Compulsory Nature of Waves &middot; Define basic wave quantities and apply the wave equation to graphs and data.
+    </p>
+
+    <div class="section-nav" style="justify-content:center;">
+      <a class="nav-btn" href="../index.html">Back to Index</a>
     </div>
   </header>
+
   <div class="container">
-    <div class="card">
-      <h2>Overview</h2>
-      <p>This page will cover the key concepts, formulas, and exam tips for <strong>B3 — Wave Basics & Wave Equation</strong>. Content will be added soon.</p>
-    </div>
+    <main>
+
+      <p class="section-intro" style="text-align:center;">
+        Focus here: what a progressive wave is, the meaning of \(A\), \(\lambda\), \(T\), \(f\), wave speed \(v\), and how to use \(v=f\lambda\) using wave graphs.
+      </p>
+
+      <div class="badge-strip">
+        <span class="badge exam">Exam focus: \(v=f\lambda\), \(f=1/T\), read \(A\), \(\lambda\), \(T\) from graphs</span>
+        <span class="badge skills">Skills: interpret displacement graphs; calculate \(v\), \(f\), \(\lambda\); compare phase</span>
+      </div>
+
+      <!-- Jump Bar -->
+      <div class="section-nav" aria-label="Jump to section" style="margin-top:20px; justify-content:center;">
+        <a href="#sec01" class="nav-btn"><span>1</span> What is a wave?</a>
+        <a href="#sec02" class="nav-btn"><span>2</span> Key quantities</a>
+        <a href="#sec03" class="nav-btn"><span>3</span> Wave equation</a>
+        <a href="#sec04" class="nav-btn"><span>4</span> Reading graphs</a>
+        <a href="#sec05" class="nav-btn"><span>5</span> Terms</a>
+        <a href="#sec06" class="nav-btn"><span>6</span> Traps</a>
+      </div>
+
+      <section>
+        <!-- Section 1 -->
+        <div class="card">
+          <h2 id="sec01">1. What is a (progressive) wave?</h2>
+
+          <ul class="key-list">
+            <li>A <strong>progressive wave</strong> is a travelling disturbance that transfers <strong>energy</strong> from one place to another.</li>
+            <li>For waves in a medium (e.g. rope / water / sound in air), the particles of the medium <strong>vibrate about their equilibrium positions</strong>.</li>
+            <li>There is <strong>no net transfer of matter</strong> over a long distance (the medium particles do not travel with the wave).</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">HKDSE Reminder</span>
+              <div class="co-content">
+                In explanations, use the wording <strong>“energy is transferred”</strong> and <strong>“particles vibrate about equilibrium”</strong>. Avoid saying “the wave carries the medium along”.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="card">
+          <h2 id="sec02">2. Key wave quantities (what they mean)</h2>
+
+          <h3>Core quantities and symbols</h3>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th width="28%">Quantity</th>
+                  <th width="20%">Symbol</th>
+                  <th width="52%">Meaning / how to identify</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Amplitude</td>
+                  <td>\(A\)</td>
+                  <td>Maximum displacement from the equilibrium position.</td>
+                </tr>
+                <tr>
+                  <td>Wavelength</td>
+                  <td>\(\lambda\)</td>
+                  <td>Smallest distance between two points that are <strong>in phase</strong> (e.g. crest to next crest).</td>
+                </tr>
+                <tr>
+                  <td>Period</td>
+                  <td>\(T\)</td>
+                  <td>Time for one complete oscillation of a point on the wave.</td>
+                </tr>
+                <tr>
+                  <td>Frequency</td>
+                  <td>\(f\)</td>
+                  <td>Number of oscillations per second. Unit: \(\text{Hz}\).</td>
+                </tr>
+                <tr>
+                  <td>Wave speed</td>
+                  <td>\(v\)</td>
+                  <td>Speed of wave travel (speed of a crest / disturbance).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Extra labels commonly used in diagrams</h3>
+          <ul class="key-list">
+            <li><strong>Displacement:</strong> distance (with sign) from equilibrium at a given time.</li>
+            <li><strong>Crest / trough (transverse):</strong> highest / lowest points of displacement.</li>
+            <li><strong>Equilibrium line:</strong> where displacement is zero.</li>
+          </ul>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Common confusion</span>
+              <div class="co-content">
+                <strong>Amplitude is not crest-to-trough distance.</strong> Crest-to-trough distance is \(2A\).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="card">
+          <h2 id="sec03">3. Wave equation (must-know formulas)</h2>
+
+          <h3>Frequency and period</h3>
+          <div style="font-size:1.2rem; text-align:center; padding:10px; background:var(--bg-body); border-radius:12px; margin:14px 0;">
+            $$ f = \frac{1}{T} $$
+          </div>
+
+          <h3>Wave speed</h3>
+          <div style="font-size:1.2rem; text-align:center; padding:10px; background:var(--bg-body); border-radius:12px; margin:14px 0;">
+            $$ v = f\lambda = \frac{\lambda}{T} $$
+          </div>
+
+          <ul class="key-list">
+            <li>Use consistent units: \(v\) in \(\text{m s}^{-1}\), \(\lambda\) in m, \(f\) in Hz, \(T\) in s.</li>
+            <li>In a given medium, changing \(f\) changes \(\lambda\) so that \(v\) stays the same (for the same wave type in the same medium).</li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">HKDSE Reminder</span>
+              <div class="co-content">
+                If the source frequency doubles (same medium), the wavelength halves, so \(v\) is unchanged.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="card">
+          <h2 id="sec04">4. Reading wave graphs (exam essentials)</h2>
+
+          <h3>(A) Displacement–distance graph (a “waveform”)</h3>
+          <ul class="key-list">
+            <li>Horizontal axis is <strong>distance</strong> at a fixed time.</li>
+            <li>Amplitude \(A\): maximum vertical value from equilibrium.</li>
+            <li>Wavelength \(\lambda\): distance between two adjacent points in phase (e.g. crest-to-crest).</li>
+          </ul>
+
+          <h3>(B) Displacement–time graph</h3>
+          <ul class="key-list">
+            <li>Horizontal axis is <strong>time</strong> at a fixed position.</li>
+            <li>Period \(T\): time for one full cycle (e.g. crest-to-next-crest).</li>
+            <li>Frequency: \( f = 1/T \).</li>
+          </ul>
+
+          <h3>Phase (quick test)</h3>
+          <ul class="key-list">
+            <li>Two points are <strong>in phase</strong> if they are at the same stage of oscillation (same displacement and same direction of motion).</li>
+            <li>On a waveform, points separated by \(\lambda\), \(2\lambda\), \(3\lambda\), ... are in phase.</li>
+          </ul>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Graph trap</span>
+              <div class="co-content">
+                Do not read \(T\) from a displacement–distance graph (it has no time axis). Do not read \(\lambda\) from a displacement–time graph (it has no distance axis).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5 -->
+        <div class="card">
+          <h2 id="sec05">5. Key terms</h2>
+
+          <div class="term-tabs">
+            <input class="term-radio" type="radio" name="term" id="term-wave" checked>
+            <input class="term-radio" type="radio" name="term" id="term-prog">
+            <input class="term-radio" type="radio" name="term" id="term-amp">
+            <input class="term-radio" type="radio" name="term" id="term-lam">
+            <input class="term-radio" type="radio" name="term" id="term-per">
+            <input class="term-radio" type="radio" name="term" id="term-freq">
+            <input class="term-radio" type="radio" name="term" id="term-speed">
+            <input class="term-radio" type="radio" name="term" id="term-phase">
+
+            <div class="term-tab-bar" aria-label="Key terms">
+              <label class="term-tab-btn" for="term-wave">Wave</label>
+              <label class="term-tab-btn" for="term-prog">Progressive wave</label>
+              <label class="term-tab-btn" for="term-amp">Amplitude \(A\)</label>
+              <label class="term-tab-btn" for="term-lam">Wavelength \(\lambda\)</label>
+              <label class="term-tab-btn" for="term-per">Period \(T\)</label>
+              <label class="term-tab-btn" for="term-freq">Frequency \(f\)</label>
+              <label class="term-tab-btn" for="term-speed">Wave speed \(v\)</label>
+              <label class="term-tab-btn" for="term-phase">In phase</label>
+            </div>
+
+            <div class="term-panel" id="panel-term-wave">
+              <p><strong>Wave:</strong> a disturbance that transfers energy from one place to another.</p>
+            </div>
+            <div class="term-panel" id="panel-term-prog">
+              <p><strong>Progressive wave:</strong> a travelling wave; medium particles vibrate about equilibrium while energy is transferred.</p>
+            </div>
+            <div class="term-panel" id="panel-term-amp">
+              <p><strong>Amplitude \(A\):</strong> maximum displacement from equilibrium.</p>
+            </div>
+            <div class="term-panel" id="panel-term-lam">
+              <p><strong>Wavelength \(\lambda\):</strong> the shortest distance between two points in phase (e.g. crest to next crest).</p>
+            </div>
+            <div class="term-panel" id="panel-term-per">
+              <p><strong>Period \(T\):</strong> time for one complete oscillation of a point on the wave.</p>
+            </div>
+            <div class="term-panel" id="panel-term-freq">
+              <p><strong>Frequency \(f\):</strong> number of oscillations per second. \( f = 1/T \).</p>
+            </div>
+            <div class="term-panel" id="panel-term-speed">
+              <p><strong>Wave speed \(v\):</strong> speed of propagation of the wave (speed of the disturbance). \( v = f\lambda \).</p>
+            </div>
+            <div class="term-panel" id="panel-term-phase">
+              <p><strong>In phase:</strong> same displacement and same direction of motion (same stage of oscillation). On a waveform, separation of \(\lambda\) means in phase.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 6 -->
+        <div class="card">
+          <h2 id="sec06">6. Common traps (high-frequency DSE mistakes)</h2>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Warning / Trap</span>
+              <div class="co-content">
+                <ul class="key-list">
+                  <li><strong>Trap:</strong> “The wave carries the medium forward.”
+                    <br><strong>Fix:</strong> medium particles vibrate about equilibrium; energy is transferred.</li>
+                  <li><strong>Trap:</strong> mixing up amplitude and peak-to-peak.
+                    <br><strong>Fix:</strong> peak-to-peak (crest to trough) is \(2A\).</li>
+                  <li><strong>Trap:</strong> using the wrong graph to find \(T\) or \(\lambda\).
+                    <br><strong>Fix:</strong> \(T\) from displacement–time; \(\lambda\) from displacement–distance.</li>
+                  <li><strong>Trap:</strong> thinking higher frequency means higher wave speed (same medium).
+                    <br><strong>Fix:</strong> in the same medium, \(v\) is (approximately) constant; \(\lambda\) changes when \(f\) changes.</li>
+                  <li><strong>Trap:</strong> unit mistakes.
+                    <br><strong>Fix:</strong> convert cm to m, ms to s before using \( v = f\lambda \).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <div class="section-nav" style="margin-top:18px; justify-content: space-between;">
+          <a class="nav-btn" href="../index.html">&larr; Back to Index</a>
+        </div>
+      </section>
+
+      <p style="text-align:center; font-size:0.85rem; color:var(--text-muted); margin-top:40px;">
+        End of note &bull; Compulsory &mdash; Wave Basics: Terms &amp; Wave Equation.
+      </p>
+    </main>
   </div>
-  <footer>
-    <p>HKDSE Physics &mdash; Compulsory Part</p>
-  </footer>
 </body>
 </html>
