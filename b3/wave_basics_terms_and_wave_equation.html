@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light dark" />
-  <title>Compulsory — Wave Basics: Terms &amp; Wave Equation | DSE Physics Notes</title>
+  <title>Wave Basics: Terms &amp; Wave Equation | DSE Physics Notes</title>
 
   <!-- MathJax for professional equation rendering -->
   <script>
@@ -396,14 +396,167 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
     /* Panel Visibility Logic */
-    #term-wave:checked ~ #panel-term-wave,
     #term-prog:checked ~ #panel-term-prog,
+    #term-trans:checked ~ #panel-term-trans,
+    #term-long:checked ~ #panel-term-long,
+    #term-front:checked ~ #panel-term-front,
     #term-amp:checked ~ #panel-term-amp,
     #term-lam:checked ~ #panel-term-lam,
     #term-per:checked ~ #panel-term-per,
     #term-freq:checked ~ #panel-term-freq,
     #term-speed:checked ~ #panel-term-speed,
     #term-phase:checked ~ #panel-term-phase { display: block; }
+
+
+    /* --- SVG Plot --- */
+    .viz {
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-card);
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .viz-title {
+      margin: 0 0 10px;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .viz svg { width: 100%; height: auto; display: block; }
+
+    /* Toggle controls for wave diagram */
+    .viz-controls {
+      display: flex;
+      gap: 10px;
+      margin: 10px 0 12px;
+      flex-wrap: wrap;
+    }
+
+    .viz-btn {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-body);
+      font-size: 0.9rem;
+      font-weight: 650;
+      cursor: pointer;
+      color: var(--text-muted);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+    }
+
+    .viz-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+      background: var(--bg-card);
+      color: var(--text-main);
+    }
+
+    .viz-btn[aria-pressed="true"] {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .viz-hidden { display: none; }
+
+    /* --- Canvas Wave Simulation (Section 2) --- */
+    .viz-container {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-body);
+      overflow: hidden;
+      margin-top: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .viz-toolbar {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: var(--bg-card);
+    }
+
+    .viz-toolbar-right {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .viz-toolbar-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .viz-sim {
+      position: relative;
+      height: 240px;
+      background: var(--bg-card);
+    }
+
+    .viz-sim canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .viz-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .viz-overlay-card {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.92);
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: var(--shadow-sm);
+      max-width: min(420px, calc(100% - 30px));
+    }
+
+    .viz-overlay-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #ef4444;
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    .viz-desc {
+      padding: 14px 16px;
+      font-size: 0.92rem;
+      color: var(--text-main);
+      border-top: 1px solid var(--border);
+    }
+
+    .viz-desc.trans { background: var(--accent-info-bg); }
+    .viz-desc.long { background: var(--accent-amber-bg); }
+
+    @media (prefers-color-scheme: dark) {
+      .viz-overlay-card {
+        background: rgba(15, 23, 42, 0.78);
+        border-color: rgba(51, 65, 85, 0.9);
+      }
+    }
 
     /* Responsive */
     @media (max-width: 768px) {
@@ -423,7 +576,7 @@
       Index / Compulsory
     </div>
 
-    <h1>Compulsory — Wave Basics: Terms &amp; Wave Equation</h1>
+    <h1>Wave Basics: Terms &amp; Wave Equation</h1>
     <p class="meta-subtitle">
       HKDSE Physics &mdash; Compulsory Nature of Waves &middot; Define basic wave quantities and apply the wave equation to graphs and data.
     </p>
@@ -437,7 +590,7 @@
     <main>
 
       <p class="section-intro" style="text-align:center;">
-        Focus here: what a progressive wave is, the meaning of \(A\), \(\lambda\), \(T\), \(f\), wave speed \(v\), and how to use \(v=f\lambda\) using wave graphs.
+        Focus here: what a travelling wave is, the meaning of \(A\), \(\lambda\), \(T\), \(f\), wave speed \(v\), and how to use \(v=f\lambda\) using wave graphs.
       </p>
 
       <div class="badge-strip">
@@ -449,75 +602,46 @@
       <div class="section-nav" aria-label="Jump to section" style="margin-top:20px; justify-content:center;">
         <a href="#sec01" class="nav-btn"><span>1</span> What is a wave?</a>
         <a href="#sec02" class="nav-btn"><span>2</span> Key quantities</a>
-        <a href="#sec03" class="nav-btn"><span>3</span> Wave equation</a>
-        <a href="#sec04" class="nav-btn"><span>4</span> Reading graphs</a>
-        <a href="#sec05" class="nav-btn"><span>5</span> Terms</a>
-        <a href="#sec06" class="nav-btn"><span>6</span> Traps</a>
+        <a href="#sec03" class="nav-btn"><span>3</span> Categories</a>
+        <a href="#sec04" class="nav-btn"><span>4</span> Wave equation</a>
+        <a href="#sec05" class="nav-btn"><span>5</span> Interactive graphs</a>
+        <a href="#sec06" class="nav-btn"><span>6</span> Terms</a>
+        <a href="#sec07" class="nav-btn"><span>7</span> Traps</a>
       </div>
 
       <section>
         <!-- Section 1 -->
         <div class="card">
-          <h2 id="sec01">1. What is a (progressive) wave?</h2>
+          <h2 id="sec01">1. What is a travelling wave?</h2>
 
           <ul class="key-list">
-            <li>A <strong>progressive wave</strong> is a travelling disturbance that transfers <strong>energy</strong> from one place to another.</li>
-            <li>For waves in a medium (e.g. rope / water / sound in air), the particles of the medium <strong>vibrate about their equilibrium positions</strong>.</li>
-            <li>There is <strong>no net transfer of matter</strong> over a long distance (the medium particles do not travel with the wave).</li>
+            <li><strong>Wave motion</strong>: transfers energy without net transfer of matter.</li>
+            <li>A <strong>travelling wave</strong> is a disturbance that travels.</li>
+            <li>For waves in a medium (e.g. rope / water / sound in air), particles of the medium <strong>vibrate about their equilibrium positions</strong>.</li>
           </ul>
 
-          <div class="callout note">
-            <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <div class="co-body">
-              <span class="co-title">HKDSE Reminder</span>
-              <div class="co-content">
-                In explanations, use the wording <strong>“energy is transferred”</strong> and <strong>“particles vibrate about equilibrium”</strong>. Avoid saying “the wave carries the medium along”.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Section 2 -->
-        <div class="card">
-          <h2 id="sec02">2. Key wave quantities (what they mean)</h2>
-
-          <h3>Core quantities and symbols</h3>
           <div class="table-container">
             <table class="data-table">
               <thead>
                 <tr>
-                  <th width="28%">Quantity</th>
-                  <th width="20%">Symbol</th>
-                  <th width="52%">Meaning / how to identify</th>
+                  <th width="22%">Type</th>
+                  <th width="38%">Particle vibration</th>
+                  <th width="20%">Diagram keywords</th>
+                  <th width="20%">Examples</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Amplitude</td>
-                  <td>\(A\)</td>
-                  <td>Maximum displacement from the equilibrium position.</td>
+                  <td><strong>Transverse</strong></td>
+                  <td>Vibration is <strong>perpendicular</strong> to direction of wave travel</td>
+                  <td>crest, trough</td>
+                  <td>rope / string, surface water waves, light</td>
                 </tr>
                 <tr>
-                  <td>Wavelength</td>
-                  <td>\(\lambda\)</td>
-                  <td>Smallest distance between two points that are <strong>in phase</strong> (e.g. crest to next crest).</td>
-                </tr>
-                <tr>
-                  <td>Period</td>
-                  <td>\(T\)</td>
-                  <td>Time for one complete oscillation of a point on the wave.</td>
-                </tr>
-                <tr>
-                  <td>Frequency</td>
-                  <td>\(f\)</td>
-                  <td>Number of oscillations per second. Unit: \(\text{Hz}\).</td>
-                </tr>
-                <tr>
-                  <td>Wave speed</td>
-                  <td>\(v\)</td>
-                  <td>Speed of wave travel (speed of a crest / disturbance).</td>
+                  <td><strong>Longitudinal</strong></td>
+                  <td>Vibration is <strong>parallel</strong> to direction of wave travel</td>
+                  <td>compression, rarefaction</td>
+                  <td>sound in air</td>
                 </tr>
               </tbody>
             </table>
@@ -543,33 +667,107 @@
           </div>
         </div>
 
-        <!-- Section 3 -->
+        <!-- Section 2 -->
         <div class="card">
-          <h2 id="sec03">3. Wave equation (must-know formulas)</h2>
-
-          <h3>Frequency and period</h3>
-          <div style="font-size:1.2rem; text-align:center; padding:10px; background:var(--bg-body); border-radius:12px; margin:14px 0;">
-            $$ f = \frac{1}{T} $$
-          </div>
-
-          <h3>Wave speed</h3>
-          <div style="font-size:1.2rem; text-align:center; padding:10px; background:var(--bg-body); border-radius:12px; margin:14px 0;">
-            $$ v = f\lambda = \frac{\lambda}{T} $$
-          </div>
+          <h2 id="sec02">2. Key wave quantities</h2>
 
           <ul class="key-list">
-            <li>Use consistent units: \(v\) in \(\text{m s}^{-1}\), \(\lambda\) in m, \(f\) in Hz, \(T\) in s.</li>
-            <li>In a given medium, changing \(f\) changes \(\lambda\) so that \(v\) stays the same (for the same wave type in the same medium).</li>
+            <li><strong>Displacement</strong> (m): distance (with sign) from equilibrium.</li>
+            <li><strong>Amplitude</strong> (A) (m): maximum displacement from equilibrium (larger A &rarr; more energy).</li>
+            <li><strong>Wavelength</strong> (&lambda;) (m): shortest distance between two adjacent points <em>in phase</em>.</li>
+            <li><strong>Period</strong> (T) (s): time for one complete oscillation of a particle.</li>
           </ul>
+
+          <div class="viz-container" aria-label="Wave simulation: transverse and longitudinal">
+            <div class="viz-toolbar">
+              <div class="viz-controls" role="group" aria-label="Switch wave mode">
+                <button class="viz-btn" id="btnModeTrans" type="button" aria-pressed="true">Transverse</button>
+                <button class="viz-btn" id="btnModeLong" type="button" aria-pressed="false">Longitudinal</button>
+              </div>
+
+              <div class="viz-toolbar-right">
+                <span class="viz-toolbar-label">Simulation:</span>
+                <button class="viz-btn" id="btnPause" type="button">Pause</button>
+              </div>
+            </div>
+
+            <div class="viz-sim">
+              <canvas id="waveCanvas" width="800" height="240" aria-label="Wave animation canvas"></canvas>
+              <div class="viz-overlay" aria-hidden="true">
+                <div class="viz-overlay-card">
+                  <span class="viz-overlay-dot"></span>
+                  <strong>Red particle:</strong> oscillates about a fixed position; it does <strong>not</strong> travel with the wave.
+                </div>
+              </div>
+            </div>
+
+            <div id="descTrans" class="viz-desc trans">
+              <strong>Transverse:</strong> particles vibrate <strong>perpendicular</strong> to the direction of wave travel.
+              <br>Watch the red dot move up/down while the disturbance travels along the rope.
+            </div>
+
+            <div id="descLong" class="viz-desc long viz-hidden">
+              <strong>Longitudinal:</strong> particles vibrate <strong>parallel</strong> to the direction of wave travel.
+              <br>Look for <strong>C</strong>ompressions (crowded) and <strong>R</strong>arefactions (spaced out).
+            </div>
+          </div>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.770 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Exam Trap</span>
+              <div class="co-content">
+                A very common mistake is saying “particles move forward with the wave”.
+                <br><strong>Pause the animation above:</strong> the red particle stays at the same horizontal position (transverse) or oscillates about a fixed centre (longitudinal). It never travels across the medium.
+              </div>
+            </div>
+          </div>
 
           <div class="callout note">
             <div class="co-icon">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
             <div class="co-body">
-              <span class="co-title">HKDSE Reminder</span>
+              <span class="co-title">HKDSE reminders</span>
               <div class="co-content">
-                If the source frequency doubles (same medium), the wavelength halves, so \(v\) is unchanged.
+                <ul class="key-list">
+                  <li><strong>Frequency and period:</strong> \( f = 1/T \).</li>
+                  <li><strong>Wave equation link:</strong> in one period \(T\), the wave travels one wavelength \(\lambda\), so \( v = \lambda/T = f\lambda \).</li>
+                  <li><strong>In phase:</strong> points separated by \(n\lambda\) (\(n = 1, 2, 3, \dots\)) are in phase.</li>
+                  <li><strong>Antiphase:</strong> points separated by \((n + 1/2)\lambda\) are in antiphase (phase difference \(\pi\)).</li>
+                  <li>On a displacement&ndash;time graph, at maximum displacement (turning point), the <strong>instantaneous velocity of the particle</strong> is zero.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="card">
+          <h2 id="sec03">3. Categories of waves</h2>
+
+          <ul class="key-list">
+            <li><strong>Mechanical waves:</strong> require a material medium; cannot travel in vacuum (e.g. sound, water waves, waves on a string).</li>
+            <li><strong>Electromagnetic waves:</strong> do not require a medium; can travel in vacuum (e.g. light, radio waves).</li>
+            <li><strong>Transverse / longitudinal:</strong> classify by the direction of particle vibration relative to wave travel (Section 1).</li>
+            <li><strong>Travelling / stationary (standing):</strong>
+              <ul class="key-list">
+                <li><strong>Travelling wave:</strong> waveform moves; transfers energy from one place to another.</li>
+                <li><strong>Stationary wave:</strong> pattern does not travel; has <strong>nodes</strong> (zero displacement) and <strong>antinodes</strong> (maximum displacement); no net energy transfer along the medium.</li>
+              </ul>
+            </li>
+          </ul>
+
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Exam reminder</span>
+              <div class="co-content">
+                In a vacuum: <strong>sound cannot</strong> travel, but <strong>electromagnetic waves can</strong>.
               </div>
             </div>
           </div>
@@ -577,36 +775,37 @@
 
         <!-- Section 4 -->
         <div class="card">
-          <h2 id="sec04">4. Reading wave graphs (exam essentials)</h2>
+          <h2 id="sec04">4. Wave equation</h2>
 
-          <h3>(A) Displacement–distance graph (a “waveform”)</h3>
-          <ul class="key-list">
-            <li>Horizontal axis is <strong>distance</strong> at a fixed time.</li>
-            <li>Amplitude \(A\): maximum vertical value from equilibrium.</li>
-            <li>Wavelength \(\lambda\): distance between two adjacent points in phase (e.g. crest-to-crest).</li>
-          </ul>
+          <div class="callout note">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Must-know equations</span>
+              <div class="co-content">
+                <div><strong>Frequency and period:</strong> \( f = \frac{1}{T} \)</div>
+                <div style="margin-top:10px;"><strong>Wave speed:</strong> \( v = f\lambda = \frac{\lambda}{T} \)</div>
+                <div style="margin-top:10px;"><strong>Stretched string:</strong> \( v = \sqrt{\frac{F}{\mu}} \) \(F\): tension, \(\mu\): mass per unit length</div>
+              </div>
+            </div>
+          </div>
 
-          <h3>(B) Displacement–time graph</h3>
           <ul class="key-list">
-            <li>Horizontal axis is <strong>time</strong> at a fixed position.</li>
-            <li>Period \(T\): time for one full cycle (e.g. crest-to-next-crest).</li>
-            <li>Frequency: \( f = 1/T \).</li>
-          </ul>
-
-          <h3>Phase (quick test)</h3>
-          <ul class="key-list">
-            <li>Two points are <strong>in phase</strong> if they are at the same stage of oscillation (same displacement and same direction of motion).</li>
-            <li>On a waveform, points separated by \(\lambda\), \(2\lambda\), \(3\lambda\), ... are in phase.</li>
+            <li>Use consistent units: <strong>v</strong> in m s<sup>&minus;1</sup>, <strong>\(\lambda\)</strong> in m, <strong>f</strong> in Hz, <strong>T</strong> in s.</li>
+            <li><strong>Wave speed v</strong> depends on the <strong>medium and conditions</strong> (e.g. for a stretched string: larger tension &rarr; larger \(v\); larger mass per unit length &rarr; smaller \(v\)). In a uniform medium with the same conditions, v is constant.</li>
+            <li><strong>Frequency f</strong> depends on the <strong>source</strong> (oscillator). When a wave enters another medium, f stays the same.</li>
+            <li><strong>Wavelength \(\lambda\)</strong> depends on v and f: <strong>\(\lambda = v/f\)</strong>. So if v changes in a different medium, \(\lambda\) changes.</li>
           </ul>
 
           <div class="callout trap">
             <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.770 1.333.192 3 1.732 3z"></path></svg>
             </div>
             <div class="co-body">
-              <span class="co-title">Graph trap</span>
+              <span class="co-title">Common confusion</span>
               <div class="co-content">
-                Do not read \(T\) from a displacement–distance graph (it has no time axis). Do not read \(\lambda\) from a displacement–time graph (it has no distance axis).
+                In the <strong>same</strong> medium (same conditions), increasing \(f\) does <strong>not</strong> increase \(v\); it decreases \(\lambda\).
               </div>
             </div>
           </div>
@@ -614,11 +813,39 @@
 
         <!-- Section 5 -->
         <div class="card">
-          <h2 id="sec05">5. Key terms</h2>
+          <h2 id="sec05">5. Interactive wave graphs</h2>
+
+          <ul class="key-list">
+            <li>Use the interactive page to practise reading wave graphs and checking phase.</li>
+            <li>It covers: displacement&ndash;distance (read \(A\), \(\lambda\)) and displacement&ndash;time (read \(T\), \(f\)).</li>
+          </ul>
+
+          <div class="section-nav" style="justify-content:center;">
+            <a class="nav-btn" href="wave_graphs_interactive.html">Open interactive wave graphs</a>
+          </div>
+
+          <div class="callout trap">
+            <div class="co-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.770 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div class="co-body">
+              <span class="co-title">Graph trap</span>
+              <div class="co-content">
+                Don’t confuse the axes: \(\lambda\) is read from a <strong>displacement&ndash;distance</strong> graph; \(T\) is read from a <strong>displacement&ndash;time</strong> graph.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 6 -->
+        <div class="card">
+          <h2 id="sec06">6. Key terms</h2>
 
           <div class="term-tabs">
-            <input class="term-radio" type="radio" name="term" id="term-wave" checked>
-            <input class="term-radio" type="radio" name="term" id="term-prog">
+            <input class="term-radio" type="radio" name="term" id="term-prog" checked>
+            <input class="term-radio" type="radio" name="term" id="term-trans">
+            <input class="term-radio" type="radio" name="term" id="term-long">
+            <input class="term-radio" type="radio" name="term" id="term-front">
             <input class="term-radio" type="radio" name="term" id="term-amp">
             <input class="term-radio" type="radio" name="term" id="term-lam">
             <input class="term-radio" type="radio" name="term" id="term-per">
@@ -627,8 +854,10 @@
             <input class="term-radio" type="radio" name="term" id="term-phase">
 
             <div class="term-tab-bar" aria-label="Key terms">
-              <label class="term-tab-btn" for="term-wave">Wave</label>
-              <label class="term-tab-btn" for="term-prog">Progressive wave</label>
+              <label class="term-tab-btn" for="term-prog">Travelling wave</label>
+              <label class="term-tab-btn" for="term-trans">Transverse wave</label>
+              <label class="term-tab-btn" for="term-long">Longitudinal wave</label>
+              <label class="term-tab-btn" for="term-front">Wavefront</label>
               <label class="term-tab-btn" for="term-amp">Amplitude \(A\)</label>
               <label class="term-tab-btn" for="term-lam">Wavelength \(\lambda\)</label>
               <label class="term-tab-btn" for="term-per">Period \(T\)</label>
@@ -637,23 +866,29 @@
               <label class="term-tab-btn" for="term-phase">In phase</label>
             </div>
 
-            <div class="term-panel" id="panel-term-wave">
-              <p><strong>Wave:</strong> a disturbance that transfers energy from one place to another.</p>
-            </div>
             <div class="term-panel" id="panel-term-prog">
-              <p><strong>Progressive wave:</strong> a travelling wave; medium particles vibrate about equilibrium while energy is transferred.</p>
+              <p><strong>Travelling wave:</strong> a disturbance that travels and transfers energy; medium particles vibrate about equilibrium (no net transfer of the medium).</p>
+            </div>
+            <div class="term-panel" id="panel-term-trans">
+              <p><strong>Transverse wave:</strong> direction of vibration is perpendicular to the direction of wave travel; has crests and troughs.</p>
+            </div>
+            <div class="term-panel" id="panel-term-long">
+              <p><strong>Longitudinal wave:</strong> direction of vibration is parallel to the direction of wave travel; consists of compressions and rarefactions.</p>
+            </div>
+            <div class="term-panel" id="panel-term-front">
+              <p><strong>Wavefront:</strong> a line (or surface) joining points on a wave that are in the same phase.</p>
             </div>
             <div class="term-panel" id="panel-term-amp">
-              <p><strong>Amplitude \(A\):</strong> maximum displacement from equilibrium.</p>
+              <p><strong>Amplitude \(A\):</strong> maximum displacement from equilibrium (distance from equilibrium to a crest / trough).</p>
             </div>
             <div class="term-panel" id="panel-term-lam">
-              <p><strong>Wavelength \(\lambda\):</strong> the shortest distance between two points in phase (e.g. crest to next crest).</p>
+              <p><strong>Wavelength \(\lambda\):</strong> the shortest distance between two adjacent points that are in phase (e.g. crest to next crest).</p>
             </div>
             <div class="term-panel" id="panel-term-per">
-              <p><strong>Period \(T\):</strong> time for one complete oscillation of a point on the wave.</p>
+              <p><strong>Period \(T\):</strong> time for one complete oscillation of a point on the wave. (Also the time taken for the wave to travel one wavelength.)</p>
             </div>
             <div class="term-panel" id="panel-term-freq">
-              <p><strong>Frequency \(f\):</strong> number of oscillations per second. \( f = 1/T \).</p>
+              <p><strong>Frequency \(f\):</strong> number of oscillations per second. \( f = 1/T \). Unit: \(\text{Hz}\).</p>
             </div>
             <div class="term-panel" id="panel-term-speed">
               <p><strong>Wave speed \(v\):</strong> speed of propagation of the wave (speed of the disturbance). \( v = f\lambda \).</p>
@@ -664,13 +899,13 @@
           </div>
         </div>
 
-        <!-- Section 6 -->
+        <!-- Section 7 -->
         <div class="card">
-          <h2 id="sec06">6. Common traps (high-frequency DSE mistakes)</h2>
+          <h2 id="sec07">7. Common traps (high-frequency DSE mistakes)</h2>
 
           <div class="callout trap">
             <div class="co-icon">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.770 1.333.192 3 1.732 3z"></path></svg>
             </div>
             <div class="co-body">
               <span class="co-title">Warning / Trap</span>
@@ -681,7 +916,7 @@
                   <li><strong>Trap:</strong> mixing up amplitude and peak-to-peak.
                     <br><strong>Fix:</strong> peak-to-peak (crest to trough) is \(2A\).</li>
                   <li><strong>Trap:</strong> using the wrong graph to find \(T\) or \(\lambda\).
-                    <br><strong>Fix:</strong> \(T\) from displacement–time; \(\lambda\) from displacement–distance.</li>
+                    <br><strong>Fix:</strong> \(T\) from displacement&ndash;time; \(\lambda\) from displacement&ndash;distance.</li>
                   <li><strong>Trap:</strong> thinking higher frequency means higher wave speed (same medium).
                     <br><strong>Fix:</strong> in the same medium, \(v\) is (approximately) constant; \(\lambda\) changes when \(f\) changes.</li>
                   <li><strong>Trap:</strong> unit mistakes.
@@ -699,9 +934,407 @@
       </section>
 
       <p style="text-align:center; font-size:0.85rem; color:var(--text-muted); margin-top:40px;">
-        End of note &bull; Compulsory &mdash; Wave Basics: Terms &amp; Wave Equation.
+        End of note &bull; Wave Basics: Terms &amp; Wave Equation.
       </p>
     </main>
   </div>
+
+  <script>
+    (function(){
+      const canvas = document.getElementById('waveCanvas');
+      const ctx = canvas ? canvas.getContext('2d') : null;
+
+      const btnTrans = document.getElementById('btnModeTrans');
+      const btnLong  = document.getElementById('btnModeLong');
+      const btnPause = document.getElementById('btnPause');
+      const descTrans = document.getElementById('descTrans');
+      const descLong  = document.getElementById('descLong');
+
+      if(!canvas || !ctx || !btnTrans || !btnLong || !btnPause) return;
+
+      let mode = 'transverse';
+      let paused = false;
+      let t = 0;
+      let W = 0, H = 0;
+      let rafId = null;
+
+      function cssVar(name){
+        return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+      }
+
+      function resize(){
+        const rect = canvas.getBoundingClientRect();
+        // Prevent negative/zero sizes during initial layout or when hidden.
+        const cssW = Math.max(0, rect.width || 0);
+        const cssH = Math.max(0, rect.height || 0);
+        if(cssW < 2 || cssH < 2) {
+          W = cssW; H = cssH;
+          return;
+        }
+
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width  = Math.max(1, Math.round(cssW * dpr));
+        canvas.height = Math.max(1, Math.round(cssH * dpr));
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        W = cssW;
+        H = cssH;
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+
+      // Safer rounded-rect: never allows negative radius; skips if w/h are too small.
+      function roundRectSafe(x, y, w, h, r){
+        if(!(w > 0) || !(h > 0)) return;
+        const rr = Math.max(0, Math.min(r, w/2, h/2));
+        ctx.beginPath();
+        ctx.moveTo(x + rr, y);
+        ctx.arcTo(x + w, y, x + w, y + h, rr);
+        ctx.arcTo(x + w, y + h, x, y + h, rr);
+        ctx.arcTo(x, y + h, x, y, rr);
+        ctx.arcTo(x, y, x + w, y, rr);
+        ctx.closePath();
+      }
+
+      function arrowHead(x, y, angle, size, color){
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(angle);
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(-size, size * 0.55);
+        ctx.lineTo(-size, -size * 0.55);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function drawDoubleArrow(x1, y1, x2, y2, color, width){
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width;
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+
+        const a = Math.atan2(y2 - y1, x2 - x1);
+        arrowHead(x2, y2, a, 9, color);
+        arrowHead(x1, y1, a + Math.PI, 9, color);
+      }
+
+      function dashedLine(x1, y1, x2, y2, color, width, dash){
+        ctx.save();
+        ctx.setLineDash(dash);
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width;
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function drawAxes(p){
+        const {xL, xR, yT, yB, yEq, cMain, cMuted, cBorder} = p;
+
+        // Frame (skip if too small)
+        const fw = Math.max(0, W - 20);
+        const fh = Math.max(0, H - 20);
+        if(fw < 2 || fh < 2) return;
+
+        roundRectSafe(10, 10, fw, fh, 14);
+        ctx.fillStyle = cssVar('--bg-card');
+        ctx.fill();
+        ctx.strokeStyle = cBorder;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Axes (with arrow)
+        ctx.strokeStyle = cMain;
+        ctx.lineWidth = 2.2;
+
+        // y-axis
+        ctx.beginPath();
+        ctx.moveTo(xL, yB);
+        ctx.lineTo(xL, yT);
+        ctx.stroke();
+        arrowHead(xL, yT, -Math.PI/2, 10, cMain);
+
+        // x-axis (through equilibrium)
+        ctx.beginPath();
+        ctx.moveTo(xL, yEq);
+        ctx.lineTo(xR, yEq);
+        ctx.stroke();
+        arrowHead(xR, yEq, 0, 10, cMain);
+
+        // equilibrium dashed
+        dashedLine(xL, yEq, xR, yEq, cBorder, 1.5, [8, 6]);
+
+        // labels
+        ctx.fillStyle = cMain;
+        ctx.font = '600 14px ' + cssVar('--font-sans');
+        ctx.fillText('displacement', Math.max(16, xL - 56), yT + 16);
+        ctx.fillText('distance', xR - 60, yEq + 30);
+
+        // y=0 tick
+        ctx.beginPath();
+        ctx.moveTo(xL, yEq);
+        ctx.lineTo(xL - 10, yEq);
+        ctx.stroke();
+        ctx.fillStyle = cMuted;
+        ctx.font = '700 12px ' + cssVar('--font-sans');
+        ctx.textAlign = 'right';
+        ctx.fillText('0', xL - 14, yEq + 4);
+        ctx.textAlign = 'left';
+
+        ctx.fillStyle = cMuted;
+        ctx.font = '600 12px ' + cssVar('--font-sans');
+        ctx.fillText('equilibrium', xR - 95, yEq - 8);
+      }
+
+      function drawTransverse(p){
+        const {xL, xR, yT, yEq, A, lambdaPx, k, cPrimary, cAmber, cBorder} = p;
+
+        // wave
+        ctx.beginPath();
+        ctx.lineWidth = 3.2;
+        ctx.strokeStyle = cPrimary;
+        const step = 2;
+        for(let x = xL; x <= xR; x += step){
+          const y = yEq - A * Math.sin(k * (x - xL) - t);
+          if(x === xL) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        // red particle (fixed x, oscillates in y)
+        const xP = xL + (xR - xL) * 0.58;
+        const yP = yEq - A * Math.sin(k * (xP - xL) - t);
+        dashedLine(xP, yEq, xP, yP, '#ef4444', 1.6, [5, 5]);
+        ctx.beginPath();
+        ctx.fillStyle = '#ef4444';
+        ctx.arc(xP, yP, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        // amplitude A (static)
+        const xA = xL + 22;
+        drawDoubleArrow(xA, yEq, xA, yEq - A, cAmber, 3);
+        ctx.fillStyle = cAmber;
+        ctx.font = '700 16px ' + cssVar('--font-sans');
+        ctx.textAlign = 'right';
+        ctx.fillText('A', xA - 8, yEq - A/2 + 6);
+        ctx.textAlign = 'left';
+
+        // wavelength λ between adjacent crests (follows motion)
+        let xC1 = (t + Math.PI/2) / k; // in plot coords (from xL)
+        xC1 = xL + ((xC1 % lambdaPx) + lambdaPx) % lambdaPx;
+        while(xC1 < xL + 55) xC1 += lambdaPx;
+        while(xC1 + lambdaPx > xR - 35) xC1 -= lambdaPx;
+        const xC2 = xC1 + lambdaPx;
+
+        const yLam = yT + 18;
+        if(xC2 > xL + 80 && xC2 < xR - 10){
+          drawDoubleArrow(xC1, yLam, xC2, yLam, cAmber, 3);
+          ctx.fillStyle = cAmber;
+          ctx.font = '700 16px ' + cssVar('--font-sans');
+          ctx.textAlign = 'center';
+          ctx.fillText('λ', (xC1 + xC2)/2, yLam - 10);
+          ctx.textAlign = 'left';
+          dashedLine(xC1, yEq, xC1, yLam + 10, cBorder, 1.2, [8, 6]);
+          dashedLine(xC2, yEq, xC2, yLam + 10, cBorder, 1.2, [8, 6]);
+        }
+      }
+
+      function drawLongitudinal(p){
+        const {xL, xR, yT, yB, yEq, A, lambdaPx, k, cPrimary, cAmber, cMuted, cBorder} = p;
+
+        const u0 = A * 0.6; // max particle displacement (parallel)
+        const spacing = 18;
+        const rows = [-2, -1, 0, 1, 2];
+        const rowDy = 14;
+
+        const n = Math.floor((xR - xL) / spacing);
+        const redI = Math.max(2, Math.floor(n * 0.58));
+
+        // particle field
+        for(let i = 0; i <= n; i++){
+          const eqX = xL + i * spacing;
+          const u = u0 * Math.sin(k * (eqX - xL) - t);
+          const x = eqX + u;
+
+          for(const r of rows){
+            const y = yEq + r * rowDy;
+            const isRed = (i === redI && r === 0);
+            ctx.beginPath();
+            ctx.fillStyle = isRed ? '#ef4444' : cPrimary;
+            ctx.globalAlpha = isRed ? 1 : (r === 0 ? 0.95 : 0.65);
+            ctx.arc(x, y, isRed ? 6 : 3, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.globalAlpha = 1;
+
+          if(i === redI){
+            dashedLine(eqX, yEq - 12, eqX, yEq + 12, '#ef4444', 1.2, [4, 4]);
+            dashedLine(eqX, yEq, x, yEq, '#ef4444', 1.2, [4, 4]);
+          }
+        }
+        ctx.globalAlpha = 1;
+
+        // labels for compression / rarefaction
+        let xRar = xL + (((t) / k) % lambdaPx);
+        let xComp = xL + (((t + Math.PI) / k) % lambdaPx);
+        while(xRar < xL + 40) xRar += lambdaPx;
+        while(xComp < xL + 40) xComp += lambdaPx;
+        if(xRar > xR - 40) xRar -= lambdaPx;
+        if(xComp > xR - 40) xComp -= lambdaPx;
+
+        ctx.fillStyle = cMuted;
+        ctx.font = '700 12px ' + cssVar('--font-sans');
+        ctx.textAlign = 'center';
+        ctx.fillText('R', xRar, yT + 28);
+        ctx.fillText('C', xComp, yT + 28);
+        ctx.textAlign = 'left';
+
+        // wavelength between adjacent compressions
+        let xC1 = xComp;
+        while(xC1 + lambdaPx > xR - 30) xC1 -= lambdaPx;
+        const xC2 = xC1 + lambdaPx;
+        const yLam = yT + 18;
+        if(xC2 > xL + 80 && xC2 < xR - 10){
+          drawDoubleArrow(xC1, yLam, xC2, yLam, cAmber, 3);
+          ctx.fillStyle = cAmber;
+          ctx.font = '700 16px ' + cssVar('--font-sans');
+          ctx.textAlign = 'center';
+          ctx.fillText('λ', (xC1 + xC2)/2, yLam - 10);
+          ctx.textAlign = 'left';
+          dashedLine(xC1, yEq, xC1, yLam + 10, cBorder, 1.2, [8, 6]);
+          dashedLine(xC2, yEq, xC2, yLam + 10, cBorder, 1.2, [8, 6]);
+        }
+
+        // amplitude (max particle displacement) shown horizontally
+        const yA = yB - 18;
+        const xA0 = xR - 160;
+        const xA1 = xA0 + u0;
+        drawDoubleArrow(xA0, yA, xA1, yA, cAmber, 3);
+        ctx.fillStyle = cAmber;
+        ctx.font = '700 16px ' + cssVar('--font-sans');
+        ctx.textAlign = 'center';
+        ctx.fillText('A', (xA0 + xA1)/2, yA - 10);
+        ctx.textAlign = 'left';
+      }
+
+      function draw(){
+        // If the canvas is temporarily too small (e.g. during layout), skip drawing safely.
+        if(W < 40 || H < 40){
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          if(!paused) t += 0.06;
+          rafId = requestAnimationFrame(draw);
+          return;
+        }
+
+        const cMain = cssVar('--text-main');
+        const cMuted = cssVar('--text-muted');
+        const cBorder = cssVar('--border');
+        const cPrimary = cssVar('--primary');
+        const cAmber = cssVar('--accent-amber');
+
+        ctx.clearRect(0, 0, W, H);
+
+        const padL = 80;
+        const padR = 28;
+        const padT = 20;
+        const padB = 46;
+
+        const xL = padL;
+        const xR = W - padR;
+        const yT = padT;
+        const yB = H - padB;
+        const yEq = yT + (yB - yT) / 2;
+
+        const plotW = Math.max(220, xR - xL);
+        const plotH = Math.max(140, yB - yT);
+
+        const A = Math.min(42, plotH * 0.32);
+        const lambdaPx = Math.min(260, plotW * 0.46);
+        const k = (2 * Math.PI) / lambdaPx;
+        const omega = 0.06;
+
+        drawAxes({xL, xR, yT, yB, yEq, cMain, cMuted, cBorder});
+
+        if(mode === 'transverse'){
+          drawTransverse({xL, xR, yT, yEq, A, lambdaPx, k, cPrimary, cAmber, cBorder});
+        } else {
+          drawLongitudinal({xL, xR, yT, yB, yEq, A, lambdaPx, k, cPrimary, cAmber, cMuted, cBorder});
+        }
+
+        if(!paused) t += omega;
+        rafId = requestAnimationFrame(draw);
+      }
+
+      function setMode(next){
+        mode = next;
+        const isT = (mode === 'transverse');
+        btnTrans.setAttribute('aria-pressed', String(isT));
+        btnLong.setAttribute('aria-pressed', String(!isT));
+        if(descTrans && descLong){
+          descTrans.classList.toggle('viz-hidden', !isT);
+          descLong.classList.toggle('viz-hidden', isT);
+        }
+      }
+
+      btnTrans.addEventListener('click', () => setMode('transverse'));
+      btnLong.addEventListener('click',  () => setMode('longitudinal'));
+
+      btnPause.addEventListener('click', () => {
+        paused = !paused;
+        btnPause.textContent = paused ? 'Play' : 'Pause';
+        btnPause.style.background = paused ? cssVar('--accent-amber-bg') : '';
+      });
+
+      // Lightweight self-tests to catch the exact crash you saw (negative radius).
+      (function runSelfTests(){
+        try {
+          const c = document.createElement('canvas');
+          c.width = 10; c.height = 10;
+          const x = c.getContext('2d');
+          if(!x) return;
+
+          // A local safe version (same logic) used only for tests.
+          function rrSafeTest(w, h, r){
+            if(!(w > 0) || !(h > 0)) return;
+            const rr = Math.max(0, Math.min(r, w/2, h/2));
+            x.beginPath();
+            x.moveTo(rr, 0);
+            x.arcTo(w, 0, w, h, rr);
+            x.arcTo(w, h, 0, h, rr);
+            x.arcTo(0, h, 0, 0, rr);
+            x.arcTo(0, 0, w, 0, rr);
+            x.closePath();
+          }
+
+          // Should not throw:
+          rrSafeTest(0, 0, 14);
+          rrSafeTest(-10, 20, 14);
+          rrSafeTest(20, -10, 14);
+          rrSafeTest(1, 1, 14);
+          console.assert(true, 'roundRectSafe: ok');
+        } catch (e) {
+          console.warn('Self-test failed:', e);
+        }
+      })();
+
+      // Restart drawing cleanly after resize.
+      function restart(){
+        if(rafId) cancelAnimationFrame(rafId);
+        resize();
+        draw();
+      }
+      // In case the page loads before layout is stable.
+      window.addEventListener('load', restart);
+
+      draw();
+    })();
+  </script>
 </body>
 </html>
