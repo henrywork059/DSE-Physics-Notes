@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Wave Graphs (Interactive) | DSE Physics Notes</title>
+
+  <!-- MathJax for professional equation rendering -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['$$','$$']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    /* =============================
+       Design System: Modern DSE
+       ============================= */
+    :root {
+      --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+      /* Palette: Slate & Blue */
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-dim: rgba(59, 130, 246, 0.08);
+
+      --bg-body: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-header: #ffffff;
+
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+
+      --border: #e2e8f0;
+      --radius: 16px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 4px 14px -4px rgba(15, 23, 42, 0.14), 0 2px 6px -2px rgba(15, 23, 42, 0.10);
+
+      /* Semantic Colors */
+      --accent-amber: #f59e0b;
+      --accent-amber-bg: #fffbeb;
+      --accent-amber-border: rgba(245, 158, 11, 0.35);
+
+      --accent-info: #3b82f6;
+      --accent-info-bg: rgba(59, 130, 246, 0.08);
+      --accent-info-border: rgba(59, 130, 246, 0.28);
+
+      --accent-green: #10b981;
+      --accent-green-bg: rgba(16, 185, 129, 0.10);
+      --accent-green-border: rgba(16, 185, 129, 0.22);
+
+      --danger: #ef4444;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-body: #0f172a;
+        --bg-card: #1e293b;
+        --bg-header: #1e293b;
+
+        --text-main: #f1f5f9;
+        --text-muted: #94a3b8;
+
+        --border: #334155;
+
+        --primary: #60a5fa;
+        --primary-dark: #3b82f6;
+        --primary-dim: rgba(96, 165, 250, 0.10);
+
+        --accent-amber-bg: rgba(245, 158, 11, 0.10);
+        --accent-amber-border: rgba(245, 158, 11, 0.30);
+
+        --accent-info-bg: rgba(59, 130, 246, 0.10);
+        --accent-info-border: rgba(59, 130, 246, 0.30);
+
+        --accent-green-bg: rgba(16, 185, 129, 0.10);
+        --accent-green-border: rgba(16, 185, 129, 0.22);
+      }
+    }
+
+    /* --- Base --- */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* --- Layout --- */
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* --- Hero Header (Radial Gradient Glow) --- */
+    .hero-header {
+      background:
+        radial-gradient(900px 360px at 15% 20%, rgba(59,130,246,0.16), transparent 55%),
+        radial-gradient(700px 320px at 85% 10%, rgba(59,130,246,0.10), transparent 55%),
+        var(--bg-header);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 20px 30px;
+      text-align: center;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.90rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      background: var(--bg-body);
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin: 0 0 10px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      background: linear-gradient(135deg, var(--primary), rgba(59,130,246,0.55));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* --- Navigation Buttons --- */
+    .section-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 0;
+      padding: 0;
+      justify-content: center;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* --- Content Cards --- */
+    section { margin-top: 14px; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin: 22px 0;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* --- Semantic Callouts (same style as notes) --- */
+    .callout {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin: 16px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      font-size: 0.95rem;
+      border: 1px solid;
+    }
+
+    .co-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      margin-top: 2px;
+    }
+    .co-icon svg { width: 100%; height: 100%; }
+
+    .co-title {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 4px;
+      font-size: 0.80rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .co-content { color: var(--text-main); }
+
+    .callout.note {
+      background: var(--accent-info-bg);
+      border-color: var(--accent-info-border);
+    }
+    .callout.note .co-icon, .callout.note .co-title { color: var(--primary); }
+
+    .callout.trap {
+      background: var(--accent-amber-bg);
+      border-color: var(--accent-amber-border);
+    }
+    .callout.trap .co-icon, .callout.trap .co-title { color: var(--accent-amber); }
+
+    .callout.ok {
+      background: var(--accent-green-bg);
+      border-color: var(--accent-green-border);
+    }
+    .callout.ok .co-icon, .callout.ok .co-title { color: var(--accent-green); }
+
+    /* =============================
+       Interactive UI (same style)
+       ============================= */
+    .ig-wrap { display: grid; gap: 14px; }
+
+    .ig-header {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--bg-body);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .ig-header-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 12px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ig-tabs {
+      display: inline-flex;
+      background: var(--bg-body);
+      padding: 4px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      gap: 4px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .ig-tab {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 800;
+      font-size: 0.92rem;
+      padding: 8px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+      user-select: none;
+    }
+
+    .ig-tab:hover { transform: translateY(-1px); color: var(--text-main); }
+
+    .ig-tab.is-active {
+      background: var(--bg-card);
+      color: var(--primary);
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+    }
+
+    .ig-chips {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .ig-chip {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-body);
+      box-shadow: var(--shadow-sm);
+      font-size: 0.90rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .ig-chip.muted {
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .ig-header-bottom {
+      padding: 12px 14px 14px;
+      background: var(--bg-body);
+    }
+
+    .ig-slider-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .ig-slider {
+      width: 100%;
+      accent-color: var(--primary);
+    }
+
+    .ig-slider-hints {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .ig-panel { display: none; }
+    .ig-panel.is-active { display: block; }
+
+    .ig-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1.2fr 1fr;
+    }
+
+    .ig-grid-2 {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .ig-canvas-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--bg-body);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .ig-canvas-top {
+      padding: 10px 12px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .ig-canvas-title {
+      font-weight: 900;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .ig-canvas-sub {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .ig-canvas-wrap {
+      position: relative;
+      height: 260px;
+      background: var(--bg-card);
+    }
+
+    canvas.ig-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .ig-legend {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      background: color-mix(in srgb, var(--bg-card) 86%, transparent);
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .ig-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--danger);
+      flex: 0 0 auto;
+    }
+
+    .ig-kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.85em;
+      padding: 2px 6px;
+      border-radius: 7px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-main);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .ig-grid { grid-template-columns: 1fr; }
+      .ig-grid-2 { grid-template-columns: 1fr; }
+      .ig-canvas-wrap { height: 240px; }
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 16px 60px; }
+      h1 { font-size: 1.8rem; }
+      .card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Header -->
+  <header class="hero-header">
+    <div class="nav-breadcrumb">
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--primary)">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+      </svg>
+      Index / Compulsory
+    </div>
+
+    <h1>Wave Graphs (Interactive)</h1>
+
+    <div class="section-nav">
+      <a class="nav-btn" href="../index.html">Back to Index</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <main>
+
+      <section>
+        <div class="card" aria-label="Interactive wave graphs">
+          <div class="ig-wrap">
+
+            <p style="text-align:center; margin:0; color:var(--text-muted); font-weight:650;">
+              Use the <strong>time slider</strong> to freeze the wave. Goal: identify <strong>at rest</strong>, <strong>maximum speed</strong>, and the particle’s <strong>next movement</strong>.
+            </p>
+
+            <div class="ig-header" aria-label="Mode and time controls">
+              <div class="ig-header-top">
+                <div class="ig-tabs" role="tablist" aria-label="Wave mode tabs">
+                  <button class="ig-tab is-active" id="tabTrans" role="tab" aria-selected="true" aria-controls="panelTrans" type="button">Transverse</button>
+                  <button class="ig-tab" id="tabLong" role="tab" aria-selected="false" aria-controls="panelLong" type="button">Longitudinal</button>
+                </div>
+
+                <div class="ig-chips" aria-label="Key values">
+                  <span class="ig-chip">t = <span id="tVal">0.00</span> s</span>
+                  <span class="ig-chip muted">T = <span id="TVal">1.00</span> s</span>
+                  <span class="ig-chip muted">f = <span id="fVal">1.00</span> Hz</span>
+                  <span class="ig-chip muted">v = <span id="vVal">2.00</span> m s<sup>-1</sup></span>
+                </div>
+              </div>
+
+              <div class="ig-header-bottom">
+                <div class="ig-slider-row">
+                  <input class="ig-slider" id="timeSlider" type="range" min="0" max="2" step="0.01" value="0" aria-label="Time slider" />
+                  <div class="ig-slider-hints">
+                    <span>0</span>
+                    <span id="hint2T">2T</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Transverse Panel -->
+            <div class="ig-panel is-active" id="panelTrans" role="tabpanel" aria-labelledby="tabTrans">
+              <div class="ig-grid-2">
+                <div class="ig-canvas-card" aria-label="Displacement-distance graph">
+                  <div class="ig-canvas-top">
+                    <div>
+                      <div class="ig-canvas-title">Displacement–distance</div>
+                      <div class="ig-canvas-sub">snapshot at time <span class="ig-kbd">t</span></div>
+                    </div>
+                    <div class="ig-canvas-sub">y vs x</div>
+                  </div>
+                  <div class="ig-canvas-wrap">
+                    <canvas class="ig-canvas" id="cvDD_T" aria-label="Displacement-distance transverse canvas"></canvas>
+                  </div>
+                </div>
+
+                <div class="ig-canvas-card" aria-label="Displacement-time graph">
+                  <div class="ig-canvas-top">
+                    <div>
+                      <div class="ig-canvas-title">Displacement–time</div>
+                      <div class="ig-canvas-sub">same particle (fixed position)</div>
+                    </div>
+                    <div class="ig-canvas-sub">y vs t</div>
+                  </div>
+                  <div class="ig-canvas-wrap">
+                    <canvas class="ig-canvas" id="cvDT_T" aria-label="Displacement-time transverse canvas"></canvas>
+                  </div>
+                </div>
+              </div>
+
+              <div class="callout trap" style="margin-top:16px;">
+                <div class="co-icon">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                <div class="co-body">
+                  <span class="co-title">Exam trap</span>
+                  <div class="co-content">
+                    The wave travels, but a particle at a fixed position <strong>only oscillates</strong>.
+                    Use the displacement–time graph: <strong>rest</strong> at turning points; <strong>maximum speed</strong> at equilibrium (y = 0).
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Longitudinal Panel -->
+            <div class="ig-panel" id="panelLong" role="tabpanel" aria-labelledby="tabLong">
+              <div class="ig-grid">
+                <div class="ig-canvas-card" aria-label="Longitudinal particle row">
+                  <div class="ig-canvas-top">
+                    <div>
+                      <div class="ig-canvas-title">Particles (wave →)</div>
+                      <div class="ig-canvas-sub">two wavelengths shown; particle <strong>e</strong> is the red one</div>
+                    </div>
+                    <div class="ig-canvas-sub">compression / rarefaction</div>
+                  </div>
+                  <div class="ig-canvas-wrap">
+                    <canvas class="ig-canvas" id="cvRow" aria-label="Longitudinal particles canvas"></canvas>
+                    <div class="ig-legend"><span class="ig-dot"></span><span><strong>Red particle (e):</strong> oscillates only (not travelling)</span></div>
+                  </div>
+                </div>
+
+                <div class="ig-grid-2">
+                  <div class="ig-canvas-card" aria-label="Longitudinal displacement-distance graph">
+                    <div class="ig-canvas-top">
+                      <div>
+                        <div class="ig-canvas-title">Displacement–distance (parallel)</div>
+                        <div class="ig-canvas-sub">snapshot at time <span class="ig-kbd">t</span></div>
+                      </div>
+                      <div class="ig-canvas-sub">\(\xi\) vs x</div>
+                    </div>
+                    <div class="ig-canvas-wrap">
+                      <canvas class="ig-canvas" id="cvDD_L" aria-label="Displacement-distance longitudinal canvas"></canvas>
+                    </div>
+                  </div>
+
+                  <div class="ig-canvas-card" aria-label="Longitudinal displacement-time graph">
+                    <div class="ig-canvas-top">
+                      <div>
+                        <div class="ig-canvas-title">Displacement–time (same particle)</div>
+                        <div class="ig-canvas-sub">particle <strong>e</strong> (fixed position)</div>
+                      </div>
+                      <div class="ig-canvas-sub">\(\xi\) vs t</div>
+                    </div>
+                    <div class="ig-canvas-wrap">
+                      <canvas class="ig-canvas" id="cvDT_L" aria-label="Displacement-time longitudinal canvas"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="callout note" style="margin-top:16px;">
+                <div class="co-icon">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div class="co-body">
+                  <span class="co-title">Reading the red particle (e)</span>
+                  <div class="co-content" id="readoutLong">—</div>
+                </div>
+              </div>
+
+              <div class="callout trap">
+                <div class="co-icon">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                <div class="co-body">
+                  <span class="co-title">Exam trap</span>
+                  <div class="co-content">
+                    In a longitudinal wave, particles <strong>do not travel with the wave</strong>. They oscillate about equilibrium.
+                    Compression: particles closer together; rarefaction: particles farther apart.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="callout ok" style="margin-top:4px;">
+              <div class="co-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              </div>
+              <div class="co-body">
+                <span class="co-title">HKDSE reminders</span>
+                <div class="co-content">
+                  \(v=f\lambda\) and \(T=\frac{1}{f}\). In many questions: <strong>v depends on medium/conditions</strong>, <strong>f depends on source</strong>, so \(\lambda\) changes when the wave enters a new medium.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="section-nav" style="justify-content:center; margin-top:18px;">
+          <a class="nav-btn" href="../index.html">&larr; Back to Index</a>
+        </div>
+      </section>
+
+      <p style="text-align:center; font-size:0.85rem; color:var(--text-muted); margin-top:40px;">
+        End of note &bull; Wave Graphs (Interactive).
+      </p>
+    </main>
+  </div>
+
+  <script>
+    (function(){
+      // =============================
+      // Parameters (HKDSE-friendly)
+      // =============================
+      // y(x,t) = A sin(kx − ωt), where k = 2π/λ and ω = 2πf.
+      const params = {
+        A: 0.06,      // amplitude in m
+        lambda: 2.0,  // wavelength in m
+        f: 1.0        // frequency in Hz
+      };
+
+      const k = () => (2 * Math.PI) / params.lambda;
+      const omega = () => 2 * Math.PI * params.f;
+      const period = () => 1 / params.f;
+      const waveSpeed = () => params.f * params.lambda;
+
+      // Transverse graphs window
+      const xMinT = 0;
+      const xMaxT = 6.0;
+      const x0T = 3.0; // fixed particle position
+
+      // Longitudinal window: exactly 2 wavelengths
+      const xMinL = 0;
+      const xMaxL = 2 * params.lambda;
+      const x0L = params.lambda / 2; // particle e
+
+      // =============================
+      // Elements
+      // =============================
+      const tabTrans = document.getElementById('tabTrans');
+      const tabLong = document.getElementById('tabLong');
+      const panelTrans = document.getElementById('panelTrans');
+      const panelLong = document.getElementById('panelLong');
+
+      const slider = document.getElementById('timeSlider');
+      const hint2T = document.getElementById('hint2T');
+
+      const tVal = document.getElementById('tVal');
+      const TVal = document.getElementById('TVal');
+      const fVal = document.getElementById('fVal');
+      const vVal = document.getElementById('vVal');
+      const readoutLong = document.getElementById('readoutLong');
+
+      const cvDD_T = document.getElementById('cvDD_T');
+      const cvDT_T = document.getElementById('cvDT_T');
+
+      const cvRow = document.getElementById('cvRow');
+      const cvDD_L = document.getElementById('cvDD_L');
+      const cvDT_L = document.getElementById('cvDT_L');
+
+      // =============================
+      // Utilities (no arcTo)
+      // =============================
+      function cssVar(name){
+        return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+      }
+
+      function clamp(n, a, b){
+        return Math.min(b, Math.max(a, n));
+      }
+
+      function setupCanvas(canvas){
+        // When a panel is hidden, layout sizes can be 0. Use safe fallbacks.
+        const parent = canvas.parentElement;
+        const rect = parent.getBoundingClientRect();
+        const dpr = Math.max(1, window.devicePixelRatio || 1);
+
+        const cssW = parent.clientWidth || 820;
+        const cssH = parent.clientHeight || 260;
+        const w = Math.max(320, Math.floor(rect.width || cssW));
+        const h = Math.max(180, Math.floor(rect.height || cssH));
+
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
+        const ctx = canvas.getContext('2d');
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        return { ctx, w, h };
+      }
+
+      function mapX(x, w, xMin, xMax){
+        const pad = 44;
+        return pad + (x - xMin) * (w - pad - 22) / (xMax - xMin);
+      }
+
+      function mapY(y, h, yScale){
+        const top = 24;
+        const bot = 34;
+        const mid = (h - top - bot) / 2 + top;
+        return mid - (y / yScale) * ((h - top - bot) / 2);
+      }
+
+      function drawAxes(ctx, w, h, xLabel, yLabel){
+        const axis = cssVar('--text-main');
+        const border = cssVar('--border');
+        const muted = cssVar('--text-muted');
+
+        // Frame
+        ctx.clearRect(0, 0, w, h);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = border;
+        ctx.strokeRect(0.5, 0.5, w - 1, h - 1);
+
+        // Axes
+        const pad = 44;
+        const left = pad;
+        const right = w - 22;
+        const top = 24;
+        const bot = h - 34;
+        const midY = (top + bot) / 2;
+
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = axis;
+        ctx.beginPath();
+        ctx.moveTo(left, top);
+        ctx.lineTo(left, bot);
+        ctx.moveTo(left, midY);
+        ctx.lineTo(right, midY);
+        ctx.stroke();
+
+        // Labels
+        ctx.fillStyle = axis;
+        ctx.font = '700 13px ' + cssVar('--font-sans');
+        ctx.fillText(yLabel, 10, 18);
+        ctx.fillText(xLabel, right - ctx.measureText(xLabel).width, h - 10);
+
+        // 0 label
+        ctx.fillStyle = muted;
+        ctx.font = '700 12px ' + cssVar('--font-sans');
+        ctx.fillText('0', left - 10 - ctx.measureText('0').width, midY + 4);
+
+        // equilibrium dashed
+        ctx.strokeStyle = border;
+        ctx.setLineDash([7, 6]);
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(left, midY);
+        ctx.lineTo(right, midY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        return { left, right, top, bot, midY };
+      }
+
+      function drawCurve(ctx, pts, strokeStyle, lineWidth){
+        if (!pts.length) return;
+        ctx.lineWidth = lineWidth;
+        ctx.strokeStyle = strokeStyle;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+        ctx.stroke();
+      }
+
+      function drawDot(ctx, x, y, r, fill){
+        ctx.beginPath();
+        ctx.fillStyle = fill;
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      function drawArrow(ctx, x, y, dirX, dirY, color){
+        const len = 18;
+        const dx = dirX * len;
+        const dy = dirY * len;
+        ctx.strokeStyle = color;
+        ctx.fillStyle = color;
+        ctx.lineWidth = 2.5;
+
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + dx, y + dy);
+        ctx.stroke();
+
+        const ang = Math.atan2(dy, dx);
+        const ah = 7;
+        ctx.beginPath();
+        ctx.moveTo(x + dx, y + dy);
+        ctx.lineTo(x + dx - ah * Math.cos(ang - Math.PI / 6), y + dy - ah * Math.sin(ang - Math.PI / 6));
+        ctx.lineTo(x + dx - ah * Math.cos(ang + Math.PI / 6), y + dy - ah * Math.sin(ang + Math.PI / 6));
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      // =============================
+      // Physics helpers
+      // =============================
+      function yTrans(x, t){
+        return params.A * Math.sin(k() * x - omega() * t);
+      }
+
+      function vyTrans(x, t){
+        return -params.A * omega() * Math.cos(k() * x - omega() * t);
+      }
+
+      // Longitudinal displacement along x
+      const AL = () => params.A * 0.9;
+
+      function xiLong(x, t){
+        return AL() * Math.sin(k() * x - omega() * t);
+      }
+
+      function vLong(x, t){
+        return -AL() * omega() * Math.cos(k() * x - omega() * t);
+      }
+
+      function accelFromDisp(disp){
+        // SHM at fixed x: a = −ω² ξ
+        return -Math.pow(omega(), 2) * disp;
+      }
+
+      function motionState(disp, vel){
+        const epsY = AL() * 0.06;
+        const epsV = Math.abs(AL() * omega()) * 0.06;
+
+        const atEquilibrium = Math.abs(disp) < epsY;
+        const atRest = Math.abs(vel) < epsV;
+
+        let key;
+        if (atRest) key = 'At max displacement ⇒ speed = 0.';
+        else if (atEquilibrium) key = 'At equilibrium ⇒ speed is maximum.';
+        else key = 'Between equilibrium and max displacement.';
+
+        let next;
+        if (!atRest) {
+          next = vel > 0 ? 'moving right now.' : 'moving left now.';
+        } else {
+          const a = accelFromDisp(disp);
+          if (Math.abs(a) < 1e-10) next = 'about to change direction (very close to equilibrium).';
+          else next = a > 0 ? 'will start moving right next.' : 'will start moving left next.';
+        }
+
+        return { atRest, atEquilibrium, key, next };
+      }
+
+      // =============================
+      // Draw: Transverse
+      // =============================
+      function drawTransverseAll(t){
+        const c1 = setupCanvas(cvDD_T);
+        const c2 = setupCanvas(cvDT_T);
+        drawDDTrans(c1.ctx, c1.w, c1.h, t);
+        drawDTTrans(c2.ctx, c2.w, c2.h, t);
+      }
+
+      function drawDDTrans(ctx, w, h, t){
+        const axis = drawAxes(ctx, w, h, 'distance x', 'displacement y');
+        const blue = cssVar('--primary');
+        const border = cssVar('--border');
+        const red = cssVar('--danger');
+
+        const yScale = params.A * 1.35;
+        const pts = [];
+        for (let x = xMinT; x <= xMaxT + 1e-9; x += (xMaxT - xMinT) / 240) {
+          pts.push({ x: mapX(x, w, xMinT, xMaxT), y: mapY(yTrans(x, t), h, yScale) });
+        }
+        drawCurve(ctx, pts, blue, 3.5);
+
+        // fixed particle x0
+        const px0 = mapX(x0T, w, xMinT, xMaxT);
+        ctx.strokeStyle = border;
+        ctx.setLineDash([7, 6]);
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(px0, axis.top);
+        ctx.lineTo(px0, axis.bot);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        const py0 = mapY(yTrans(x0T, t), h, yScale);
+        drawDot(ctx, px0, py0, 5.5, red);
+
+        // movement arrow (up/down)
+        const vy = vyTrans(x0T, t);
+        const epsV = Math.abs(params.A * omega()) * 0.06;
+        if (Math.abs(vy) >= epsV) {
+          // canvas y increases downward, so vy>0 means arrow down
+          drawArrow(ctx, px0 + 14, py0, 0, vy > 0 ? 1 : -1, red);
+        }
+
+        // small hint
+        ctx.fillStyle = cssVar('--text-muted');
+        ctx.font = '800 12px ' + cssVar('--font-sans');
+        ctx.fillText('vertical line: same particle', axis.left + 8, axis.top + 14);
+      }
+
+      function drawDTTrans(ctx, w, h, t){
+        const axis = drawAxes(ctx, w, h, 'time t', 'displacement y');
+        const blue = cssVar('--primary-dark');
+        const border = cssVar('--border');
+        const red = cssVar('--danger');
+        const muted = cssVar('--text-muted');
+
+        const yScale = params.A * 1.35;
+        const tMin = 0;
+        const tMax = 2 * period();
+
+        function mapT(tt){
+          return axis.left + (tt - tMin) * (axis.right - axis.left) / (tMax - tMin);
+        }
+
+        const pts = [];
+        for (let tt = tMin; tt <= tMax + 1e-9; tt += (tMax - tMin) / 300) {
+          pts.push({ x: mapT(tt), y: mapY(yTrans(x0T, tt), h, yScale) });
+        }
+        drawCurve(ctx, pts, blue, 3.5);
+
+        // current time marker
+        const tx = mapT(t);
+        ctx.strokeStyle = border;
+        ctx.setLineDash([7, 6]);
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(tx, axis.top);
+        ctx.lineTo(tx, axis.bot);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        const ty = mapY(yTrans(x0T, t), h, yScale);
+        drawDot(ctx, tx, ty, 5.5, red);
+
+        // velocity arrow
+        const vy = vyTrans(x0T, t);
+        const epsV = Math.abs(params.A * omega()) * 0.06;
+        if (Math.abs(vy) >= epsV) {
+          drawArrow(ctx, tx + 14, ty, 0, vy > 0 ? 1 : -1, red);
+        }
+
+        ctx.fillStyle = muted;
+        ctx.font = '800 12px ' + cssVar('--font-sans');
+        ctx.fillText('speed max at y = 0', axis.left + 8, axis.top + 14);
+      }
+
+      // =============================
+      // Draw: Longitudinal
+      // =============================
+      function drawLongitudinalAll(t){
+        const cRow = setupCanvas(cvRow);
+        const c1 = setupCanvas(cvDD_L);
+        const c2 = setupCanvas(cvDT_L);
+
+        drawParticleRow(cRow.ctx, cRow.w, cRow.h, t);
+        drawDDLong(c1.ctx, c1.w, c1.h, t);
+        drawDTLong(c2.ctx, c2.w, c2.h, t);
+
+        const disp = xiLong(x0L, t);
+        const vel = vLong(x0L, t);
+        const st = motionState(disp, vel);
+
+        const pos = (Math.abs(disp) < AL() * 0.06)
+          ? 'at equilibrium (\\(\\xi = 0\\))'
+          : (disp > 0 ? 'to the right of equilibrium (\\(\\xi>0\\))' : 'to the left of equilibrium (\\(\\xi<0\\))');
+
+        const moving = st.atRest ? 'at rest (speed = 0)' : (vel > 0 ? 'moving right' : 'moving left');
+
+        readoutLong.innerHTML =
+          '<ul style="margin:0; padding-left:18px;">'
+          + '<li><strong>Current state:</strong> ' + pos + '; ' + moving + '.</li>'
+          + '<li><strong>Rest / max speed:</strong> ' + st.key + '</li>'
+          + ''
+          + '</ul>';
+      }
+
+      function drawParticleRow(ctx, w, h, t){
+        const border = cssVar('--border');
+        const blue = cssVar('--primary');
+        const red = cssVar('--danger');
+        const amber = cssVar('--accent-amber');
+        const muted = cssVar('--text-muted');
+        const axis = cssVar('--text-main');
+
+        ctx.clearRect(0, 0, w, h);
+
+        // frame
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = border;
+        ctx.strokeRect(0.5, 0.5, w - 1, h - 1);
+
+        const y = h * 0.58;
+        const leftPad = 46;
+        const rightPad = 34;
+
+        // 2 wavelengths, 9 particles per wavelength => 17 particles total (shared middle)
+        const letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q'];
+        const n = letters.length;
+        const dx = (w - leftPad - rightPad) / (n - 1);
+
+        // grid
+        ctx.strokeStyle = border;
+        ctx.lineWidth = 1;
+        ctx.setLineDash([6, 6]);
+        for (let i = 0; i < n; i++) {
+          const x = leftPad + i * dx;
+          ctx.beginPath();
+          ctx.moveTo(x, 18);
+          ctx.lineTo(x, h - 28);
+          ctx.stroke();
+        }
+        ctx.beginPath();
+        ctx.moveTo(leftPad, y);
+        ctx.lineTo(w - rightPad, y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // wave direction label
+        ctx.fillStyle = axis;
+        ctx.font = '900 12px ' + cssVar('--font-sans');
+        ctx.fillText('wave →', w - 78, 18);
+
+        // red particle index: e
+        const iRed = 4;
+        const iMid = 8; // i
+
+        // equilibrium marker for red particle
+        const eqRed = leftPad + iRed * dx;
+        ctx.strokeStyle = border;
+        ctx.setLineDash([8, 6]);
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(eqRed, y - 30);
+        ctx.lineTo(eqRed, y + 30);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // draw particles
+        const dispMax = AL();
+        const shiftPx = 14;
+
+        for (let i = 0; i < n; i++) {
+          const eqX = leftPad + i * dx;
+          const xMeters = xMinL + (i / (n - 1)) * (xMaxL - xMinL); // 0 → 2λ
+          const disp = xiLong(xMeters, t);
+          const px = eqX + (disp / dispMax) * shiftPx;
+
+          if (i === iRed) {
+            drawDot(ctx, px, y, 6.5, red);
+
+            const vel = vLong(x0L, t);
+            const epsV = Math.abs(dispMax * omega()) * 0.06;
+            if (Math.abs(vel) >= epsV) {
+              drawArrow(ctx, px, y - 18, vel > 0 ? 1 : -1, 0, red);
+            } else {
+              ctx.fillStyle = muted;
+              ctx.font = '900 12px ' + cssVar('--font-sans');
+              ctx.fillText('rest', clamp(px + 10, 12, w - 46), clamp(y - 20, 18, h - 12));
+            }
+
+            ctx.fillStyle = muted;
+            ctx.font = '800 12px ' + cssVar('--font-sans');
+            ctx.fillText('equilibrium', clamp(eqRed - 40, 12, w - 92), y + 44);
+          } else {
+            drawDot(ctx, px, y, 3.2, blue);
+          }
+
+          // letter label under equilibrium position
+          ctx.fillStyle = muted;
+          ctx.font = '900 12px ' + cssVar('--font-sans');
+          ctx.fillText(letters[i], eqX - 3, y + 24);
+        }
+
+        // λ brackets: a→i and i→q
+        function drawLambdaBracket(x1, x2, yLine){
+          ctx.strokeStyle = amber;
+          ctx.fillStyle = amber;
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.moveTo(x1, yLine);
+          ctx.lineTo(x2, yLine);
+          ctx.stroke();
+
+          const ah = 7;
+          ctx.beginPath();
+          ctx.moveTo(x1, yLine);
+          ctx.lineTo(x1 + ah, yLine - ah/1.4);
+          ctx.lineTo(x1 + ah, yLine + ah/1.4);
+          ctx.closePath();
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.moveTo(x2, yLine);
+          ctx.lineTo(x2 - ah, yLine - ah/1.4);
+          ctx.lineTo(x2 - ah, yLine + ah/1.4);
+          ctx.closePath();
+          ctx.fill();
+
+          ctx.font = '900 14px ' + cssVar('--font-sans');
+          ctx.textAlign = 'center';
+          ctx.fillText('λ', (x1 + x2) / 2, yLine - 10);
+          ctx.textAlign = 'start';
+        }
+
+        const xA = leftPad;
+        const xI = leftPad + iMid * dx;
+        const xQ = leftPad + (n - 1) * dx;
+        drawLambdaBracket(xA, xI, 36);
+        drawLambdaBracket(xI, xQ, 62);
+
+        ctx.fillStyle = muted;
+        ctx.font = '800 12px ' + cssVar('--font-sans');
+        ctx.fillText('a→i is λ; i→q is λ (adjacent points in phase)', 14, h - 12);
+      }
+
+      function drawDDLong(ctx, w, h, t){
+        const axis = drawAxes(ctx, w, h, 'distance x', 'displacement ξ');
+        const blue = cssVar('--primary');
+        const border = cssVar('--border');
+        const red = cssVar('--danger');
+        const muted = cssVar('--text-muted');
+
+        const yScale = AL() * 1.35;
+        const pts = [];
+        for (let x = xMinL; x <= xMaxL + 1e-9; x += (xMaxL - xMinL) / 240) {
+          pts.push({ x: mapX(x, w, xMinL, xMaxL), y: mapY(xiLong(x, t), h, yScale) });
+        }
+        drawCurve(ctx, pts, blue, 3.5);
+
+        // mark x0L (particle e)
+        const px0 = mapX(x0L, w, xMinL, xMaxL);
+        ctx.strokeStyle = border;
+        ctx.setLineDash([7, 6]);
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(px0, axis.top);
+        ctx.lineTo(px0, axis.bot);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        const py0 = mapY(xiLong(x0L, t), h, yScale);
+        drawDot(ctx, px0, py0, 5.5, red);
+
+        const vel = vLong(x0L, t);
+        const epsV = Math.abs(AL() * omega()) * 0.06;
+        if (Math.abs(vel) >= epsV) {
+          drawArrow(ctx, px0 + 10, py0 - 16, vel > 0 ? 1 : -1, 0, red);
+        }
+
+        ctx.fillStyle = muted;
+        ctx.font = '800 12px ' + cssVar('--font-sans');
+        ctx.fillText('vertical line: particle e', axis.left + 8, axis.top + 14);
+      }
+
+      function drawDTLong(ctx, w, h, t){
+        const axis = drawAxes(ctx, w, h, 'time t', 'displacement ξ');
+        const blue = cssVar('--primary-dark');
+        const border = cssVar('--border');
+        const red = cssVar('--danger');
+        const muted = cssVar('--text-muted');
+
+        const yScale = AL() * 1.35;
+        const tMin = 0;
+        const tMax = 2 * period();
+
+        function mapT(tt){
+          return axis.left + (tt - tMin) * (axis.right - axis.left) / (tMax - tMin);
+        }
+
+        const pts = [];
+        for (let tt = tMin; tt <= tMax + 1e-9; tt += (tMax - tMin) / 300) {
+          pts.push({ x: mapT(tt), y: mapY(xiLong(x0L, tt), h, yScale) });
+        }
+        drawCurve(ctx, pts, blue, 3.5);
+
+        const tx = mapT(t);
+        ctx.strokeStyle = border;
+        ctx.setLineDash([7, 6]);
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(tx, axis.top);
+        ctx.lineTo(tx, axis.bot);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        const ty = mapY(xiLong(x0L, t), h, yScale);
+        drawDot(ctx, tx, ty, 5.5, red);
+
+        const vel = vLong(x0L, t);
+        const epsV = Math.abs(AL() * omega()) * 0.06;
+        if (Math.abs(vel) >= epsV) {
+          drawArrow(ctx, tx + 10, ty - 16, vel > 0 ? 1 : -1, 0, red);
+        }
+
+        ctx.fillStyle = muted;
+        ctx.font = '800 12px ' + cssVar('--font-sans');
+        ctx.fillText('speed max at ξ = 0', axis.left + 8, axis.top + 14);
+      }
+
+      // =============================
+      // Mode + slider
+      // =============================
+      let mode = 'transverse';
+
+      function setMode(next){
+        mode = next;
+        const isT = mode === 'transverse';
+
+        tabTrans.classList.toggle('is-active', isT);
+        tabLong.classList.toggle('is-active', !isT);
+        tabTrans.setAttribute('aria-selected', isT ? 'true' : 'false');
+        tabLong.setAttribute('aria-selected', !isT ? 'true' : 'false');
+
+        panelTrans.classList.toggle('is-active', isT);
+        panelLong.classList.toggle('is-active', !isT);
+
+        // Let layout settle (important for canvas sizes when switching tabs)
+        requestAnimationFrame(render);
+      }
+
+      tabTrans.addEventListener('click', () => setMode('transverse'));
+      tabLong.addEventListener('click', () => setMode('longitudinal'));
+
+      function render(){
+        const t = parseFloat(slider.value);
+        tVal.textContent = t.toFixed(2);
+        TVal.textContent = period().toFixed(2);
+        fVal.textContent = params.f.toFixed(2);
+        vVal.textContent = waveSpeed().toFixed(2);
+
+        if (mode === 'transverse') drawTransverseAll(t);
+        else drawLongitudinalAll(t);
+
+        if (window.MathJax && window.MathJax.typesetPromise) {
+          window.MathJax.typesetPromise([readoutLong]).catch(() => {});
+        }
+      }
+
+      slider.addEventListener('input', render);
+
+      window.addEventListener('resize', () => {
+        clearTimeout(window.__igResizeT);
+        window.__igResizeT = setTimeout(render, 80);
+      });
+
+      // =============================
+      // Self-tests (sanity)
+      // =============================
+      function runSelfTests(){
+        console.assert(period() > 0, 'T must be positive');
+        console.assert(waveSpeed() > 0, 'v must be positive');
+
+        // equilibrium test
+        console.assert(Math.abs(yTrans(0, 0)) < 1e-12, 'y(0,0) should be 0');
+
+        // finite values
+        console.assert(Number.isFinite(vyTrans(1, 0.2)), 'vy must be finite');
+        console.assert(Number.isFinite(xiLong(1, 0.2)), 'xi must be finite');
+        console.assert(Number.isFinite(vLong(1, 0.2)), 'vLong must be finite');
+
+        // longitudinal range
+        console.assert(Math.abs(xMaxL - 2 * params.lambda) < 1e-12, 'Longitudinal x-range must be 2λ');
+        console.assert(Math.abs(x0L - params.lambda / 2) < 1e-12, 'particle e should be at λ/2');
+
+        // letters count: 2λ with 9 per λ => 17
+        console.assert((['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q']).length === 17, 'Need 17 particles (a..q)');
+      }
+
+      // Init slider: 0 to 2T
+      const twoT = 2 * period();
+      slider.min = '0';
+      slider.max = String(twoT.toFixed(2));
+      slider.step = String((period() / 240).toFixed(4));
+      slider.value = '0';
+      hint2T.textContent = '2T = ' + twoT.toFixed(2) + ' s';
+
+      runSelfTests();
+      render();
+    })();
+  </script>
+</body>
+</html>
